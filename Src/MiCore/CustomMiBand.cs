@@ -13,7 +13,7 @@ using Windows.Security.Cryptography.Core;
 using Windows.Storage;
 using Windows.Storage.Streams;
 
-namespace MiBand3
+namespace MiCore
 {
     public class CustomMiBand : IDisposable, INotifyPropertyChanged
     {
@@ -303,7 +303,7 @@ namespace MiBand3
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        internal async Task SetAlertLevel(int v)
+        public async Task SetAlertLevel(int v)
         {
             //TODO
         }
@@ -313,49 +313,49 @@ namespace MiBand3
             //TODO
         }
 
-        internal async Task setWearLocation()
+        public async Task setWearLocation()
         {
             //
         }
 
-        internal async Task setTimeFormatDisplay()
+        public async Task setTimeFormatDisplay()
         {
-            throw new NotImplementedException();
+            //TODO
         }
 
-        internal async Task setUserInfo(string v1, DateTime date, string v2, int v3, int v4)
+        public async Task setUserInfo(string v1, DateTime date, string v2, int v3, int v4)
         {
-            throw new NotImplementedException();
+            //TODO
         }
 
-        internal void setRotateWristToSwitchInfo()
+        public void setRotateWristToSwitchInfo()
         {
-            throw new NotImplementedException();
+            //TODO
         }
 
-        internal void setGoalNotification()
+        public void setGoalNotification()
         {
-            throw new NotImplementedException();
+            //TODO
         }
 
-        internal void setDoNotDisturb()
+        public void setDoNotDisturb()
         {
-            throw new NotImplementedException();
+            //TODO
         }
 
-        internal async Task setDisplayItems()
+        public async Task setDisplayItems()
         {
-            throw new NotImplementedException();
+            //TODO
         }
 
-        internal async Task setDateDisplay()
+        public async Task setDateDisplay()
         {
-            throw new NotImplementedException();
+            //TODO
         }
 
-        internal async Task setActivateDisplayOnLiftWrist()
+        public async Task setActivateDisplayOnLiftWrist()
         {
-            throw new NotImplementedException();
+            //TODO
         }
     }
 }

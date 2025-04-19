@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MiCore;
+using System;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

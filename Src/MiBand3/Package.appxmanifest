@@ -47,7 +47,7 @@
           <uap:Rotation Preference="portraitFlipped"/></uap:InitialRotationPreference>
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTaskRuntime.PeriodicalSync">
+        <Extension Category="windows.backgroundTasks" EntryPoint="MiNotificationWatcher.PeriodicalSync">
           <BackgroundTasks>
             <Task Type="bluetooth"/>
             <Task Type="deviceConnectionChange"/>

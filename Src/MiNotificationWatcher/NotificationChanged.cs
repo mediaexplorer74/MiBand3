@@ -7,7 +7,7 @@ using Windows.ApplicationModel.Background;
 using Windows.UI.Notifications;
 using Windows.UI.Notifications.Management;
 
-namespace BackgroundTaskRuntime
+namespace MiNotificationWatcher
 {
     public class NotificationChanged : IBackgroundTask
     {

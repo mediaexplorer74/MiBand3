@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MiBand3
+namespace MiCore
 {
     public class ClockResult
     {

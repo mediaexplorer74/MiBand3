@@ -1,4 +1,4 @@
-﻿using MiBand3;
+﻿using MiCore;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -11,7 +11,7 @@ using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Storage;
 using Windows.Storage.Streams;
 
-namespace MiBand3
+namespace MiCore
 {
     public class HeartResult : IDisposable, INotifyPropertyChanged
     {

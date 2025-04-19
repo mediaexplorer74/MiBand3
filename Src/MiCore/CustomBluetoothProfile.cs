@@ -1,7 +1,7 @@
 ﻿// This code defines a class structure for a custom Bluetooth profile, including various services and characteristics.
 using System;
 
-namespace MiBand3
+namespace MiCore
 {
     public class CustomBluetoothProfile
     {

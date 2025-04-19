@@ -7,7 +7,8 @@ using Windows.UI.Notifications.Management;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-//using BackgroundTaskRuntime;
+using MiNotificationWatcher;
+using MiCore;
 
 
 namespace MiBand3
@@ -69,7 +70,7 @@ namespace MiBand3
                     BackgroundTaskBuilder builder = new BackgroundTaskBuilder()
                     {
                         Name = "UserNotificationChanged",
-                        TaskEntryPoint = default//typeof(BackgroundTaskRuntime.NotificationChanged).FullName
+                        TaskEntryPoint = "MiNotificationWatcher.NotificationChanged"//typeof(MiNotificationWatcher.NotificationChanged).FullName
                     };
 
                     builder.SetTrigger(new UserNotificationChangedTrigger(
@@ -120,7 +121,7 @@ namespace MiBand3
                     var builder = new BackgroundTaskBuilder
                     {
                         Name = "PeriodicalSync",
-                        TaskEntryPoint = default//typeof(BackgroundTaskRuntime.PeriodicalSync).FullName
+                        TaskEntryPoint = "MiNotificationWatcher.PeriodicalSync"//typeof(MiNotificationWatcher.PeriodicalSync).FullName
                     };
 
                     builder.SetTrigger(new TimeTrigger(periodTime, false));

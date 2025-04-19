@@ -9,7 +9,7 @@ using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Devices.Enumeration;
 
-namespace MiBand3
+namespace MiCore
 {
     public class CustomBand
     {

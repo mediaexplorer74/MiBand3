@@ -1,10 +1,10 @@
-﻿using MiBand3;
+﻿using MiCore;
 using System;
 using System.Collections.Generic;
 using Windows.ApplicationModel;
 using Windows.Storage;
 
-namespace MiBand3
+namespace MiCore
 {
     public class NotificationResult
     {

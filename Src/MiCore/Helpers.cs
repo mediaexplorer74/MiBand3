@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 using Windows.Storage;
 using Windows.Storage.Streams;
 
-namespace MiBand3
+namespace MiCore
 {
     public class Helpers
     {

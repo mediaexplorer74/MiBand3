@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MiCore;
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -15,8 +16,8 @@ namespace MiBand3
         {
             App.CustomMiBand = new CustomMiBand();
 
-            //DEBUG
-            if (1==0)//(App.LocalSettings.Values["DeviceId"] == null)
+            //DEBUG: substitute it by "(1==0)" for temp. MainPage access (without any real device)
+            if (App.LocalSettings.Values["DeviceId"] == null)
             {
                 Frame.Navigate(typeof(DevicePage));
             }

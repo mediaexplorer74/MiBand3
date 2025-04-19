@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 
-namespace BackgroundTaskRuntime
+namespace MiNotificationWatcher
 {
     public class PeriodicalSync : IBackgroundTask
     {

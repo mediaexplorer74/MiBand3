@@ -2,7 +2,7 @@
 using Windows.ApplicationModel;
 using Windows.UI.Notifications;
 
-namespace MiBand3
+namespace MiCore
 {
     public class NotificationRequest
     {

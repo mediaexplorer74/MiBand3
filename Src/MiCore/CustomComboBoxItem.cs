@@ -1,4 +1,4 @@
-﻿namespace MiBand3
+﻿namespace MiCore
 {
     public class CustomComboBoxItem
     {

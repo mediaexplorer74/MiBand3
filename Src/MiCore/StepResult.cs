@@ -8,7 +8,7 @@ using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Storage;
 
-namespace MiBand3
+namespace MiCore
 {
     public class StepResult : IDisposable
     {

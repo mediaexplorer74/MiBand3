@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MiCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;

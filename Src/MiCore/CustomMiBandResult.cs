@@ -6,7 +6,7 @@ using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI.Core;
 
-namespace MiBand3
+namespace MiCore
 {
     public class CustomMiBandResult : INotifyPropertyChanged
     {

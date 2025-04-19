@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MiCore;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using Windows.UI.Xaml;
@@ -59,8 +60,8 @@ namespace MiBand3
             lblStepsDetails.Text = _result.HeartRate.ToString("N0");
         }
 
-        private async void btnMeasurement_Click(Object sender, RoutedEventArgs e)
-        {
+        private async void btnMeasurement_Click(object sender, RoutedEventArgs e)
+        {           
             prMeasurement.IsActive = true;
             btnMeasurement.IsEnabled = false;
 

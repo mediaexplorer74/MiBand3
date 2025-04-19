@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MiCore;
+using System;
 using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;

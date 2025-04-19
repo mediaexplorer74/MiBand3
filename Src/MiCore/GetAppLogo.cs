@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace MiBand3
+namespace MiCore
 {
     public class GetAppLogo : IValueConverter
     {
