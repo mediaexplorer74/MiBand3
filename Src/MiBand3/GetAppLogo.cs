@@ -1,0 +1,42 @@
+﻿using System;
+using System.Threading.Tasks;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Media.Imaging;
+
+namespace MiBand3
+{
+
+    public class GetAppLogo : IValueConverter
+    {
+        public Object Convert(Object value, Type targetType, Object parameter, String language)
+        {
+            try
+            {
+                // Retrieve the app logo asynchronously
+                var task = Task.Run(async () =>
+                {
+                    return await Helpers.GetAppLogoById(value.ToString());
+                });
+
+                task.Wait();
+
+                var bitmap = new BitmapImage();
+                bitmap.SetSource(task.Result);
+
+                return bitmap;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public Object ConvertBack(Object value, Type targetType, Object parameter, String language)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
+
+
+
