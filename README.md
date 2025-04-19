@@ -9,6 +9,7 @@ FitForMiBand is/was a [simple VB.NET implementation](https://github.com/AL3X1/Fi
 I'll ty to port ("translate") VB to C# and "uprgrade" it for Xaiomi Band 3 (or even 4?) compatibilty.
 
 ## Status / progress
+- Min. Win. SDK = 14393
 - Code "translated" with (help) of MS Copilot (Engine ChatGPT 4o).
 - Very strange code behaviour (perhaps, some app logic damaged after c# port... idk) 
 
