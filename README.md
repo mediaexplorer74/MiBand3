@@ -19,7 +19,7 @@ I'll ty to port ("translate") VB to C# and "upgrade" it for Xaiomi Band 3 (or ev
 
 ## Reference(s)
 - https://github.com/superhans205/FitForMiBand Original src code (deleted by superhans205 in/at 2018)
-- https://github.com/superhans205, Cool VB.NET MonoGame Developer (page deleted)
+- https://github.com/superhans205, Brave VB.NET Developer (GitHub profile page deleted)
 - https://4pda.to/forum/index.php?showtopic=792038 4PDA, "Архив носимых устройств - Bind Mi Band Версия: 1.21.4.60" (Rus.)
 - https://web.archive.org/web/20181224120806/http://www.bindmiband.com/ Bind Mi Band (deleted; viewving available via WayBackMachine service)
 
