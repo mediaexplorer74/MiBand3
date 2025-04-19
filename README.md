@@ -14,7 +14,7 @@ I'll ty to port ("translate") VB to C# and "upgrade" it for Xaiomi Band 3 (or ev
 - Very strange code behaviour (perhaps, some app logic damaged after c# port... idk) 
 
 ## ToDo
-- Fix 100500 bugs
+- Fix 100500 bugs afret "automatic intelligence" (AI... it's joke))
 - Think of/about MiBand4 support...
 
 ## Reference(s)
