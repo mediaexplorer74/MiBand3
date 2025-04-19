@@ -48,7 +48,7 @@ namespace MiBand3
             }
             finally
             {
-                prMeasurement.IsActive = False;
+                prMeasurement.IsActive = false;
                 btnMeasurement.IsEnabled = true;
             }
         }

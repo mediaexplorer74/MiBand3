@@ -26,6 +26,10 @@ namespace MiBand3
                 tsHeartrate.IsOn = Convert.ToBoolean(App.LocalSettings.Values[$"Setting_{(int)CustomMiBandResult.BandOperation.Heartrate}"]);
         }
 
+        private void DisplayItemsPage_Loaded(object sender, RoutedEventArgs e)
+        {
+        }
+
         private async void btnSave_Click(object sender, RoutedEventArgs e)
         {
             pbProcessing.Visibility = Visibility.Visible;
@@ -56,6 +60,8 @@ namespace MiBand3
                 btnSave.IsEnabled = true;
             }
         }
+
+       
     }
 }
 

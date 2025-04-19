@@ -5,7 +5,8 @@
     xmlns:local="using:MiBand3"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Loaded="MainPage_Loaded">
 
     <Page.Resources>
         <DataTemplate x:Key="ResultsListViewTemplate">
@@ -33,10 +34,11 @@
     </Page.Resources>
 
     <Grid Background="#003e70">
-        <controls:MasterDetailsView ItemTemplate="{StaticResource ResultsListViewTemplate}"
-                                    MasterPaneWidth="560"
-                                    Background="#003e70"
-                                    Name="CustomMasterDetailsView">
+        <controls:MasterDetailsView Name="CustomMasterDetailsView"
+            ItemTemplate="{StaticResource ResultsListViewTemplate}"
+                            MasterPaneWidth="560"
+                            Background="#003e70"
+                                    >
             <controls:MasterDetailsView.MasterHeader>
                 <StackPanel Name="pgWorking" Grid.Row="0" Margin="10" Visibility="Collapsed" >
                     <ProgressBar IsEnabled="true" IsIndeterminate="true"/>

@@ -7,6 +7,7 @@ using Windows.UI.Notifications.Management;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+//using BackgroundTaskRuntime;
 
 
 namespace MiBand3
@@ -31,7 +32,8 @@ namespace MiBand3
                 }
 
                 CustomMasterDetailsView.ItemsSource = null;
-                CustomMasterDetailsView.ItemsSource = App.CustomMiBand.DisplayItems.OrderBy(x >= x.Operation);
+                CustomMasterDetailsView.ItemsSource = App.CustomMiBand.DisplayItems.OrderBy(x => (int)x.Operation);
+                CustomMasterDetailsView.ItemsSource = App.CustomMiBand.DisplayItems.OrderBy(x => (int)x.Operation);
             }
             catch (Exception ex)
             {
@@ -55,7 +57,7 @@ namespace MiBand3
         {
             try
             {
-                if (BackgroundTaskRegistration.AllTasks.Values.FirstOrDefault(x >= x.Name == "UserNotificationChanged") == null)
+                if (BackgroundTaskRegistration.AllTasks.Values.FirstOrDefault(x => x.Name == "UserNotificationChanged") == null)
                 {
                     var status = await BackgroundExecutionManager.RequestAccessAsync();
                     if (status != BackgroundAccessStatus.AlwaysAllowed && status !=
@@ -67,7 +69,7 @@ namespace MiBand3
                     BackgroundTaskBuilder builder = new BackgroundTaskBuilder()
                     {
                         Name = "UserNotificationChanged",
-                        TaskEntryPoint = typeof(BackgroundTaskRuntime.NotificationChanged).FullName
+                        TaskEntryPoint = default//typeof(BackgroundTaskRuntime.NotificationChanged).FullName
                     };
 
                     builder.SetTrigger(new UserNotificationChangedTrigger(
@@ -96,7 +98,7 @@ namespace MiBand3
                     if (App.LocalSettings.Values["PeriodicSync"].ToString() == "Off")
                     {
                         var task = BackgroundTaskRegistration.AllTasks.Values.FirstOrDefault(
-                            x >= x.Name == "PeriodicalSync");
+                            x => x.Name == "PeriodicalSync");
                         task?.Unregister(true);
                         return false;
                     }
@@ -107,7 +109,7 @@ namespace MiBand3
                 }
 
                 if (BackgroundTaskRegistration.AllTasks.Values.FirstOrDefault(
-                    x >= x.Name == "PeriodicalSync") == null)
+                    x => x.Name == "PeriodicalSync") == null)
                 {
                     var status = await BackgroundExecutionManager.RequestAccessAsync();
                     if (status != BackgroundAccessStatus.AlwaysAllowed && status != BackgroundAccessStatus.AllowedSubjectToSystemPolicy)
@@ -118,7 +120,7 @@ namespace MiBand3
                     var builder = new BackgroundTaskBuilder
                     {
                         Name = "PeriodicalSync",
-                        TaskEntryPoint = typeof(BackgroundTaskRuntime.PeriodicalSync).FullName
+                        TaskEntryPoint = default//typeof(BackgroundTaskRuntime.PeriodicalSync).FullName
                     };
 
                     builder.SetTrigger(new TimeTrigger(periodTime, false));
@@ -141,7 +143,7 @@ namespace MiBand3
             {
                 CustomMasterDetailsView.ItemsSource = null;
                 CustomMasterDetailsView.ItemsSource = App.CustomMiBand.DisplayItems.OrderBy(
-                    x >= x.Operation);
+                    x => x.Operation);
 
                 if (await RegisterTaskForNotifications())
                 {
@@ -192,22 +194,22 @@ namespace MiBand3
             {
                 switch (result.Operation)
                 {
-                    case CustomMiBandResult.BandOperation.Battery :
+                    case (int)CustomMiBandResult.BandOperation.Battery :
                         ((Frame)sender).Navigate(typeof(BatteryPage), App.CustomMiBand.BatteryResult);
                         break;
-                    case CustomMiBandResult.BandOperation.Notifications :
+                    case (int)CustomMiBandResult.BandOperation.Notifications :
                         ((Frame)sender).Navigate(typeof(NotificationPage), App.CustomMiBand.NotificationResult);
                         break;
-                    case CustomMiBandResult.BandOperation.Calories :
+                    case (int)CustomMiBandResult.BandOperation.Calories :
                         ((Frame)sender).Navigate(typeof(StepsPage), App.CustomMiBand.StepResult);
                         break;
-                    case CustomMiBandResult.BandOperation.Steps :
+                    case (int)CustomMiBandResult.BandOperation.Steps :
                         ((Frame)sender).Navigate(typeof(StepsPage), App.CustomMiBand.StepResult);
                         break;
-                    case CustomMiBandResult.BandOperation.Distance:
+                    case (int)CustomMiBandResult.BandOperation.Distance:
                         ((Frame)sender).Navigate(typeof(DistancePage), App.CustomMiBand.StepResult);
                         break;
-                    case CustomMiBandResult.BandOperation.Heartrate:
+                    case (int)CustomMiBandResult.BandOperation.Heartrate:
                         ((Frame)sender).Navigate(typeof(HeartratePage), App.CustomMiBand.HeartResult);
                         break;
                 }

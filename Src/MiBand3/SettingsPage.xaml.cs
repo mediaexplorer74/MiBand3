@@ -86,6 +86,9 @@ namespace MiBand3
             bolLoading = false;
         }
 
+        private void SettingsPage_Loaded(object sender, RoutedEventArgs e)
+        {
+        }
         private async void tsDisplay_Toggled(object sender, RoutedEventArgs e)
         {
             if (!bolLoading)
@@ -305,6 +308,7 @@ namespace MiBand3
                 }
             }
         }
+      
     }
 }
 

@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using Windows.Storage;
+using Windows.Storage.Streams;
 
 namespace MiBand3
 {
@@ -103,6 +106,32 @@ namespace MiBand3
         public static void DebugWriter(Type sender, string message, string type = "ERROR")
         {
             Debug.WriteLine($"{type} in {sender.FullName}: {message}");
+        }
+
+        public static async Task<IRandomAccessStream> GetAppLogoById(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                throw new ArgumentException("ID cannot be null or empty.", nameof(id));
+            }
+
+            try
+            {
+                var storageFile = await Windows.ApplicationModel.Package.Current.InstalledLocation
+                    .GetFileAsync($"Assets/Logos/{id}.png");
+
+                return await storageFile.OpenAsync(FileAccessMode.Read);
+            }
+            catch (FileNotFoundException)
+            {
+                DebugWriter(typeof(Helpers), $"Logo with ID '{id}' not found.", "WARNING");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                DebugWriter(typeof(Helpers), $"An error occurred while retrieving the logo: {ex.Message}", "ERROR");
+                throw;
+            }
         }
     }
 }

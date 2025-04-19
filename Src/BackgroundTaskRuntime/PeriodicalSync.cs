@@ -5,7 +5,7 @@ using Windows.ApplicationModel.Background;
 
 namespace BackgroundTaskRuntime
 {
-    public sealed class PeriodicalSync : IBackgroundTask
+    public class PeriodicalSync : IBackgroundTask
     {
         private BackgroundTaskDeferral _deferral;
         private CustomMiBand _customMiBand;

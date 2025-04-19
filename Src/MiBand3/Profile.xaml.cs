@@ -54,17 +54,17 @@ namespace MiBand3
 
             if (App.LocalSettings.Values["Profile_Height"] != null)
             {
-                cboHeight.SelectedItem = heights.FirstOrDefault(x >= x.Value == App.LocalSettings.Values["Profile_Height"].ToString());
+                cboHeight.SelectedItem = heights.FirstOrDefault(x => x.Value == App.LocalSettings.Values["Profile_Height"].ToString());
             }
 
             if (App.LocalSettings.Values["Profile_Weight"] != null)
             {
-                cboWeight.SelectedItem = weights.FirstOrDefault(x >= x.Value == App.LocalSettings.Values["Profile_Weight"].ToString());
+                cboWeight.SelectedItem = weights.FirstOrDefault(x => x.Value == App.LocalSettings.Values["Profile_Weight"].ToString());
             }
 
             if (App.LocalSettings.Values["Profile_Steps"] != null)
             {
-                cboSteps.SelectedItem = steps.FirstOrDefault(x >= x.Value == App.LocalSettings.Values["Profile_Steps"].ToString());
+                cboSteps.SelectedItem = steps.FirstOrDefault(x =>  x.Value == App.LocalSettings.Values["Profile_Steps"].ToString());
             }
 
             if (App.LocalSettings.Values["Profile_DateOfBirth"] != null)
@@ -78,6 +78,9 @@ namespace MiBand3
             }
         }
 
+        private void Profile_Loaded(object sender, RoutedEventArgs e)
+        {
+        }
         private void cboGender_SelectionChanged(Object sender, SelectionChangedEventArgs e)
         {
             if (cboGender.SelectedItem != null)
@@ -154,6 +157,8 @@ namespace MiBand3
                 btnSave.IsEnabled = true;
             }
         }
+
+                      
     }
 }
 

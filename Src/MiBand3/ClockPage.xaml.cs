@@ -17,10 +17,16 @@ namespace MiBand3
             lblOnBand.Text = $"On Band: {DateTime.Now:dddd, MM/dd/yyyy HH:mm}";
         }
 
+        private void ClockPage_Loaded(object sender, RoutedEventArgs e)
+        {
+        }
+
         private void btnSync_Click(Object sender, RoutedEventArgs e)
         {
             // Add synchronization logic here
         }
+
+       
     }
 }
 

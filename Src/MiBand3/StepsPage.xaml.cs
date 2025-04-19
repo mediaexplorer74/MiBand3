@@ -36,9 +36,9 @@ namespace MiBand3
                 int i = 1;
 
                 foreach (var element in _result.History
-                    .Where(x >= x.Type == 0 && x.Moment <= DateTime.Now 
+                    .Where(x => x.Type == 0 && x.Moment <= DateTime.Now
                     && x.Moment >= DateTime.Now.AddDays(-7))
-    .ToList())
+                    .ToList())
                 {
                     switch (i)
                     {
@@ -106,8 +106,9 @@ namespace MiBand3
             try
             {
                 return (_result.History
-                    .Where(x >= x.Type == HistoryValues.Types.Distances && x.Moment <= DateTime.Now && x.Moment >= DateTime.Now.AddDays(-7))
-    .Sum(x >= x.Value) / 1000).ToString("N2");
+                    .Where(x => x.Type == (int)HistoryValues.Types.Distances 
+                    && x.Moment <= DateTime.Now && x.Moment >= DateTime.Now.AddDays(-7))
+                    .Sum(x => x.Value) / 1000).ToString("N2");
             }
             catch (Exception)
             {
@@ -123,7 +124,7 @@ namespace MiBand3
             }
             catch (Exception)
             {
-                return(0).ToString("N2");
+                return (0).ToString("N2");
             }
         }
 
@@ -132,9 +133,9 @@ namespace MiBand3
             try
             {
                 return (_result.History
-                    .Where(x >= x.Type == HistoryValues.Types.Calories 
+                    .Where(x => x.Type == (int)HistoryValues.Types.Calories
                     && x.Moment <= DateTime.Now && x.Moment >= DateTime.Now.AddDays(-7))
-    .Sum(x >= x.Value) / 1000).ToString("N2");
+                    .Sum(x => x.Value) / 1000).ToString("N2");
             }
             catch (Exception)
             {

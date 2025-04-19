@@ -79,6 +79,9 @@ namespace MiBand3
             }
         }
 
+        private void WelcomePage_Loaded(object sender, RoutedEventArgs e)
+        {
+        }
         private void cboGender_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cboGender.SelectedItem != null)
@@ -166,6 +169,8 @@ namespace MiBand3
                 btnSave.IsEnabled = true;
             }
         }
+
+    
     }
 }
 

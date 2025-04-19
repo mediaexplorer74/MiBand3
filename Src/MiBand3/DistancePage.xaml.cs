@@ -14,12 +14,14 @@ namespace MiBand3
             set { _result = value; }
         }
 
+        public HistoryValues HistoryValues { get; private set; }
+
         protected override void OnNavigatedTo(Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
             _result = e.Parameter as StepResult;
         }
 
-        private void StepsPage_Loaded(Object sender, RoutedEventArgs e)
+        private void DistancePage_Loaded(Object sender, RoutedEventArgs e)
         {
             try
             {
@@ -36,8 +38,9 @@ namespace MiBand3
                 int i = 1;
 
                 foreach (var element in _result.History
-                    .Where(x >= x.Type == HistoryValues.Types.Distances && x.Moment <= DateTime.Now && x.Moment >= DateTime.Now.AddDays(-7))
-    .ToList())
+                    .Where(x => x.Type == (int)HistoryValues.Types.Distances
+                         && x.Moment <= DateTime.Now && x.Moment >= DateTime.Now.AddDays(-7))
+                    .ToList())
                 {
                     switch (i)
                     {
@@ -100,6 +103,7 @@ namespace MiBand3
             }
         }
 
+
         private string GetTotalDistanceInKm()
         {
             try
@@ -117,9 +121,9 @@ namespace MiBand3
             try
             {
                 return (_result.History
-                    .Where(x >= x.Type == HistoryValues.Types.Steps 
+                    .Where(x => x.Type == (int)HistoryValues.Types.Steps
                     && x.Moment <= DateTime.Now && x.Moment >= DateTime.Now.AddDays(-7))
-                            .Sum(x >= x.Value) / 1000).ToString("N2");
+                            .Sum(x => x.Value) / 1000).ToString("N2");
             }
             catch (Exception)
             {
@@ -132,9 +136,9 @@ namespace MiBand3
             try
             {
                 return (_result.History
-                    .Where(x >= x.Type == HistoryValues.Types.Calories 
+                    .Where(x => x.Type == (int)HistoryValues.Types.Calories
                     && x.Moment <= DateTime.Now && x.Moment >= DateTime.Now.AddDays(-7))
-                          .Sum(x >= x.Value) / 1000).ToString("N2");
+                          .Sum(x => x.Value) / 1000).ToString("N2");
             }
             catch (Exception)
             {

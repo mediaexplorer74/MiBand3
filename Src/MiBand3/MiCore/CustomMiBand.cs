@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ using Windows.Storage.Streams;
 
 namespace MiBand3
 {
-    public class CustomMiBand/* : IDisposable, INotifyPropertyChanged*/
+    public class CustomMiBand : IDisposable, INotifyPropertyChanged
     {
         public enum AuthorizationStatus
         {
@@ -147,6 +148,10 @@ namespace MiBand3
                 Debug.WriteLine($"Request Handler for ValueChanged");
                 GattCharacteristic = await GetCharacteristic(GetService(CustomBluetoothProfile.Authentication.Service), CustomBluetoothProfile.Authentication.AuthCharacteristic);
 
+                // DEBUG
+                if (GattCharacteristic == null)
+                    return true;//default;
+
                 if (await GattCharacteristic.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.Notify) == GattCommunicationStatus.Success)
                 {
                     Debug.WriteLine($"Requested Handler added");
@@ -251,12 +256,25 @@ namespace MiBand3
 
         public async Task<GattCharacteristic> GetCharacteristic(GattDeviceService service, Guid uuid)
         {
-            var characteristicsResult = await service.GetCharacteristicsAsync(BluetoothCacheMode.Uncached);
+            //DEBUG
+            if (service == null)
+                return null;
+
+            GattCharacteristicsResult characteristicsResult = 
+                await service.GetCharacteristicsAsync(BluetoothCacheMode.Uncached);
+            
             return characteristicsResult.Characteristics.FirstOrDefault(x => x.Uuid == uuid);
         }
 
         public GattDeviceService GetService(Guid uuid)
         {
+            //DEBUG
+            Debug.WriteLine($"GetService: {uuid}");
+
+            if (GattServices == null)
+            {
+                return null;
+            }
             return GattServices.Services.FirstOrDefault(x => x.Uuid == uuid);
         }
 
@@ -283,6 +301,61 @@ namespace MiBand3
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        internal async Task SetAlertLevel(int v)
+        {
+            //TODO
+        }
+
+        public async Task UpdateOperations()
+        {
+            //TODO
+        }
+
+        internal async Task setWearLocation()
+        {
+            //
+        }
+
+        internal async Task setTimeFormatDisplay()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal async Task setUserInfo(string v1, DateTime date, string v2, int v3, int v4)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void setRotateWristToSwitchInfo()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void setGoalNotification()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void setDoNotDisturb()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal async Task setDisplayItems()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal async Task setDateDisplay()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal async Task setActivateDisplayOnLiftWrist()
+        {
+            throw new NotImplementedException();
         }
     }
 }

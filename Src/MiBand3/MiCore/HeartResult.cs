@@ -1,7 +1,9 @@
-﻿using System;
+﻿using MiBand3;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Devices.Bluetooth;

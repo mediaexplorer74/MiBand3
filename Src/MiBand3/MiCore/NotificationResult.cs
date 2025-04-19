@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MiBand3;
+using System;
 using System.Collections.Generic;
+using Windows.ApplicationModel;
 using Windows.Storage;
 
 namespace MiBand3

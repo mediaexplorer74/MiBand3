@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.ApplicationModel;
 using Windows.UI.Notifications;
 
 namespace MiBand3

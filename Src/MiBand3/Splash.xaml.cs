@@ -15,7 +15,8 @@ namespace MiBand3
         {
             App.CustomMiBand = new CustomMiBand();
 
-            if (App.LocalSettings.Values["DeviceId"] == null)
+            //DEBUG
+            if (1==0)//(App.LocalSettings.Values["DeviceId"] == null)
             {
                 Frame.Navigate(typeof(DevicePage));
             }

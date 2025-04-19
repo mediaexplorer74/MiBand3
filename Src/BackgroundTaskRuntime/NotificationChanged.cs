@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using ClassesCollection;
 using Windows.ApplicationModel.Background;
 using Windows.UI.Notifications;
 using Windows.UI.Notifications.Management;
 
 namespace BackgroundTaskRuntime
 {
-    public sealed class NotificationChanged : IBackgroundTask
+    public class NotificationChanged : IBackgroundTask
     {
         private BackgroundTaskDeferral _deferral;
         private CustomMiBand _customMiBand;

@@ -124,9 +124,15 @@
     <Compile Include="BatteryPage.xaml.cs">
       <DependentUpon>BatteryPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MiCore\BatteryResult.cs" />
     <Compile Include="ClockPage.xaml.cs">
       <DependentUpon>ClockPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MiCore\ClockResult.cs" />
+    <Compile Include="MiCore\CustomBand.cs" />
+    <Compile Include="MiCore\CustomBluetoothProfile.cs" />
+    <Compile Include="MiCore\CustomComboBoxItem.cs" />
+    <Compile Include="MiCore\CustomMiBand.cs" />
     <Compile Include="DevicePage.xaml.cs">
       <DependentUpon>DevicePage.xaml</DependentUpon>
     </Compile>
@@ -136,28 +142,21 @@
     <Compile Include="DistancePage.xaml.cs">
       <DependentUpon>DistancePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GetAppLogo.cs" />
     <Compile Include="HeartratePage.xaml.cs">
       <DependentUpon>HeartratePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MiCore\CustomMiBandResult.cs" />
+    <Compile Include="MiCore\GetAppLogo.cs" />
+    <Compile Include="MiCore\HeartResult.cs" />
+    <Compile Include="MiCore\Helpers.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Content Include="MiCore\BatteryResult.cs" />
-    <Content Include="MiCore\ClockResult.cs" />
-    <Content Include="MiCore\CustomBand.cs" />
-    <Content Include="MiCore\CustomBluetoothProfile.cs" />
-    <Content Include="MiCore\CustomComboBoxItem.cs" />
-    <Content Include="MiCore\CustomMiBand.cs" />
-    <Content Include="MiCore\CustomMiBandResult.cs" />
-    <Content Include="MiCore\HeartResult.cs" />
-    <Content Include="MiCore\Helpers.cs" />
-    <Content Include="MiCore\NotificationRequest.cs" />
-    <Content Include="MiCore\NotificationResult.cs" />
-    <Content Include="MiCore\StepResult.cs" />
     <Compile Include="NotificationPage.xaml.cs">
       <DependentUpon>NotificationPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MiCore\NotificationRequest.cs" />
+    <Compile Include="MiCore\NotificationResult.cs" />
     <Compile Include="Profile.xaml.cs">
       <DependentUpon>Profile.xaml</DependentUpon>
     </Compile>
@@ -168,6 +167,7 @@
     <Compile Include="Splash.xaml.cs">
       <DependentUpon>Splash.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MiCore\StepResult.cs" />
     <Compile Include="StepsPage.xaml.cs">
       <DependentUpon>StepsPage.xaml</DependentUpon>
     </Compile>

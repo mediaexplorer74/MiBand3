@@ -5,10 +5,9 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace MiBand3
 {
-
     public class GetAppLogo : IValueConverter
     {
-        public Object Convert(Object value, Type targetType, Object parameter, String language)
+        public object Convert(Object value, Type targetType, Object parameter, String language)
         {
             try
             {
@@ -31,7 +30,7 @@ namespace MiBand3
             }
         }
 
-        public Object ConvertBack(Object value, Type targetType, Object parameter, String language)
+        public object ConvertBack(Object value, Type targetType, Object parameter, String language)
         {
             throw new NotImplementedException();
         }
