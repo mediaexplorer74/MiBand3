@@ -116,6 +116,8 @@ namespace MiCore
 
         public async Task<GattCommunicationStatus> GetSteps(GattCharacteristic mCharacteristic)
         {
+            if (mCharacteristic == null)
+                return default;
             try
             {
                 var result = await mCharacteristic.ReadValueAsync(BluetoothCacheMode.Uncached);

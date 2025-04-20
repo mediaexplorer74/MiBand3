@@ -101,7 +101,7 @@ namespace MiBand3
                 try
                 {
                     App.LocalSettings.Values["IsDisplayOnLiftWristEnabled"] = toggleSwitch.IsOn;
-                    await App.CustomMiBand.setActivateDisplayOnLiftWrist();
+                    await App.CustomMiBand.SetActivateDisplayOnLiftWrist();
                 }
                 catch (Exception ex)
                 {

@@ -30,7 +30,17 @@ namespace MiBand3
             // Identification sequence
             foreach (var device in mDevices)
             {
-                if (device.Name.ToUpper() == "MI BAND 2")
+                var deviceName = device.Name.ToUpper();
+                if 
+                ( 
+                 deviceName == "MI BAND 2"
+                 ||
+                 deviceName == "MI BAND 3"
+                 ||
+                 deviceName == "MI BAND 4"
+                 ||
+                 deviceName == "MI BAND 5"
+                )
                 {
                     mDevice = device;
                     App.LocalSettings.Values["DeviceId"] = mDevice.Id;

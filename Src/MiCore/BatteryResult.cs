@@ -81,7 +81,20 @@ namespace MiCore
         {
             try
             {
-                var batteryResult = await mCharacteristic.ReadValueAsync(BluetoothCacheMode.Uncached);
+                GattReadResult batteryResult = default;
+
+                try
+                {
+                    batteryResult = await mCharacteristic.ReadValueAsync(BluetoothCacheMode.Uncached);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("[ex] Get batteryResult error: " + ex.Message);
+                }
+
+                if (batteryResult == null)
+                    return default;
+
                 if (batteryResult.Status == GattCommunicationStatus.Success)
                 {
                     Debug.WriteLine("READ: BATTERY INFO");
