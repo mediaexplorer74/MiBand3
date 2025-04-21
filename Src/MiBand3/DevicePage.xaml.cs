@@ -39,7 +39,11 @@ namespace MiBand3
                  ||
                  deviceName == "MI BAND 4"
                  ||
+                 deviceName == "MI SMART BAND 4"
+                 ||
                  deviceName == "MI BAND 5"
+                 ||
+                 deviceName == "MI SMART BAND 5"
                 )
                 {
                     mDevice = device;

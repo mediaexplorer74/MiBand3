@@ -1,4 +1,4 @@
-## MiBand3
+## MiBand3 v1.0-alpha - master branch
 ![Logo](Images/logo.png)
 
 ## About 
@@ -19,11 +19,12 @@ I'll ty to port ("translate") VB to C# and "upgrade" it for Xaiomi Band 3 (or ev
 - Min. Win. SDK = 14393
 - Code "translated" with (help) of MS Copilot (Engine ChatGPT-4o).
 - Draft / sketch (but at now, app already compiled and can start normally.. at minimum!)
+- Only Mi Band 3 tested (battery status ok, all other parameters failed), but theoretically Band 4 and 5 can be connected… 
 
 
 ## ToDo
 - Fix 100500 bugs of "automatic intelligence" (AI... it's joke))
-- Think of/about MiBand4 support...
+- Think of/about MiBand 4 & 5 modifications...
 
 ## Reference(s)
 - https://github.com/superhans205/FitForMiBand Original src code (deleted by superhans205 in/at 2018)
