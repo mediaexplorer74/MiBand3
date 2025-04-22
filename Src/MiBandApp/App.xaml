@@ -1,0 +1,306 @@
+﻿<micro:CaliburnApplication 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:converters="using:MiBandApp.Converters" 
+    xmlns:local="using:MiBandApp" 
+    xmlns:micro="using:Caliburn.Micro" 
+    x:Class="MiBandApp.App">
+    <micro:CaliburnApplication.Resources>
+        <ResourceDictionary>
+            <converters:BoolToVisibilityConverter x:Key="BoolToVis" />
+            <converters:FlaggedEnumToBoolConverter x:Key="FlaggedEnumToBool" />
+            <converters:BoolToBoolConverter x:Key="BoolToBool" />
+            <converters:MathConverter x:Key="MathConverter" />
+            <converters:StringFormatConverter x:Key="StringFormatConverter" />
+            <converters:DayNameConverter x:Key="DayNameConverter" />
+            <converters:MinutesToStringConverter x:Key="MinutesToStringConverter" />
+            <converters:CustomConverter x:Key="CustomConverter" />
+            <converters:SyncStateConverter x:Key="SyncStateConverter" />
+            <converters:DistanceKmToFormattedStringConverter x:Key="DistanceKmToFormattedStringConverter" />
+            <converters:CaloriesToFormattedStringConverter x:Key="CaloriesToFormattedStringConverter" />
+            <converters:BoolToOpacityConverter x:Key="BoolToOpacity" />
+            <converters:DaysBoolArrayToStringConverter x:Key="DaysToStringConverter" />
+            <SolidColorBrush x:Key="AppBackgroundBrush">
+                <Color>
+                    <StaticResource ResourceKey="PhoneBackgroundColor" />
+                </Color>
+            </SolidColorBrush>
+            <SolidColorBrush x:Key="AppAccentBrush">
+                <Color>
+                    <ThemeResource ResourceKey="SystemColorControlAccentColor" />
+                </Color>
+            </SolidColorBrush>
+            <SolidColorBrush x:Key="AppForegroundBrush">
+                <Color>
+                    <StaticResource ResourceKey="PhoneForegroundColor" />
+                </Color>
+            </SolidColorBrush>
+            <SolidColorBrush x:Key="AppForegroundDisabledBrush">
+                <Color>
+                    <StaticResource ResourceKey="PhoneDisabledColor" />
+                </Color>
+            </SolidColorBrush>
+            <Style x:Key="DefaultPageStyle" TargetType="Page">
+                <Setters>
+                    <SetterBaseCollection>
+                        <Setter Property="Background">
+                            <Value>
+                                <StaticResource ResourceKey="AppBackgroundBrush" />
+                            </Value>
+                        </Setter>
+                        <Setter Property="Foreground">
+                            <Value>
+                                <StaticResource ResourceKey="AppForegroundBrush" />
+                            </Value>
+                        </Setter>
+                        <Setter Property="IsTextScaleFactorEnabled" Value="True" />
+                    </SetterBaseCollection>
+                </Setters>
+            </Style>
+            <Style x:Key="AppTitleStyle" TargetType="TextBlock">
+                <BasedOn>
+                    <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
+                </BasedOn>
+                <Setters>
+                    <SetterBaseCollection>
+                        <Setter Property="FontSize" Value="16" />
+                        <Setter Property="Text" Value="BIND MI BAND" />
+                        <Setter Property="FontWeight" Value="Light" />
+                        <Setter Property="Margin" Value="0 0 0 0" />
+                        <Setter Property="IsTextScaleFactorEnabled" Value="False" />
+                        <Setter Property="LineHeight" Value="NaN" />
+                    </SetterBaseCollection>
+                </Setters>
+            </Style>
+            <Style x:Key="PageTitleStyle" TargetType="TextBlock">
+                <Setters>
+                    <SetterBaseCollection>
+                        <Setter Property="FontSize" Value="48" />
+                        <Setter Property="FontWeight" Value="SemiLight" />
+                        <Setter Property="MinHeight" Value="0" />
+                    </SetterBaseCollection>
+                </Setters>
+            </Style>
+            <Style x:Key="DefaultHyperlinkButtonStyle" TargetType="HyperlinkButton">
+                <Setters>
+                    <SetterBaseCollection>
+                        <Setter Property="Template">
+                            <Value>
+                                <ControlTemplate TargetType="HyperlinkButton">
+                                    <Template>
+                                        <TextBlock>
+                      <FontSize>
+                        <Binding Path="FontSize">
+                          <RelativeSource>
+                            <RelativeSource Mode="TemplatedParent" />
+                          </RelativeSource>
+                        </Binding>
+                      </FontSize>
+                      <Inlines>
+                        <InlineCollection>
+                          <Underline>
+                            <Inlines>
+                              <InlineCollection>
+                                <Run>
+                                  <Text>
+                                    <Binding Path="Content">
+                                      <RelativeSource>
+                                        <RelativeSource Mode="TemplatedParent" />
+                                      </RelativeSource>
+                                    </Binding>
+                                  </Text>
+                                </Run>
+                              </InlineCollection>
+                            </Inlines>
+                          </Underline>
+                        </InlineCollection>
+                      </Inlines>
+                                        </TextBlock>
+                                    </Template>
+                                </ControlTemplate>
+                            </Value>
+                        </Setter>
+                    </SetterBaseCollection>
+                </Setters>
+            </Style>
+            <Style TargetType="HyperlinkButton">
+                <BasedOn>
+                    <StaticResource ResourceKey="DefaultHyperlinkButtonStyle" />
+                </BasedOn>
+            </Style>
+            <Thickness x:Key="RootContainerThickness">19, 10</Thickness>
+            <Style x:Key="ActivityItemSecondaryTextBlockStyle" TargetType="TextBlock">
+                <BasedOn>
+                    <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
+                </BasedOn>
+                <Setters>
+                    <SetterBaseCollection>
+                        <Setter Property="FontSize" Value="13" />
+                        <Setter Property="LineHeight" Value="NaN" />
+                    </SetterBaseCollection>
+                </Setters>
+            </Style>
+            <Style x:Key="ActivityItemSecondaryWrappableTextBlockStyle" TargetType="TextBlock">
+                <BasedOn>
+                    <StaticResource ResourceKey="ActivityItemSecondaryTextBlockStyle" />
+                </BasedOn>
+                <Setters>
+                    <SetterBaseCollection>
+                        <Setter Property="Margin" Value="0 3 10 0" />
+                    </SetterBaseCollection>
+                </Setters>
+            </Style>
+            <Style x:Key="ActivityItemTimeTextBlockStyle" TargetType="TextBlock">
+                <BasedOn>
+                    <StaticResource ResourceKey="ActivityItemSecondaryTextBlockStyle" />
+                </BasedOn>
+                <Setters>
+                    <SetterBaseCollection>
+                        <Setter Property="FontWeight" Value="Normal" />
+                        <Setter Property="Foreground">
+                            <Value>
+                                <ThemeResource ResourceKey="AppAccentBrush" />
+                            </Value>
+                        </Setter>
+                    </SetterBaseCollection>
+                </Setters>
+            </Style>
+            <Style x:Key="ActivityItemDurationTextBlockStyle" TargetType="TextBlock">
+                <BasedOn>
+                    <StaticResource ResourceKey="ActivityItemTimeTextBlockStyle" />
+                </BasedOn>
+                <Setters>
+                    <SetterBaseCollection>
+                        <Setter Property="FontWeight" Value="Light" />
+                        <Setter Property="Margin" Value="10 0 0 0" />
+                    </SetterBaseCollection>
+                </Setters>
+            </Style>
+            <Style x:Key="ActivityItemMainContentTextBlockStyle" TargetType="TextBlock">
+                <BasedOn>
+                    <StaticResource ResourceKey="BodyTextBlockStyle" />
+                </BasedOn>
+                <Setters>
+                    <SetterBaseCollection>
+                        <Setter Property="FontSize" Value="16" />
+                        <Setter Property="Margin" Value="0 0 10 0" />
+                        <Setter Property="FontFamily" Value="Segoe UI" />
+                        <Setter Property="FontWeight" Value="Medium" />
+                        <Setter Property="Foreground">
+                            <Value>
+                                <StaticResource ResourceKey="AppForegroundBrush" />
+                            </Value>
+                        </Setter>
+                    </SetterBaseCollection>
+                </Setters>
+            </Style>
+            <Style x:Key="SecondaryPageHeaderTextBlockStyle" TargetType="TextBlock">
+                <BasedOn>
+                    <StaticResource ResourceKey="BaseTextBlockStyle" />
+                </BasedOn>
+                <Setters>
+                    <SetterBaseCollection>
+                        <Setter Property="FontSize">
+                            <Value>
+                                <ThemeResource ResourceKey="TextStyleExtraExtraLargeFontSize" />
+                            </Value>
+                        </Setter>
+                        <Setter Property="FontWeight" Value="Light" />
+                    </SetterBaseCollection>
+                </Setters>
+            </Style>
+            <Style x:Key="PickerMainTextBlockStyle" TargetType="TextBlock">
+                <Setters>
+                    <SetterBaseCollection>
+                        <Setter Property="FontSize">
+                            <Value>
+                                <ThemeResource ResourceKey="TextStyleExtraExtraLargeFontSize" />
+                            </Value>
+                        </Setter>
+                        <Setter Property="FontFamily" Value="Segoe WP" />
+                        <Setter Property="FontStretch" Value="Condensed" />
+                        <Setter Property="FontWeight" Value="SemiBold" />
+                    </SetterBaseCollection>
+                </Setters>
+            </Style>
+            <Style x:Key="PickerSecondaryTextBlockStyle" TargetType="TextBlock">
+                <Setters>
+                    <SetterBaseCollection>
+                        <Setter Property="FontSize">
+                            <Value>
+                                <ThemeResource ResourceKey="TextStyleLargeFontSize" />
+                            </Value>
+                        </Setter>
+                    </SetterBaseCollection>
+                </Setters>
+            </Style>
+            <Style x:Key="PickerButtonStyle" TargetType="Button">
+                <Setters>
+                    <SetterBaseCollection>
+                        <Setter Property="Padding" Value="5 0" />
+                        <Setter Property="HorizontalContentAlignment" Value="Left" />
+                    </SetterBaseCollection>
+                </Setters>
+            </Style>
+            <Thickness x:Key="PickerListSelectorMargin">0,70</Thickness>
+            <Thickness x:Key="PickerListSelectorItemContentMargin">10,0,0,10</Thickness>
+            <Style x:Key="PickerTitleTextBlockStyle" TargetType="TextBlock">
+                <BasedOn>
+                    <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
+                </BasedOn>
+                <Setters>
+                    <SetterBaseCollection>
+                        <Setter Property="FontFamily" Value="Segoe WP" />
+                        <Setter Property="FontWeight" Value="Light" />
+                        <Setter Property="FontSize">
+                            <Value>
+                                <StaticResource ResourceKey="TextStyleExtraLargePlusFontSize" />
+                            </Value>
+                        </Setter>
+                        <Setter Property="Margin" Value="19 20" />
+                        <Setter Property="LineHeight" Value="NaN" />
+                    </SetterBaseCollection>
+                </Setters>
+            </Style>
+            <Style x:Key="ImprovedControlHeaderTextBlockStyle" TargetType="TextBlock">
+                <BasedOn>
+                    <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
+                </BasedOn>
+                <Setters>
+                    <SetterBaseCollection>
+                        <Setter Property="Margin" Value="2 0 0 -2" />
+                    </SetterBaseCollection>
+                </Setters>
+            </Style>
+            <Style x:Key="GrayTextBlockStyle" TargetType="TextBlock">
+                <BasedOn>
+                    <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
+                </BasedOn>
+                <Setters>
+                    <SetterBaseCollection>
+                        <Setter Property="LineHeight" Value="NaN" />
+                    </SetterBaseCollection>
+                </Setters>
+            </Style>
+            <Style x:Key="GrayBigTextBlockStyle" TargetType="TextBlock">
+                <BasedOn>
+                    <StaticResource ResourceKey="GroupHeaderTextBlockStyle" />
+                </BasedOn>
+                <Setters>
+                    <SetterBaseCollection>
+                        <Setter Property="LineHeight" Value="NaN" />
+                        <Setter Property="TextWrapping" Value="Wrap" />
+                    </SetterBaseCollection>
+                </Setters>
+            </Style>
+        </ResourceDictionary>
+    </micro:CaliburnApplication.Resources>
+</micro:CaliburnApplication>
+<!--micro:CaliburnApplication
+    x:Class="MiBandApp.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MiBandApp"
+    xmlns:micro="using:Caliburn.Micro">
+</micro:CaliburnApplication-->
+

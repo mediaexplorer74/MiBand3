@@ -1,0 +1,232 @@
+﻿<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+      xmlns:core="using:Microsoft.Xaml.Interactions.Core" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:gregstoll="using:Gregstoll" 
+      xmlns:interactivity="using:Microsoft.Xaml.Interactivity" 
+      xmlns:local="using:MiBandApp.Views" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:viewModels="using:MiBandApp.ViewModels" 
+      x:Class="MiBandApp.Views.DayDetailsPage">
+    <Page.Style>
+        <StaticResource ResourceKey="DefaultPageStyle" />
+    </Page.Style>
+    <Grid>
+        <Grid>
+            <Margin>
+                <StaticResource ResourceKey="RootContainerThickness" />
+            </Margin>
+            <RowDefinitions>
+                <RowDefinitionCollection>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </RowDefinitionCollection>
+            </RowDefinitions>
+            <Children>
+                <UIElementCollection>
+                    <StackPanel Row="0">
+                        <Children>
+                            <UIElementCollection>
+                                <TextBlock>
+                  <Style>
+                    <StaticResource ResourceKey="AppTitleStyle" />
+                  </Style>
+                                </TextBlock>
+                                <TextBlock x:Uid="DayDetailsPageTitle" Text="history">
+                  <Style>
+                    <StaticResource ResourceKey="PageTitleStyle" />
+                  </Style>
+                                </TextBlock>
+                            </UIElementCollection>
+                        </Children>
+                    </StackPanel>
+                    <TextBlock Row="1">
+            <Style>
+              <StaticResource ResourceKey="SecondaryPageHeaderTextBlockStyle" />
+            </Style>
+            <Text>
+              <Binding Path="Date" ConverterParameter="{0:m}sp({0:dddd})">
+                <Converter>
+                  <StaticResource ResourceKey="StringFormatConverter" />
+                </Converter>
+              </Binding>
+            </Text>
+                    </TextBlock>
+                    <ScrollViewer Row="2" Margin="0,20,0,0" VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled">
+                        <Content>
+                            <StackPanel Margin="0,5,0,10,0" VerticalAlignment="Stretch">
+                                <Resources>
+                                    <ResourceDictionary>
+                                        <Style x:Key="SecondaryDetailsTextBlockStyle" TargetType="TextBlock">
+                                            <BasedOn>
+                                                <StaticResource ResourceKey="BodyTextBlockStyle" />
+                                            </BasedOn>
+                                            <Setters>
+                                                <SetterBaseCollection>
+                                                    <Setter Property="FontSize" Value="16" />
+                                                    <Setter Property="Margin" Value="0 0 20 0" />
+                                                </SetterBaseCollection>
+                                            </Setters>
+                                        </Style>
+                                    </ResourceDictionary>
+                                </Resources>
+                                <Children>
+                                    <UIElementCollection>
+                                        <TextBlock x:Uid="DayDetailsPageStepsHeader">
+                      <Style>
+                        <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
+                      </Style>
+                      <Inlines>
+                        <InlineCollection implicititems="Steps walked" />
+                      </Inlines>
+                                        </TextBlock>
+                                        <TextBlock FontSize="40">
+                      <Inlines>
+                        <InlineCollection>
+                          <Run>
+                            <Text>
+                              <Binding Path="Steps" />
+                            </Text>
+                          </Run>
+                        </InlineCollection>
+                      </Inlines>
+                                        </TextBlock>
+                                        <ProgressBar Minimum="0">
+                                            <Foreground>
+                                                <StaticResource ResourceKey="AppAccentBrush" />
+                                            </Foreground>
+                                            <Maximum>
+                                                <Binding Path="StepsGoal" />
+                                            </Maximum>
+                                            <Value>
+                                                <Binding Path="Steps" />
+                                            </Value>
+                                        </ProgressBar>
+                                        <gregstoll:UniversalWrapPanel Orientation="Horizontal">
+                                            <Children>
+                                                <UIElementCollection>
+                                                    <TextBlock>
+                            <Style>
+                              <StaticResource ResourceKey="SecondaryDetailsTextBlockStyle" />
+                            </Style>
+                            <Text>
+                              <Binding Path="Distance">
+                                <Converter>
+                                  <StaticResource ResourceKey="DistanceKmToFormattedStringConverter" />
+                                </Converter>
+                              </Binding>
+                            </Text>
+                                                    </TextBlock>
+                                                    <TextBlock>
+                            <Style>
+                              <StaticResource ResourceKey="SecondaryDetailsTextBlockStyle" />
+                            </Style>
+                            <Text>
+                              <Binding Path="Calories">
+                                <Converter>
+                                  <StaticResource ResourceKey="CaloriesToFormattedStringConverter" />
+                                </Converter>
+                              </Binding>
+                            </Text>
+                                                    </TextBlock>
+                                                </UIElementCollection>
+                                            </Children>
+                                        </gregstoll:UniversalWrapPanel>
+                                        <TextBlock x:Uid="DayDetailsPageSleepHeader" Margin="0,20,0,0">
+                      <Style>
+                        <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
+                      </Style>
+                      <Inlines>
+                        <InlineCollection implicititems="Sleep time" />
+                      </Inlines>
+                                        </TextBlock>
+                                        <TextBlock FontSize="40">
+                      <Inlines>
+                        <InlineCollection>
+                          <Run>
+                            <Text>
+                              <Binding Path="SleepMinutes">
+                                <Converter>
+                                  <StaticResource ResourceKey="MinutesToStringConverter" />
+                                </Converter>
+                              </Binding>
+                            </Text>
+                          </Run>
+                        </InlineCollection>
+                      </Inlines>
+                                        </TextBlock>
+                                        <ProgressBar Minimum="0">
+                                            <Foreground>
+                                                <StaticResource ResourceKey="AppSleepBrush" />
+                                            </Foreground>
+                                            <Maximum>
+                                                <Binding Path="SleepGoal" />
+                                            </Maximum>
+                                            <Value>
+                                                <Binding Path="SleepMinutes" />
+                                            </Value>
+                                        </ProgressBar>
+                                        <gregstoll:UniversalWrapPanel Orientation="Horizontal">
+                                            <Children>
+                                                <UIElementCollection>
+                                                    <TextBlock>
+                            <Style>
+                              <StaticResource ResourceKey="SecondaryDetailsTextBlockStyle" />
+                            </Style>
+                            <Inlines>
+                              <InlineCollection>
+                                <Run x:Uid="SleepingActivityDeepSleep" Text="Deep sleep" />
+                                <Run Text=": " />
+                                <Run>
+                                  <Text>
+                                    <Binding Path="DeepSleepMinutes">
+                                      <Converter>
+                                        <StaticResource ResourceKey="MinutesToStringConverter" />
+                                      </Converter>
+                                    </Binding>
+                                  </Text>
+                                </Run>
+                              </InlineCollection>
+                            </Inlines>
+                                                    </TextBlock>
+                                                </UIElementCollection>
+                                            </Children>
+                                        </gregstoll:UniversalWrapPanel>
+                                        <ContentControl x:Name="ActivitiesListViewModel" Margin="0,30,0,0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" />
+                                    </UIElementCollection>
+                                </Children>
+                            </StackPanel>
+                        </Content>
+                    </ScrollViewer>
+                    <TextBlock Row="3" VerticalAlignment="Bottom">
+            <Style>
+              <ThemeResource ResourceKey="GrayTextBlockStyle" />
+            </Style>
+            <Inlines>
+              <InlineCollection>
+                <Run Text="← " />
+                <Run x:Uid="PressBackButton" Text="Press back button when you are done." />
+              </InlineCollection>
+            </Inlines>
+                    </TextBlock>
+                </UIElementCollection>
+            </Children>
+        </Grid>
+    </Grid>
+</Page>
+<!--Page
+    x:Class="MiBandApp.Views.DayDetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MiBandApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+
+    </Grid>
+</Page-->

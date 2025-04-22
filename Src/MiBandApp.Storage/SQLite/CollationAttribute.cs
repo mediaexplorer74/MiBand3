@@ -1,0 +1,19 @@
+﻿// Decompiled with JetBrains decompiler
+// Type: SQLite.CollationAttribute
+// Assembly: MiBandApp.Storage, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+// MVID: 12BDBED5-65C6-40FC-A182-B057969144FE
+// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.Storage.dll
+
+using System;
+
+#nullable disable
+namespace SQLite
+{
+  [AttributeUsage(AttributeTargets.Property)]
+  public class CollationAttribute : Attribute
+  {
+    public string Value { get; private set; }
+
+    public CollationAttribute(string collation) => this.Value = collation;
+  }
+}

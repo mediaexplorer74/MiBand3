@@ -1,0 +1,249 @@
+﻿<!--Page
+    x:Class="MiBandApp.Views.AboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MiBandApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+
+    </Grid>
+</Page-->
+<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="using:MiBandApp.Views" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:micro="using:Caliburn.Micro" 
+      xmlns:viewModels="using:MiBandApp.ViewModels" 
+      x:Class="MiBandApp.Views.AboutPage">
+    <Page.Style>
+        <StaticResource ResourceKey="DefaultPageStyle" />
+    </Page.Style>
+    <Page.Resources>
+        <ResourceDictionary>
+            <MergedDictionaries>
+                <ResourceDictionaryCollection>
+                    <ResourceDictionary Source="../Resources/SpecificStyles.xaml" />
+                </ResourceDictionaryCollection>
+            </MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Content>
+        <Grid>
+            <Margin>
+                <StaticResource ResourceKey="RootContainerThickness" />
+            </Margin>
+            <Resources>
+                <ResourceDictionary>
+                    <Style x:Key="SectionHeaderTextBlockStyle" TargetType="TextBlock">
+                        <BasedOn>
+                            <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
+                        </BasedOn>
+                        <Setters>
+                            <SetterBaseCollection>
+                                <Setter Property="FontSize" Value="25" />
+                                <Setter Property="LineHeight" Value="NaN" />
+                            </SetterBaseCollection>
+                        </Setters>
+                    </Style>
+                    <Style x:Key="SectionBodyTextBlockStyle" TargetType="TextBlock">
+                        <BasedOn>
+                            <StaticResource ResourceKey="BodyTextBlockStyle" />
+                        </BasedOn>
+                        <Setters>
+                            <SetterBaseCollection>
+                                <Setter Property="FontSize" Value="20" />
+                                <Setter Property="Margin" Value="12 0 0 10" />
+                            </SetterBaseCollection>
+                        </Setters>
+                    </Style>
+                    <Style x:Key="SectionNoteTextBlockStyle" TargetType="TextBlock">
+                        <Setters>
+                            <SetterBaseCollection>
+                                <Setter Property="FontSize">
+                                    <Value>
+                                        <StaticResource ResourceKey="TextStyleSmallFontSize" />
+                                    </Value>
+                                </Setter>
+                                <Setter Property="Margin" Value="12 -5 0 10" />
+                                <Setter Property="TextWrapping" Value="Wrap" />
+                            </SetterBaseCollection>
+                        </Setters>
+                    </Style>
+                    <Style TargetType="HyperlinkButton">
+                        <BasedOn>
+                            <StaticResource ResourceKey="DefaultHyperlinkButtonStyle" />
+                        </BasedOn>
+                        <Setters>
+                            <SetterBaseCollection>
+                                <Setter Property="FontSize" Value="20" />
+                                <Setter Property="Margin" Value="12 0 0 10" />
+                            </SetterBaseCollection>
+                        </Setters>
+                    </Style>
+                </ResourceDictionary>
+            </Resources>
+            <RowDefinitions>
+                <RowDefinitionCollection>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </RowDefinitionCollection>
+            </RowDefinitions>
+            <Children>
+                <UIElementCollection>
+                    <StackPanel Row="0">
+                        <Children>
+                            <UIElementCollection>
+                                <TextBlock>
+                  <Style>
+                    <StaticResource ResourceKey="AppTitleStyle" />
+                  </Style>
+                                </TextBlock>
+                            </UIElementCollection>
+                        </Children>
+                    </StackPanel>
+                    <Pivot Row="1">
+                        <Style>
+                            <StaticResource ResourceKey="PivotWithoutStupidPaddingStyle" />
+                        </Style>
+                        <TitleTemplate>
+                            <DataTemplate />
+                        </TitleTemplate>
+                        <Items>
+                            <ItemCollection>
+                                <PivotItem x:Uid="AboutPageAboutTab" Header="about">
+                                    <Content>
+                                        <Grid>
+                                            <Children>
+                                                <UIElementCollection>
+                                                    <ScrollViewer VerticalScrollBarVisibility="Visible" VerticalScrollMode="Auto">
+                                                        <Content>
+                                                            <StackPanel>
+                                                                <Children>
+                                                                    <UIElementCollection>
+                                                                        <TextBlock x:Uid="AboutPageWhatsThisHeader" Attach="[Event Holding] = [Action SendExtraDiagnostics()]" IsHoldingEnabled="False">
+                                      <Style>
+                                        <StaticResource ResourceKey="SectionHeaderTextBlockStyle" />
+                                      </Style>
+                                      <Inlines>
+                                        <InlineCollection implicititems="What's this" />
+                                      </Inlines>
+                                                                        </TextBlock>
+                                                                        <TextBlock x:Uid="AboutPageWhatsThisContent">
+                                      <Style>
+                                        <ThemeResource ResourceKey="SectionBodyTextBlockStyle" />
+                                      </Style>
+                                      <Inlines>
+                                        <InlineCollection implicititems="Non-official Mi Band client" />
+                                      </Inlines>
+                                                                        </TextBlock>
+                                                                        <TextBlock x:Uid="AboutPageWhatsThisHint">
+                                      <Style>
+                                        <ThemeResource ResourceKey="SectionNoteTextBlockStyle" />
+                                      </Style>
+                                      <Inlines>
+                                        <InlineCollection>
+                                          <Run Text="Warning: you use this application on your own risk. There are no guaranties it will work properly or won't damage your device." />
+                                          <LineBreak />
+                                          <Run Text="Anyway, we don't want this either :)" />
+                                          <LineBreak />
+                                          <Run Text="All trademarks belong to their owners." />
+                                        </InlineCollection>
+                                      </Inlines>
+                                                                        </TextBlock>
+                                                                        <TextBlock x:Uid="AboutPageVersionHeader">
+                                      <Style>
+                                        <StaticResource ResourceKey="SectionHeaderTextBlockStyle" />
+                                      </Style>
+                                      <Inlines>
+                                        <InlineCollection implicititems="Version" />
+                                      </Inlines>
+                                                                        </TextBlock>
+                                                                        <TextBlock>
+                                      <Style>
+                                        <ThemeResource ResourceKey="SectionBodyTextBlockStyle" />
+                                      </Style>
+                                      <Text>
+                                        <Binding Path="Version" />
+                                      </Text>
+                                                                        </TextBlock>
+                                                                        <TextBlock x:Uid="AboutPageContactUsHeader">
+                                      <Style>
+                                        <StaticResource ResourceKey="SectionHeaderTextBlockStyle" />
+                                      </Style>
+                                      <Inlines>
+                                        <InlineCollection implicititems="Contact us" />
+                                      </Inlines>
+                                                                        </TextBlock>
+                                                                        <HyperlinkButton Attach="[Event Click] = [Action SendEmail()]" Content="support@bindmiband.com" />
+                                                                        <TextBlock x:Uid="AboutPageRateAndReviewHeader">
+                                      <Style>
+                                        <StaticResource ResourceKey="SectionHeaderTextBlockStyle" />
+                                      </Style>
+                                      <Inlines>
+                                        <InlineCollection implicititems="Rate and review" />
+                                      </Inlines>
+                                                                        </TextBlock>
+                                                                        <HyperlinkButton x:Uid="AboutPageRateAndReviewContent" NavigateUri="ms-windows-store:reviewapp?appid=8d5bd514-cde3-4506-b95f-e4b6ab410d57" Content="I promise to give 5 stars :)" />
+                                                                        <TextBlock x:Uid="AboutPageRateAndReviewHint">
+                                      <Style>
+                                        <StaticResource ResourceKey="SectionNoteTextBlockStyle" />
+                                      </Style>
+                                      <Inlines>
+                                        <InlineCollection implicititems="In case of having issues, found bugs or suggestions, we will be happier to receive your email, than bad review. Thanks!" />
+                                      </Inlines>
+                                                                        </TextBlock>
+                                                                        <TextBlock x:Uid="AboutPageReadMoreHeader">
+                                      <Style>
+                                        <StaticResource ResourceKey="SectionHeaderTextBlockStyle" />
+                                      </Style>
+                                      <Inlines>
+                                        <InlineCollection implicititems="Read more" />
+                                      </Inlines>
+                                                                        </TextBlock>
+                                                                        <HyperlinkButton NavigateUri="http://bindmiband.com" Content="bindmiband.com" />
+                                                                        <HyperlinkButton x:Uid="AboutPageThanksHyperlink" NavigateUri="http://bindmiband.blogspot.com/p/thanks.html" Content="thanks" />
+                                                                    </UIElementCollection>
+                                                                </Children>
+                                                            </StackPanel>
+                                                        </Content>
+                                                    </ScrollViewer>
+                                                </UIElementCollection>
+                                            </Children>
+                                        </Grid>
+                                    </Content>
+                                </PivotItem>
+                                <PivotItem x:Uid="AboutPageChangesHistoryTab" x:Name="ChangesHistoryPivotItem" Header="changes history">
+                                    <Content>
+                                        <Grid VerticalAlignment="Stretch">
+                                            <Children>
+                                                <UIElementCollection>
+                                                    <ScrollViewer VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled">
+                                                        <Content>
+                                                            <ListView>
+                                                                <ItemTemplate>
+                                                                    <StaticResource ResourceKey="UpdateHistoryItemDataTemplate" />
+                                                                </ItemTemplate>
+                                                                <ItemsSource>
+                                                                    <Binding Path="Updates" />
+                                                                </ItemsSource>
+                                                            </ListView>
+                                                        </Content>
+                                                    </ScrollViewer>
+                                                </UIElementCollection>
+                                            </Children>
+                                        </Grid>
+                                    </Content>
+                                </PivotItem>
+                            </ItemCollection>
+                        </Items>
+                    </Pivot>
+                </UIElementCollection>
+            </Children>
+        </Grid>
+    </Content>
+</Page>

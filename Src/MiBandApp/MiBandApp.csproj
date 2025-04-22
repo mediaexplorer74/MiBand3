@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{47A9BD3E-F83A-423D-A482-BE2A0DC2532D}</ProjectGuid>
+    <OutputType>AppContainerExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MiBandApp</RootNamespace>
+    <AssemblyName>MiBandApp</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
+    <AppxPackageSigningEnabled>false</AppxPackageSigningEnabled>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
+    <OutputPath>bin\ARM64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Band.cs" />
+    <Compile Include="Controls\BandAnimation.cs" />
+    <Compile Include="Controls\Gauge.cs" />
+    <Compile Include="Controls\OpenMenuFlyoutAction.cs" />
+    <Compile Include="Controls\Pickers\HeightPicker.xaml.cs">
+      <DependentUpon>HeightPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Pickers\SleepGoalPicker.xaml.cs">
+      <DependentUpon>SleepGoalPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Pickers\StepsGoalPicker.xaml.cs">
+      <DependentUpon>StepsGoalPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Pickers\WeightPicker.xaml.cs">
+      <DependentUpon>WeightPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\BoolToBoolConverter.cs" />
+    <Compile Include="Converters\BoolToOpacityConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\CaloriesToFormattedStringConverter.cs" />
+    <Compile Include="Converters\CustomConverter.cs" />
+    <Compile Include="Converters\DayNameConverter.cs" />
+    <Compile Include="Converters\DaysBoolArrayToStringConverter.cs" />
+    <Compile Include="Converters\DistanceKmToFormattedStringConverter.cs" />
+    <Compile Include="Converters\FlaggedEnumToBoolConverter.cs" />
+    <Compile Include="Converters\MathConverter.cs" />
+    <Compile Include="Converters\MinutesToStringConverter.cs" />
+    <Compile Include="Converters\StringFormatConverter.cs" />
+    <Compile Include="Converters\SyncStateConverter.cs" />
+    <Compile Include="DebugLogger.cs" />
+    <Compile Include="Views\DayDetailsPage.xaml.cs">
+      <DependentUpon>DayDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DevicePage.xaml.cs">
+      <DependentUpon>DevicePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FirmwareUpgradePage.xaml.cs">
+      <DependentUpon>FirmwareUpgradePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HistoryPage.xaml.cs">
+      <DependentUpon>HistoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BandController.cs" />
+    <Compile Include="Services\BandSyncController.cs" />
+    <Compile Include="Services\BandSyncReminderService.cs" />
+    <Compile Include="Services\BandSyncState.cs" />
+    <Compile Include="Services\BindingState.cs" />
+    <Compile Include="Services\ClockService.cs" />
+    <Compile Include="Services\ClockTickEventArgs.cs" />
+    <Compile Include="Services\ClockTickType.cs" />
+    <Compile Include="Services\CommunicationOperation.cs" />
+    <Compile Include="Services\DataManager.cs" />
+    <Compile Include="Services\DiagnosticsService.cs" />
+    <Compile Include="Services\EmailComposer.cs" />
+    <Compile Include="Services\LicensingService.cs" />
+    <Compile Include="Services\OneDriveSessionService.cs" />
+    <Compile Include="Services\OneDriveSyncService.cs" />
+    <Compile Include="Services\ProtocolActivationHandler.cs" />
+    <Compile Include="Services\SerializableDataBase.cs" />
+    <Compile Include="Services\StatusBarItem.cs" />
+    <Compile Include="Services\StatusBarMessage.cs" />
+    <Compile Include="Services\StatusBarNotificationService.cs" />
+    <Compile Include="Services\StatusBarProgressItem.cs" />
+    <Compile Include="Services\UpdateHistoryItem.cs" />
+    <Compile Include="Services\UpdatesHistoryService.cs" />
+    <Compile Include="Tools\BandLogger.cs" />
+    <Compile Include="Tools\ColorExtensions.cs" />
+    <Compile Include="Tools\CultureHelper.cs" />
+    <Compile Include="Tools\DictionaryExtensions.cs" />
+    <Compile Include="Tools\MessageDialogExtensions.cs" />
+    <Compile Include="Tools\MonitorableExtensions.cs" />
+    <Compile Include="Tools\MonitorableSource`1.cs" />
+    <Compile Include="Tools\MonitorableUpdatedEventArgs`1.cs" />
+    <Compile Include="Tools\Monitorable`1.cs" />
+    <Compile Include="Tools\PageBaseViewModel.cs" />
+    <Compile Include="Tools\PlainLoggingLayout.cs" />
+    <Compile Include="Tools\PropertyChangedEx.cs" />
+    <Compile Include="Tools\SystemInfo.cs" />
+    <Compile Include="Tools\TaskExtensions.cs" />
+    <Compile Include="Tools\WindowsVersion.cs" />
+    <Compile Include="ViewModels\AboutPageViewModel.cs" />
+    <Compile Include="ViewModels\Activities\ActivitiesListViewModel.cs" />
+    <Compile Include="ViewModels\Activities\HeartRateMeasureActivityViewModel.cs" />
+    <Compile Include="ViewModels\Activities\IActivityViewModel.cs" />
+    <Compile Include="ViewModels\Activities\RunningActivityViewModel.cs" />
+    <Compile Include="ViewModels\Activities\SleepDetailsPageViewModel.cs" />
+    <Compile Include="ViewModels\Activities\SleepingActivityViewModel.cs" />
+    <Compile Include="ViewModels\Activities\WalkingActivityViewModel.cs" />
+    <Compile Include="ViewModels\AlarmsPageViewModel.cs" />
+    <Compile Include="ViewModels\Band\BandAlarmViewModel.cs" />
+    <Compile Include="ViewModels\CloudViewModel.cs" />
+    <Compile Include="ViewModels\DayDetailsPageViewModel.cs" />
+    <Compile Include="ViewModels\DevicePageViewModel.cs" />
+    <Compile Include="ViewModels\DeviceSettings\ActivityReminderViewModel.cs" />
+    <Compile Include="ViewModels\DeviceSettings\BatteryViewModel.cs" />
+    <Compile Include="ViewModels\DeviceSettings\DeviceSettingViewModelBase.cs" />
+    <Compile Include="ViewModels\DeviceSettings\DisplayViewModel.cs" />
+    <Compile Include="ViewModels\DeviceSettings\FirmwareViewModel.cs" />
+    <Compile Include="ViewModels\DeviceSettings\FlipDisplayOnWristRotateViewModel.cs" />
+    <Compile Include="ViewModels\DeviceSettings\GoalReachedNotificationViewModel.cs" />
+    <Compile Include="ViewModels\DeviceSettings\HeartRateDuringSleepViewModel.cs" />
+    <Compile Include="ViewModels\DeviceSettings\HighlightOnWristLiftViewModel.cs" />
+    <Compile Include="ViewModels\DeviceSettings\LedsColorViewModel.cs" />
+    <Compile Include="ViewModels\DeviceSettings\NotDisturbViewModel.cs" />
+    <Compile Include="ViewModels\DeviceSettings\WearingLocationViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ActivityReminderDialogViewModel.cs" />
+    <Compile Include="ViewModels\FirmwareUpgradePageViewModel.cs" />
+    <Compile Include="ViewModels\HistoryPageViewModel.cs" />
+    <Compile Include="ViewModels\History\DaySummaryViewModel.cs" />
+    <Compile Include="ViewModels\History\HistoryWeekViewModel.cs" />
+    <Compile Include="ViewModels\MainPageComponents\MessagesViewModel.cs" />
+    <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\PairingPageViewModel.cs" />
+    <Compile Include="ViewModels\SettingsPageViewModel.cs" />
+    <Compile Include="ViewModels\Tabs\HeartRateTabViewModel.cs" />
+    <Compile Include="ViewModels\Tabs\SleepTabViewModel.cs" />
+    <Compile Include="ViewModels\Tabs\WalkTabViewModel.cs" />
+    <Compile Include="ViewModels\UserInfoPageViewModel.cs" />
+    <Compile Include="ViewModels\WhatsNewPageViewModel.cs" />
+    <Compile Include="Views\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Activities\ActivitiesListView.cs" />
+    <Compile Include="Views\Activities\HeartRateMeasureActivityView.cs" />
+    <Compile Include="Views\Activities\RunningActivityView.cs" />
+    <Compile Include="Views\Activities\SleepDetailsPage.cs" />
+    <Compile Include="Views\Activities\SleepingActivityView.cs" />
+    <Compile Include="Views\Activities\WalkingActivityView.cs" />
+    <Compile Include="Views\AlarmsPage.xaml.cs">
+      <DependentUpon>AlarmsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Band\BandAlarmView.cs" />
+    <Compile Include="Views\CloudView.xaml.cs">
+      <DependentUpon>CloudView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceSettings\ActivityReminderView.cs" />
+    <Compile Include="Views\DeviceSettings\BatteryView.cs" />
+    <Compile Include="Views\DeviceSettings\DisplayView.cs" />
+    <Compile Include="Views\DeviceSettings\FirmwareView.cs" />
+    <Compile Include="Views\DeviceSettings\FlipDisplayOnWristRotateView.cs" />
+    <Compile Include="Views\DeviceSettings\GoalReachedNotificationView.cs" />
+    <Compile Include="Views\DeviceSettings\HeartRateDuringSleepView.cs" />
+    <Compile Include="Views\DeviceSettings\HighlightOnWristLiftView.cs" />
+    <Compile Include="Views\DeviceSettings\LedsColorView.cs" />
+    <Compile Include="Views\DeviceSettings\NotDisturbView.cs" />
+    <Compile Include="Views\DeviceSettings\WearingLocationView.cs" />
+    <Compile Include="Views\MainPageComponents\MessagesView.cs" />
+    <Compile Include="Views\MainPageView.xaml.cs">
+      <DependentUpon>MainPageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PairingPage.xaml.cs">
+      <DependentUpon>PairingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\HeartRateTabView.cs" />
+    <Compile Include="Views\Tabs\SleepTabView.cs" />
+    <Compile Include="Views\Tabs\WalkTabView.cs" />
+    <Compile Include="Views\UserInfoPage.xaml.cs">
+      <DependentUpon>UserInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WhatsNewPage.xaml.cs">
+      <DependentUpon>WhatsNewPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Properties\Default.rd.xml" />
+    <Content Include="Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="Assets\SplashScreen.scale-200.png" />
+    <Content Include="Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="Controls\Pickers\HeightPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Pickers\SleepGoalPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Pickers\StepsGoalPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Pickers\WeightPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DayDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DevicePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FirmwareUpgradePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HistoryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\SpecificStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AlarmsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CloudView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainPageView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PairingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserInfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WhatsNewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Caliburn.Micro">
+      <Version>3.2.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.2.14</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>8.0.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IanSavchenko.Controls\IanSavchenko.Controls.csproj">
+      <Project>{a47de50a-546b-4384-8739-5cdb558d7641}</Project>
+      <Name>IanSavchenko.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MetroLog\MetroLog.csproj">
+      <Project>{56161579-ad02-45f7-9e41-78b2cf115015}</Project>
+      <Name>MetroLog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MiBand.SDK.PCL\MiBand.SDK.PCL.csproj">
+      <Project>{cdcabf51-a640-497a-83fd-9c6d0860f499}</Project>
+      <Name>MiBand.SDK.PCL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MiBand.SDK\MiBand.SDK.csproj">
+      <Project>{3d967f35-f451-4443-9b02-f78e839ca67e}</Project>
+      <Name>MiBand.SDK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MiBandApp.Data\MiBandApp.Data.csproj">
+      <Project>{ae3d1a9d-0072-40cb-ba9b-fcf729d911bf}</Project>
+      <Name>MiBandApp.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MiBandApp.Storage\MiBandApp.Storage.csproj">
+      <Project>{b852b855-7e74-4c36-b3e2-a1c639a8a3e9}</Project>
+      <Name>MiBandApp.Storage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Microsoft.Live\Microsoft.Live.csproj">
+      <Project>{9272dc23-215e-4411-b13b-ebe9ada22b3d}</Project>
+      <Name>Microsoft.Live</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UniversalWrapPanel\UniversalWrapPanel.csproj">
+      <Project>{d36f9761-c838-46ca-9284-3b97674a780d}</Project>
+      <Name>UniversalWrapPanel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

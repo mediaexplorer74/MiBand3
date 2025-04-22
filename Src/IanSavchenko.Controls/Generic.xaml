@@ -1,0 +1,142 @@
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:local="using:IanSavchenko.Controls">
+    <Style TargetType="local:ListSelector">
+        <Setters>
+            <SetterBaseCollection>
+                <Setter Property="ItemTemplate">
+                    <Value>
+                        <DataTemplate>
+                            <Template>
+                                <ContentPresenter Margin="5,5,5,5" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontFamily="Segoe WP" FontSize="50" FontWeight="SemiBold">
+                                    <Content>
+                                        <Binding Mode="OneWay" />
+                                    </Content>
+                                </ContentPresenter>
+                            </Template>
+                        </DataTemplate>
+                    </Value>
+                </Setter>
+                <Setter Property="Template">
+                    <Value>
+                        <ControlTemplate TargetType="local:ListSelector">
+                            <Template>
+                                <Grid>
+                                    <Children>
+                                        <UIElementCollection>
+                                            <Border>
+                                                <Background>
+                                                    <TemplateBinding Property="Background" />
+                                                </Background>
+                                                <BorderBrush>
+                                                    <TemplateBinding Property="BorderBrush" />
+                                                </BorderBrush>
+                                                <BorderThickness>
+                                                    <TemplateBinding Property="BorderThickness" />
+                                                </BorderThickness>
+                                                <Child>
+                                                    <ScrollViewer Name="PART_ScrollViewer" Opacity="0" VerticalScrollBarVisibility="Hidden">
+                                                        <Content>
+                                                            <ItemsControl Name="PART_ItemsControl" />
+                                                        </Content>
+                                                    </ScrollViewer>
+                                                </Child>
+                                            </Border>
+                                            <local:ListSelectorItem x:Name="PART_InactiveStateItem" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="True" IsSelected="False" Opacity="1">
+                                                <Width>
+                                                    <TemplateBinding Property="ItemWidth" />
+                                                </Width>
+                                                <Height>
+                                                    <TemplateBinding Property="ItemHeight" />
+                                                </Height>
+                                                <Margin>
+                                                    <TemplateBinding Property="ItemMargin" />
+                                                </Margin>
+                                            </local:ListSelectorItem>
+                                        </UIElementCollection>
+                                    </Children>
+                                </Grid>
+                            </Template>
+                        </ControlTemplate>
+                    </Value>
+                </Setter>
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="ItemMargin" Value="0,5" />
+            </SetterBaseCollection>
+        </Setters>
+    </Style>
+    <Style TargetType="local:ListSelectorItem">
+        <Setters>
+            <SetterBaseCollection>
+                <Setter Property="Template">
+                    <Value>
+                        <ControlTemplate TargetType="local:ListSelectorItem">
+                            <Template>
+                                <Grid>
+                                    <VisualStateGroups>
+                                        <VisualStateGroupCollection>
+                                            <VisualStateGroup x:Name="Common">
+                                                <States>
+                                                    <VisualStateCollection>
+                                                        <VisualState x:Name="Normal" />
+                                                        <VisualState x:Name="Selected">
+                                                            <DeferredStoryboard>
+                                                                <Storyboard>
+                                                                    <Children>
+                                                                        <TimelineCollection>
+                                                                            <DoubleAnimation Duration="0" TargetName="AccentBackgroundBorder" TargetProperty="(Border.Opacity)" To="1" />
+                                                                            <ColorAnimation Duration="0" TargetName="ContentBrush" TargetProperty="(SolidColorBrush.Color)" To="4294967295" />
+                                                                        </TimelineCollection>
+                                                                    </Children>
+                                                                </Storyboard>
+                                                            </DeferredStoryboard>
+                                                        </VisualState>
+                                                    </VisualStateCollection>
+                                                </States>
+                                            </VisualStateGroup>
+                                        </VisualStateGroupCollection>
+                                    </VisualStateGroups>
+                                    <Children>
+                                        <UIElementCollection>
+                                            <Border x:Name="BackgroundBorder" Background="Transparent" BorderThickness="3,3,3,3">
+                                                <BorderBrush>
+                                                    <ThemeResource ResourceKey="PhoneDisabledBrush" />
+                                                </BorderBrush>
+                                            </Border>
+                                            <Border x:Name="AccentBackgroundBorder" Opacity="0">
+                                                <Background>
+                                                    <ThemeResource ResourceKey="PhoneAccentBrush" />
+                                                </Background>
+                                            </Border>
+                                            <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                <Content>
+                                                    <TemplateBinding Property="ItemContent" />
+                                                </Content>
+                                                <ContentTemplate>
+                                                    <TemplateBinding Property="ItemTemplate" />
+                                                </ContentTemplate>
+                                                <Foreground>
+                                                    <SolidColorBrush x:Name="ContentBrush">
+                                                        <Color>
+                                                            <ThemeResource ResourceKey="PhoneDisabledColor" />
+                                                        </Color>
+                                                    </SolidColorBrush>
+                                                </Foreground>
+                                            </ContentPresenter>
+                                        </UIElementCollection>
+                                    </Children>
+                                </Grid>
+                            </Template>
+                        </ControlTemplate>
+                    </Value>
+                </Setter>
+            </SetterBaseCollection>
+        </Setters>
+    </Style>
+</ResourceDictionary>
+<!--ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+</ResourceDictionary-->

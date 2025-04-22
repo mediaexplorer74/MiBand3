@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3D967F35-F451-4443-9B02-F78E839CA67E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MiBand.SDK</RootNamespace>
+    <AssemblyName>MiBand.SDK</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <PlatformTarget>ARM</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <PlatformTarget>ARM</PlatformTarget>
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
+    <PlatformTarget>ARM64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
+    <PlatformTarget>ARM64</PlatformTarget>
+    <OutputPath>bin\ARM64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Bluetooth\BluetoothDeviceBase.cs" />
+    <Compile Include="Bluetooth\CommunicationException.cs" />
+    <Compile Include="Bluetooth\ConnectionStatus.cs" />
+    <Compile Include="Bluetooth\DeviceNotConnectedException.cs" />
+    <Compile Include="Bluetooth\DeviceUnreachableException.cs" />
+    <Compile Include="Bluetooth\IBluetoothDevice.cs" />
+    <Compile Include="Bluetooth\MiBandException.cs" />
+    <Compile Include="Bluetooth\MiBandInFaultStateException.cs" />
+    <Compile Include="Bluetooth\MiBandNotPairedException.cs" />
+    <Compile Include="Bluetooth\MiBandNotSupportedException.cs" />
+    <Compile Include="Bluetooth\NotifyResponse.cs" />
+    <Compile Include="Bluetooth\ServiceUuid.cs" />
+    <Compile Include="Configuration\ActivityReminderConfig.cs" />
+    <Compile Include="Configuration\Alarm.cs" />
+    <Compile Include="Configuration\BandColorTheme.cs" />
+    <Compile Include="Configuration\BandWearLocation.cs" />
+    <Compile Include="Configuration\DateDisplayMode.cs" />
+    <Compile Include="Configuration\DaysOfWeek.cs" />
+    <Compile Include="Configuration\DisplayItem.cs" />
+    <Compile Include="Configuration\GoalInfo.cs" />
+    <Compile Include="Configuration\NotDisturbConfig.cs" />
+    <Compile Include="Configuration\UserInfo.cs" />
+    <Compile Include="Core\AlertNotifyIcon.cs" />
+    <Compile Include="Core\AlertThirdPartyIcon.cs" />
+    <Compile Include="Core\AuthenticationResult.cs" />
+    <Compile Include="Core\BandDeviceInfo.cs" />
+    <Compile Include="Core\BatteryInfo.cs" />
+    <Compile Include="Core\BindingResult.cs" />
+    <Compile Include="Core\Capability.cs" />
+    <Compile Include="Core\IMiBand.cs" />
+    <Compile Include="Core\IMiBandInfo.cs" />
+    <Compile Include="Core\MiBandBase.cs" />
+    <Compile Include="Core\MiBandInfo.cs" />
+    <Compile Include="Core\MiBandModel.cs" />
+    <Compile Include="Core\MiBandOne\CharacteristicGuid.cs" />
+    <Compile Include="Core\MiBandOne\MiBandOne.cs" />
+    <Compile Include="Core\MiBandOne\MiBandOneA.cs" />
+    <Compile Include="Core\MiBandOne\MiBandOneActivityDataLoader.cs" />
+    <Compile Include="Core\MiBandOne\MiBandOneFirmwareUpgrader.cs" />
+    <Compile Include="Core\MiBandOne\MiBandOneFirmwareUploader.cs" />
+    <Compile Include="Core\MiBandOne\MiBandOneS.cs" />
+    <Compile Include="Core\MiBandStatus.cs" />
+    <Compile Include="Core\MiBandTwo\CharacteristicGuid.cs" />
+    <Compile Include="Core\MiBandTwo\FirmwareType.cs" />
+    <Compile Include="Core\MiBandTwo\MiBandTwo.cs" />
+    <Compile Include="Core\MiBandTwo\MiBandTwoActivityDataLoader.cs" />
+    <Compile Include="Core\MiBandTwo\MiBandTwoDataLoader.cs" />
+    <Compile Include="Core\MiBandTwo\MiBandTwoDataLoaderKind.cs" />
+    <Compile Include="Core\MiBandTwo\MiBandTwoDataSyncFragment.cs" />
+    <Compile Include="Core\MiBandTwo\MiBandTwoFirmwareUploader.cs" />
+    <Compile Include="Core\MiBandTwo\UserInfoFlag.cs" />
+    <Compile Include="Core\Vibration.cs" />
+    <Compile Include="FirmwareUpgrade\Firmware.cs" />
+    <Compile Include="FirmwareUpgrade\FirmwareUpgradeError.cs" />
+    <Compile Include="FirmwareUpgrade\FirmwareUpgradeState.cs" />
+    <Compile Include="FirmwareUpgrade\IFirmwareUpgradeProgress.cs" />
+    <Compile Include="HeartRate\HeartRateLoader.cs" />
+    <Compile Include="MiBandLocator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\BytesUtils.cs" />
+    <Compile Include="Tools\CharacteristicWatcher.cs" />
+    <Compile Include="Tools\CryptographyTools.cs" />
+    <Compile Include="Tools\IBufferExtensions.cs" />
+    <Compile Include="Tools\ILog.cs" />
+    <Compile Include="Tools\LogStub.cs" />
+    <Compile Include="Tools\MiBand2Tools.cs" />
+    <Compile Include="Tools\VersionExtensions.cs" />
+    <Compile Include="Tools\Watchdog.cs" />
+    <EmbeddedResource Include="Properties\MiBand.SDK.rd.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>6.2.14</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MiBand.SDK.PCL\MiBand.SDK.PCL.csproj">
+      <Project>{cdcabf51-a640-497a-83fd-9c6d0860f499}</Project>
+      <Name>MiBand.SDK.PCL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

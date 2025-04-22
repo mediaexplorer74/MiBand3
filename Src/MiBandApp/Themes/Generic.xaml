@@ -1,0 +1,144 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns:controls="using:MiBandApp.Controls">
+    <Style TargetType="controls:Gauge">
+        <Setters>
+            <SetterBaseCollection>
+                <Setter Property="Template">
+                    <Value>
+                        <ControlTemplate TargetType="controls:Gauge">
+                            <Template>
+                                <Viewbox>
+                                    <Child>
+                                        <Grid Width="200" Height="200">
+                                            <Children>
+                                                <UIElementCollection>
+                                                    <Path Name="PART_Scale">
+                                                        <Stroke>
+                                                            <TemplateBinding Property="ScaleBrush" />
+                                                        </Stroke>
+                                                        <StrokeThickness>
+                                                            <TemplateBinding Property="ScaleWidth" />
+                                                        </StrokeThickness>
+                                                    </Path>
+                                                    <Path Name="PART_Trail">
+                                                        <Stroke>
+                                                            <TemplateBinding Property="TrailBrush" />
+                                                        </Stroke>
+                                                        <StrokeThickness>
+                                                            <TemplateBinding Property="ScaleWidth" />
+                                                        </StrokeThickness>
+                                                    </Path>
+                                                    <ContentControl HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Content>
+                                                            <TemplateBinding Property="Content" />
+                                                        </Content>
+                                                    </ContentControl>
+                                                    <Grid>
+                                                        <RowDefinitions>
+                                                            <RowDefinitionCollection>
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                            </RowDefinitionCollection>
+                                                        </RowDefinitions>
+                                                        <Children>
+                                                            <UIElementCollection>
+                                                                <Path Name="PART_Needle" HorizontalAlignment="Center" Data="M 0,0 l 0,100 l 5,0 l 0,-100 l -5,0" RenderTransformOrigin="0.5,1" Stretch="Uniform">
+                                                                    <Fill>
+                                                                        <TemplateBinding Property="NeedleBrush" />
+                                                                    </Fill>
+                                                                </Path>
+                                                            </UIElementCollection>
+                                                        </Children>
+                                                    </Grid>
+                                                </UIElementCollection>
+                                            </Children>
+                                        </Grid>
+                                    </Child>
+                                </Viewbox>
+                            </Template>
+                        </ControlTemplate>
+                    </Value>
+                </Setter>
+            </SetterBaseCollection>
+        </Setters>
+    </Style>
+    <Style TargetType="controls:Band">
+        <Setters>
+            <SetterBaseCollection>
+                <Setter Property="Template">
+                    <Value>
+                        <ControlTemplate>
+                            <Template>
+                                <Viewbox>
+                                    <Child>
+                                        <Border Width="110" Height="40" BorderThickness="4,4,4,4" CornerRadius="20">
+                                            <BorderBrush>
+                                                <TemplateBinding Property="Foreground" />
+                                            </BorderBrush>
+                                            <Child>
+                                                <Grid>
+                                                    <Visibility>
+                                                        <Binding Path="DotsVisibility">
+                                                            <RelativeSource>
+                                                                <RelativeSource Mode="TemplatedParent" />
+                                                            </RelativeSource>
+                                                        </Binding>
+                                                    </Visibility>
+                                                    <Resources>
+                                                        <ResourceDictionary>
+                                                            <Style TargetType="Ellipse">
+                                                                <Setters>
+                                                                    <SetterBaseCollection>
+                                                                        <Setter Property="StrokeThickness" Value="1" />
+                                                                        <Setter Property="Width" Value="10" />
+                                                                        <Setter Property="Height" Value="10" />
+                                                                    </SetterBaseCollection>
+                                                                </Setters>
+                                                            </Style>
+                                                        </ResourceDictionary>
+                                                    </Resources>
+                                                    <ColumnDefinitions>
+                                                        <ColumnDefinitionCollection>
+                                                            <ColumnDefinition />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition />
+                                                        </ColumnDefinitionCollection>
+                                                    </ColumnDefinitions>
+                                                    <Children>
+                                                        <UIElementCollection>
+                                                            <Ellipse Name="PART_EllipseLeft" Column="0" HorizontalAlignment="Right">
+                                                                <Stroke>
+                                                                    <TemplateBinding Property="Foreground" />
+                                                                </Stroke>
+                                                            </Ellipse>
+                                                            <Ellipse Name="PART_EllipseCenter" Column="1" Margin="15,0,15,0">
+                                                                <Stroke>
+                                                                    <TemplateBinding Property="Foreground" />
+                                                                </Stroke>
+                                                            </Ellipse>
+                                                            <Ellipse Name="PART_EllipseRight" Column="2" HorizontalAlignment="Left">
+                                                                <Stroke>
+                                                                    <TemplateBinding Property="Foreground" />
+                                                                </Stroke>
+                                                            </Ellipse>
+                                                        </UIElementCollection>
+                                                    </Children>
+                                                </Grid>
+                                            </Child>
+                                        </Border>
+                                    </Child>
+                                </Viewbox>
+                            </Template>
+                        </ControlTemplate>
+                    </Value>
+                </Setter>
+            </SetterBaseCollection>
+        </Setters>
+    </Style>
+</ResourceDictionary>
+<!--ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+</ResourceDictionary-->

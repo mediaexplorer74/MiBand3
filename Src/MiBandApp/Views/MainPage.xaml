@@ -1,0 +1,377 @@
+﻿<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+      xmlns:controls="using:MiBandApp.Controls" 
+      xmlns:core="using:Microsoft.Xaml.Interactions.Core" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:interactivity="using:Microsoft.Xaml.Interactivity" 
+      xmlns:local="using:MiBandApp" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:micro="using:Caliburn.Micro" 
+      xmlns:tabs="using:MiBandApp.Views.Tabs" 
+      xmlns:viewModels="using:MiBandApp.ViewModels" 
+      x:Class="MiBandApp.Views.MainPage">
+    <Page.Style>
+        <StaticResource ResourceKey="DefaultPageStyle" />
+    </Page.Style>
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Compact">
+            <PrimaryCommands>
+                <CommandBarElementCollection>
+                    <AppBarButton x:Uid="MainPageRefreshButton" x:Name="RefreshAll" Icon="Sync" Label="refresh">
+                        <IsEnabled>
+                            <Binding Path="IsRefreshing" ConverterParameter="False">
+                                <Converter>
+                                    <StaticResource ResourceKey="BoolToBool" />
+                                </Converter>
+                            </Binding>
+                        </IsEnabled>
+                    </AppBarButton>
+                    <AppBarButton x:Uid="MainPageAlarmsButton" x:Name="OpenAlarms" Label="alarms">
+                        <IsEnabled>
+                            <Binding Path="IsBinded" />
+                        </IsEnabled>
+                        <Icon>
+                            <BitmapIcon UriSource="../Resources/Images/appbar.clock.png" />
+                        </Icon>
+                    </AppBarButton>
+                    <AppBarButton x:Uid="MainPageHistoryButton" x:Name="OpenHistory" Label="history">
+                        <Icon>
+                            <BitmapIcon UriSource="../Resources/Images/appbar.graph.line.png" />
+                        </Icon>
+                    </AppBarButton>
+                </CommandBarElementCollection>
+            </PrimaryCommands>
+            <SecondaryCommands>
+                <CommandBarElementCollection>
+                    <AppBarButton x:Uid="MainPageDeviceButton" x:Name="ManageDevice" Label="device">
+                        <IsEnabled>
+                            <Binding Path="IsBinded" />
+                        </IsEnabled>
+                    </AppBarButton>
+                    <AppBarButton x:Uid="MainPageProfileButton" x:Name="OpenUserInfo" Label="profile" />
+                    <AppBarButton x:Uid="MainPageSettingsButton" x:Name="OpenSettingsPage" Label="settings" />
+                    <AppBarButton x:Uid="MainPageAboutButton" x:Name="OpenAboutPage" Label="about" />
+                </CommandBarElementCollection>
+            </SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+    <Page.Resources>
+        <ResourceDictionary>
+            <MergedDictionaries>
+                <ResourceDictionaryCollection>
+                    <ResourceDictionary Source="../Resources/SpecificStyles.xaml" />
+                </ResourceDictionaryCollection>
+            </MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <Grid VerticalAlignment="Stretch">
+            <Margin>
+                <StaticResource ResourceKey="RootContainerThickness" />
+            </Margin>
+            <Background>
+                <StaticResource ResourceKey="AppBackgroundBrush" />
+            </Background>
+            <RowDefinitions>
+                <RowDefinitionCollection>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </RowDefinitionCollection>
+            </RowDefinitions>
+            <Children>
+                <UIElementCollection>
+                    <Grid Row="0">
+                        <Children>
+                            <UIElementCollection>
+                                <TextBlock VerticalAlignment="Top">
+                  <Style>
+                    <StaticResource ResourceKey="AppTitleStyle" />
+                  </Style>
+                                </TextBlock>
+                                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
+                                    <Children>
+                                        <UIElementCollection>
+                                            <controls:Band Height="15" Margin="0,5,0,0" VerticalAlignment="Top">
+                                                <controls:Animation>
+                                                    <Binding Path="BandAnimationType" />
+                                                </controls:Animation>
+                                                <controls:DotsVisibility>
+                                                    <Binding Path="ShowConnectivityControlDots">
+                                                        <Converter>
+                                                            <StaticResource ResourceKey="BoolToVis" />
+                                                        </Converter>
+                                                    </Binding>
+                                                </controls:DotsVisibility>
+                                                <Foreground>
+                                                    <Binding Path="DevicePageHasWarning" ConverterParameter="DeviceWarningToColor">
+                                                        <Converter>
+                                                            <StaticResource ResourceKey="CustomConverter" />
+                                                        </Converter>
+                                                    </Binding>
+                                                </Foreground>
+                                                <controls:Value>
+                                                    <Binding Path="BatteryValue" />
+                                                </controls:Value>
+                                            </controls:Band>
+                                            <TextBlock MinWidth="20" Margin="5,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        <Style>
+                          <StaticResource ResourceKey="AppTitleStyle" />
+                        </Style>
+                        <Text>
+                          <Binding Path="BatteryPercentString" />
+                        </Text>
+                                            </TextBlock>
+                                        </UIElementCollection>
+                                    </Children>
+                                </StackPanel>
+                            </UIElementCollection>
+                        </Children>
+                    </Grid>
+                    <ScrollViewer Row="1" IsZoomInertiaEnabled="True" MaxZoomFactor="1" VerticalScrollBarVisibility="Hidden" VerticalSnapPointsType="Optional" ZoomMode="Disabled">
+                        <Visibility>
+                            <Binding Path="MessagesViewModel.IsMessageDisplayed" ConverterParameter="False">
+                                <Converter>
+                                    <StaticResource ResourceKey="BoolToVis" />
+                                </Converter>
+                            </Binding>
+                        </Visibility>
+                        <Content>
+                            <StackPanel>
+                                <Children>
+                                    <UIElementCollection>
+                                        <Grid Margin="0,10,0,10">
+                                            <ColumnDefinitions>
+                                                <ColumnDefinitionCollection>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </ColumnDefinitionCollection>
+                                            </ColumnDefinitions>
+                                            <Children>
+                                                <UIElementCollection>
+                                                    <ListView x:Name="TabsIconsListView">
+                                                        <ItemContainerStyle>
+                                                            <StaticResource ResourceKey="ListViewItemSemiTransparentUnselectedStyle" />
+                                                        </ItemContainerStyle>
+                                                        <SelectedIndex>
+                                                            <Binding ElementName="WalkSleepPivot" Path="SelectedIndex" Mode="TwoWay" />
+                                                        </SelectedIndex>
+                                                        <ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <Template>
+                                                                    <StackPanel Orientation="Horizontal" />
+                                                                </Template>
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsPanel>
+                                                        <Resources>
+                                                            <ResourceDictionary>
+                                                                <Style x:Key="HeartBitmapIconStyle" TargetType="BitmapIcon">
+                                                                    <Setters>
+                                                                        <SetterBaseCollection>
+                                                                            <Setter Property="Height" Value="50" />
+                                                                            <Setter Property="Margin" Value="5 0 20 0" />
+                                                                            <Setter Property="UriSource" Value="../Resources/Images/heart305.png" />
+                                                                        </SetterBaseCollection>
+                                                                    </Setters>
+                                                                </Style>
+                                                            </ResourceDictionary>
+                                                        </Resources>
+                                                        <Items>
+                                                            <ItemCollection>
+                                                                <ListViewItem>
+                                                                    <Content>
+                                                                        <BitmapIcon Height="50" Margin="0,0,20,0" UriSource="../Resources/Images/footsteps.png" />
+                                                                    </Content>
+                                                                </ListViewItem>
+                                                                <ListViewItem>
+                                                                    <Content>
+                                                                        <BitmapIcon Height="50" Margin="0,0,20,0" UriSource="../Resources/Images/moon-sleep-512-000000.png" />
+                                                                    </Content>
+                                                                </ListViewItem>
+                                                            </ItemCollection>
+                                                        </Items>
+                                                    </ListView>
+                                                    <ListViewItem Column="1" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Attach="[Event Tapped] = [Action OpenUserInfo()];">
+                                                        <Content>
+                                                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                                                <Children>
+                                                                    <UIElementCollection>
+                                                                        <BitmapIcon Height="40" HorizontalAlignment="Right" UriSource="../Resources/Images/business57.png">
+                                                                            <Foreground>
+                                                                                <ThemeResource ResourceKey="PhoneDisabledBrush" />
+                                                                            </Foreground>
+                                                                            <Visibility>
+                                                                                <Binding Path="UserInfo.IsMale">
+                                                                                    <Converter>
+                                                                                        <StaticResource ResourceKey="BoolToVis" />
+                                                                                    </Converter>
+                                                                                </Binding>
+                                                                            </Visibility>
+                                                                        </BitmapIcon>
+                                                                        <BitmapIcon Height="40" HorizontalAlignment="Right" UriSource="../Resources/Images/business64.png">
+                                                                            <Foreground>
+                                                                                <ThemeResource ResourceKey="PhoneDisabledBrush" />
+                                                                            </Foreground>
+                                                                            <Visibility>
+                                                                                <Binding Path="UserInfo.IsMale" ConverterParameter="False">
+                                                                                    <Converter>
+                                                                                        <StaticResource ResourceKey="BoolToVis" />
+                                                                                    </Converter>
+                                                                                </Binding>
+                                                                            </Visibility>
+                                                                        </BitmapIcon>
+                                                                        <TextBlock MaxWidth="150" Margin="5,0,0,0" VerticalAlignment="Center" FontSize="20" TextWrapping="Wrap">
+                                      <Style>
+                                        <StaticResource ResourceKey="GroupHeaderTextBlockStyle" />
+                                      </Style>
+                                      <Text>
+                                        <Binding Path="UserInfo.Name" />
+                                      </Text>
+                                                                        </TextBlock>
+                                                                    </UIElementCollection>
+                                                                </Children>
+                                                            </StackPanel>
+                                                        </Content>
+                                                    </ListViewItem>
+                                                </UIElementCollection>
+                                            </Children>
+                                        </Grid>
+                                        <Pivot x:Name="WalkSleepPivot">
+                                            <Foreground>
+                                                <StaticResource ResourceKey="AppForegroundBrush" />
+                                            </Foreground>
+                                            <Style>
+                                                <StaticResource ResourceKey="PivotWithoutStupidPaddingStyle" />
+                                            </Style>
+                                            <HeaderTemplate>
+                                                <DataTemplate />
+                                            </HeaderTemplate>
+                                            <Items>
+                                                <ItemCollection>
+                                                    <PivotItem x:Uid="MainPageWalkTab" Header="walk">
+                                                        <Content>
+                                                            <ContentControl x:Name="WalkTabViewModel" />
+                                                        </Content>
+                                                    </PivotItem>
+                                                    <PivotItem x:Uid="MainPageSleepTab" Header="sleep">
+                                                        <Content>
+                                                            <ContentControl x:Name="SleepTabViewModel" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                                                <MinHeight>
+                                                                    <Binding ElementName="WalkTabViewModel" Path="ActualHeight" />
+                                                                </MinHeight>
+                                                            </ContentControl>
+                                                        </Content>
+                                                    </PivotItem>
+                                                </ItemCollection>
+                                            </Items>
+                                        </Pivot>
+                                        <Grid Margin="0,10,0,3">
+                                            <Children>
+                                                <UIElementCollection>
+                                                    <TextBlock>
+                            <Foreground>
+                              <Binding Path="SyncState" ConverterParameter="textblock">
+                                <Converter>
+                                  <StaticResource ResourceKey="SyncStateConverter" />
+                                </Converter>
+                              </Binding>
+                            </Foreground>
+                            <Style>
+                              <StaticResource ResourceKey="GrayTextBlockStyle" />
+                            </Style>
+                            <Text>
+                              <Binding Path="SyncState">
+                                <Converter>
+                                  <StaticResource ResourceKey="SyncStateConverter" />
+                                </Converter>
+                              </Binding>
+                            </Text>
+                                                    </TextBlock>
+                                                    <ListViewItem Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Attach="[Event Tapped] = [Action ShowSyncHelp()];">
+                                                        <Visibility>
+                                                            <Binding Path="SyncState" ConverterParameter="Failed">
+                                                                <Converter>
+                                                                    <StaticResource ResourceKey="SyncStateConverter" />
+                                                                </Converter>
+                                                            </Binding>
+                                                        </Visibility>
+                                                        <Content>
+                                                            <TextBlock FontWeight="ExtraLight" Foreground="Red">
+                                <Style>
+                                  <StaticResource ResourceKey="GrayTextBlockStyle" />
+                                </Style>
+                                <Inlines>
+                                  <InlineCollection>
+                                    <Underline>
+                                      <Inlines>
+                                        <InlineCollection>
+                                          <Run x:Uid="MainPageSyncErrorWhatToDo" Text="what to do?" />
+                                        </InlineCollection>
+                                      </Inlines>
+                                    </Underline>
+                                  </InlineCollection>
+                                </Inlines>
+                                                            </TextBlock>
+                                                        </Content>
+                                                    </ListViewItem>
+                                                </UIElementCollection>
+                                            </Children>
+                                        </Grid>
+                                        <Grid>
+                                            <Background>
+                                                <ThemeResource ResourceKey="CommandBarBackgroundThemeBrush" />
+                                            </Background>
+                                            <Children>
+                                                <UIElementCollection>
+                                                    <ProgressBar Value="100">
+                                                        <Foreground>
+                                                            <Binding Path="SyncState">
+                                                                <Converter>
+                                                                    <StaticResource ResourceKey="SyncStateConverter" />
+                                                                </Converter>
+                                                            </Binding>
+                                                        </Foreground>
+                                                        <IsIndeterminate>
+                                                            <Binding Path="SyncState" ConverterParameter="InProgress">
+                                                                <Converter>
+                                                                    <StaticResource ResourceKey="SyncStateConverter" />
+                                                                </Converter>
+                                                            </Binding>
+                                                        </IsIndeterminate>
+                                                    </ProgressBar>
+                                                </UIElementCollection>
+                                            </Children>
+                                        </Grid>
+                                        <ContentControl x:Name="ActivitiesListViewModel" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" />
+                                    </UIElementCollection>
+                                </Children>
+                            </StackPanel>
+                        </Content>
+                    </ScrollViewer>
+                    <Grid Row="1" VerticalAlignment="Center">
+                        <Children>
+                            <UIElementCollection>
+                                <ContentControl x:Name="MessagesViewModel" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+                            </UIElementCollection>
+                        </Children>
+                    </Grid>
+                </UIElementCollection>
+            </Children>
+        </Grid>
+    </Grid>
+</Page>
+<!--Page
+    x:Class="MiBandApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MiBandApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+
+    </Grid>
+</Page-->
