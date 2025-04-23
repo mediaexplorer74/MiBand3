@@ -17,7 +17,7 @@ using Windows.Foundation;
 #nullable disable
 namespace MiBand.SDK.Bluetooth
 {
-  internal abstract class BluetoothDeviceBase : IBluetoothDevice, IDisposable
+  internal abstract class BluetoothDeviceBase : IBluetoothDevice//, IDisposable
   {
     private ConnectionStatus _connectionStatus;
     private readonly List<GattCharacteristic> _notificationEnabled = new List<GattCharacteristic>();
@@ -28,7 +28,8 @@ namespace MiBand.SDK.Bluetooth
       this.DefaultGattService = defaultGattService;
     }
 
-    public event EventHandler ConnectionStatusChanged;
+    public event EventHandler<EventArgs> ConnectionStatusChanged;
+    //public event EventHandler ConnectionStatusChanged;
 
     public ConnectionStatus ConnectionStatus
     {
@@ -108,47 +109,64 @@ namespace MiBand.SDK.Bluetooth
       this.CheckWriteResult(write);
     }
 
-    internal async Task<NotifyResponse> WriteCharacteristicGetResponse(
-      GattCharacteristic characteristic,
-      byte[] data,
-      Task delayTask,
-      int payloadOffset = 0)
-    {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      BluetoothDeviceBase.\u003C\u003Ec__DisplayClass20_0 cDisplayClass200 = new BluetoothDeviceBase.\u003C\u003Ec__DisplayClass20_0();
-      // ISSUE: reference to a compiler-generated field
-      cDisplayClass200.\u003C\u003E4__this = this;
-      // ISSUE: reference to a compiler-generated field
-      cDisplayClass200.payloadOffset = payloadOffset;
-      if (delayTask == null)
-        throw new ArgumentNullException(string.Format("Argument {0} shouldn't be null", (object) nameof (delayTask)));
-      // ISSUE: reference to a compiler-generated field
-      cDisplayClass200.notifyReceivedTcs = new TaskCompletionSource<NotifyResponse>((object) null);
-      // ISSUE: method pointer
-      TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs> valueChangedDelegate = new TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>((object) cDisplayClass200, __methodptr(\u003CWriteCharacteristicGetResponse\u003Eb__0));
-      GattCharacteristic gattCharacteristic = characteristic;
-      WindowsRuntimeMarshal.AddEventHandler<TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>>(new Func<TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>, EventRegistrationToken>(gattCharacteristic.add_ValueChanged), new Action<EventRegistrationToken>(gattCharacteristic.remove_ValueChanged), valueChangedDelegate);
-      NotifyResponse notifyResponse = (NotifyResponse) null;
-      try
-      {
-        await this.EnableNotifications(characteristic).ConfigureAwait(false);
-        await this.WriteCharacteristic(characteristic, data, ((Enum) (object) characteristic.CharacteristicProperties).HasFlag((Enum) (object) (GattCharacteristicProperties) 4)).ConfigureAwait(false);
-        // ISSUE: reference to a compiler-generated field
-        // ISSUE: reference to a compiler-generated field
-        if (await Task.WhenAny((Task) cDisplayClass200.notifyReceivedTcs.Task, delayTask).ConfigureAwait(false) == cDisplayClass200.notifyReceivedTcs.Task)
+        // Fix for CS0518, CS1001, CS1002, CS1056, CS0246, CS0103
+
+        // The issue seems to be related to the decompiled code and the use of a compiler-generated class `c__DisplayClass20_0`.
+        // This class is not defined in the provided code, and the decompiler has introduced invalid syntax.
+        // To fix this, we need to replace the problematic code with a proper implementation.
+
+        internal async Task<NotifyResponse> WriteCharacteristicGetResponse(
+            GattCharacteristic characteristic,
+            byte[] data,
+            Task delayTask,
+            int payloadOffset = 0)
         {
-          // ISSUE: reference to a compiler-generated field
-          notifyResponse = cDisplayClass200.notifyReceivedTcs.Task.Result;
+            if (delayTask == null)
+                throw new ArgumentNullException(nameof(delayTask));
+
+            var notifyReceivedTcs = new TaskCompletionSource<NotifyResponse>();
+            TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs> valueChangedDelegate 
+                = (sender, args) =>
+            {
+                try
+                {
+                    if (args.CharacteristicValue == null)
+                    {
+                        notifyReceivedTcs.TrySetResult(null);
+                    }
+                    else
+                    {
+                        NotifyResponse result = new NotifyResponse(args.CharacteristicValue.ToArraySafe(), payloadOffset);
+                        notifyReceivedTcs.TrySetResult(result);
+                    }
+                }
+                catch
+                {
+                    notifyReceivedTcs.TrySetResult(null);
+                }
+            };
+
+            characteristic.ValueChanged += valueChangedDelegate;
+
+            NotifyResponse notifyResponse = null;
+            try
+            {
+                await EnableNotifications(characteristic).ConfigureAwait(false);
+                await WriteCharacteristic(characteristic, data, characteristic.CharacteristicProperties.HasFlag(GattCharacteristicProperties.WriteWithoutResponse)).ConfigureAwait(false);
+
+                if (await Task.WhenAny(notifyReceivedTcs.Task, delayTask).ConfigureAwait(false) == notifyReceivedTcs.Task)
+                {
+                    notifyResponse = notifyReceivedTcs.Task.Result;
+                }
+            }
+            finally
+            {
+                await DisableNotifications(characteristic).ConfigureAwait(false);
+                characteristic.ValueChanged -= valueChangedDelegate;
+            }
+
+            return notifyResponse;
         }
-      }
-      finally
-      {
-        await this.DisableNotifications(characteristic).ConfigureAwait(false);
-        WindowsRuntimeMarshal.RemoveEventHandler<TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>>(new Action<EventRegistrationToken>(characteristic.remove_ValueChanged), valueChangedDelegate);
-      }
-      return notifyResponse;
-    }
 
     internal Task<NotifyResponse> WriteCharacteristicGetResponse(
       GattCharacteristic characteristic,

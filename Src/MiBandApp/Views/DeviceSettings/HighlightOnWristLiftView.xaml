@@ -1,0 +1,39 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             x:Class="MiBandApp.Views.DeviceSettings.HighlightOnWristLiftView">
+    <UserControl.Content>
+        <StackPanel>
+            <Children>
+                <UIElementCollection>
+                    <TextBlock x:Uid="DevicePage_HighlightDisplayOnWristLift" Margin="0,0,0,-10" Text="Highlight display on wrist lift">
+            <Style>
+              <ThemeResource ResourceKey="GrayTextBlockStyle" />
+            </Style>
+                    </TextBlock>
+                    <ToggleSwitch x:Uid="SettingsPageToggleSwitch" OffContent="Disabled" OnContent="Enabled">
+                        <IsOn>
+                            <Binding Path="IsHighlightOnWristLiftEnabled" Mode="TwoWay" />
+                        </IsOn>
+                    </ToggleSwitch>
+                </UIElementCollection>
+            </Children>
+        </StackPanel>
+    </UserControl.Content>
+</UserControl>
+<!--UserControl
+    x:Class="MiBandApp.Views.DeviceSettings.HighlightOnWristLiftView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MiBandApp.Views.DeviceSettings"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+
+    </Grid>
+</UserControl-->

@@ -1,0 +1,80 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:core="using:Microsoft.Xaml.Interactions.Core" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:interactivity="using:Microsoft.Xaml.Interactivity" 
+             xmlns:local="using:MiBandApp.Views.Activities" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:micro="using:Caliburn.Micro" 
+             x:Class="MiBandApp.Views.Activities.HeartRateMeasureActivityView">
+    <Grid>
+        <Grid>
+            <ColumnDefinitions>
+                <ColumnDefinitionCollection>
+                    <ColumnDefinition Width="40px" />
+                    <ColumnDefinition Width="*" />
+                </ColumnDefinitionCollection>
+            </ColumnDefinitions>
+            <RowDefinitions>
+                <RowDefinitionCollection>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </RowDefinitionCollection>
+            </RowDefinitions>
+            <Children>
+                <UIElementCollection>
+                    <BitmapIcon RowSpan="2" Column="0" Width="30" Margin="0,0,10,0" VerticalAlignment="Center" UriSource="../../Resources/Images/pulse1.png" />
+                    <TextBlock Row="0" Column="1">
+            <Style>
+              <StaticResource ResourceKey="ActivityItemTimeTextBlockStyle" />
+            </Style>
+            <Inlines>
+              <InlineCollection>
+                <Run>
+                  <Text>
+                    <Binding Path="Activity.Begin" ConverterParameter="{0:t}">
+                      <Converter>
+                        <StaticResource ResourceKey="StringFormatConverter" />
+                      </Converter>
+                    </Binding>
+                  </Text>
+                </Run>
+              </InlineCollection>
+            </Inlines>
+                    </TextBlock>
+                    <TextBlock Row="1" Column="1">
+            <Style>
+              <StaticResource ResourceKey="ActivityItemMainContentTextBlockStyle" />
+            </Style>
+            <Inlines>
+              <InlineCollection>
+                <Run x:Uid="HeartRateMeasureActivityViewTitle" Text="Heart rate" />
+                <Run Text=": " />
+                <Run>
+                  <Text>
+                    <Binding Path="Activity.HeartRate" />
+                  </Text>
+                </Run>
+              </InlineCollection>
+            </Inlines>
+                    </TextBlock>
+                </UIElementCollection>
+            </Children>
+        </Grid>
+    </Grid>
+</UserControl>
+<!--UserControl
+    x:Class="MiBandApp.Views.Activities.HeartRateMeasureActivityView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MiBandApp.Views.Activities"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+
+    </Grid>
+</UserControl-->

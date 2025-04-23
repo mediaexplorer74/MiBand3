@@ -1,0 +1,110 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="using:MiBandApp.Views.DeviceSettings" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:micro="using:Caliburn.Micro" 
+             x:Class="MiBandApp.Views.DeviceSettings.ActivityReminderView">
+    <UserControl.Content>
+        <StackPanel>
+            <Children>
+                <UIElementCollection>
+                    <TextBlock x:Uid="DevicePage_ActivityReminder" Margin="0,0,0,-10" Text="Activity reminder">
+            <Style>
+              <ThemeResource ResourceKey="GrayTextBlockStyle" />
+            </Style>
+                    </TextBlock>
+                    <ToggleSwitch x:Uid="SettingsPageToggleSwitch" x:Name="ActivityReminderToggleSwitch" OffContent="Disabled" OnContent="Enabled">
+                        <IsEnabled>
+                            <Binding Path="ActivityReminderDialog.IsVisible" ConverterParameter="False">
+                                <Converter>
+                                    <StaticResource ResourceKey="BoolToBool" />
+                                </Converter>
+                            </Binding>
+                        </IsEnabled>
+                        <IsOn>
+                            <Binding Path="IsActivityReminderEnabled" Mode="TwoWay" />
+                        </IsOn>
+                    </ToggleSwitch>
+                    <StackPanel>
+                        <Visibility>
+                            <Binding ElementName="ActivityReminderToggleSwitch" Path="IsOn">
+                                <Converter>
+                                    <StaticResource ResourceKey="BoolToVis" />
+                                </Converter>
+                            </Binding>
+                        </Visibility>
+                        <Children>
+                            <UIElementCollection>
+                                <TextBlock x:Uid="DeivcePage_ActivityReminderTip" x:ConnectionId="1" Margin="0,0,0,10" HorizontalAlignment="Stretch" IsTapEnabled="False">
+                  <Foreground>
+                    <StaticResource ResourceKey="AppAccentBrush" />
+                  </Foreground>
+                  <Style>
+                    <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
+                  </Style>
+                  <Visibility>
+                    <Binding Path="ActivityReminderDialog.IsVisible" ConverterParameter="False">
+                      <Converter>
+                        <StaticResource ResourceKey="BoolToVis" />
+                      </Converter>
+                    </Binding>
+                  </Visibility>
+                  <Inlines>
+                    <InlineCollection implicititems="Tap to configure reminder settings" />
+                  </Inlines>
+                                </TextBlock>
+                                <StackPanel x:Name="ActivityReminderConfigureContentDialog" Margin="12,0,12,0">
+                                    <DataContext>
+                                        <Binding Path="ActivityReminderDialog" />
+                                    </DataContext>
+                                    <Visibility>
+                                        <Binding Path="IsVisible">
+                                            <Converter>
+                                                <StaticResource ResourceKey="BoolToVis" />
+                                            </Converter>
+                                        </Binding>
+                                    </Visibility>
+                                    <Children>
+                                        <UIElementCollection>
+                                            <TimePicker x:Uid="DevicePage_ActivityReminderStartTime" x:Name="StartTimePicker" Header="Start time">
+                                                <Time>
+                                                    <Binding Path="StartTime" Mode="TwoWay" />
+                                                </Time>
+                                            </TimePicker>
+                                            <TimePicker x:Uid="DevicePage_ActivityReminderEndTime" x:Name="EndTimePicker" Header="End time">
+                                                <Time>
+                                                    <Binding Path="EndTime" Mode="TwoWay" />
+                                                </Time>
+                                            </TimePicker>
+                                            <Button x:Uid="DevicePage_ActivityReminderSaveSettings" Attach="[Event Tapped] = [Action OnSaveButtonTapped()]" Content="Save">
+                                                <IsEnabled>
+                                                    <Binding Path="IsSaveButtonEnabled" />
+                                                </IsEnabled>
+                                            </Button>
+                                        </UIElementCollection>
+                                    </Children>
+                                </StackPanel>
+                            </UIElementCollection>
+                        </Children>
+                    </StackPanel>
+                </UIElementCollection>
+            </Children>
+        </StackPanel>
+    </UserControl.Content>
+</UserControl>
+<!--UserControl
+    x:Class="MiBandApp.Views.DeviceSettings.ActivityReminderView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MiBandApp.Views.DeviceSettings"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+
+    </Grid>
+</UserControl-->

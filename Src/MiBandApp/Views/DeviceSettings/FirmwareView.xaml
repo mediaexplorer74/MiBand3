@@ -1,0 +1,126 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="using:MiBandApp.Views.DeviceSettings" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             x:Class="MiBandApp.Views.DeviceSettings.FirmwareView">
+    <UserControl.Content>
+        <StackPanel>
+            <Children>
+                <UIElementCollection>
+                    <Grid>
+                        <Children>
+                            <UIElementCollection>
+                                <StackPanel>
+                                    <Children>
+                                        <UIElementCollection>
+                                            <TextBlock x:Uid="DevicePageFirmwareHeader">
+                        <Style>
+                          <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
+                        </Style>
+                        <Inlines>
+                          <InlineCollection implicititems="Firmware version" />
+                        </Inlines>
+                                            </TextBlock>
+                                            <TextBlock>
+                        <Style>
+                          <StaticResource ResourceKey="BaseTextBlockStyle" />
+                        </Style>
+                        <Text>
+                          <Binding Path="FirmwareVersion" />
+                        </Text>
+                                            </TextBlock>
+                                        </UIElementCollection>
+                                    </Children>
+                                </StackPanel>
+                                <Button x:Uid="DevicePage_UpgradeFirmwareButton" x:Name="UpgradeFirmware" HorizontalAlignment="Right" Content="upgrade">
+                                    <IsEnabled>
+                                        <Binding Path="IsFirmwareUpgradeEnabled" />
+                                    </IsEnabled>
+                                    <Visibility>
+                                        <Binding Path="IsFirmwareUpgradeAvailable">
+                                            <Converter>
+                                                <StaticResource ResourceKey="BoolToVis" />
+                                            </Converter>
+                                        </Binding>
+                                    </Visibility>
+                                </Button>
+                            </UIElementCollection>
+                        </Children>
+                    </Grid>
+                    <TextBlock x:Uid="DevicePage_FirmwareUpToDate" Text="Firmware is up to date.">
+            <FontSize>
+              <StaticResource ResourceKey="TextStyleSmallFontSize" />
+            </FontSize>
+            <Style>
+              <ThemeResource ResourceKey="GrayTextBlockStyle" />
+            </Style>
+            <Visibility>
+              <Binding Path="IsFirmwareUpToDate">
+                <Converter>
+                  <StaticResource ResourceKey="BoolToVis" />
+                </Converter>
+              </Binding>
+            </Visibility>
+                    </TextBlock>
+                    <TextBlock>
+            <FontSize>
+              <StaticResource ResourceKey="TextStyleSmallFontSize" />
+            </FontSize>
+            <Style>
+              <ThemeResource ResourceKey="GrayTextBlockStyle" />
+            </Style>
+            <Visibility>
+              <Binding Path="IsFirmwareUpgradeAvailable">
+                <Converter>
+                  <StaticResource ResourceKey="BoolToVis" />
+                </Converter>
+              </Binding>
+            </Visibility>
+            <Inlines>
+              <InlineCollection>
+                <Run x:Uid="DevicePage_NewerFirmwareMessage" Text="Newer firmware version available" />
+                <Run Text=": " />
+                <Run>
+                  <Text>
+                    <Binding Path="NewerFirmwareVersion" />
+                  </Text>
+                </Run>
+              </InlineCollection>
+            </Inlines>
+                    </TextBlock>
+                    <TextBlock x:Uid="DevicePageNeedFirmwareUpgrade" Margin="0,10,0,0" Foreground="Red" Text="Firmware needs to be upgraded. Some features may not work.">
+            <FontSize>
+              <StaticResource ResourceKey="TextStyleMediumFontSize" />
+            </FontSize>
+            <Style>
+              <StaticResource ResourceKey="BaseTextBlockStyle" />
+            </Style>
+            <Visibility>
+              <Binding Path="IsFirmwareNeedingUpgrade">
+                <Converter>
+                  <StaticResource ResourceKey="BoolToVis" />
+                </Converter>
+              </Binding>
+            </Visibility>
+                    </TextBlock>
+                </UIElementCollection>
+            </Children>
+        </StackPanel>
+    </UserControl.Content>
+</UserControl>
+<!--UserControl
+    x:Class="MiBandApp.Views.DeviceSettings.FirmwareView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MiBandApp.Views.DeviceSettings"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+
+    </Grid>
+</UserControl-->

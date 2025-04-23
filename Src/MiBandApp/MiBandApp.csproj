@@ -150,11 +150,65 @@
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Converters\SyncStateConverter.cs" />
     <Compile Include="DebugLogger.cs" />
+    <Compile Include="Views\Activities\ActivitiesListView.xaml.cs">
+      <DependentUpon>ActivitiesListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Activities\HeartRateMeasureActivityView.xaml.cs">
+      <DependentUpon>HeartRateMeasureActivityView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Activities\RunningActivityView.xaml.cs">
+      <DependentUpon>RunningActivityView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Activities\SleepDetailsPage.xaml.cs">
+      <DependentUpon>SleepDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Activities\SleepingActivityView.xaml.cs">
+      <DependentUpon>SleepingActivityView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Activities\WalkingActivityView.xaml.cs">
+      <DependentUpon>WalkingActivityView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Band\BandAlarmView.xaml.cs">
+      <DependentUpon>BandAlarmView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DayDetailsPage.xaml.cs">
       <DependentUpon>DayDetailsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DevicePage.xaml.cs">
       <DependentUpon>DevicePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceSettings\ActivityReminderView.xaml.cs">
+      <DependentUpon>ActivityReminderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceSettings\BatteryView.xaml.cs">
+      <DependentUpon>BatteryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceSettings\DisplayView.xaml.cs">
+      <DependentUpon>DisplayView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceSettings\FirmwareView.xaml.cs">
+      <DependentUpon>FirmwareView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceSettings\FlipDisplayOnWristRotateView.xaml.cs">
+      <DependentUpon>FlipDisplayOnWristRotateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceSettings\GoalReachedNotificationView.xaml.cs">
+      <DependentUpon>GoalReachedNotificationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceSettings\HeartRateDuringSleepView.xaml.cs">
+      <DependentUpon>HeartRateDuringSleepView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceSettings\HighlightOnWristLiftView.xaml.cs">
+      <DependentUpon>HighlightOnWristLiftView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceSettings\LedsColorView.xaml.cs">
+      <DependentUpon>LedsColorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceSettings\NotDisturbView.xaml.cs">
+      <DependentUpon>NotDisturbView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DeviceSettings\WearingLocationView.xaml.cs">
+      <DependentUpon>WearingLocationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FirmwareUpgradePage.xaml.cs">
       <DependentUpon>FirmwareUpgradePage.xaml</DependentUpon>
@@ -246,30 +300,12 @@
     <Compile Include="Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Activities\ActivitiesListView.cs" />
-    <Compile Include="Views\Activities\HeartRateMeasureActivityView.cs" />
-    <Compile Include="Views\Activities\RunningActivityView.cs" />
-    <Compile Include="Views\Activities\SleepDetailsPage.cs" />
-    <Compile Include="Views\Activities\SleepingActivityView.cs" />
-    <Compile Include="Views\Activities\WalkingActivityView.cs" />
     <Compile Include="Views\AlarmsPage.xaml.cs">
       <DependentUpon>AlarmsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Band\BandAlarmView.cs" />
     <Compile Include="Views\CloudView.xaml.cs">
       <DependentUpon>CloudView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DeviceSettings\ActivityReminderView.cs" />
-    <Compile Include="Views\DeviceSettings\BatteryView.cs" />
-    <Compile Include="Views\DeviceSettings\DisplayView.cs" />
-    <Compile Include="Views\DeviceSettings\FirmwareView.cs" />
-    <Compile Include="Views\DeviceSettings\FlipDisplayOnWristRotateView.cs" />
-    <Compile Include="Views\DeviceSettings\GoalReachedNotificationView.cs" />
-    <Compile Include="Views\DeviceSettings\HeartRateDuringSleepView.cs" />
-    <Compile Include="Views\DeviceSettings\HighlightOnWristLiftView.cs" />
-    <Compile Include="Views\DeviceSettings\LedsColorView.cs" />
-    <Compile Include="Views\DeviceSettings\NotDisturbView.cs" />
-    <Compile Include="Views\DeviceSettings\WearingLocationView.cs" />
     <Compile Include="Views\MainPageComponents\MessagesView.cs" />
     <Compile Include="Views\MainPageView.xaml.cs">
       <DependentUpon>MainPageView.xaml</DependentUpon>
@@ -280,9 +316,15 @@
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Tabs\HeartRateTabView.cs" />
-    <Compile Include="Views\Tabs\SleepTabView.cs" />
-    <Compile Include="Views\Tabs\WalkTabView.cs" />
+    <Compile Include="Views\Tabs\HeartRateTabView.xaml.cs">
+      <DependentUpon>HeartRateTabView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\SleepTabView.xaml.cs">
+      <DependentUpon>SleepTabView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Tabs\WalkTabView.xaml.cs">
+      <DependentUpon>WalkTabView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserInfoPage.xaml.cs">
       <DependentUpon>UserInfoPage.xaml</DependentUpon>
     </Compile>
@@ -326,11 +368,83 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Activities\ActivitiesListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Activities\HeartRateMeasureActivityView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Activities\RunningActivityView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Activities\SleepDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Activities\SleepingActivityView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Activities\WalkingActivityView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Band\BandAlarmView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DayDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DevicePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceSettings\ActivityReminderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceSettings\BatteryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceSettings\DisplayView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceSettings\FirmwareView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceSettings\FlipDisplayOnWristRotateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceSettings\GoalReachedNotificationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceSettings\HeartRateDuringSleepView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceSettings\HighlightOnWristLiftView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceSettings\LedsColorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceSettings\NotDisturbView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeviceSettings\WearingLocationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -375,6 +489,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tabs\HeartRateTabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tabs\SleepTabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Tabs\WalkTabView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

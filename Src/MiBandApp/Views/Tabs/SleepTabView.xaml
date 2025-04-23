@@ -1,0 +1,258 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:controls="using:MiBandApp.Controls" 
+             xmlns:core="using:Microsoft.Xaml.Interactions.Core" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:interactivity="using:Microsoft.Xaml.Interactivity" 
+             xmlns:local="using:MiBandApp.Views.Tabs" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:micro="using:Caliburn.Micro" 
+             x:Class="MiBandApp.Views.Tabs.SleepTabView" 
+             HorizontalContentAlignment="Stretch" 
+             VerticalContentAlignment="Stretch">
+    <UserControl.Content>
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Children>
+                <UIElementCollection>
+                    <StackPanel>
+                        <Visibility>
+                            <Binding Path="IsPro" ConverterParameter="True">
+                                <Converter>
+                                    <StaticResource ResourceKey="BoolToVis" />
+                                </Converter>
+                            </Binding>
+                        </Visibility>
+                        <Children>
+                            <UIElementCollection>
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="15">
+                  <Style>
+                    <StaticResource ResourceKey="GrayBigTextBlockStyle" />
+                  </Style>
+                  <Inlines>
+                    <InlineCollection>
+                      <Run x:Uid="SleepTabGoalHeader" Text="Goal" />
+                      <Run Text=": " />
+                      <Run>
+                        <Text>
+                          <Binding Path="GoalInfo.SleepGoalMinutes">
+                            <Converter>
+                              <StaticResource ResourceKey="MinutesToStringConverter" />
+                            </Converter>
+                          </Binding>
+                        </Text>
+                      </Run>
+                    </InlineCollection>
+                  </Inlines>
+                                </TextBlock>
+                                <controls:Gauge Margin="0,-40,0,0" IsTextScaleFactorEnabled="True" IsUndefined="True" Minimum="0" NeedleBrush="Transparent" ScaleTickBrush="Transparent" ScaleWidth="15" TickBrush="Transparent">
+                                    <controls:Maximum>
+                                        <Binding Path="GoalInfo.SleepGoalMinutes" />
+                                    </controls:Maximum>
+                                    <controls:ScaleBrush>
+                                        <ThemeResource ResourceKey="CommandBarBackgroundThemeBrush" />
+                                    </controls:ScaleBrush>
+                                    <controls:TrailBrush>
+                                        <StaticResource ResourceKey="AppAccentBrush" />
+                                    </controls:TrailBrush>
+                                    <controls:Value>
+                                        <Binding Path="TotalSleepTimeMin" />
+                                    </controls:Value>
+                                    <controls:Content>
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Resources>
+                                                <ResourceDictionary>
+                                                    <Style x:Key="HintLabelStyle" TargetType="TextBlock">
+                                                        <BasedOn>
+                                                            <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
+                                                        </BasedOn>
+                                                        <Setters>
+                                                            <SetterBaseCollection>
+                                                                <Setter Property="FontSize" Value="8" />
+                                                                <Setter Property="TextAlignment" Value="Center" />
+                                                            </SetterBaseCollection>
+                                                        </Setters>
+                                                    </Style>
+                                                    <Style x:Key="ValueTextBlockStyle" TargetType="TextBlock">
+                                                        <Setters>
+                                                            <SetterBaseCollection>
+                                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                                <Setter Property="FontSize" Value="13" />
+                                                                <Setter Property="FontWeight" Value="Normal" />
+                                                                <Setter Property="TextAlignment" Value="Center" />
+                                                                <Setter Property="FontFamily" Value="Segoe UI" />
+                                                                <Setter Property="Margin" Value="0,-2,0,-2" />
+                                                            </SetterBaseCollection>
+                                                        </Setters>
+                                                    </Style>
+                                                </ResourceDictionary>
+                                            </Resources>
+                                            <Children>
+                                                <UIElementCollection>
+                                                    <TextBlock x:Uid="MainPageTotalSleepTimeHeader">
+                            <Style>
+                              <StaticResource ResourceKey="HintLabelStyle" />
+                            </Style>
+                            <Inlines>
+                              <InlineCollection implicititems="Total sleep time" />
+                            </Inlines>
+                                                    </TextBlock>
+                                                    <TextBlock HorizontalAlignment="Center" FontSize="23" FontWeight="Normal">
+                            <Inlines>
+                              <InlineCollection>
+                                <Run>
+                                  <Text>
+                                    <Binding Path="TotalSleepTimeMin" ConverterParameter="HoursOnly">
+                                      <Converter>
+                                        <StaticResource ResourceKey="MinutesToStringConverter" />
+                                      </Converter>
+                                    </Binding>
+                                  </Text>
+                                </Run>
+                                <Run FontSize="15">
+                                  <Text>
+                                    <Binding Path="TotalSleepTimeMin" ConverterParameter="HoursText">
+                                      <Converter>
+                                        <StaticResource ResourceKey="MinutesToStringConverter" />
+                                      </Converter>
+                                    </Binding>
+                                  </Text>
+                                </Run>
+                                <Run FontSize="15" Text=" " />
+                                <Run>
+                                  <Text>
+                                    <Binding Path="TotalSleepTimeMin" ConverterParameter="MinutesOnly">
+                                      <Converter>
+                                        <StaticResource ResourceKey="MinutesToStringConverter" />
+                                      </Converter>
+                                    </Binding>
+                                  </Text>
+                                </Run>
+                                <Run FontSize="15">
+                                  <Text>
+                                    <Binding Path="TotalSleepTimeMin" ConverterParameter="MinutesText">
+                                      <Converter>
+                                        <StaticResource ResourceKey="MinutesToStringConverter" />
+                                      </Converter>
+                                    </Binding>
+                                  </Text>
+                                </Run>
+                              </InlineCollection>
+                            </Inlines>
+                                                    </TextBlock>
+                                                    <StackPanel HorizontalAlignment="Center">
+                                                        <Children>
+                                                            <UIElementCollection>
+                                                                <TextBlock x:Uid="SleepTabDeepSleep">
+                                  <Style>
+                                    <StaticResource ResourceKey="HintLabelStyle" />
+                                  </Style>
+                                  <Inlines>
+                                    <InlineCollection implicititems="Deep sleep" />
+                                  </Inlines>
+                                                                </TextBlock>
+                                                                <TextBlock>
+                                  <Style>
+                                    <StaticResource ResourceKey="ValueTextBlockStyle" />
+                                  </Style>
+                                  <Text>
+                                    <Binding Path="TotalDeepSleepMin">
+                                      <Converter>
+                                        <StaticResource ResourceKey="MinutesToStringConverter" />
+                                      </Converter>
+                                    </Binding>
+                                  </Text>
+                                                                </TextBlock>
+                                                            </UIElementCollection>
+                                                        </Children>
+                                                    </StackPanel>
+                                                </UIElementCollection>
+                                            </Children>
+                                        </StackPanel>
+                                    </controls:Content>
+                                    <interactivity:Behaviors>
+                                        <interactivity:BehaviorCollection>
+                                            <core:DataTriggerBehavior Value="Success">
+                                                <core:Binding>
+                                                    <Binding Path="SyncState" />
+                                                </core:Binding>
+                                                <core:Actions>
+                                                    <interactivity:ActionCollection>
+                                                        <core:ChangePropertyAction PropertyName="IsUndefined" Value="False" />
+                                                    </interactivity:ActionCollection>
+                                                </core:Actions>
+                                            </core:DataTriggerBehavior>
+                                            <core:DataTriggerBehavior Value="Failed">
+                                                <core:Binding>
+                                                    <Binding Path="SyncState" />
+                                                </core:Binding>
+                                                <core:Actions>
+                                                    <interactivity:ActionCollection>
+                                                        <core:ChangePropertyAction PropertyName="IsUndefined" Value="False" />
+                                                    </interactivity:ActionCollection>
+                                                </core:Actions>
+                                            </core:DataTriggerBehavior>
+                                            <core:DataTriggerBehavior Value="InProgress">
+                                                <core:Binding>
+                                                    <Binding Path="SyncState" />
+                                                </core:Binding>
+                                                <core:Actions>
+                                                    <interactivity:ActionCollection>
+                                                        <core:ChangePropertyAction PropertyName="IsUndefined" Value="True" />
+                                                    </interactivity:ActionCollection>
+                                                </core:Actions>
+                                            </core:DataTriggerBehavior>
+                                        </interactivity:BehaviorCollection>
+                                    </interactivity:Behaviors>
+                                </controls:Gauge>
+                                <TextBlock Margin="0,-40,0,0" HorizontalAlignment="Center" FontSize="15">
+                  <Style>
+                    <StaticResource ResourceKey="GrayBigTextBlockStyle" />
+                  </Style>
+                  <Inlines>
+                    <InlineCollection>
+                      <Run x:Uid="SleepTabTimeInBedHeader" Text="Time in bed" />
+                      <Run Text=": " />
+                      <Run>
+                        <Text>
+                          <Binding Path="TotalTimeInBed">
+                            <Converter>
+                              <StaticResource ResourceKey="MinutesToStringConverter" />
+                            </Converter>
+                          </Binding>
+                        </Text>
+                      </Run>
+                    </InlineCollection>
+                  </Inlines>
+                                </TextBlock>
+                            </UIElementCollection>
+                        </Children>
+                    </StackPanel>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Attach="[Event Tapped] = [Action GoToSubscriptionPage()]" FontSize="25" TextAlignment="Center">
+            <Style>
+              <StaticResource ResourceKey="GrayBigTextBlockStyle" />
+            </Style>
+            <Visibility>
+              <Binding Path="IsPro" ConverterParameter="False">
+                <Converter>
+                  <StaticResource ResourceKey="BoolToVis" />
+                </Converter>
+              </Binding>
+            </Visibility>
+            <Inlines>
+              <InlineCollection>
+                <Run x:Uid="MainPageUpgradeToProSleep1" Text="Upgrade to" />
+                <Run Text=" PRO">
+                  <Foreground>
+                    <StaticResource ResourceKey="AppAccentBrush" />
+                  </Foreground>
+                </Run>
+                <LineBreak />
+                <Run x:Uid="MainPageUpgradeToProSleep2" Text="to enable sleep tracking" />
+              </InlineCollection>
+            </Inlines>
+                    </TextBlock>
+                </UIElementCollection>
+            </Children>
+        </Grid>
+    </UserControl.Content>
+</UserControl>

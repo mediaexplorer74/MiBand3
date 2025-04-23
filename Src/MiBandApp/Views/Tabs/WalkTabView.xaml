@@ -1,0 +1,224 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:controls="using:MiBandApp.Controls" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="using:MiBandApp.Views.Tabs" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:micro="using:Caliburn.Micro" 
+             xmlns:tabs="using:MiBandApp.ViewModels.Tabs" 
+             x:Class="MiBandApp.Views.Tabs.WalkTabView">
+    <UserControl.Content>
+        <StackPanel x:Name="WalkGrid" HorizontalAlignment="Center">
+            <Background>
+                <StaticResource ResourceKey="AppBackgroundBrush" />
+            </Background>
+            <Children>
+                <UIElementCollection>
+                    <Grid>
+                        <Children>
+                            <UIElementCollection>
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Bottom"
+                                           FontSize="15">
+                  <Style>
+                    <StaticResource ResourceKey="GrayBigTextBlockStyle" />
+                  </Style>
+                  <Inlines>
+                    <InlineCollection>
+                      <Run x:Uid="WalkTabGoalHeader" Text="Goal" />
+                      <Run Text=": " />
+                      <Run>
+                        <Text>
+                          <Binding Path="GoalInfo.StepsGoal" ConverterParameter="{0} steps">
+                            <Converter>
+                              <StaticResource ResourceKey="StringFormatConverter" />
+                            </Converter>
+                          </Binding>
+                        </Text>
+                      </Run>
+                    </InlineCollection>
+                  </Inlines>
+                                </TextBlock>
+                            </UIElementCollection>
+                        </Children>
+                    </Grid>
+                    <controls:Gauge Margin="0,-40,0,0" VerticalAlignment="Top" 
+                                    IsTextScaleFactorEnabled="True" 
+                                    Minimum="0" NeedleBrush="Transparent" 
+                                    ScaleTickBrush="Transparent" 
+                                    ScaleWidth="15" TickBrush="Transparent">
+                        <controls:IsUndefined>
+                            <Binding Path="IsRefreshingSteps" />
+                        </controls:IsUndefined>
+                        <controls:Maximum>
+                            <Binding Path="GoalInfo.StepsGoal" />
+                        </controls:Maximum>
+                        <controls:ScaleBrush>
+                            <ThemeResource ResourceKey="CommandBarBackgroundThemeBrush" />
+                        </controls:ScaleBrush>
+                        <controls:TrailBrush>
+                            <StaticResource ResourceKey="AppAccentBrush" />
+                        </controls:TrailBrush>
+                        <controls:Value>
+                            <Binding Path="RealtimeSteps" />
+                        </controls:Value>
+                        <controls:Content>
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Visibility>
+                                    <Binding Path="IsRealtimeStepsLoaded">
+                                        <Converter>
+                                            <StaticResource ResourceKey="BoolToVis" />
+                                        </Converter>
+                                    </Binding>
+                                </Visibility>
+                                <Resources>
+                                    <ResourceDictionary>
+                                        <Style x:Key="HintLabelStyle" TargetType="TextBlock">
+                                            <BasedOn>
+                                                <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
+                                            </BasedOn>
+                                            <Setters>
+                                                <SetterBaseCollection>
+                                                    <Setter Property="FontSize" Value="8" />
+                                                    <Setter Property="TextAlignment" Value="Center" />
+                                                </SetterBaseCollection>
+                                            </Setters>
+                                        </Style>
+                                    </ResourceDictionary>
+                                </Resources>
+                                <Children>
+                                    <UIElementCollection>
+                                        <TextBlock x:Uid="MainPageDailyStepsHeader">
+                      <Style>
+                        <StaticResource ResourceKey="HintLabelStyle" />
+                      </Style>
+                      <Inlines>
+                        <InlineCollection implicititems="Daily steps" />
+                      </Inlines>
+                                        </TextBlock>
+                                        <TextBlock HorizontalAlignment="Center"
+                                                   FontSize="23"
+                                                   FontWeight="Normal">
+                      <Text>
+                        <Binding Path="RealtimeSteps" />
+                      </Text>
+                                        </TextBlock>
+                                        <Grid Margin="0,2,0,-2">
+                                            <ColumnDefinitions>
+                                                <ColumnDefinitionCollection>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="10px" />
+                                                    <ColumnDefinition />
+                                                </ColumnDefinitionCollection>
+                                            </ColumnDefinitions>
+                                            <Resources>
+                                                <ResourceDictionary>
+                                                    <Style x:Key="ValueTextBlockStyle" TargetType="TextBlock">
+                                                        <Setters>
+                                                            <SetterBaseCollection>
+                                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                                <Setter Property="FontSize" Value="13" />
+                                                                <Setter Property="FontWeight" Value="Normal" />
+                                                                <Setter Property="TextAlignment" Value="Center" />
+                                                                <Setter Property="FontFamily" Value="Segoe UI" />
+                                                                <Setter Property="Margin" Value="0,-2,0,-2" />
+                                                            </SetterBaseCollection>
+                                                        </Setters>
+                                                    </Style>
+                                                </ResourceDictionary>
+                                            </Resources>
+                                            <Children>
+                                                <UIElementCollection>
+                                                    <StackPanel>
+                                                        <Children>
+                                                            <UIElementCollection>
+                                                                <TextBlock x:Uid="MainPageDistanceHeader">
+                                  <Style>
+                                    <StaticResource ResourceKey="HintLabelStyle" />
+                                  </Style>
+                                  <Inlines>
+                                    <InlineCollection implicititems="Distance" />
+                                  </Inlines>
+                                                                </TextBlock>
+                                                                <TextBlock>
+                                  <Style>
+                                    <StaticResource ResourceKey="ValueTextBlockStyle" />
+                                  </Style>
+                                  <Text>
+                                    <Binding Path="DailyDistance" />
+                                  </Text>
+                                                                </TextBlock>
+                                                                <TextBlock>
+                                  <Style>
+                                    <StaticResource ResourceKey="HintLabelStyle" />
+                                  </Style>
+                                  <Text>
+                                    <Binding Path="DistanceUnits" />
+                                  </Text>
+                                                                </TextBlock>
+                                                            </UIElementCollection>
+                                                        </Children>
+                                                    </StackPanel>
+                                                    <StackPanel Column="2">
+                                                        <Children>
+                                                            <UIElementCollection>
+                                                                <TextBlock x:Uid="MainPageEnergyHeader">
+                                  <Style>
+                                    <StaticResource ResourceKey="HintLabelStyle" />
+                                  </Style>
+                                  <Inlines>
+                                    <InlineCollection implicititems="Energy" />
+                                  </Inlines>
+                                                                </TextBlock>
+                                                                <TextBlock>
+                                  <Style>
+                                    <StaticResource ResourceKey="ValueTextBlockStyle" />
+                                  </Style>
+                                  <Text>
+                                    <Binding Path="DailyEnergy" />
+                                  </Text>
+                                                                </TextBlock>
+                                                                <TextBlock>
+                                  <Style>
+                                    <StaticResource ResourceKey="HintLabelStyle" />
+                                  </Style>
+                                  <Text>
+                                    <Binding Path="EnergyUnits" />
+                                  </Text>
+                                                                </TextBlock>
+                                                            </UIElementCollection>
+                                                        </Children>
+                                                    </StackPanel>
+                                                </UIElementCollection>
+                                            </Children>
+                                        </Grid>
+                                    </UIElementCollection>
+                                </Children>
+                            </StackPanel>
+                        </controls:Content>
+                    </controls:Gauge>
+                    <TextBlock Margin="0,-40,0,0" HorizontalAlignment="Center" FontSize="15">
+            <Style>
+              <StaticResource ResourceKey="GrayBigTextBlockStyle" />
+            </Style>
+            <Inlines>
+              <InlineCollection>
+                <Run x:Uid="WalkTabTotalWalkingTimeHeader" Text="Walking time" />
+                <Run Text=": " />
+                <Run>
+                  <Text>
+                    <Binding Path="TotalWalkingTime">
+                      <Converter>
+                        <StaticResource ResourceKey="MinutesToStringConverter" />
+                      </Converter>
+                    </Binding>
+                  </Text>
+                </Run>
+              </InlineCollection>
+            </Inlines>
+                    </TextBlock>
+                </UIElementCollection>
+            </Children>
+        </StackPanel>
+    </UserControl.Content>
+</UserControl>

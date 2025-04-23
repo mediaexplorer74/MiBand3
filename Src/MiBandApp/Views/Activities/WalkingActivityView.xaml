@@ -1,0 +1,197 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:core="using:Microsoft.Xaml.Interactions.Core" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:gregstoll="using:Gregstoll" 
+             xmlns:interactivity="using:Microsoft.Xaml.Interactivity" 
+             xmlns:local="using:MiBandApp.Views.Activities" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             x:Class="MiBandApp.Views.Activities.WalkingActivityView">
+    <UserControl.Content>
+        <Grid>
+            <ColumnDefinitions>
+                <ColumnDefinitionCollection>
+                    <ColumnDefinition Width="40px" />
+                    <ColumnDefinition />
+                </ColumnDefinitionCollection>
+            </ColumnDefinitions>
+            <RowDefinitions>
+                <RowDefinitionCollection>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </RowDefinitionCollection>
+            </RowDefinitions>
+            <Children>
+                <UIElementCollection>
+                    <StackPanel Row="0" Column="1" Orientation="Horizontal">
+                        <Children>
+                            <UIElementCollection>
+                                <TextBlock>
+                  <Style>
+                    <StaticResource ResourceKey="ActivityItemTimeTextBlockStyle" />
+                  </Style>
+                  <Visibility>
+                    <Binding Path="ShowOneTimestamp" ConverterParameter="False">
+                      <Converter>
+                        <StaticResource ResourceKey="BoolToVis" />
+                      </Converter>
+                    </Binding>
+                  </Visibility>
+                  <Inlines>
+                    <InlineCollection>
+                      <Run>
+                        <Text>
+                          <Binding Path="Activity.Begin" ConverterParameter="{0:t}">
+                            <Converter>
+                              <StaticResource ResourceKey="StringFormatConverter" />
+                            </Converter>
+                          </Binding>
+                        </Text>
+                      </Run>
+                      <Run Text="-" />
+                      <Run>
+                        <Text>
+                          <Binding Path="Activity.End" ConverterParameter="{0:t}">
+                            <Converter>
+                              <StaticResource ResourceKey="StringFormatConverter" />
+                            </Converter>
+                          </Binding>
+                        </Text>
+                      </Run>
+                    </InlineCollection>
+                  </Inlines>
+                                </TextBlock>
+                                <TextBlock>
+                  <Style>
+                    <StaticResource ResourceKey="ActivityItemTimeTextBlockStyle" />
+                  </Style>
+                  <Visibility>
+                    <Binding Path="ShowOneTimestamp">
+                      <Converter>
+                        <StaticResource ResourceKey="BoolToVis" />
+                      </Converter>
+                    </Binding>
+                  </Visibility>
+                  <Inlines>
+                    <InlineCollection>
+                      <Run>
+                        <Text>
+                          <Binding Path="Activity.Begin" ConverterParameter="{0:t}">
+                            <Converter>
+                              <StaticResource ResourceKey="StringFormatConverter" />
+                            </Converter>
+                          </Binding>
+                        </Text>
+                      </Run>
+                    </InlineCollection>
+                  </Inlines>
+                                </TextBlock>
+                            </UIElementCollection>
+                        </Children>
+                    </StackPanel>
+                    <BitmapIcon Row="0" RowSpan="2" Column="0" Height="30" Margin="0,0,10,0" VerticalAlignment="Center" UriSource="../../Resources/Images/walking2.png">
+                        <interactivity:Behaviors>
+                            <interactivity:BehaviorCollection>
+                                <core:DataTriggerBehavior Value="True">
+                                    <core:Binding>
+                                        <Binding Path="IsSmallWalk" />
+                                    </core:Binding>
+                                    <core:Actions>
+                                        <interactivity:ActionCollection>
+                                            <core:ChangePropertyAction PropertyName="Height" Value="20" />
+                                        </interactivity:ActionCollection>
+                                    </core:Actions>
+                                </core:DataTriggerBehavior>
+                            </interactivity:BehaviorCollection>
+                        </interactivity:Behaviors>
+                    </BitmapIcon>
+                    <gregstoll:UniversalWrapPanel Row="1" Column="1" Orientation="Horizontal">
+                        <Children>
+                            <UIElementCollection>
+                                <TextBlock>
+                  <Style>
+                    <StaticResource ResourceKey="ActivityItemMainContentTextBlockStyle" />
+                  </Style>
+                  <Inlines>
+                    <InlineCollection>
+                      <Run x:Uid="WalkingActivity_WalkTitle" Text="Walking" />
+                      <Run Text=": " />
+                      <Run>
+                        <Text>
+                          <Binding Path="DurationMin" ConverterParameter="short">
+                            <Converter>
+                              <StaticResource ResourceKey="MinutesToStringConverter" />
+                            </Converter>
+                          </Binding>
+                        </Text>
+                      </Run>
+                    </InlineCollection>
+                  </Inlines>
+                                </TextBlock>
+                                <TextBlock>
+                  <Style>
+                    <StaticResource ResourceKey="ActivityItemSecondaryWrappableTextBlockStyle" />
+                  </Style>
+                  <Inlines>
+                    <InlineCollection>
+                      <Run x:Uid="WalkingActivitySteps" Text="Steps" />
+                      <Run Text=": " />
+                      <Run>
+                        <Text>
+                          <Binding Path="Activity.Steps" ConverterParameter="{0}">
+                            <Converter>
+                              <StaticResource ResourceKey="StringFormatConverter" />
+                            </Converter>
+                          </Binding>
+                        </Text>
+                      </Run>
+                    </InlineCollection>
+                  </Inlines>
+                                </TextBlock>
+                                <TextBlock>
+                  <Style>
+                    <StaticResource ResourceKey="ActivityItemSecondaryWrappableTextBlockStyle" />
+                  </Style>
+                  <Text>
+                    <Binding Path="Activity.Distance">
+                      <Converter>
+                        <StaticResource ResourceKey="DistanceKmToFormattedStringConverter" />
+                      </Converter>
+                    </Binding>
+                  </Text>
+                                </TextBlock>
+                                <TextBlock>
+                  <Style>
+                    <StaticResource ResourceKey="ActivityItemSecondaryWrappableTextBlockStyle" />
+                  </Style>
+                  <Text>
+                    <Binding Path="Activity.Calories">
+                      <Converter>
+                        <StaticResource ResourceKey="CaloriesToFormattedStringConverter" />
+                      </Converter>
+                    </Binding>
+                  </Text>
+                                </TextBlock>
+                            </UIElementCollection>
+                        </Children>
+                    </gregstoll:UniversalWrapPanel>
+                </UIElementCollection>
+            </Children>
+        </Grid>
+    </UserControl.Content>
+</UserControl>
+<!--UserControl
+    x:Class="MiBandApp.Views.Activities.WalkingActivityView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MiBandApp.Views.Activities"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+
+    </Grid>
+</UserControl-->
