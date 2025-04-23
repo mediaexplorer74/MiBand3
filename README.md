@@ -10,7 +10,7 @@ I'll ty to port ("translate") VB to C# and "upgrade" it for Xaiomi Band 3 (or ev
 
 ## Status / progress
 - Min. Win. SDK = 15063
-- Code R.E. with (help) of DotPeek C# decompiler.
+- Code R.E. (via DotPeek C# decompiler) completed. Only "main part" (MiBandApp) failed to build/compile..
 - Draft / damaged / 100500 bugs still here/there!
 
 
