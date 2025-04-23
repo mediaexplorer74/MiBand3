@@ -6,10 +6,10 @@
 
 using MiBand.SDK.Data;
 using MiBand.SDK.Tools;
-using System;
-using System.Collections.Generic;
+using System; // For DateTimeOffset
+using System.Collections.Generic; // For List<>
+using System.Linq; // For LINQ methods like Any
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 #nullable disable
@@ -49,14 +49,19 @@ namespace MiBand.SDK.Core.MiBandTwo
     {
       while (true)
       {
-        MiBandTwoDataSyncFragment fragment;
+        MiBandTwoDataSyncFragment fragment = default;
         MiBandTwoDataSyncFragment dataSyncFragment = fragment;
         fragment = await this._dataLoader.GetData(searchTime, MiBandTwoDataLoaderKind.Activity);
         if (fragment != null)
         {
-          if (fragment.ItemsCount != 0 && !resultPackage.ActivitySeries.Any<RawMinuteActivityDataSeries>((Func<RawMinuteActivityDataSeries, bool>) (t => t.StartTime == fragment.StartTime)))
+          if (fragment.ItemsCount != 0 && 
+                        !resultPackage.ActivitySeries.Any<RawMinuteActivityDataSeries>(
+                            (Func<RawMinuteActivityDataSeries, bool>)
+              (t => t.StartTime == fragment.StartTime)))
           {
-            RawMinuteActivityDataSeries activityDataSeries = this.PostProcessActivitiesFragment(fragment);
+            RawMinuteActivityDataSeries activityDataSeries = 
+                            this.PostProcessActivitiesFragment(fragment);
+
             if (activityDataSeries.Data.Count == fragment.ItemsCount)
             {
               resultPackage.ActivitySeries.Add(activityDataSeries);
@@ -90,7 +95,8 @@ label_7:
       List<HeartRateMeasurement> collection = this.PostProcessHeartRateFragment(data);
       if (collection.Count != data.ItemsCount)
         throw new InvalidDataException("Number of received heart rate measurements is not the same as in data header");
-      resultPackage.HeartRateMeasurements.AddRange((IEnumerable<HeartRateMeasurement>) collection);
+      
+      //resultPackage.HeartRateMeasurements.AddRange((IEnumerable<HeartRateMeasurement>) collection);
       return true;
     }
 

@@ -11,21 +11,20 @@ using Windows.UI.Xaml;
 #nullable disable
 namespace MetroLog
 {
-  public static class GlobalCrashHandler
-  {
-    public static void Configure()
+    public static class GlobalCrashHandler
     {
-      Application current = Application.Current;
-      WindowsRuntimeMarshal.AddEventHandler<UnhandledExceptionEventHandler>(new Func<UnhandledExceptionEventHandler, EventRegistrationToken>(current.add_UnhandledException), new Action<EventRegistrationToken>(current.remove_UnhandledException), new UnhandledExceptionEventHandler(GlobalCrashHandler.App_UnhandledException));
-    }
+        public static void Configure()
+        {
+            Application.Current.UnhandledException += GlobalCrashHandler.App_UnhandledException;
+        }
 
-    private static async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-    {
-      WindowsRuntimeMarshal.RemoveEventHandler<UnhandledExceptionEventHandler>(new Action<EventRegistrationToken>(Application.Current.remove_UnhandledException), new UnhandledExceptionEventHandler(GlobalCrashHandler.App_UnhandledException));
-      e.put_Handled(true);
-      LogWriteOperation[] logWriteOperationArray = await ((ILoggerAsync) LogManagerFactory.DefaultLogManager.GetLogger<Application>()).FatalAsync("The application crashed: " + e.Message, (object) e);
-      await LazyFlushManager.FlushAllAsync(new LogWriteContext());
-      Application.Current.Exit();
+        private static async void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Application.Current.UnhandledException -= GlobalCrashHandler.App_UnhandledException;
+            e.Handled = true;
+            LogWriteOperation[] logWriteOperationArray = await ((ILoggerAsync)LogManagerFactory.DefaultLogManager.GetLogger<Application>()).FatalAsync("The application crashed: " + e.Message, (object)e);
+            await LazyFlushManager.FlushAllAsync(new LogWriteContext());
+            Application.Current.Exit();
+        }
     }
-  }
 }

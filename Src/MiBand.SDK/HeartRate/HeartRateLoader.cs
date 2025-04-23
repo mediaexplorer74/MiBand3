@@ -49,11 +49,13 @@ namespace MiBand.SDK.HeartRate
         return (HeartRateMeasurement) null;
       object obj = (object) null;
       int num = 0;
-      HeartRateMeasurement heartRate;
+      HeartRateMeasurement heartRate = default;
       try
       {
         this._gettingDataTaskCompletionSource = new TaskCompletionSource<HeartRateMeasurement>();
-        ConfiguredTaskAwaitable configuredTaskAwaitable = this.ConfigureServiceForNotificationsAsync().ConfigureAwait(false);
+        ConfiguredTaskAwaitable configuredTaskAwaitable = 
+                    this.ConfigureServiceForNotificationsAsync().ConfigureAwait(false);
+
         await configuredTaskAwaitable;
         configuredTaskAwaitable = this.SendMeasurementStartCommand().ConfigureAwait(false);
         await configuredTaskAwaitable;
@@ -71,7 +73,7 @@ namespace MiBand.SDK.HeartRate
         }
         num = 1;
       }
-      catch (object ex)
+      catch (Exception ex)
       {
         obj = ex;
       }
@@ -80,14 +82,15 @@ namespace MiBand.SDK.HeartRate
       if (obj1 != null)
       {
         if (!(obj1 is Exception source))
-          throw obj1;
+         throw (Exception)obj1;
+        
         ExceptionDispatchInfo.Capture(source).Throw();
       }
       if (num == 1)
         return heartRate;
       obj = (object) null;
-      heartRate = (HeartRateMeasurement) null;
-      HeartRateMeasurement heartRate1;
+      heartRate = (HeartRateMeasurement) default;
+      HeartRateMeasurement heartRate1 = heartRate;
       return heartRate1;
     }
 
@@ -111,34 +114,39 @@ namespace MiBand.SDK.HeartRate
       }.AsBuffer());
     }
 
-    private async Task ConfigureServiceForNotificationsAsync()
-    {
-      try
-      {
-        GattCharacteristic hrCharacteristics = this._hrCharacteristics;
-        // ISSUE: method pointer
-        WindowsRuntimeMarshal.AddEventHandler<TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>>(new Func<TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>, EventRegistrationToken>(hrCharacteristics.add_ValueChanged), new Action<EventRegistrationToken>(hrCharacteristics.remove_ValueChanged), new TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>((object) this, __methodptr(HeartRateOnValueChanged)));
-        GattCommunicationStatus communicationStatus = await this._hrCharacteristics.WriteClientCharacteristicConfigurationDescriptorAsync((GattClientCharacteristicConfigurationDescriptorValue) 1);
-      }
-      catch (Exception ex)
-      {
-        this._log.Warning("Exception when trying to configure service for notifications on: " + (object) ex);
-      }
-    }
+        private async Task ConfigureServiceForNotificationsAsync()
+        {
+            try
+            {
+                GattCharacteristic hrCharacteristics = this._hrCharacteristics;
 
-    private async Task UnsubscribeFromNotifies()
-    {
-      try
-      {
-        GattCommunicationStatus communicationStatus = await this._hrCharacteristics.WriteClientCharacteristicConfigurationDescriptorAsync((GattClientCharacteristicConfigurationDescriptorValue) 0);
-        // ISSUE: method pointer
-        WindowsRuntimeMarshal.RemoveEventHandler<TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>>(new Action<EventRegistrationToken>(this._hrCharacteristics.remove_ValueChanged), new TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>((object) this, __methodptr(HeartRateOnValueChanged)));
-      }
-      catch (Exception ex)
-      {
-        this._log.Warning("Exception when trying to configure service for notifications off: " + (object) ex);
-      }
-    }
+                // Use lambda expressions to add and remove event handlers
+                hrCharacteristics.ValueChanged += (sender, args) => HeartRateOnValueChanged(sender, args);
+
+                GattCommunicationStatus communicationStatus = await this._hrCharacteristics
+                    .WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.Notify);
+            }
+            catch (Exception ex)
+            {
+                this._log.Warning("Exception when trying to configure service for notifications on: " + ex);
+            }
+        }
+
+        private async Task UnsubscribeFromNotifies()
+        {
+            try
+            {
+                GattCommunicationStatus communicationStatus = await this._hrCharacteristics
+                    .WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.None);
+
+                // Corrected the variable name to use the existing field '_hrCharacteristics'
+                this._hrCharacteristics.ValueChanged -= HeartRateOnValueChanged;
+            }
+            catch (Exception ex)
+            {
+                this._log.Warning("Exception when trying to configure service for notifications off: " + ex);
+            }
+        }
 
     private void HeartRateOnValueChanged(GattCharacteristic sender, GattValueChangedEventArgs args)
     {

@@ -12,10 +12,13 @@ namespace MiBand.SDK.Data
 {
   public class RawMinuteActivityDataSeries
   {
-    public RawMinuteActivityDataSeries() => this.Data = new List<RawMinuteActivityData>();
+        public RawMinuteActivityDataSeries()
+        {
+            this.Data = new List<RawMinuteActivityData>();
+        }
 
-    public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset StartTime { get; set; }
 
-    public List<RawMinuteActivityData> Data { get; private set; }
+       public List<RawMinuteActivityData> Data { get; private set; }
   }
 }

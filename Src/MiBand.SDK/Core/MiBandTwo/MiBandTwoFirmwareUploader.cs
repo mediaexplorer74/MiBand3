@@ -153,7 +153,8 @@ namespace MiBand.SDK.Core.MiBandTwo
         this._firmwareUpgradeProgress.ReportError(FirmwareUpgradeError.CommunicationError);
         throw;
       }
-      Task.Delay(5000).ContinueWith<bool>((Func<Task, bool>) (t => transmissionCompleteTcs.TrySetResult(true)));
+      Task.Delay(5000).ContinueWith<bool>((Func<Task, bool>)
+          (t => transmissionCompleteTcs.TrySetResult(true)));
       return hash;
     }
 

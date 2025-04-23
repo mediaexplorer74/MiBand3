@@ -91,7 +91,8 @@ namespace Microsoft.Live.Operations
         return;
       try
       {
-        this.Request.BeginGetResponse((AsyncCallback) new AsyncCallback(((WebOperation) this).OnGetResponseCompleted), (object) null);
+        this.Request.BeginGetResponse(
+            new AsyncCallback(this.OnGetResponseCompleted), null);
       }
       catch (WebException ex)
       {

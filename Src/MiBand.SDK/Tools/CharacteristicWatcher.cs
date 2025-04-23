@@ -76,8 +76,11 @@ namespace MiBand.SDK.Tools
     {
       try
       {
-        GattReadResult gattReadResult = await this._characteristic.ReadValueAsync((BluetoothCacheMode) 1);
-        return gattReadResult.Status != 1 ? gattReadResult.Value.ToArraySafe() : (byte[]) null;
+        GattReadResult gattReadResult = await this._characteristic.ReadValueAsync(
+            BluetoothCacheMode.Uncached);
+        return gattReadResult.Status != GattCommunicationStatus.AccessDenied 
+                    ? gattReadResult.Value.ToArraySafe() 
+                    : (byte[]) null;
       }
       catch
       {

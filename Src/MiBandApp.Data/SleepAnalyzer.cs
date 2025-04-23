@@ -142,7 +142,7 @@ namespace MiBandApp.Data
         if (dataList.GetAverageActivity(begin, 15) > 30.0)
         {
           do
-            ;
+          { }
           while (begin < dataList.Count && dataList[begin++].Steps <= 0);
           return begin - 1;
         }

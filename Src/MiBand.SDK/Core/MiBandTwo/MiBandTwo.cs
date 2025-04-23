@@ -247,7 +247,8 @@ namespace MiBand.SDK.Core.MiBandTwo
 
     public override async Task Reboot()
     {
-      throw new NotImplementedException("No programmatical reboot is available for Mi Band 2. You need to press sensor button for 10 seconds.");
+      throw new NotImplementedException(
+          "No programmatical reboot is available for Mi Band 2. You need to press sensor button for 10 seconds.");
     }
 
     public override async Task Vibrate(Vibration vibration)
@@ -257,7 +258,8 @@ namespace MiBand.SDK.Core.MiBandTwo
         GattDeviceService secondaryService = this.GetSecondaryService(GattServiceUuids.ImmediateAlert);
         if (secondaryService == null)
           return;
-        await this.WriteCharacteristic(secondaryService.GetCharacteristics(GattCharacteristicUuids.AlertLevel)[0], new byte[1]
+        await this.WriteCharacteristic(secondaryService.GetCharacteristics(
+            GattCharacteristicUuids.AlertLevel)[0], new byte[1]
         {
           (byte) vibration
         }, true).ConfigureAwait(false);

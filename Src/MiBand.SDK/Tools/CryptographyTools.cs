@@ -14,8 +14,9 @@ namespace MiBand.SDK.Tools
   {
     public static byte[] ComputeMD5(string str)
     {
-      byte[] md5;
-      CryptographicBuffer.CopyToByteArray(HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Md5).HashData(CryptographicBuffer.ConvertStringToBinary(str, (BinaryStringEncoding) 0)), ref md5);
+      byte[] md5 = default;
+      CryptographicBuffer.CopyToByteArray(HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Md5)
+          .HashData(CryptographicBuffer.ConvertStringToBinary(str, (BinaryStringEncoding) 0)), out md5);
       return md5;
     }
   }

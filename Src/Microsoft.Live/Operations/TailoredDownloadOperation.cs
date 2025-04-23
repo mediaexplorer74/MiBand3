@@ -92,7 +92,7 @@ namespace Microsoft.Live.Operations
       }
       else
         downloader = new BackgroundDownloader();
-      downloader.put_Group(LiveConnectClient.LiveSDKDownloadGroup);
+      downloader.Group = LiveConnectClient.LiveSDKDownloadGroup;
       this.cts = new CancellationTokenSource();
       this.downloadOp = downloader.CreateDownload((Uri) this.Url, this.OutputFile);
       System.Progress<DownloadOperation> progressHandler = new System.Progress<DownloadOperation>((Action<DownloadOperation>) new Action<DownloadOperation>(this.OnDownloadProgress));
@@ -126,9 +126,13 @@ namespace Microsoft.Live.Operations
 
     private void OnDownloadProgress(DownloadOperation downloadOp)
     {
-      if (downloadOp.Progress.Status == 7 || downloadOp.Progress.Status == 6 || this.isAttach || this.Progress == null)
+      if (downloadOp.Progress.Status == BackgroundTransferStatus.Error 
+                || downloadOp.Progress.Status == BackgroundTransferStatus.Canceled 
+                || this.isAttach || this.Progress == null)
         return;
-      this.Progress.Report(new LiveOperationProgress((long) downloadOp.Progress.BytesReceived, (long) downloadOp.Progress.TotalBytesToReceive));
+
+      this.Progress.Report(new LiveOperationProgress((long) downloadOp.Progress.BytesReceived, 
+          (long) downloadOp.Progress.TotalBytesToReceive));
     }
 
     private async Task<LiveDownloadOperationResult> ProcessDownloadErrorResponse(Exception exception)

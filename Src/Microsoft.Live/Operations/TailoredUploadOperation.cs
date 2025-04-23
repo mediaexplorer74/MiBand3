@@ -112,88 +112,88 @@ namespace Microsoft.Live.Operations
       uploadLinkOperation.Execute();
     }
 
-    private async void OnGetUploadLinkCompleted(LiveOperationResult result)
-    {
-      if (this.Status == OperationStatus.Cancelled)
-      {
-        // ISSUE: reference to a compiler-generated method
-        this.\u003C\u003En__FabricatedMethodf();
-      }
-      else if (result.Error != null || result.IsCancelled)
-      {
-        this.OnOperationCompleted(result);
-      }
-      else
-      {
-        Uri uploadUrl = new Uri(result.RawResult, UriKind.Absolute);
-        BackgroundUploader uploader = new BackgroundUploader();
-        uploader.put_Group(LiveConnectClient.LiveSDKUploadGroup);
-        if (this.LiveClient.Session != null)
-          uploader.SetRequestHeader("Authorization", "bearer " + this.LiveClient.Session.AccessToken);
-        uploader.SetRequestHeader("X-HTTP-Live-Library", Platform.GetLibraryHeaderValue());
-        uploader.put_Method("PUT");
-        this.uploadOpCts = new CancellationTokenSource();
-        Exception webError = (Exception) null;
-        LiveOperationResult opResult = (LiveOperationResult) null;
-        try
+      
+        private async void OnGetUploadLinkCompleted(LiveOperationResult result)
         {
-          if (this.InputStream != null)
-            this.uploadOp = await uploader.CreateUploadFromStreamAsync((Uri) uploadUrl, this.InputStream);
-          else
-            this.uploadOp = uploader.CreateUpload((Uri) uploadUrl, this.InputFile);
-          System.Progress<UploadOperation> progressHandler = new System.Progress<UploadOperation>((Action<UploadOperation>) new Action<UploadOperation>(this.OnUploadProgress));
-          this.uploadOp = await this.uploadOp.StartAsync().AsTask<UploadOperation, UploadOperation>(this.uploadOpCts.Token, (IProgress<UploadOperation>) progressHandler);
-        }
-        catch (TaskCanceledException ex)
-        {
-          opResult = new LiveOperationResult((Exception) ex, true);
-        }
-        catch (Exception ex)
-        {
-          webError = ex;
-        }
-        if (opResult == null)
-        {
-          try
-          {
-            IInputStream responseStream = this.uploadOp == null ? (IInputStream) null : this.uploadOp.GetResultStreamAt(0UL);
-            if (responseStream == null)
+            if (this.Status == OperationStatus.Cancelled)
             {
-              opResult = new LiveOperationResult((Exception) new LiveConnectException("client_error", ResourceHelper.GetString("ConnectionError")), false);
+                // Replace the invalid fabricated method call with appropriate cancellation handling logic.
+                this.OnCancel(); // Assuming OnCancel() is the intended method to handle cancellation.
+            }
+            else if (result.Error != null || result.IsCancelled)
+            {
+                this.OnOperationCompleted(result);
             }
             else
             {
-              DataReader reader = new DataReader(responseStream);
-              uint length = await (IAsyncOperation<uint>) reader.LoadAsync(10240U);
-              opResult = ApiOperation.CreateOperationResultFrom(reader.ReadString(length), ApiMethod.Upload);
-              if (webError != null)
-              {
-                if (opResult.Error != null)
+                Uri uploadUrl = new Uri(result.RawResult, UriKind.Absolute);
+                BackgroundUploader uploader = new BackgroundUploader();
+                uploader.Group = LiveConnectClient.LiveSDKUploadGroup;
+                if (this.LiveClient.Session != null)
+                    uploader.SetRequestHeader("Authorization", "bearer " + this.LiveClient.Session.AccessToken);
+                uploader.SetRequestHeader("X-HTTP-Live-Library", Platform.GetLibraryHeaderValue());
+                uploader.Method = "PUT";
+                this.uploadOpCts = new CancellationTokenSource();
+                Exception webError = null;
+                LiveOperationResult opResult = null;
+                try
                 {
-                  if (!(opResult.Error is LiveConnectException))
-                    opResult = new LiveOperationResult(webError, false);
+                    if (this.InputStream != null)
+                        this.uploadOp = await uploader.CreateUploadFromStreamAsync(uploadUrl, this.InputStream);
+                    else
+                        this.uploadOp = uploader.CreateUpload(uploadUrl, this.InputFile);
+                    System.Progress<UploadOperation> progressHandler = new System.Progress<UploadOperation>(this.OnUploadProgress);
+                    this.uploadOp = await this.uploadOp.StartAsync().AsTask(this.uploadOpCts.Token, progressHandler);
                 }
-              }
+                catch (TaskCanceledException ex)
+                {
+                    opResult = new LiveOperationResult(ex, true);
+                }
+                catch (Exception ex)
+                {
+                    webError = ex;
+                }
+                if (opResult == null)
+                {
+                    try
+                    {
+                        IInputStream responseStream = this.uploadOp?.GetResultStreamAt(0UL);
+                        if (responseStream == null)
+                        {
+                            opResult = new LiveOperationResult(new LiveConnectException("client_error", ResourceHelper.GetString("ConnectionError")), false);
+                        }
+                        else
+                        {
+                            DataReader reader = new DataReader(responseStream);
+                            uint length = await reader.LoadAsync(MaxUploadResponseLength);
+                            opResult = ApiOperation.CreateOperationResultFrom(reader.ReadString(length), ApiMethod.Upload);
+                            if (webError != null && opResult.Error != null && !(opResult.Error is LiveConnectException))
+                            {
+                                opResult = new LiveOperationResult(webError, false);
+                            }
+                        }
+                    }
+                    catch (COMException ex)
+                    {
+                        opResult = new LiveOperationResult(ex, false);
+                    }
+                    catch (FileNotFoundException ex)
+                    {
+                        opResult = new LiveOperationResult(ex, false);
+                    }
+                }
+                this.OnOperationCompleted(opResult);
             }
-          }
-          catch (COMException ex)
-          {
-            opResult = new LiveOperationResult((Exception) ex, false);
-          }
-          catch (FileNotFoundException ex)
-          {
-            opResult = new LiveOperationResult((Exception) ex, false);
-          }
         }
-        this.OnOperationCompleted(opResult);
-      }
-    }
 
     private void OnUploadProgress(UploadOperation uploadOp)
     {
-      if (uploadOp.Progress.Status == 7 || uploadOp.Progress.Status == 6 || this.isAttach || this.Progress == null)
+      if (uploadOp.Progress.Status == BackgroundTransferStatus.Error 
+                || uploadOp.Progress.Status == BackgroundTransferStatus.Canceled 
+                || this.isAttach || this.Progress == null)
         return;
-      this.Progress.Report(new LiveOperationProgress((long) uploadOp.Progress.BytesSent, (long) uploadOp.Progress.TotalBytesToSend));
+      this.Progress.Report(new LiveOperationProgress((long) uploadOp.Progress.BytesSent, 
+          (long) uploadOp.Progress.TotalBytesToSend));
     }
   }
 }

@@ -74,7 +74,9 @@ namespace Microsoft.Live.Operations
     {
       this.Request = WebRequestFactory.Current.CreateWebRequest(this.Url, "POST");
       this.Request.ContentType = "application/x-www-form-urlencoded";
-      this.Request.BeginGetRequestStream((AsyncCallback) new AsyncCallback(((WebOperation) this).OnGetRequestStreamCompleted), (object) null);
+
+      this.Request.BeginGetRequestStream(
+          new AsyncCallback(this.OnGetRequestStreamCompleted), null);
     }
 
     protected void OnOperationCompleted(LiveLoginResult opResult)

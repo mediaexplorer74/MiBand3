@@ -47,7 +47,7 @@ namespace Microsoft.Live.Operations
         BackgroundDownloader backgroundDownloader = new BackgroundDownloader();
         backgroundDownloader.SetRequestHeader("Authorization", "bearer " + loginResult.Session.AccessToken);
         backgroundDownloader.SetRequestHeader("X-HTTP-Live-Library", Platform.GetLibraryHeaderValue());
-        backgroundDownloader.put_Group(LiveConnectClient.LiveSDKDownloadGroup);
+        backgroundDownloader.Group = LiveConnectClient.LiveSDKDownloadGroup;
         this.downloadOp = backgroundDownloader.CreateDownload((Uri) this.Url, this.OutputFile);
         this.taskCompletionSource.SetResult(new LiveDownloadOperation(this.downloadOp));
       }

@@ -7,6 +7,7 @@
 using MiBand.SDK.Data;
 using MiBand.SDK.Tools;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,8 +20,8 @@ using Windows.Foundation;
 #nullable disable
 namespace MiBand.SDK.Core.MiBandOne
 {
-  internal class MiBandOneActivityDataLoader
-  {
+  internal class MiBandOneActivityDataLoader 
+    {
     private static volatile bool _dataLoading;
     private const int ReadingTimeoutSec = 5;
     private readonly MiBand.SDK.Core.MiBandOne.MiBandOne _bluetoothDevice;
@@ -48,16 +49,20 @@ namespace MiBand.SDK.Core.MiBandOne
 
     public async Task<SynchronizationDataPackage> LoadData()
     {
-      MiBandOneActivityDataLoader._dataLoading = !MiBandOneActivityDataLoader._dataLoading ? true : throw new InvalidOperationException("Cannot load data when previous operation not finished");
+      MiBandOneActivityDataLoader._dataLoading = !MiBandOneActivityDataLoader._dataLoading 
+                ? true 
+                : throw new InvalidOperationException(
+                    "Cannot load data when previous operation not finished");
+
       object obj = (object) null;
       int num = 0;
-      SynchronizationDataPackage synchronizationDataPackage;
+      SynchronizationDataPackage synchronizationDataPackage = new SynchronizationDataPackage();//default;
       try
       {
         if (!await this.InitReceiver().ConfigureAwait(false))
         {
           this._log.Error("Receiver not initialized");
-          synchronizationDataPackage = (SynchronizationDataPackage) null;
+          synchronizationDataPackage = null;
         }
         else if (!await this.StartReceivingData().ConfigureAwait(false))
         {
@@ -84,7 +89,7 @@ namespace MiBand.SDK.Core.MiBandOne
         }
         num = 1;
       }
-      catch (object ex)
+      catch (Exception ex)
       {
         obj = ex;
       }
@@ -94,39 +99,43 @@ namespace MiBand.SDK.Core.MiBandOne
       if (obj1 != null)
       {
         if (!(obj1 is Exception source))
-          throw obj1;
+          throw new InvalidOperationException("An unexpected object type was encountered. " 
+              + obj1.ToString());
         ExceptionDispatchInfo.Capture(source).Throw();
       }
       if (num == 1)
         return synchronizationDataPackage;
       obj = (object) null;
       synchronizationDataPackage = (SynchronizationDataPackage) null;
-      SynchronizationDataPackage synchronizationDataPackage1;
+      SynchronizationDataPackage synchronizationDataPackage1 = synchronizationDataPackage;
       return synchronizationDataPackage1;
     }
 
-    private async Task<bool> InitReceiver()
-    {
-      try
-      {
-        this._activityCharacteristic = this._bluetoothDevice.GetCharacteristic(CharacteristicGuid.Activity);
-        if (this._activityCharacteristic == null)
-          return false;
-        GattCharacteristic activityCharacteristic = this._activityCharacteristic;
-        // ISSUE: method pointer
-        WindowsRuntimeMarshal.AddEventHandler<TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>>(new Func<TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>, EventRegistrationToken>(activityCharacteristic.add_ValueChanged), new Action<EventRegistrationToken>(activityCharacteristic.remove_ValueChanged), new TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>((object) this, __methodptr(ActivityCharOnValueChanged)));
-        GattCommunicationStatus communicationStatus = await this._activityCharacteristic.WriteClientCharacteristicConfigurationDescriptorAsync((GattClientCharacteristicConfigurationDescriptorValue) 2);
-        BandDeviceInfo bandDeviceInfo = await this._bluetoothDevice.GetBandDeviceInfo(true);
-        this._hasNumberLineFirstByte = bandDeviceInfo.ProfileVersion >= new Version("2.0.7");
-        if (this._hasNumberLineFirstByte)
-          this._log.Info(string.Format("Lines have first number as a number line. Profile version: {0}", (object) bandDeviceInfo.ProfileVersion));
-      }
-      catch (Exception ex)
-      {
-        return false;
-      }
-      return true;
-    }
+        private async Task<bool> InitReceiver()
+        {
+            try
+            {
+                this._activityCharacteristic = this._bluetoothDevice.GetCharacteristic(CharacteristicGuid.Activity);
+                if (this._activityCharacteristic == null)
+                    return false;
+
+                // Subscribe to the _activityCharacteristic ValueChanged event
+                this._activityCharacteristic.ValueChanged += ActivityCharOnValueChanged;
+
+                GattCommunicationStatus communicationStatus = await this._activityCharacteristic
+                    .WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.Notify);
+
+                BandDeviceInfo bandDeviceInfo = await this._bluetoothDevice.GetBandDeviceInfo(true);
+                this._hasNumberLineFirstByte = bandDeviceInfo.ProfileVersion >= new Version("2.0.7");
+                if (this._hasNumberLineFirstByte)
+                    this._log.Info(string.Format("Lines have first number as a number line. Profile version: {0}", bandDeviceInfo.ProfileVersion));
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
+        }
 
     private async Task<bool> StartReceivingData()
     {
@@ -200,31 +209,38 @@ namespace MiBand.SDK.Core.MiBandOne
       }
     }
 
-    private async Task DisposeReceiver()
-    {
-      try
-      {
-        GattCommunicationStatus communicationStatus = await this._activityCharacteristic.WriteClientCharacteristicConfigurationDescriptorAsync((GattClientCharacteristicConfigurationDescriptorValue) 0);
-      }
-      catch (Exception ex)
-      {
-      }
-      finally
-      {
-        // ISSUE: method pointer
-        WindowsRuntimeMarshal.RemoveEventHandler<TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>>(new Action<EventRegistrationToken>(this._activityCharacteristic.remove_ValueChanged), new TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>((object) this, __methodptr(ActivityCharOnValueChanged)));
-      }
-    }
+        private async Task DisposeReceiver()
+        {
+            try
+            {
+                GattCommunicationStatus communicationStatus = await this._activityCharacteristic
+                    .WriteClientCharacteristicConfigurationDescriptorAsync(
+                    GattClientCharacteristicConfigurationDescriptorValue.None);
+            }
+            catch (Exception ex)
+            {
+                // Handle exception if needed
+            }
+            finally
+            {
+                // Unsubscribe from the ValueChanged event using the -= operator
+                this._activityCharacteristic.ValueChanged -= ActivityCharOnValueChanged;
+            }
+        }
 
     private SynchronizationDataPackage CompleteResultPackage()
     {
       try
       {
         List<MiBandOneActivityDataLoader.DataSyncFragment> list = this.GetFragmentsFromBytes().ToList<MiBandOneActivityDataLoader.DataSyncFragment>();
-        SynchronizationDataPackage synchronizationDataPackage = new SynchronizationDataPackage();
-        synchronizationDataPackage.ActivitySeries.AddRange(this.ProcessAllFragments(list));
+       SynchronizationDataPackage synchronizationDataPackage = new SynchronizationDataPackage();
+
+        IEnumerable<RawMinuteActivityDataSeries> r = this.ProcessAllFragments(list);
+        synchronizationDataPackage.ActivitySeries.AddRange(r);
         if (synchronizationDataPackage.TotalMinutes != this._totalMinutes)
-          throw new Exception(string.Format("Number of received minute data ({0}) is not the same as declared in first header {1}", (object) synchronizationDataPackage.TotalMinutes, (object) this._totalMinutes));
+          throw new Exception(string.Format(
+                  "Number of received minute data ({0}) is not the same as declared in first header {1}",
+              (object) synchronizationDataPackage.TotalMinutes, (object) this._totalMinutes));
         return synchronizationDataPackage;
       }
       catch (Exception ex)
@@ -263,8 +279,10 @@ namespace MiBand.SDK.Core.MiBandOne
             Activity = (int) dataArray[index * this._bytesPerMinute + 1],
             Steps = (int) dataArray[index * this._bytesPerMinute + 2]
           };
+          
           if (this._bytesPerMinute == 4)
             minuteActivityData.HeartRate = (int) dataArray[index * this._bytesPerMinute + 3];
+
           activityDataSeries.Data.Add(minuteActivityData);
         }
         yield return activityDataSeries;
@@ -278,9 +296,11 @@ namespace MiBand.SDK.Core.MiBandOne
         throw new InvalidOperationException("Couldn't completely read data header from memory stream.");
       this._log.Debug("Fragment header: " + string.Join<byte>(" ", (IEnumerable<byte>) numArray));
       int num = (int) numArray[0];
+
       MiBandOneActivityDataLoader.DataSyncFragment fragment = new MiBandOneActivityDataLoader.DataSyncFragment(new DateTime(2000 + (int) numArray[1], (int) numArray[2] + 1, (int) numArray[3], (int) numArray[4], (int) numArray[5], (int) numArray[6]), (int) numArray[9] + ((int) numArray[10] << 8), this._bytesPerMinute);
       if (fragment.TotalMinutes != 0 && this._dataMemoryStream.Read(fragment.DataArray, 0, fragment.DataArray.Length) != fragment.DataArray.Length)
         throw new InvalidOperationException("Couldn't completely read data from memory stream.");
+     
       return fragment;
     }
 

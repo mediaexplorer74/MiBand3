@@ -184,18 +184,18 @@ namespace MetroLog.Internal
       switch (input)
       {
         case DateTime dateTime2:
-          ref object local1 = ref output;
           DateTime dateTime1 = dateTime2;
           dateTime1 = dateTime1.ToUniversalTime();
-          string str1 = dateTime1.ToString(PocoJsonSerializerStrategy.Iso8601Format[0], (IFormatProvider) CultureInfo.InvariantCulture);
-          local1 = (object) str1;
+          string str1 = dateTime1.ToString(PocoJsonSerializerStrategy.Iso8601Format[0],
+              (IFormatProvider) CultureInfo.InvariantCulture);
+          output = (object) str1;
           break;
         case DateTimeOffset dateTimeOffset2:
-          ref object local2 = ref output;
           DateTimeOffset dateTimeOffset1 = dateTimeOffset2;
           dateTimeOffset1 = dateTimeOffset1.ToUniversalTime();
-          string str2 = dateTimeOffset1.ToString(PocoJsonSerializerStrategy.Iso8601Format[0], (IFormatProvider) CultureInfo.InvariantCulture);
-          local2 = (object) str2;
+          string str2 = dateTimeOffset1.ToString(PocoJsonSerializerStrategy.Iso8601Format[0], 
+              (IFormatProvider) CultureInfo.InvariantCulture);
+          output = (object) str2;
           break;
         case Guid guid:
           output = (object) guid.ToString("D");

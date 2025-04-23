@@ -17,7 +17,9 @@ namespace MiBand.SDK.Data
     {
       get
       {
-        return this.ActivitySeries.Count != 0 ? Enumerable.First<RawMinuteActivityDataSeries>((IEnumerable<RawMinuteActivityDataSeries>) Enumerable.OrderBy<RawMinuteActivityDataSeries, DateTimeOffset>((IEnumerable<RawMinuteActivityDataSeries>) this.ActivitySeries, (Func<RawMinuteActivityDataSeries, DateTimeOffset>) (t => t.StartTime))).StartTime : new DateTimeOffset();
+        return this.ActivitySeries.Count != 0 
+                    ? Enumerable.First<RawMinuteActivityDataSeries>(
+                        (IEnumerable<RawMinuteActivityDataSeries>) Enumerable.OrderBy<RawMinuteActivityDataSeries, DateTimeOffset>((IEnumerable<RawMinuteActivityDataSeries>) this.ActivitySeries, (Func<RawMinuteActivityDataSeries, DateTimeOffset>) (t => t.StartTime))).StartTime : new DateTimeOffset();
       }
     }
 
@@ -31,8 +33,11 @@ namespace MiBand.SDK.Data
       }
     }
 
-    public List<RawMinuteActivityDataSeries> ActivitySeries { get; } = new List<RawMinuteActivityDataSeries>();
+      
+      public List<RawMinuteActivityDataSeries> ActivitySeries { get; } 
+           = new List<RawMinuteActivityDataSeries>();
 
-    public List<HeartRateMeasurement> HeartRateMeasurements { get; } = new List<HeartRateMeasurement>();
+      public List<HeartRateMeasurement> HeartRateMeasurements { get; set; } 
+            = new List<HeartRateMeasurement>();
   }
 }

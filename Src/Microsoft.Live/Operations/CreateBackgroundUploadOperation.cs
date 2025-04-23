@@ -75,11 +75,11 @@ namespace Microsoft.Live.Operations
       {
         Uri uploadUrl = new Uri(result.RawResult, UriKind.Absolute);
         BackgroundUploader uploader = new BackgroundUploader();
-        uploader.put_Group(LiveConnectClient.LiveSDKUploadGroup);
+        uploader.Group = LiveConnectClient.LiveSDKUploadGroup;
         if (this.LiveClient.Session != null)
           uploader.SetRequestHeader("Authorization", "bearer " + this.LiveClient.Session.AccessToken);
         uploader.SetRequestHeader("X-HTTP-Live-Library", Platform.GetLibraryHeaderValue());
-        uploader.put_Method("PUT");
+        uploader.Method = "PUT";
         UploadOperation uploadOperation;
         if (this.InputStream != null)
           uploadOperation = await uploader.CreateUploadFromStreamAsync((Uri) uploadUrl, this.InputStream);

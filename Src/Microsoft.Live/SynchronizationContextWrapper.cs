@@ -12,58 +12,47 @@ using Windows.UI.Xaml;
 #nullable disable
 namespace Microsoft.Live
 {
-  internal class SynchronizationContextWrapper
-  {
-    private readonly CoreDispatcher syncContext;
-
-    public SynchronizationContextWrapper(CoreDispatcher syncContext)
+    internal class SynchronizationContextWrapper
     {
-      this.syncContext = syncContext;
-    }
+        private readonly CoreDispatcher syncContext;
 
-    public static SynchronizationContextWrapper Current
-    {
-      get
-      {
-        try
+        public SynchronizationContextWrapper(CoreDispatcher syncContext)
         {
-          if (Window.Current != null)
-          {
-            if (Window.Current.Dispatcher != null)
-              return new SynchronizationContextWrapper(Window.Current.Dispatcher);
-          }
+            this.syncContext = syncContext;
         }
-        catch (COMException ex)
-        {
-        }
-        return new SynchronizationContextWrapper((CoreDispatcher) null);
-      }
-    }
 
-    public async void Post(Action callback)
-    {
-      DispatchedHandler dispatchedHandler = (DispatchedHandler) null;
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      SynchronizationContextWrapper.\u003C\u003Ec__DisplayClass2 cDisplayClass2 = new SynchronizationContextWrapper.\u003C\u003Ec__DisplayClass2();
-      // ISSUE: reference to a compiler-generated field
-      cDisplayClass2.callback = callback;
-      if (this.syncContext != null)
-      {
-        CoreDispatcher syncContext = this.syncContext;
-        if (dispatchedHandler == null)
+        public static SynchronizationContextWrapper Current
         {
-          // ISSUE: method pointer
-          dispatchedHandler = new DispatchedHandler((object) cDisplayClass2, __methodptr(\u003CPost\u003Eb__0));
+            get
+            {
+                try
+                {
+                    if (Window.Current != null)
+                    {
+                        if (Window.Current.Dispatcher != null)
+                            return new SynchronizationContextWrapper(Window.Current.Dispatcher);
+                    }
+                }
+                catch (COMException ex)
+                {
+                }
+                return new SynchronizationContextWrapper((CoreDispatcher)null);
+            }
         }
-        DispatchedHandler dispatchedHandler1 = dispatchedHandler;
-        await syncContext.RunAsync((CoreDispatcherPriority) 0, dispatchedHandler1);
-      }
-      else
-      {
-        // ISSUE: reference to a compiler-generated field
-        cDisplayClass2.callback();
-      }
+
+        public async void Post(Action callback)
+        {
+            if (this.syncContext != null)
+            {
+                await this.syncContext.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    callback?.Invoke();
+                });
+            }
+            else
+            {
+                callback?.Invoke();
+            }
+        }
     }
-  }
 }

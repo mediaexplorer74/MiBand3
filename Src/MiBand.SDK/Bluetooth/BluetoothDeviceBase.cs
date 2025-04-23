@@ -28,8 +28,8 @@ namespace MiBand.SDK.Bluetooth
       this.DefaultGattService = defaultGattService;
     }
 
-    public event EventHandler<EventArgs> ConnectionStatusChanged;
-    //public event EventHandler ConnectionStatusChanged;
+    //public event EventHandler<EventArgs> ConnectionStatusChanged;
+    public event EventHandler ConnectionStatusChanged;
 
     public ConnectionStatus ConnectionStatus
     {
@@ -73,7 +73,7 @@ namespace MiBand.SDK.Bluetooth
 
     protected internal async Task<byte[]> ReadCharacteristic(
       GattCharacteristic characteristic,
-      BluetoothCacheMode mode = 1)
+      BluetoothCacheMode mode = BluetoothCacheMode.Uncached)
     {
       this.CheckConnectionStatus();
       GattReadResult read;
@@ -251,7 +251,7 @@ namespace MiBand.SDK.Bluetooth
 
     private void CheckReadResult(GattReadResult readResult)
     {
-      if (readResult.Status == 1)
+      if (readResult.Status == GattCommunicationStatus.Unreachable)
       {
         this.ConnectionStatus = ConnectionStatus.Unreachable;
         throw new DeviceUnreachableException();
@@ -261,7 +261,7 @@ namespace MiBand.SDK.Bluetooth
 
     private void CheckWriteResult(GattCommunicationStatus communicationStatus)
     {
-      if (communicationStatus == 1)
+      if (communicationStatus == GattCommunicationStatus.Unreachable)
       {
         this.ConnectionStatus = ConnectionStatus.Unreachable;
         throw new DeviceUnreachableException();

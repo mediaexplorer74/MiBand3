@@ -121,16 +121,6 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="IanSavchenko_Controls_XamlTypeInfo\Activator.cs" />
-    <Compile Include="IanSavchenko_Controls_XamlTypeInfo\AddToCollection.cs" />
-    <Compile Include="IanSavchenko_Controls_XamlTypeInfo\AddToDictionary.cs" />
-    <Compile Include="IanSavchenko_Controls_XamlTypeInfo\Getter.cs" />
-    <Compile Include="IanSavchenko_Controls_XamlTypeInfo\Setter.cs" />
-    <Compile Include="IanSavchenko_Controls_XamlTypeInfo\XamlMember.cs" />
-    <Compile Include="IanSavchenko_Controls_XamlTypeInfo\XamlMetaDataProvider.cs" />
-    <Compile Include="IanSavchenko_Controls_XamlTypeInfo\XamlSystemBaseType.cs" />
-    <Compile Include="IanSavchenko_Controls_XamlTypeInfo\XamlTypeInfoProvider.cs" />
-    <Compile Include="IanSavchenko_Controls_XamlTypeInfo\XamlUserType.cs" />
     <Compile Include="ListSelector.cs" />
     <Compile Include="ListSelectorFlyout.cs" />
     <Compile Include="ListSelectorItem.cs" />
@@ -140,7 +130,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.14</Version>
+      <Version>6.0.8</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

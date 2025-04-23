@@ -23,7 +23,7 @@ namespace Microsoft.Live.Operations
         return;
       try
       {
-        this.Request.BeginGetRequestStream((AsyncCallback) new AsyncCallback(((WebOperation) this).OnGetRequestStreamCompleted), (object) null);
+        this.Request.BeginGetRequestStream(new AsyncCallback(this.OnGetRequestStreamCompleted), null);
       }
       catch (WebException ex)
       {

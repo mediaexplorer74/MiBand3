@@ -38,29 +38,33 @@ namespace MetroLog.Internal
       return (IStorageFile) file;
     }
 
-    public Task ShareLogFile(string title, string description)
-    {
-      // ISSUE: object of a compiler-generated type is created
-      // ISSUE: variable of a compiler-generated type
-      LogManager.\u003C\u003Ec__DisplayClass1_0 cDisplayClass10 = new LogManager.\u003C\u003Ec__DisplayClass1_0()
-      {
-        \u003C\u003E4__this = this,
-        title = title,
-        description = description,
-        dtm = DataTransferManager.GetForCurrentView(),
-        tcs = new TaskCompletionSource<object>(),
-        handler = (TypedEventHandler<DataTransferManager, DataRequestedEventArgs>) null
-      };
-      // ISSUE: reference to a compiler-generated field
-      // ISSUE: method pointer
-      cDisplayClass10.handler = new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>((object) cDisplayClass10, __methodptr(\u003CShareLogFile\u003Eb__0));
-      // ISSUE: reference to a compiler-generated field
-      DataTransferManager dtm = cDisplayClass10.dtm;
-      // ISSUE: reference to a compiler-generated field
-      WindowsRuntimeMarshal.AddEventHandler<TypedEventHandler<DataTransferManager, DataRequestedEventArgs>>(new Func<TypedEventHandler<DataTransferManager, DataRequestedEventArgs>, EventRegistrationToken>(dtm.add_DataRequested), new Action<EventRegistrationToken>(dtm.remove_DataRequested), cDisplayClass10.handler);
-      DataTransferManager.ShowShareUI();
-      return (Task) Task.FromResult<bool>(true);
-    }
+        public Task ShareLogFile(string title, string description)
+        {
+            var tcs = new TaskCompletionSource<object>();
+            var dtm = DataTransferManager.GetForCurrentView();
+
+            TypedEventHandler<DataTransferManager, DataRequestedEventArgs> handler = (sender, args) =>
+            {
+                var request = args.Request;
+                request.Data.Properties.Title = title;
+                request.Data.Properties.Description = description;
+                request.Data.SetText("Log file sharing is not implemented yet."); // Placeholder for actual log file sharing logic
+                tcs.SetResult(null);
+            };
+
+            dtm.DataRequested += handler;
+
+            try
+            {
+                DataTransferManager.ShowShareUI();
+            }
+            finally
+            {
+                dtm.DataRequested -= handler;
+            }
+
+            return tcs.Task;
+        }
 
     public LoggingConfiguration DefaultConfiguration { get; private set; }
 

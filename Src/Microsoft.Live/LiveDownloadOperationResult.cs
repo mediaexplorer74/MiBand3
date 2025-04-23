@@ -35,33 +35,33 @@ namespace Microsoft.Live
 
     internal bool IsCancelled { get; private set; }
 
-    public async Task<IRandomAccessStream> GetRandomAccessStreamAsync()
-    {
-      IRandomAccessStream ras = (IRandomAccessStream) null;
-      if (this.File != null)
-        ras = await this.File.OpenAsync((FileAccessMode) 0);
-      else if (this.Stream != null)
-      {
-        ras = (IRandomAccessStream) new InMemoryRandomAccessStream();
-        DataWriter dw = new DataWriter(ras.GetOutputStreamAt(0UL));
-        using (DataReader dr = new DataReader(this.Stream))
+        public async Task<IRandomAccessStream> GetRandomAccessStreamAsync()
         {
-          uint bytesRead = 0;
-          do
-          {
-            bytesRead = await (IAsyncOperation<uint>) dr.LoadAsync(102400U);
-            if (bytesRead > 0U)
+            IRandomAccessStream ras = (IRandomAccessStream)null;
+            if (this.File != null)
+                ras = await this.File.OpenAsync((FileAccessMode)0);
+            else if (this.Stream != null)
             {
-              byte[] numArray = new byte[(IntPtr) bytesRead];
-              dr.ReadBytes(numArray);
-              dw.WriteBytes(numArray);
+                ras = (IRandomAccessStream)new InMemoryRandomAccessStream();
+                DataWriter dw = new DataWriter(ras.GetOutputStreamAt(0UL));
+                using (DataReader dr = new DataReader(this.Stream))
+                {
+                    uint bytesRead = 0;
+                    do
+                    {
+                        bytesRead = await (IAsyncOperation<uint>)dr.LoadAsync(102400U);
+                        if (bytesRead > 0U)
+                        {
+                            byte[] numArray = new byte[checked((int)bytesRead)]; // Fixed the explicit cast issue
+                            dr.ReadBytes(numArray);
+                            dw.WriteBytes(numArray);
+                        }
+                    }
+                    while (bytesRead > 0U);
+                }
+                int num = (int)await (IAsyncOperation<uint>)dw.StoreAsync();
             }
-          }
-          while (bytesRead > 0U);
+            return ras;
         }
-        int num = (int) await (IAsyncOperation<uint>) dw.StoreAsync();
-      }
-      return ras;
-    }
   }
 }

@@ -76,38 +76,42 @@ namespace MiBand.SDK.Core.MiBandTwo
       }
     }
 
-    private async Task StartDataSync()
-    {
-      this._log.Debug("Starting data sync.");
-      this._receiveBuffer = new List<byte[]>();
-      GattCharacteristic dataSyncChar = this._dataSyncChar;
-      // ISSUE: method pointer
-      WindowsRuntimeMarshal.AddEventHandler<TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>>(new Func<TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>, EventRegistrationToken>(dataSyncChar.add_ValueChanged), new Action<EventRegistrationToken>(dataSyncChar.remove_ValueChanged), new TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>((object) this, __methodptr(DataSyncCharOnValueChanged)));
-      await this._device.EnableNotifications(this._dataSyncChar).ConfigureAwait(false);
-      NotifyResponse notifyResponse = await this._device.WriteCharacteristicGetResponse(this._dataSyncControlChar, new byte[1]
-      {
-        (byte) 2
-      }, TimeSpan.FromSeconds(20.0)).ConfigureAwait(false);
-      if (notifyResponse == null)
-      {
-        this._log.Error("Sync waiting timeout or incorrect response.");
-        throw new TimeoutException("Syncrhonization timed out");
-      }
-      if (!notifyResponse.IsSuccessCommand(2))
-        throw new Exception("Sync fragment command returned fail result.");
-    }
+        private async Task StartDataSync()
+        {
+            this._log.Debug("Starting data sync.");
+            this._receiveBuffer = new List<byte[]>();
 
-    private async Task FinishDataSync()
-    {
-      this._log.Debug(string.Format("Finished data sync. Buffer size = {0}", (object) this._receiveBuffer.Count));
-      await this._device.DisableNotifications(this._dataSyncChar).ConfigureAwait(false);
-      // ISSUE: method pointer
-      WindowsRuntimeMarshal.RemoveEventHandler<TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>>(new Action<EventRegistrationToken>(this._dataSyncChar.remove_ValueChanged), new TypedEventHandler<GattCharacteristic, GattValueChangedEventArgs>((object) this, __methodptr(DataSyncCharOnValueChanged)));
-      NotifyResponse notifyResponse = await this._device.WriteCharacteristicGetResponse(this._dataSyncControlChar, new byte[1]
-      {
-        (byte) 3
-      }).ConfigureAwait(false);
-    }
+            // Subscribe to the ValueChanged event using a lambda expression
+            this._dataSyncChar.ValueChanged += (sender, args) => DataSyncCharOnValueChanged(sender, args);
+
+            await this._device.EnableNotifications(this._dataSyncChar).ConfigureAwait(false);
+            NotifyResponse notifyResponse = await this._device.WriteCharacteristicGetResponse(this._dataSyncControlChar, new byte[1]
+            {
+                (byte) 2
+            }, TimeSpan.FromSeconds(20.0)).ConfigureAwait(false);
+
+            if (notifyResponse == null)
+            {
+                this._log.Error("Sync waiting timeout or incorrect response.");
+                throw new TimeoutException("Synchronization timed out");
+            }
+            if (!notifyResponse.IsSuccessCommand(2))
+                throw new Exception("Sync fragment command returned fail result.");
+        }
+
+        private async Task FinishDataSync()
+        {
+            this._log.Debug(string.Format("Finished data sync. Buffer size = {0}", (object)this._receiveBuffer.Count));
+            await this._device.DisableNotifications(this._dataSyncChar).ConfigureAwait(false);
+
+            // Unsubscribe from the ValueChanged event
+            this._dataSyncChar.ValueChanged -= (sender, args) => DataSyncCharOnValueChanged(sender, args);
+
+            NotifyResponse notifyResponse = await this._device.WriteCharacteristicGetResponse(this._dataSyncControlChar, new byte[1]
+            {
+                (byte) 3
+            }).ConfigureAwait(false);
+        }
 
     private void DataSyncCharOnValueChanged(
       GattCharacteristic sender,

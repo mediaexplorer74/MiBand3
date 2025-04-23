@@ -34,11 +34,45 @@ namespace MetroLog
       this.Owner = owner;
       this.Owner.LoggerCreated += new EventHandler<LoggerEventArgs>(this.Owner_LoggerCreated);
       this.Clients = new List<ILazyFlushable>();
-      // ISSUE: method pointer
-      this.Timer = ThreadPoolTimer.CreatePeriodicTimer(new TimerElapsedHandler((object) this, __methodptr(\u003C\u002Ector\u003Eb__17_0)), TimeSpan.FromMinutes(2.0));
-    }
+       
+        this.Timer = ThreadPoolTimer.CreatePeriodicTimer(
+            (timer) => this.TimerElapsedHandler(timer),
+            TimeSpan.FromMinutes(2.0)
+        );
+      
+     }
 
-    private void Owner_LoggerCreated(object sender, LoggerEventArgs e)
+        private void TimerElapsedHandler(ThreadPoolTimer timer)
+        {
+            // Replacing the problematic line with a lambda expression for the TimerElapsedHandler delegate
+            this.Timer = ThreadPoolTimer.CreatePeriodicTimer(
+                (timer) => this.TimerElapsedHandler(timer),
+                TimeSpan.FromMinutes(2.0)
+            );
+            // Fix for the problematic line causing multiple errors
+            // Replacing the use of '__methodptr' and lambda with a direct lambda expression
+            this.Timer = ThreadPoolTimer.CreatePeriodicTimer(
+                (timer) => this.TimerElapsedHandler(timer),
+                TimeSpan.FromMinutes(2.0)
+            );
+            List<ILazyFlushable> clientsToFlush;
+
+            // Lock to safely access the Clients list
+            lock (this._lock)
+            {
+                // Create a copy of the Clients list to avoid modifying it during iteration
+                clientsToFlush = new List<ILazyFlushable>(this.Clients);
+            }
+
+            // Iterate through the copied list and trigger LazyFlushAsync for each client
+            foreach (var client in clientsToFlush)
+            {
+                // Fire and forget the LazyFlushAsync call
+                _ = client.LazyFlushAsync(new LogWriteContext());
+            }
+        }
+
+        private void Owner_LoggerCreated(object sender, LoggerEventArgs e)
     {
       lock (this._lock)
       {
@@ -50,14 +84,14 @@ namespace MetroLog
       }
     }
 
-    static LazyFlushManager()
-    {
-      LazyFlushManager.Owners = new Dictionary<ILogManager, LazyFlushManager>();
-      if (LoggingEnvironment.XamlApplicationState != XamlApplicationState.Available)
-        return;
-      Application current = Application.Current;
-      WindowsRuntimeMarshal.AddEventHandler<SuspendingEventHandler>(new Func<SuspendingEventHandler, EventRegistrationToken>(current.add_Suspending), new Action<EventRegistrationToken>(current.remove_Suspending), new SuspendingEventHandler(LazyFlushManager.Current_Suspending));
-    }
+        static LazyFlushManager()
+        {
+            LazyFlushManager.Owners = new Dictionary<ILogManager, LazyFlushManager>();
+            if (LoggingEnvironment.XamlApplicationState != XamlApplicationState.Available)
+                return;
+
+            Application.Current.Suspending += LazyFlushManager.Current_Suspending;
+        }
 
     private static async void Current_Suspending(object sender, SuspendingEventArgs e)
     {

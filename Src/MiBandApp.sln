@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiBandApp.Data", "MiBandApp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiBand.SDK.PCL", "MiBand.SDK.PCL\MiBand.SDK.PCL.csproj", "{CDCABF51-A640-497A-83FD-9C6D0860F499}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IanSavchenko.Controls", "IanSavchenko.Controls\IanSavchenko.Controls.csproj", "{A47DE50A-546B-4384-8739-5CDB558D7641}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ian.Controls", "Ian.Controls\Ian.Controls.csproj", "{A47DE50A-546B-4384-8739-5CDB558D7641}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiBand.SDK", "MiBand.SDK\MiBand.SDK.csproj", "{3D967F35-F451-4443-9B02-F78E839CA67E}"
 EndProject

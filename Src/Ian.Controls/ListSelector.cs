@@ -1,10 +1,10 @@
 ﻿// Decompiled with JetBrains decompiler
-// Type: IanSavchenko.Controls.ListSelector
-// Assembly: IanSavchenko.Controls, Version=0.8.2.0, Culture=neutral, PublicKeyToken=null
+// Type: Ian.Controls.ListSelector
+// Assembly: Ian.Controls, Version=0.8.2.0, Culture=neutral, PublicKeyToken=null
 // MVID: C384A7D9-D254-451C-A544-CD6C2993240A
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\IanSavchenko.Controls.dll
+// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\Ian.Controls.dll
 
-using IanSavchenko.Controls.Tools;
+using Ian.Controls.Tools;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Animation;
 
 #nullable disable
-namespace IanSavchenko.Controls
+namespace Ian.Controls
 {
   [TemplatePart(Name = "PART_ItemsControl", Type = typeof (ItemsControl))]
   [TemplatePart(Name = "PART_ScrollViewer", Type = typeof (ScrollViewer))]
@@ -52,13 +52,18 @@ namespace IanSavchenko.Controls
     private double _prevChangeViewCallCurrentOffset = -1.0;
     private bool _active;
 
-    public ListSelector()
-    {
-      this.put_DefaultStyleKey((object) typeof (ListSelector));
-      WindowsRuntimeMarshal.AddEventHandler<SizeChangedEventHandler>(new Func<SizeChangedEventHandler, EventRegistrationToken>(((FrameworkElement) this).add_SizeChanged), new Action<EventRegistrationToken>(((FrameworkElement) this).remove_SizeChanged), new SizeChangedEventHandler(this.OnSizeChanged));
-      WindowsRuntimeMarshal.AddEventHandler<RoutedEventHandler>(new Func<RoutedEventHandler, EventRegistrationToken>(((FrameworkElement) this).add_Loaded), new Action<EventRegistrationToken>(((FrameworkElement) this).remove_Loaded), new RoutedEventHandler(this.OnLoaded));
-      this._scheduleInvoker = new ScheduleInvoker(((DependencyObject) this).Dispatcher);
-    }
+        public ListSelector()
+        {
+            this.DefaultStyleKey = (object)typeof(ListSelector);
+
+            // Use the += operator to subscribe to the SizeChanged event
+            this.SizeChanged += this.OnSizeChanged;
+
+            // Use the += operator to subscribe to the Loaded event
+            this.Loaded += this.OnLoaded;
+
+            this._scheduleInvoker = new ScheduleInvoker(((DependencyObject)this).Dispatcher);
+        }
 
     public double ItemWidth
     {
@@ -115,23 +120,7 @@ namespace IanSavchenko.Controls
       }
     }
 
-    protected virtual void OnApplyTemplate()
-    {
-      this._itemsControlPart = this.GetTemplateChild("PART_ItemsControl") as ItemsControl;
-      this._scrollViewerPart = this.GetTemplateChild("PART_ScrollViewer") as ScrollViewer;
-      this._inactiveStateItemPart = this.GetTemplateChild("PART_InactiveStateItem") as ListSelectorItem;
-      ScrollViewer scrollViewerPart1 = this._scrollViewerPart;
-      WindowsRuntimeMarshal.AddEventHandler<EventHandler<ScrollViewerViewChangedEventArgs>>(new Func<EventHandler<ScrollViewerViewChangedEventArgs>, EventRegistrationToken>(scrollViewerPart1.add_ViewChanged), new Action<EventRegistrationToken>(scrollViewerPart1.remove_ViewChanged), new EventHandler<ScrollViewerViewChangedEventArgs>(this.ScrollViewerPartOnViewChanged));
-      ScrollViewer scrollViewerPart2 = this._scrollViewerPart;
-      WindowsRuntimeMarshal.AddEventHandler<EventHandler<ScrollViewerViewChangingEventArgs>>(new Func<EventHandler<ScrollViewerViewChangingEventArgs>, EventRegistrationToken>(scrollViewerPart2.add_ViewChanging), new Action<EventRegistrationToken>(scrollViewerPart2.remove_ViewChanging), new EventHandler<ScrollViewerViewChangingEventArgs>(this.ScrollViewerPartOnViewChanging));
-      ((UIElement) this._scrollViewerPart).put_IsTapEnabled(true);
-      ScrollViewer scrollViewerPart3 = this._scrollViewerPart;
-      WindowsRuntimeMarshal.AddEventHandler<TappedEventHandler>(new Func<TappedEventHandler, EventRegistrationToken>(((UIElement) scrollViewerPart3).add_Tapped), new Action<EventRegistrationToken>(((UIElement) scrollViewerPart3).remove_Tapped), new TappedEventHandler(this.ScrollViewerPartOnTapped));
-      this.UpdateItemsControlItems();
-      this.UpdateGeometricalParams();
-      this.CreateAnimations();
-      ((FrameworkElement) this).OnApplyTemplate();
-    }
+       
 
     private static void OnItemHeightChanged(
       DependencyObject d,
@@ -205,8 +194,12 @@ namespace IanSavchenko.Controls
       if (this._itemsControlPart == null)
         return;
       double actualHeight = ((FrameworkElement) this).ActualHeight;
-      this._itemsControlMargin = new Thickness(0.0, actualHeight / 2.0 - this.ItemMargin.Top - this.ItemHeight / 2.0, 0.0, actualHeight / 2.0 - this.ItemMargin.Bottom - this.ItemHeight / 2.0);
-      ((FrameworkElement) this._itemsControlPart).put_Margin(this._itemsControlMargin);
+
+      this._itemsControlMargin = new Thickness(
+          0.0, actualHeight / 2.0 - this.ItemMargin.Top - this.ItemHeight / 2.0, 0.0, 
+          actualHeight / 2.0 - this.ItemMargin.Bottom - this.ItemHeight / 2.0);
+
+      this._itemsControlPart.Margin = this._itemsControlMargin;
     }
 
     private int GetItemIndexForScrollOffset(double scrollOffset)
@@ -227,9 +220,9 @@ namespace IanSavchenko.Controls
         foreach (object obj in (IEnumerable) this.ItemsSource)
         {
           ListSelectorItem listSelectorItem1 = new ListSelectorItem();
-          ((FrameworkElement) listSelectorItem1).put_Width(this.ItemWidth);
-          ((FrameworkElement) listSelectorItem1).put_Height(this.ItemHeight);
-          ((FrameworkElement) listSelectorItem1).put_Margin(this.ItemMargin);
+          ((FrameworkElement) listSelectorItem1).Width = this.ItemWidth;
+          ((FrameworkElement) listSelectorItem1).Height = this.ItemHeight;
+          ((FrameworkElement) listSelectorItem1).Margin = this.ItemMargin;
           listSelectorItem1.ItemContent = obj;
           listSelectorItem1.ItemIndex = num++;
           ListSelectorItem listSelectorItem2 = listSelectorItem1;
@@ -238,30 +231,31 @@ namespace IanSavchenko.Controls
         }
       }
       this.UpdateItemsOpacity();
-      this._itemsControlPart.put_ItemsSource((object) null);
-      this._itemsControlPart.put_ItemsSource((object) this._items);
+      this._itemsControlPart.ItemsSource = null;
+      this._itemsControlPart.ItemsSource = this._items;
       if (this._items.Count <= 0 || this.SelectedIndex != -1)
         return;
       await this.SelectItem(0).ConfigureAwait(true);
     }
 
-    private void CreateAnimations()
-    {
-      this._showItemsStoryboard = new Storyboard();
-      this._hideItemsStoryboard = new Storyboard();
-      this._hideItemsAnimation = new DoubleAnimation();
-      this._hideItemsAnimation.put_To(new double?(0.0));
-      this._showItemsAnimation = new DoubleAnimation();
-      this._showItemsAnimation.put_To(new double?(1.0));
-      ((ICollection<Timeline>) this._showItemsStoryboard.Children).Add((Timeline) this._showItemsAnimation);
-      ((ICollection<Timeline>) this._hideItemsStoryboard.Children).Add((Timeline) this._hideItemsAnimation);
-      Storyboard.SetTarget((Timeline) this._showItemsStoryboard, (DependencyObject) this._scrollViewerPart);
-      Storyboard.SetTarget((Timeline) this._hideItemsStoryboard, (DependencyObject) this._scrollViewerPart);
-      Storyboard.SetTargetProperty((Timeline) this._showItemsStoryboard, "Opacity");
-      Storyboard.SetTargetProperty((Timeline) this._hideItemsStoryboard, "Opacity");
-      Storyboard showItemsStoryboard = this._showItemsStoryboard;
-      WindowsRuntimeMarshal.AddEventHandler<EventHandler<object>>(new Func<EventHandler<object>, EventRegistrationToken>(((Timeline) showItemsStoryboard).add_Completed), new Action<EventRegistrationToken>(((Timeline) showItemsStoryboard).remove_Completed), new EventHandler<object>(this.ShowItemsStoryboardOnCompleted));
-    }
+        private void CreateAnimations()
+        {
+            this._showItemsStoryboard = new Storyboard();
+            this._hideItemsStoryboard = new Storyboard();
+            this._hideItemsAnimation = new DoubleAnimation();
+            this._hideItemsAnimation.To = new double?(0.0);
+            this._showItemsAnimation = new DoubleAnimation();
+            this._showItemsAnimation.To = new double?(1.0);
+            this._showItemsStoryboard.Children.Add(this._showItemsAnimation);
+            this._hideItemsStoryboard.Children.Add(this._hideItemsAnimation);
+            Storyboard.SetTarget(this._showItemsAnimation, this._scrollViewerPart);
+            Storyboard.SetTarget(this._hideItemsAnimation, this._scrollViewerPart);
+            Storyboard.SetTargetProperty(this._showItemsAnimation, "Opacity");
+            Storyboard.SetTargetProperty(this._hideItemsAnimation, "Opacity");
+
+            // Use += operator to subscribe to the Completed event
+            this._showItemsStoryboard.Completed += this.ShowItemsStoryboardOnCompleted;
+        }
 
     private async void ScrollViewerPartOnTapped(
       object sender,
@@ -309,7 +303,7 @@ namespace IanSavchenko.Controls
       {
         if (!this._active && !scrollViewerViewChangingEventArgs.IsInertial)
         {
-          ((UIElement) this._inactiveStateItemPart).put_Visibility((Visibility) 1);
+          this._inactiveStateItemPart.Visibility = Visibility.Collapsed;
           this.IsActive = true;
         }
         this.RemoveHighlight();
@@ -335,7 +329,7 @@ namespace IanSavchenko.Controls
       int num2 = indexForScrollOffset - num1;
       int num3 = indexForScrollOffset + num1;
       for (int index = 0; index < this._items.Count; ++index)
-        ((UIElement) this._items[index]).put_Opacity(index < num2 || index > num3 ? 0.0 : 1.0);
+        this._items[index].Opacity = index < num2 || index > num3 ? 0.0 : 1.0;
     }
 
     private async Task SelectItem(int index)
@@ -415,13 +409,13 @@ namespace IanSavchenko.Controls
     private void StartSnapping()
     {
       this._snappingPerformed = true;
-      ((UIElement) this._scrollViewerPart).put_IsHitTestVisible(false);
+      this._scrollViewerPart.IsHitTestVisible = false;
     }
 
     private void FinishSnapping()
     {
       this._snappingPerformed = false;
-      ((UIElement) this._scrollViewerPart).put_IsHitTestVisible(true);
+      this._scrollViewerPart.IsHitTestVisible = true;
     }
 
     private void ScrollToOffset(double newOffset, double currentOffset)
@@ -448,7 +442,7 @@ namespace IanSavchenko.Controls
       else
         this.HideScrollViewer();
       if (!this._active)
-        ((UIElement) this._inactiveStateItemPart).put_Visibility((Visibility) 0);
+        this._inactiveStateItemPart.Visibility = Visibility.Visible;
       this.UpdateInactiveStateItem();
     }
 
@@ -458,10 +452,11 @@ namespace IanSavchenko.Controls
       this._hideItemsStoryboard.Stop();
       lock (this._showItemsStoryboard)
       {
-        if (this._showItemsStoryboard.GetCurrentState() != 2)
+        if (this._showItemsStoryboard.GetCurrentState() != ClockState.Stopped)
           return;
-        this._showItemsAnimation.put_From(new double?(opacity));
-        ((Timeline) this._showItemsAnimation).put_Duration(new Duration(TimeSpan.FromMilliseconds(200.0 * Math.Abs(1.0 - opacity))));
+        this._showItemsAnimation.From = new double?(opacity);
+        ((Timeline) this._showItemsAnimation).Duration = 
+                    new Duration(TimeSpan.FromMilliseconds(200.0 * Math.Abs(1.0 - opacity)));
         this._showItemsStoryboard.Begin();
       }
     }
@@ -472,10 +467,11 @@ namespace IanSavchenko.Controls
       this._showItemsStoryboard.Stop();
       lock (this._hideItemsStoryboard)
       {
-        if (this._hideItemsStoryboard.GetCurrentState() != 2)
+        if (this._hideItemsStoryboard.GetCurrentState() != ClockState.Stopped)
           return;
-        this._hideItemsAnimation.put_From(new double?(opacity));
-        ((Timeline) this._hideItemsAnimation).put_Duration(new Duration(TimeSpan.FromMilliseconds(200.0 * Math.Abs(opacity))));
+        this._hideItemsAnimation.From = new double?(opacity);
+        ((Timeline) this._hideItemsAnimation).Duration = 
+                    new Duration(TimeSpan.FromMilliseconds(200.0 * Math.Abs(opacity)));
         this._hideItemsStoryboard.Begin();
       }
     }
@@ -484,7 +480,26 @@ namespace IanSavchenko.Controls
     {
       if (!this.IsActive)
         return;
-      ((UIElement) this._inactiveStateItemPart).put_Visibility((Visibility) 1);
+      this._inactiveStateItemPart.Visibility = Visibility.Collapsed;
     }
+    protected override void OnApplyTemplate()
+    {
+            base.OnApplyTemplate();
+
+            this._itemsControlPart = this.GetTemplateChild("PART_ItemsControl") as ItemsControl;
+            this._scrollViewerPart = this.GetTemplateChild("PART_ScrollViewer") as ScrollViewer;
+            this._inactiveStateItemPart = this.GetTemplateChild("PART_InactiveStateItem") as ListSelectorItem;
+
+            if (this._scrollViewerPart != null)
+            {
+                this._scrollViewerPart.ViewChanged += this.ScrollViewerPartOnViewChanged;
+                this._scrollViewerPart.ViewChanging += this.ScrollViewerPartOnViewChanging;
+                this._scrollViewerPart.Tapped += this.ScrollViewerPartOnTapped;
+            }
+
+            this.UpdateItemsControlItems();
+            this.UpdateGeometricalParams();
+            this.CreateAnimations();
+     }
   }
 }

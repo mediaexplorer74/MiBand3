@@ -183,20 +183,43 @@ namespace MetroLog.Internal.Reflection
       return (ReflectionUtils.GetDelegate) (source => fieldInfo.GetValue(source));
     }
 
-    public static ReflectionUtils.GetDelegate GetGetMethodByExpression(PropertyInfo propertyInfo)
-    {
-      MethodInfo getterMethodInfo = ReflectionUtils.GetGetterMethodInfo(propertyInfo);
-      ParameterExpression parameterExpression;
-      Func<object, object> compiled = ((Expression<Func<object, object>>) (instance => Expression.Call((Expression) (!ReflectionUtils.IsValueType(propertyInfo.DeclaringType) ? Expression.TypeAs((Expression) parameterExpression, propertyInfo.DeclaringType) : Expression.Convert((Expression) parameterExpression, propertyInfo.DeclaringType)), getterMethodInfo) as object)).Compile();
-      return (ReflectionUtils.GetDelegate) (source => compiled(source));
-    }
+        public static ReflectionUtils.GetDelegate GetGetMethodByExpression(PropertyInfo propertyInfo)
+        {
+            MethodInfo getterMethodInfo = ReflectionUtils.GetGetterMethodInfo(propertyInfo);
+            ParameterExpression parameterExpression = Expression.Parameter(typeof(object), "instance"); // Initialize parameterExpression
+            Func<object, object> compiled = Expression.Lambda<Func<object, object>>(
+                Expression.Convert(
+                    Expression.Call(
+                        !ReflectionUtils.IsValueType(propertyInfo.DeclaringType)
+                            ? Expression.TypeAs(parameterExpression, propertyInfo.DeclaringType)
+                            : Expression.Convert(parameterExpression, propertyInfo.DeclaringType),
+                        getterMethodInfo
+                    ),
+                    typeof(object)
+                ),
+                parameterExpression
+            ).Compile();
+            return source => compiled(source);
+        }
 
-    public static ReflectionUtils.GetDelegate GetGetMethodByExpression(FieldInfo fieldInfo)
-    {
-      ParameterExpression parameterExpression;
-      ReflectionUtils.GetDelegate compiled = Expression.Lambda<ReflectionUtils.GetDelegate>((Expression) Expression.Convert((Expression) Expression.Field((Expression) Expression.Convert((Expression) parameterExpression, fieldInfo.DeclaringType), fieldInfo), typeof (object)), parameterExpression).Compile();
-      return (ReflectionUtils.GetDelegate) (source => compiled(source));
-    }
+        public static ReflectionUtils.GetDelegate GetGetMethodByExpression(FieldInfo fieldInfo)
+        {
+            // Initialize the parameterExpression variable to fix CS0165
+            ParameterExpression parameterExpression = Expression.Parameter(typeof(object), "instance");
+
+            ReflectionUtils.GetDelegate compiled = Expression.Lambda<ReflectionUtils.GetDelegate>(
+                Expression.Convert(
+                    Expression.Field(
+                        Expression.Convert(parameterExpression, fieldInfo.DeclaringType),
+                        fieldInfo
+                    ),
+                    typeof(object)
+                ),
+                parameterExpression
+            ).Compile();
+
+            return source => compiled(source);
+        }
 
     public static ReflectionUtils.SetDelegate GetSetMethod(PropertyInfo propertyInfo)
     {
@@ -233,13 +256,23 @@ namespace MetroLog.Internal.Reflection
       return (ReflectionUtils.SetDelegate) ((source, val) => compiled(source, val));
     }
 
-    public static ReflectionUtils.SetDelegate GetSetMethodByExpression(FieldInfo fieldInfo)
-    {
-      ParameterExpression parameterExpression1;
-      ParameterExpression parameterExpression2;
-      Action<object, object> compiled = Expression.Lambda<Action<object, object>>((Expression) ReflectionUtils.Assign((Expression) Expression.Field((Expression) Expression.Convert((Expression) parameterExpression1, fieldInfo.DeclaringType), fieldInfo), (Expression) Expression.Convert((Expression) parameterExpression2, fieldInfo.FieldType)), parameterExpression1, parameterExpression2).Compile();
-      return (ReflectionUtils.SetDelegate) ((source, val) => compiled(source, val));
-    }
+        public static ReflectionUtils.SetDelegate GetSetMethodByExpression(FieldInfo fieldInfo)
+        {
+            ParameterExpression parameterExpression1 = Expression.Parameter(typeof(object), "instance");
+            ParameterExpression parameterExpression2 = Expression.Parameter(typeof(object), "value");
+            Action<object, object> compiled = Expression.Lambda<Action<object, object>>(
+                (Expression)ReflectionUtils.Assign(
+                    (Expression)Expression.Field(
+                        (Expression)Expression.Convert((Expression)parameterExpression1, fieldInfo.DeclaringType),
+                        fieldInfo
+                    ),
+                    (Expression)Expression.Convert((Expression)parameterExpression2, fieldInfo.FieldType)
+                ),
+                parameterExpression1,
+                parameterExpression2
+            ).Compile();
+            return (ReflectionUtils.SetDelegate)((source, val) => compiled(source, val));
+        }
 
     public static BinaryExpression Assign(Expression left, Expression right)
     {

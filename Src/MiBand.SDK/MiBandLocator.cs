@@ -94,10 +94,11 @@ namespace MiBand.SDK
       catch (Exception ex)
       {
         this._log.Info(string.Format("Not found gatt service for device id {0} with {1}", (object) deviceId, (object) ex));
-        return await Task.FromResult<GattDeviceService>((GattDeviceService) null);
+        //return await Task.FromResult<GattDeviceService>((GattDeviceService) null);
       }
-      GattDeviceService serviceForDeviceId;
-      return serviceForDeviceId;
+            //GattDeviceService serviceForDeviceId;
+        //return serviceForDeviceId;
+        return await Task.FromResult<GattDeviceService>((GattDeviceService)null);
     }
   }
 }

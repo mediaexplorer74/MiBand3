@@ -34,7 +34,7 @@ namespace Gregstoll
     protected virtual Size MeasureOverride(Size availableSize)
     {
       Point point = new Point(0.0, 0.0);
-      if (this.Orientation == 1)
+      if (this.Orientation == Orientation.Horizontal)
       {
         double val1 = 0.0;
         double num = 0.0;
@@ -77,7 +77,7 @@ namespace Gregstoll
     {
       Point point1 = new Point(0.0, 0.0);
       int num1 = 0;
-      if (this.Orientation == 1)
+      if (this.Orientation == Orientation.Horizontal)
       {
         double num2 = 0.0;
         foreach (UIElement child in (IEnumerable<UIElement>) this.Children)
@@ -100,11 +100,15 @@ namespace Gregstoll
         double num3 = 0.0;
         foreach (UIElement child in (IEnumerable<UIElement>) this.Children)
         {
-          child.Arrange((Rect) new Rect(point1, new Point(point1.X + ((Size) child.DesiredSize).Width, point1.Y + ((Size) child.DesiredSize).Height)));
-          if (((Size) child.DesiredSize).Width > num3)
-            num3 = ((Size) child.DesiredSize).Width;
-          point1.Y += ((Size) child.DesiredSize).Height;
-          if (num1 + 1 < ((ICollection<UIElement>) this.Children).Count && point1.Y + ((Size) ((IList<UIElement>) this.Children)[num1 + 1].DesiredSize).Height > finalSize.Height)
+          child.Arrange( new Rect( point1, 
+              new Point(point1.X + child.DesiredSize.Width, 
+              point1.Y + child.DesiredSize.Height) ) );
+
+          if (child.DesiredSize.Width > num3)
+            num3 = child.DesiredSize.Width;
+          point1.Y += child.DesiredSize.Height;
+          if (num1 + 1 < this.Children.Count 
+             && point1.Y + this.Children[num1 + 1].DesiredSize.Height > finalSize.Height)
           {
             point1.Y = 0.0;
             point1.X += num3;
@@ -113,7 +117,7 @@ namespace Gregstoll
           ++num1;
         }
       }
-      return (Size) ((FrameworkElement) this).ArrangeOverride((Size) finalSize);
+      return this.ArrangeOverride(finalSize);
     }
   }
 }
