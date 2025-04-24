@@ -1,12 +1,13 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.Tools.PageBaseViewModel
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using Caliburn.Micro;
-using Microsoft.HockeyApp;
+//using Microsoft.HockeyApp;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 #nullable disable
@@ -24,7 +25,9 @@ namespace MiBandApp.Tools
     {
       this.IsActive = true;
       await this.OnActivate().ConfigureAwait(true);
-      HockeyClient.Current.TrackPageView(this.GetType().Name.Replace("ViewModel", string.Empty));
+            //HockeyClient.Current.TrackPageView(this.GetType().Name.Replace("ViewModel", string.Empty));
+        Debug.WriteLine("[i] PageBaseViewModel : " 
+            + this.GetType().Name.Replace("ViewModel", string.Empty));
     }
 
     public async void Deactivate(bool close)

@@ -1,74 +1,67 @@
 ﻿<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-      xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting" 
       xmlns:core="using:Microsoft.Xaml.Interactions.Core" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:dataVisualization="using:WinRTXamlToolkit.Controls.DataVisualization" 
       xmlns:interactivity="using:Microsoft.Xaml.Interactivity" 
       xmlns:local="using:MiBandApp.Views" 
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:micro="using:Caliburn.Micro" 
-      xmlns:primitives="using:WinRTXamlToolkit.Controls.DataVisualization.Charting.Primitives" 
       xmlns:system="using:System" 
       xmlns:viewModels="using:MiBandApp.ViewModels" 
       x:Class="MiBandApp.Views.HistoryPage" x:Name="Root">
-    
-    <Page.Style>
+    <!--
+    xmlns:Charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
+    xmlns:dataVisualization="using:WinRTXamlToolkit.Controls.DataVisualization" 
+    xmlns:primitives="using:WinRTXamlToolkit.Controls.DataVisualization.Charting.Primitives" 
+      -->
+
+        <Page.Style>
         <StaticResource ResourceKey="DefaultPageStyle" />
     </Page.Style>
-    <Resources>
+    <Page.Resources>
         <ResourceDictionary>
-            <MergedDictionaries>
-                <ResourceDictionaryCollection>
+            <ResourceDictionary.MergedDictionaries>               
                     <ResourceDictionary Source="../Resources/SpecificStyles.xaml" />
-                </ResourceDictionaryCollection>
-            </MergedDictionaries>
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </Resources>
+    </Page.Resources>
+
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Compact">
-            <PrimaryCommands>
-                <CommandBarElementCollection>
-                    <AppBarToggleButton x:Uid="HistoryPageSleepView" x:Name="SwitchToSleep" Label="sleep view">
-                        <IsChecked>
-                            <Binding Path="IsDisplayingSleep" Mode="TwoWay" />
-                        </IsChecked>
-                        <Icon>
-                            <BitmapIcon UriSource="../Resources/Images/appbar.moon.png" />
-                        </Icon>
-                    </AppBarToggleButton>
-                    <AppBarToggleButton x:Uid="HistoryPageListView" Icon="List" Label="list view">
-                        <IsChecked>
-                            <Binding Path="IsInListView" Mode="TwoWay" />
-                        </IsChecked>
-                    </AppBarToggleButton>
-                </CommandBarElementCollection>
-            </PrimaryCommands>
+            <AppBarToggleButton x:Uid="HistoryPageSleepView" x:Name="SwitchToSleep" Label="sleep view"
+                                IsChecked="{Binding Path=IsDisplayingSleep, Mode=TwoWay}">
+                <AppBarToggleButton.Icon>
+                    <BitmapIcon UriSource="../Resources/Images/appbar.moon.png" />
+                </AppBarToggleButton.Icon>
+            </AppBarToggleButton>
+
+            <AppBarToggleButton x:Uid="HistoryPageListView" Icon="List" Label="list view"
+                                IsChecked="{Binding Path=IsInListView, Mode=TwoWay}" />
         </CommandBar>
     </Page.BottomAppBar>
+
     <Page.Content>
-        <Grid>
-            <Margin>
+        <StackPanel>
+          <Grid>
+            <!--Grid.Margin>
                 <StaticResource ResourceKey="RootContainerThickness" />
-            </Margin>
-            <Resources>
+            </Grid.Margin-->
+            <Grid.Resources>
                 <ResourceDictionary>
                     <Style x:Key="HiddenTicksStyle" TargetType="Line">
-                        <Setters>
-                            <SetterBaseCollection>
-                                <Setter Property="Visibility" Value="Collapsed" />
-                            </SetterBaseCollection>
-                        </Setters>
+                        <Style.Setters>                          
+                                <Setter Property="Visibility" Value="Collapsed" />                        
+                        </Style.Setters>
                     </Style>
                     <Style x:Key="PathFlipViewNavigationButttonStyle" TargetType="Path">
-                        <Setters>
-                            <SetterBaseCollection>
-                                <Setter Property="StrokeThickness" Value="5" />
-                            </SetterBaseCollection>
-                        </Setters>
+                        <Style.Setters>                           
+                                <Setter Property="StrokeThickness" Value="5" />                          
+                        </Style.Setters>
                     </Style>
-                    <Style TargetType="Charting:Chart">
-                        <Setters>
+
+                    <!-- TODO: TargetType="Charting:Chart"-->
+                    <!--Style TargetType="Charting:Chart">
+                        <Style.Setters>
                             <SetterBaseCollection>
                                 <Setter Property="TitleStyle">
                                     <Value>
@@ -140,18 +133,17 @@
                                     </Value>
                                 </Setter>
                             </SetterBaseCollection>
-                        </Setters>
-                    </Style>
+                        </Style.Setters>
+                    </Style-->
                 </ResourceDictionary>
-            </Resources>
-            <RowDefinitions>
-                <RowDefinitionCollection>
+            </Grid.Resources>
+            <Grid.RowDefinitions>              
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition />
-                </RowDefinitionCollection>
-            </RowDefinitions>
-            <Children>
+                    <RowDefinition />           
+            </Grid.RowDefinitions>
+            
+            <!--Children>
                 <UIElementCollection>
                     <StackPanel Row="0">
                         <Children>
@@ -226,675 +218,665 @@
                       </Run>
                     </InlineCollection>
                   </Inlines>
-                                </TextBlock>
-                                <TextBlock x:Uid="HistoryPageSleepHeader" Text="сон">
-                  <Style>
-                    <StaticResource ResourceKey="DisplayContentTextBlockStyle" />
-                  </Style>
-                  <Visibility>
-                    <Binding Path="IsDisplayingSleep">
-                      <Converter>
-                        <StaticResource ResourceKey="BoolToVis" />
-                      </Converter>
-                    </Binding>
-                  </Visibility>
-                                </TextBlock>
-                                <TextBlock x:Uid="HistoryPageStepsHeader" Text="кроки">
-                  <Style>
-                    <StaticResource ResourceKey="DisplayContentTextBlockStyle" />
-                  </Style>
-                  <Visibility>
-                    <Binding Path="IsDisplayingSleep" ConverterParameter="False">
-                      <Converter>
-                        <StaticResource ResourceKey="BoolToVis" />
-                      </Converter>
-                    </Binding>
-                  </Visibility>
-                                </TextBlock>
-                            </UIElementCollection>
-                        </Children>
-                    </Grid>
-                    <FlipView Row="2">
-                        <SelectedIndex>
-                            <Binding Path="ViewModeIndex" Mode="TwoWay" />
-                        </SelectedIndex>
-                        <ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <Template>
-                                    <StackPanel Orientation="Vertical" />
-                                </Template>
-                            </ItemsPanelTemplate>
-                        </ItemsPanel>
-                        <Items>
-                            <ItemCollection>
-                                <FlipViewItem>
-                                    <Content>
-                                        <Grid>
-                                            <RowDefinitions>
-                                                <RowDefinitionCollection>
-                                                    <RowDefinition Height="Auto" />
-                                                    <RowDefinition Height="*" />
-                                                </RowDefinitionCollection>
-                                            </RowDefinitions>
-                                            <Children>
-                                                <UIElementCollection>
-                                                    <Charting:Chart x:Name="SleepChart" Row="1" Width="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
-                                                        <interactivity:Behaviors>
-                                                            <interactivity:BehaviorCollection>
-                                                                <core:EventTriggerBehavior EventName="Loaded">
-                                                                    <core:Actions>
-                                                                        <interactivity:ActionCollection>
-                                                                            <core:ChangePropertyAction PropertyName="Visibility">
-                                                                                <core:Value>
-                                                                                    <Visibility>Visible</Visibility>
-                                                                                </core:Value>
-                                                                            </core:ChangePropertyAction>
-                                                                        </interactivity:ActionCollection>
-                                                                    </core:Actions>
-                                                                </core:EventTriggerBehavior>
-                                                            </interactivity:BehaviorCollection>
-                                                        </interactivity:Behaviors>
-                                                        <Charting:Title>
-                                                            <TextBlock>
-                                <Inlines>
-                                  <InlineCollection>
-                                    <Run x:Uid="SleepDetailsPage_LightSleep" Text="Light sleep132456">
-                                      <Foreground>
-                                        <StaticResource ResourceKey="AppLightSleepBrush" />
-                                      </Foreground>
-                                    </Run>
-                                    <Run Text=" | " />
-                                    <Run x:Uid="SleepDetailsPage_DeepSleep" Text="Deep sleep123456">
-                                      <Foreground>
-                                        <StaticResource ResourceKey="AppDeepSleepBrush" />
-                                      </Foreground>
-                                    </Run>
-                                  </InlineCollection>
-                                </Inlines>
-                                                            </TextBlock>
-                                                        </Charting:Title>
-                                                        <Charting:Series>
-                                                            <Collection1WinRTXamlToolkitControlsDataVisualizationChartingISeries xmlns="using:System.Collections.ObjectModel">
-                                                                <Charting:StackedColumnSeries>
-                                                                    <Charting:SeriesDefinitions>
-                                                                        <Collection1WinRTXamlToolkitControlsDataVisualizationChartingSeriesDefinition>
-                                                                            <Charting:SeriesDefinition Title="DeepSleep" DependentValuePath="DeepSleepMinutes">
-                                                                                <Charting:IndependentValueBinding>
-                                                                                    <Binding Path="Date" ConverterParameter="{0:dddnlMMM d}" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-                                                                                        <Converter>
-                                                                                            <StaticResource ResourceKey="StringFormatConverter" />
-                                                                                        </Converter>
-                                                                                    </Binding>
-                                                                                </Charting:IndependentValueBinding>
-                                                                                <Charting:DataPointStyle>
-                                                                                    <Style TargetType="Charting:ColumnDataPoint" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-                                                                                        <Setters>
-                                                                                            <SetterBaseCollection>
-                                                                                                <Setter Property="Background">
-                                                                                                    <Value>
-                                                                                                        <StaticResource ResourceKey="AppDeepSleepBrush" />
-                                                                                                    </Value>
-                                                                                                </Setter>
-                                                                                            </SetterBaseCollection>
-                                                                                        </Setters>
-                                                                                    </Style>
-                                                                                </Charting:DataPointStyle>
-                                                                            </Charting:SeriesDefinition>
-                                                                            <Charting:SeriesDefinition Title="LightSleep" DependentValuePath="SleepMinutes">
-                                                                                <Charting:IndependentValueBinding>
-                                                                                    <Binding Path="Date" ConverterParameter="{0:dddnlMMM d}" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-                                                                                        <Converter>
-                                                                                            <StaticResource ResourceKey="StringFormatConverter" />
-                                                                                        </Converter>
-                                                                                    </Binding>
-                                                                                </Charting:IndependentValueBinding>
-                                                                                <Charting:DataPointStyle>
-                                                                                    <Style TargetType="Charting:ColumnDataPoint" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-                                                                                        <Setters>
-                                                                                            <SetterBaseCollection>
-                                                                                                <Setter Property="Background">
-                                                                                                    <Value>
-                                                                                                        <StaticResource ResourceKey="AppLightSleepBrush" />
-                                                                                                    </Value>
-                                                                                                </Setter>
-                                                                                            </SetterBaseCollection>
-                                                                                        </Setters>
-                                                                                    </Style>
-                                                                                </Charting:DataPointStyle>
-                                                                            </Charting:SeriesDefinition>
-                                                                        </Collection1WinRTXamlToolkitControlsDataVisualizationChartingSeriesDefinition>
-                                                                    </Charting:SeriesDefinitions>
-                                                                    <Charting:IndependentAxis>
-                                                                        <Charting:CategoryAxis Location="Bottom" Orientation="X">
-                                                                            <Charting:MajorTickMarkStyle>
-                                                                                <Style TargetType="Line" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-                                                                                    <Setters>
-                                                                                        <SetterBaseCollection>
-                                                                                            <Setter Property="Stroke" Value="Transparent" />
-                                                                                        </SetterBaseCollection>
-                                                                                    </Setters>
-                                                                                </Style>
-                                                                            </Charting:MajorTickMarkStyle>
-                                                                            <Charting:AxisLabelStyle>
-                                                                                <Style TargetType="Charting:AxisLabel" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-                                                                                    <Setters>
-                                                                                        <SetterBaseCollection>
-                                                                                            <Setter Property="FontWeight" Value="Normal" />
-                                                                                        </SetterBaseCollection>
-                                                                                    </Setters>
-                                                                                </Style>
-                                                                            </Charting:AxisLabelStyle>
-                                                                        </Charting:CategoryAxis>
-                                                                    </Charting:IndependentAxis>
-                                                                </Charting:StackedColumnSeries>
-                                                                <Charting:ScatterSeries Title="SleepGoal" DependentValuePath="Value" IndependentValuePath="Key" IsSelectionEnabled="True">
-                                                                    <Charting:ItemsSource>
-                                                                        <Binding Path="Week.SleepGoal" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
-                                                                    </Charting:ItemsSource>
-                                                                    <Charting:DataPointStyle>
-                                                                        <Style TargetType="Charting:ScatterDataPoint" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                </TextBlock-->
+
+            <StackPanel>
+                <TextBlock Style="{StaticResource AppTitleStyle}" />
+                <TextBlock x:Uid="HistoryPageTitle" Text="history" Style="{StaticResource PageTitleStyle}" />
+            </StackPanel>
+
+            <Grid>
+                <Grid.Resources>
+                    <ResourceDictionary>
+                        <Style x:Key="DisplayContentTextBlockStyle" TargetType="TextBlock">
+                            <Style.BasedOn>
+                                <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
+                            </Style.BasedOn>
+                            <Setter Property="HorizontalAlignment" Value="Right" />
+                            <Setter Property="VerticalAlignment" Value="Bottom" />
+                            <Setter Property="Margin" Value="0,0,17,0" />
+                            <Setter Property="FontSize" Value="20" />
+                        </Style>
+                        <Style x:Key="DisplaySubHeaderContentTextBlockStyle" TargetType="TextBlock">
+                            <Style.BasedOn>
+                                <StaticResource ResourceKey="DisplayContentTextBlockStyle" />
+                            </Style.BasedOn>
+                            <Setter Property="FontSize" Value="14" />
+                        </Style>
+                    </ResourceDictionary>
+                </Grid.Resources>
+                <TextBlock HorizontalAlignment="Left" Style="{StaticResource SecondaryPageHeaderTextBlockStyle}">
+        <Run Text="{Binding Path=Week.WeekStartDate, ConverterParameter={StaticResource StringFormatConverter}}" />
+        <Run Text="-" />
+        <Run Text="{Binding Path=Week.WeekEndDate, ConverterParameter={StaticResource StringFormatConverter}}" />
+                </TextBlock>
+            </Grid>
+
+
+
+            <TextBlock x:Uid="HistoryPageSleepHeader" 
+           Text="sleep" 
+           Style="{StaticResource DisplayContentTextBlockStyle}" 
+           Visibility="{Binding Path=IsDisplayingSleep, Converter={StaticResource BoolToVis}}" />
+
+
+
+
+            <TextBlock x:Uid="HistoryPageStepsHeader" 
+           Text="steps" 
+           Style="{StaticResource DisplayContentTextBlockStyle}" 
+           Visibility="{Binding Path=IsDisplayingSleep, Converter={StaticResource BoolToVis}, ConverterParameter=False}" />
+
+
+        </Grid>
+
+
+
+        <FlipView Grid.Row="2" SelectedIndex="{Binding Path=ViewModeIndex, Mode=TwoWay}">
+            <FlipView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </FlipView.ItemsPanel>
+
+            <FlipView.ItemTemplate>
+                <DataTemplate>
+
+                    <Grid>
+                                <Grid.RowDefinitions>
+                                        
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                       
+                                </Grid.RowDefinitions>
+                                <!--Children>
+                            <UIElementCollection>
+                                <Charting:Chart x:Name="SleepChart" Row="1" Width="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
+                                                <interactivity:Behaviors>
+                                                    <interactivity:BehaviorCollection>
+                                                        <core:EventTriggerBehavior EventName="Loaded">
+                                                            <core:Actions>
+                                                                <interactivity:ActionCollection>
+                                                                    <core:ChangePropertyAction PropertyName="Visibility">
+                                                                        <core:Value>
+                                                                            <Visibility>Visible</Visibility>
+                                                                        </core:Value>
+                                                                    </core:ChangePropertyAction>
+                                                                </interactivity:ActionCollection>
+                                                            </core:Actions>
+                                                        </core:EventTriggerBehavior>
+                                                    </interactivity:BehaviorCollection>
+                                                </interactivity:Behaviors>
+                                                <Charting:Title>
+                                                    <TextBlock>
+                        <Inlines>
+                            <InlineCollection>
+                            <Run x:Uid="SleepDetailsPage_LightSleep" Text="Light sleep132456">
+                                <Foreground>
+                                <StaticResource ResourceKey="AppLightSleepBrush" />
+                                </Foreground>
+                            </Run>
+                            <Run Text=" | " />
+                            <Run x:Uid="SleepDetailsPage_DeepSleep" Text="Deep sleep123456">
+                                <Foreground>
+                                <StaticResource ResourceKey="AppDeepSleepBrush" />
+                                </Foreground>
+                            </Run>
+                            </InlineCollection>
+                        </Inlines>
+                                                    </TextBlock>
+                                                </Charting:Title>
+                                                <Charting:Series>
+                                                    <Collection1WinRTXamlToolkitControlsDataVisualizationChartingISeries xmlns="using:System.Collections.ObjectModel">
+                                                        <Charting:StackedColumnSeries>
+                                                            <Charting:SeriesDefinitions>
+                                                                <Collection1WinRTXamlToolkitControlsDataVisualizationChartingSeriesDefinition>
+                                                                    <Charting:SeriesDefinition Title="DeepSleep" DependentValuePath="DeepSleepMinutes">
+                                                                        <Charting:IndependentValueBinding>
+                                                                            <Binding Path="Date" ConverterParameter="{0:dddnlMMM d}" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                                                                <Converter>
+                                                                                    <StaticResource ResourceKey="StringFormatConverter" />
+                                                                                </Converter>
+                                                                            </Binding>
+                                                                        </Charting:IndependentValueBinding>
+                                                                        <Charting:DataPointStyle>
+                                                                            <Style TargetType="Charting:ColumnDataPoint" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                                                                <Setters>
+                                                                                    <SetterBaseCollection>
+                                                                                        <Setter Property="Background">
+                                                                                            <Value>
+                                                                                                <StaticResource ResourceKey="AppDeepSleepBrush" />
+                                                                                            </Value>
+                                                                                        </Setter>
+                                                                                    </SetterBaseCollection>
+                                                                                </Setters>
+                                                                            </Style>
+                                                                        </Charting:DataPointStyle>
+                                                                    </Charting:SeriesDefinition>
+                                                                    <Charting:SeriesDefinition Title="LightSleep" DependentValuePath="SleepMinutes">
+                                                                        <Charting:IndependentValueBinding>
+                                                                            <Binding Path="Date" ConverterParameter="{0:dddnlMMM d}" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                                                                <Converter>
+                                                                                    <StaticResource ResourceKey="StringFormatConverter" />
+                                                                                </Converter>
+                                                                            </Binding>
+                                                                        </Charting:IndependentValueBinding>
+                                                                        <Charting:DataPointStyle>
+                                                                            <Style TargetType="Charting:ColumnDataPoint" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                                                                <Setters>
+                                                                                    <SetterBaseCollection>
+                                                                                        <Setter Property="Background">
+                                                                                            <Value>
+                                                                                                <StaticResource ResourceKey="AppLightSleepBrush" />
+                                                                                            </Value>
+                                                                                        </Setter>
+                                                                                    </SetterBaseCollection>
+                                                                                </Setters>
+                                                                            </Style>
+                                                                        </Charting:DataPointStyle>
+                                                                    </Charting:SeriesDefinition>
+                                                                </Collection1WinRTXamlToolkitControlsDataVisualizationChartingSeriesDefinition>
+                                                            </Charting:SeriesDefinitions>
+                                                            <Charting:IndependentAxis>
+                                                                <Charting:CategoryAxis Location="Bottom" Orientation="X">
+                                                                    <Charting:MajorTickMarkStyle>
+                                                                        <Style TargetType="Line" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
                                                                             <Setters>
                                                                                 <SetterBaseCollection>
-                                                                                    <Setter Property="BorderBrush">
-                                                                                        <Value>
-                                                                                            <StaticResource ResourceKey="AppSleepBrush" />
-                                                                                        </Value>
-                                                                                    </Setter>
-                                                                                    <Setter Property="Width" Value="4000" />
-                                                                                    <Setter Property="Template">
-                                                                                        <Value>
-                                                                                            <ControlTemplate TargetType="Charting:ScatterDataPoint">
-                                                                                                <Template>
-                                                                                                    <Grid x:Name="Root">
-                                                                                                        <Children>
-                                                                                                            <UIElementCollection>
-                                                                                                                <Line Stretch="Fill" StrokeThickness="2" X1="0" X2="1" Y1="0" Y2="0">
-                                                                                                                    <Stroke>
-                                                                                                                        <TemplateBinding Property="BorderBrush" />
-                                                                                                                    </Stroke>
-                                                                                                                </Line>
-                                                                                                            </UIElementCollection>
-                                                                                                        </Children>
-                                                                                                    </Grid>
-                                                                                                </Template>
-                                                                                            </ControlTemplate>
-                                                                                        </Value>
-                                                                                    </Setter>
+                                                                                    <Setter Property="Stroke" Value="Transparent" />
                                                                                 </SetterBaseCollection>
                                                                             </Setters>
                                                                         </Style>
-                                                                    </Charting:DataPointStyle>
-                                                                    <Charting:IndependentAxis>
-                                                                        <Charting:DateTimeAxis IntervalType="Days" Orientation="X" Visibility="Collapsed" />
-                                                                    </Charting:IndependentAxis>
-                                                                </Charting:ScatterSeries>
-                                                            </Collection1WinRTXamlToolkitControlsDataVisualizationChartingISeries>
-                                                        </Charting:Series>
-                                                        <Charting:Axes>
-                                                            <Collection1WinRTXamlToolkitControlsDataVisualizationChartingIAxis xmlns="using:System.Collections.ObjectModel">
-                                                                <Charting:LinearAxis Orientation="Y" ShowGridLines="False">
+                                                                    </Charting:MajorTickMarkStyle>
                                                                     <Charting:AxisLabelStyle>
                                                                         <Style TargetType="Charting:AxisLabel" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
                                                                             <Setters>
                                                                                 <SetterBaseCollection>
-                                                                                    <Setter Property="Template">
-                                                                                        <Value>
-                                                                                            <ControlTemplate TargetType="Charting:AxisLabel">
-                                                                                                <Template>
-                                                                                                    <TextBlock IsTextScaleFactorEnabled="True">
-                                                    <DataContext>
-                                                      <TemplateBinding Property="FormattedContent" />
-                                                    </DataContext>
-                                                    <Text>
-                                                      <Binding>
-                                                        <Converter>
-                                                          <StaticResource ResourceKey="MinutesToStringConverter" />
-                                                        </Converter>
-                                                      </Binding>
-                                                    </Text>
-                                                                                                    </TextBlock>
-                                                                                                </Template>
-                                                                                            </ControlTemplate>
-                                                                                        </Value>
-                                                                                    </Setter>
+                                                                                    <Setter Property="FontWeight" Value="Normal" />
                                                                                 </SetterBaseCollection>
                                                                             </Setters>
                                                                         </Style>
                                                                     </Charting:AxisLabelStyle>
-                                                                </Charting:LinearAxis>
-                                                            </Collection1WinRTXamlToolkitControlsDataVisualizationChartingIAxis>
-                                                        </Charting:Axes>
-                                                    </Charting:Chart>
-                                                    <Charting:Chart x:Name="WalkChart" Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
-                                                        <interactivity:Behaviors>
-                                                            <interactivity:BehaviorCollection>
-                                                                <core:EventTriggerBehavior EventName="Loaded">
-                                                                    <core:Actions>
-                                                                        <interactivity:ActionCollection>
-                                                                            <core:ChangePropertyAction PropertyName="Visibility">
-                                                                                <core:Value>
-                                                                                    <Visibility>Visible</Visibility>
-                                                                                </core:Value>
-                                                                            </core:ChangePropertyAction>
-                                                                        </interactivity:ActionCollection>
-                                                                    </core:Actions>
-                                                                </core:EventTriggerBehavior>
-                                                            </interactivity:BehaviorCollection>
-                                                        </interactivity:Behaviors>
-                                                        <Charting:Title>
-                                                            <TextBlock>
-                                <Inlines>
-                                  <InlineCollection>
-                                    <Run x:Uid="WalkingActivity_WalkTitle" Text="Walking123456">
-                                      <Foreground>
-                                        <StaticResource ResourceKey="AppAccentBrush" />
-                                      </Foreground>
-                                    </Run>
-                                  </InlineCollection>
-                                </Inlines>
-                                                            </TextBlock>
-                                                        </Charting:Title>
-                                                        <Charting:Series>
-                                                            <Collection1WinRTXamlToolkitControlsDataVisualizationChartingISeries xmlns="using:System.Collections.ObjectModel">
-                                                                <Charting:ColumnSeries Title="Walk" AnimationSequence="Simultaneous" DependentValuePath="DaySummary.Steps" IsSelectionEnabled="True">
-                                                                    <Charting:IndependentValueBinding>
-                                                                        <Binding Path="DaySummary.Date" ConverterParameter="{0:dddnlMMM d}" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                                                </Charting:CategoryAxis>
+                                                            </Charting:IndependentAxis>
+                                                        </Charting:StackedColumnSeries>
+                                                        <Charting:ScatterSeries Title="SleepGoal" DependentValuePath="Value" IndependentValuePath="Key" IsSelectionEnabled="True">
+                                                            <Charting:ItemsSource>
+                                                                <Binding Path="Week.SleepGoal" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+                                                            </Charting:ItemsSource>
+                                                            <Charting:DataPointStyle>
+                                                                <Style TargetType="Charting:ScatterDataPoint" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                                                    <Setters>
+                                                                        <SetterBaseCollection>
+                                                                            <Setter Property="BorderBrush">
+                                                                                <Value>
+                                                                                    <StaticResource ResourceKey="AppSleepBrush" />
+                                                                                </Value>
+                                                                            </Setter>
+                                                                            <Setter Property="Width" Value="4000" />
+                                                                            <Setter Property="Template">
+                                                                                <Value>
+                                                                                    <ControlTemplate TargetType="Charting:ScatterDataPoint">
+                                                                                        <Template>
+                                                                                            <Grid x:Name="Root">
+                                                                                                <Children>
+                                                                                                    <UIElementCollection>
+                                                                                                        <Line Stretch="Fill" StrokeThickness="2" X1="0" X2="1" Y1="0" Y2="0">
+                                                                                                            <Stroke>
+                                                                                                                <TemplateBinding Property="BorderBrush" />
+                                                                                                            </Stroke>
+                                                                                                        </Line>
+                                                                                                    </UIElementCollection>
+                                                                                                </Children>
+                                                                                            </Grid>
+                                                                                        </Template>
+                                                                                    </ControlTemplate>
+                                                                                </Value>
+                                                                            </Setter>
+                                                                        </SetterBaseCollection>
+                                                                    </Setters>
+                                                                </Style>
+                                                            </Charting:DataPointStyle>
+                                                            <Charting:IndependentAxis>
+                                                                <Charting:DateTimeAxis IntervalType="Days" Orientation="X" Visibility="Collapsed" />
+                                                            </Charting:IndependentAxis>
+                                                        </Charting:ScatterSeries>
+                                                    </Collection1WinRTXamlToolkitControlsDataVisualizationChartingISeries>
+                                                </Charting:Series>
+                                                <Charting:Axes>
+                                                    <Collection1WinRTXamlToolkitControlsDataVisualizationChartingIAxis xmlns="using:System.Collections.ObjectModel">
+                                                        <Charting:LinearAxis Orientation="Y" ShowGridLines="False">
+                                                            <Charting:AxisLabelStyle>
+                                                                <Style TargetType="Charting:AxisLabel" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                                                    <Setters>
+                                                                        <SetterBaseCollection>
+                                                                            <Setter Property="Template">
+                                                                                <Value>
+                                                                                    <ControlTemplate TargetType="Charting:AxisLabel">
+                                                                                        <Template>
+                                                                                            <TextBlock IsTextScaleFactorEnabled="True">
+                                            <DataContext>
+                                                <TemplateBinding Property="FormattedContent" />
+                                            </DataContext>
+                                            <Text>
+                                                <Binding>
+                                                <Converter>
+                                                    <StaticResource ResourceKey="MinutesToStringConverter" />
+                                                </Converter>
+                                                </Binding>
+                                            </Text>
+                                                                                            </TextBlock>
+                                                                                        </Template>
+                                                                                    </ControlTemplate>
+                                                                                </Value>
+                                                                            </Setter>
+                                                                        </SetterBaseCollection>
+                                                                    </Setters>
+                                                                </Style>
+                                                            </Charting:AxisLabelStyle>
+                                                        </Charting:LinearAxis>
+                                                    </Collection1WinRTXamlToolkitControlsDataVisualizationChartingIAxis>
+                                                </Charting:Axes>
+                                            </Charting:Chart>
+                                            <Charting:Chart x:Name="WalkChart" Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
+                                                <interactivity:Behaviors>
+                                                    <interactivity:BehaviorCollection>
+                                                        <core:EventTriggerBehavior EventName="Loaded">
+                                                            <core:Actions>
+                                                                <interactivity:ActionCollection>
+                                                                    <core:ChangePropertyAction PropertyName="Visibility">
+                                                                        <core:Value>
+                                                                            <Visibility>Visible</Visibility>
+                                                                        </core:Value>
+                                                                    </core:ChangePropertyAction>
+                                                                </interactivity:ActionCollection>
+                                                            </core:Actions>
+                                                        </core:EventTriggerBehavior>
+                                                    </interactivity:BehaviorCollection>
+                                                </interactivity:Behaviors>
+                                                <Charting:Title>
+                                                    <TextBlock>
+                        <Inlines>
+                            <InlineCollection>
+                            <Run x:Uid="WalkingActivity_WalkTitle" Text="Walking123456">
+                                <Foreground>
+                                <StaticResource ResourceKey="AppAccentBrush" />
+                                </Foreground>
+                            </Run>
+                            </InlineCollection>
+                        </Inlines>
+                                                    </TextBlock>
+                                                </Charting:Title>
+                                                <Charting:Series>
+                                                    <Collection1WinRTXamlToolkitControlsDataVisualizationChartingISeries xmlns="using:System.Collections.ObjectModel">
+                                                        <Charting:ColumnSeries Title="Walk" AnimationSequence="Simultaneous" DependentValuePath="DaySummary.Steps" IsSelectionEnabled="True">
+                                                            <Charting:IndependentValueBinding>
+                                                                <Binding Path="DaySummary.Date" ConverterParameter="{0:dddnlMMM d}" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                                                    <Converter>
+                                                                        <StaticResource ResourceKey="StringFormatConverter" />
+                                                                    </Converter>
+                                                                </Binding>
+                                                            </Charting:IndependentValueBinding>
+                                                            <Charting:DataPointStyle>
+                                                                <Style TargetType="Charting:ColumnDataPoint" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                                                    <Setters>
+                                                                        <SetterBaseCollection>
+                                                                            <Setter Property="Background">
+                                                                                <Value>
+                                                                                    <StaticResource ResourceKey="AppAccentBrush" />
+                                                                                </Value>
+                                                                            </Setter>
+                                                                        </SetterBaseCollection>
+                                                                    </Setters>
+                                                                </Style>
+                                                            </Charting:DataPointStyle>
+                                                            <Charting:IndependentAxis>
+                                                                <Charting:CategoryAxis Location="Bottom" Orientation="X">
+                                                                    <Charting:MajorTickMarkStyle>
+                                                                        <Style TargetType="Line" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                                                            <Setters>
+                                                                                <SetterBaseCollection>
+                                                                                    <Setter Property="Stroke" Value="Transparent" />
+                                                                                </SetterBaseCollection>
+                                                                            </Setters>
+                                                                        </Style>
+                                                                    </Charting:MajorTickMarkStyle>
+                                                                    <Charting:AxisLabelStyle>
+                                                                        <Style TargetType="Charting:AxisLabel" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                                                            <Setters>
+                                                                                <SetterBaseCollection>
+                                                                                    <Setter Property="FontWeight" Value="Normal" />
+                                                                                </SetterBaseCollection>
+                                                                            </Setters>
+                                                                        </Style>
+                                                                    </Charting:AxisLabelStyle>
+                                                                </Charting:CategoryAxis>
+                                                            </Charting:IndependentAxis>
+                                                        </Charting:ColumnSeries>
+                                                        <Charting:ScatterSeries Title="WalkGoal" DependentValuePath="Value" IndependentValuePath="Key" IsSelectionEnabled="True">
+                                                            <Charting:ItemsSource>
+                                                                <Binding Path="Week.StepsGoal" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
+                                                            </Charting:ItemsSource>
+                                                            <Charting:DataPointStyle>
+                                                                <Style TargetType="Charting:ScatterDataPoint" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                                                    <Setters>
+                                                                        <SetterBaseCollection>
+                                                                            <Setter Property="BorderBrush">
+                                                                                <Value>
+                                                                                    <StaticResource ResourceKey="AppAccentBrush" />
+                                                                                </Value>
+                                                                            </Setter>
+                                                                            <Setter Property="Width" Value="4000" />
+                                                                            <Setter Property="Template">
+                                                                                <Value>
+                                                                                    <ControlTemplate TargetType="Charting:ScatterDataPoint">
+                                                                                        <Template>
+                                                                                            <Grid x:Name="Root">
+                                                                                                <Children>
+                                                                                                    <UIElementCollection>
+                                                                                                        <Line Stretch="Fill" StrokeThickness="2" X1="0" X2="1" Y1="0" Y2="0">
+                                                                                                            <Stroke>
+                                                                                                                <TemplateBinding Property="BorderBrush" />
+                                                                                                            </Stroke>
+                                                                                                        </Line>
+                                                                                                    </UIElementCollection>
+                                                                                                </Children>
+                                                                                            </Grid>
+                                                                                        </Template>
+                                                                                    </ControlTemplate>
+                                                                                </Value>
+                                                                            </Setter>
+                                                                        </SetterBaseCollection>
+                                                                    </Setters>
+                                                                </Style>
+                                                            </Charting:DataPointStyle>
+                                                            <Charting:IndependentAxis>
+                                                                <Charting:DateTimeAxis IntervalType="Days" Orientation="X" Visibility="Collapsed" />
+                                                            </Charting:IndependentAxis>
+                                                        </Charting:ScatterSeries>
+                                                    </Collection1WinRTXamlToolkitControlsDataVisualizationChartingISeries>
+                                                </Charting:Series>
+                                                <Charting:Axes>
+                                                    <Collection1WinRTXamlToolkitControlsDataVisualizationChartingIAxis xmlns="using:System.Collections.ObjectModel">
+                                                        <Charting:LinearAxis Orientation="Y" ShowGridLines="False">
+                                                            <Charting:AxisLabelStyle>
+                                                                <Style TargetType="Charting:AxisLabel" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                                                                    <Setters>
+                                                                        <SetterBaseCollection>
+                                                                            <Setter Property="Template">
+                                                                                <Value>
+                                                                                    <ControlTemplate TargetType="Charting:AxisLabel">
+                                                                                        <Template>
+                                                                                            <TextBlock IsTextScaleFactorEnabled="True">
+                                            <DataContext>
+                                                <TemplateBinding Property="FormattedContent" />
+                                            </DataContext>
+                                            <Text>
+                                                <Binding />
+                                            </Text>
+                                                                                            </TextBlock>
+                                                                                        </Template>
+                                                                                    </ControlTemplate>
+                                                                                </Value>
+                                                                            </Setter>
+                                                                        </SetterBaseCollection>
+                                                                    </Setters>
+                                                                </Style>
+                                                            </Charting:AxisLabelStyle>
+                                                        </Charting:LinearAxis>
+                                                    </Collection1WinRTXamlToolkitControlsDataVisualizationChartingIAxis>
+                                                </Charting:Axes>
+                                            </Charting:Chart>
+                                        </UIElementCollection>
+                                    </Children-->
+                               
+                    
+                         <!--FlipViewItem x:Name="DownFlipViewItem">
+                            <Resources>
+                                <ResourceDictionary>
+                                    <DataTemplate x:Key="WalkItemDataTemplate">
+                                        <Template>
+                                            <Border Margin="0,0,0,10">
+                                                <Child>
+                                                    <Grid HorizontalAlignment="Stretch">
+                                                        <ColumnDefinitions>
+                                                            <ColumnDefinitionCollection>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </ColumnDefinitionCollection>
+                                                        </ColumnDefinitions>
+                                                        <RowDefinitions>
+                                                            <RowDefinitionCollection>
+                                                                <RowDefinition Height="Auto" />
+                                                                <RowDefinition Height="Auto" />
+                                                            </RowDefinitionCollection>
+                                                        </RowDefinitions>
+                                                        <Children>
+                                                            <UIElementCollection>
+                                                                <TextBlock FontSize="30" FontWeight="Light">
+                                <Text>
+                                <Binding Path="DaySummary.Date" ConverterParameter="{0:dddd}" Mode="OneTime">
+                                    <Converter>
+                                    <StaticResource ResourceKey="StringFormatConverter" />
+                                    </Converter>
+                                </Binding>
+                                </Text>
+                                                                </TextBlock>
+                                                                <BitmapIcon Row="0" Column="1" Height="20" Margin="0,5,0,5" VerticalAlignment="Bottom" UriSource="../Resources/Images/run.png">
+                                                                    <Visibility>
+                                                                        <Binding Path="DaySummary.WasRunning" Mode="OneTime">
                                                                             <Converter>
-                                                                                <StaticResource ResourceKey="StringFormatConverter" />
+                                                                                <StaticResource ResourceKey="BoolToVis" />
                                                                             </Converter>
                                                                         </Binding>
-                                                                    </Charting:IndependentValueBinding>
-                                                                    <Charting:DataPointStyle>
-                                                                        <Style TargetType="Charting:ColumnDataPoint" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-                                                                            <Setters>
-                                                                                <SetterBaseCollection>
-                                                                                    <Setter Property="Background">
-                                                                                        <Value>
-                                                                                            <StaticResource ResourceKey="AppAccentBrush" />
-                                                                                        </Value>
-                                                                                    </Setter>
-                                                                                </SetterBaseCollection>
-                                                                            </Setters>
-                                                                        </Style>
-                                                                    </Charting:DataPointStyle>
-                                                                    <Charting:IndependentAxis>
-                                                                        <Charting:CategoryAxis Location="Bottom" Orientation="X">
-                                                                            <Charting:MajorTickMarkStyle>
-                                                                                <Style TargetType="Line" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-                                                                                    <Setters>
-                                                                                        <SetterBaseCollection>
-                                                                                            <Setter Property="Stroke" Value="Transparent" />
-                                                                                        </SetterBaseCollection>
-                                                                                    </Setters>
-                                                                                </Style>
-                                                                            </Charting:MajorTickMarkStyle>
-                                                                            <Charting:AxisLabelStyle>
-                                                                                <Style TargetType="Charting:AxisLabel" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-                                                                                    <Setters>
-                                                                                        <SetterBaseCollection>
-                                                                                            <Setter Property="FontWeight" Value="Normal" />
-                                                                                        </SetterBaseCollection>
-                                                                                    </Setters>
-                                                                                </Style>
-                                                                            </Charting:AxisLabelStyle>
-                                                                        </Charting:CategoryAxis>
-                                                                    </Charting:IndependentAxis>
-                                                                </Charting:ColumnSeries>
-                                                                <Charting:ScatterSeries Title="WalkGoal" DependentValuePath="Value" IndependentValuePath="Key" IsSelectionEnabled="True">
-                                                                    <Charting:ItemsSource>
-                                                                        <Binding Path="Week.StepsGoal" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" />
-                                                                    </Charting:ItemsSource>
-                                                                    <Charting:DataPointStyle>
-                                                                        <Style TargetType="Charting:ScatterDataPoint" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-                                                                            <Setters>
-                                                                                <SetterBaseCollection>
-                                                                                    <Setter Property="BorderBrush">
-                                                                                        <Value>
-                                                                                            <StaticResource ResourceKey="AppAccentBrush" />
-                                                                                        </Value>
-                                                                                    </Setter>
-                                                                                    <Setter Property="Width" Value="4000" />
-                                                                                    <Setter Property="Template">
-                                                                                        <Value>
-                                                                                            <ControlTemplate TargetType="Charting:ScatterDataPoint">
-                                                                                                <Template>
-                                                                                                    <Grid x:Name="Root">
-                                                                                                        <Children>
-                                                                                                            <UIElementCollection>
-                                                                                                                <Line Stretch="Fill" StrokeThickness="2" X1="0" X2="1" Y1="0" Y2="0">
-                                                                                                                    <Stroke>
-                                                                                                                        <TemplateBinding Property="BorderBrush" />
-                                                                                                                    </Stroke>
-                                                                                                                </Line>
-                                                                                                            </UIElementCollection>
-                                                                                                        </Children>
-                                                                                                    </Grid>
-                                                                                                </Template>
-                                                                                            </ControlTemplate>
-                                                                                        </Value>
-                                                                                    </Setter>
-                                                                                </SetterBaseCollection>
-                                                                            </Setters>
-                                                                        </Style>
-                                                                    </Charting:DataPointStyle>
-                                                                    <Charting:IndependentAxis>
-                                                                        <Charting:DateTimeAxis IntervalType="Days" Orientation="X" Visibility="Collapsed" />
-                                                                    </Charting:IndependentAxis>
-                                                                </Charting:ScatterSeries>
-                                                            </Collection1WinRTXamlToolkitControlsDataVisualizationChartingISeries>
-                                                        </Charting:Series>
-                                                        <Charting:Axes>
-                                                            <Collection1WinRTXamlToolkitControlsDataVisualizationChartingIAxis xmlns="using:System.Collections.ObjectModel">
-                                                                <Charting:LinearAxis Orientation="Y" ShowGridLines="False">
-                                                                    <Charting:AxisLabelStyle>
-                                                                        <Style TargetType="Charting:AxisLabel" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-                                                                            <Setters>
-                                                                                <SetterBaseCollection>
-                                                                                    <Setter Property="Template">
-                                                                                        <Value>
-                                                                                            <ControlTemplate TargetType="Charting:AxisLabel">
-                                                                                                <Template>
-                                                                                                    <TextBlock IsTextScaleFactorEnabled="True">
-                                                    <DataContext>
-                                                      <TemplateBinding Property="FormattedContent" />
-                                                    </DataContext>
-                                                    <Text>
-                                                      <Binding />
-                                                    </Text>
-                                                                                                    </TextBlock>
-                                                                                                </Template>
-                                                                                            </ControlTemplate>
-                                                                                        </Value>
-                                                                                    </Setter>
-                                                                                </SetterBaseCollection>
-                                                                            </Setters>
-                                                                        </Style>
-                                                                    </Charting:AxisLabelStyle>
-                                                                </Charting:LinearAxis>
-                                                            </Collection1WinRTXamlToolkitControlsDataVisualizationChartingIAxis>
-                                                        </Charting:Axes>
-                                                    </Charting:Chart>
-                                                </UIElementCollection>
-                                            </Children>
-                                        </Grid>
-                                    </Content>
-                                </FlipViewItem>
-                                <FlipViewItem x:Name="DownFlipViewItem">
+                                                                    </Visibility>
+                                                                </BitmapIcon>
+                                                                <TextBlock Row="0" Column="2" HorizontalAlignment="Right" FontSize="30">
+                                <Text>
+                                <Binding Path="DaySummary.Steps" Mode="OneTime" />
+                                </Text>
+                                                                </TextBlock>
+                                                                <StackPanel Row="1" Column="0" ColumnSpan="3" HorizontalAlignment="Right" Orientation="Horizontal">
+                                                                    <Resources>
+                                                                        <ResourceDictionary>
+                                                                            <Style TargetType="TextBlock">
+                                                                                <BasedOn>
+                                                                                    <StaticResource ResourceKey="ActivityItemSecondaryWrappableTextBlockStyle" />
+                                                                                </BasedOn>
+                                                                                <Setters>
+                                                                                    <SetterBaseCollection>
+                                                                                        <Setter Property="Margin" Value="10 0 0 0" />
+                                                                                    </SetterBaseCollection>
+                                                                                </Setters>
+                                                                            </Style>
+                                                                        </ResourceDictionary>
+                                                                    </Resources>
+                                                                    <Children>
+                                                                        <UIElementCollection>
+                                                                            <TextBlock>
+                                    <Text>
+                                        <Binding Path="DaySummary.Distance" Mode="OneTime">
+                                        <Converter>
+                                            <StaticResource ResourceKey="DistanceKmToFormattedStringConverter" />
+                                        </Converter>
+                                        </Binding>
+                                    </Text>
+                                                                            </TextBlock>
+                                                                            <TextBlock>
+                                    <Text>
+                                        <Binding Path="DaySummary.Calories" Mode="OneTime">
+                                        <Converter>
+                                            <StaticResource ResourceKey="CaloriesToFormattedStringConverter" />
+                                        </Converter>
+                                        </Binding>
+                                    </Text>
+                                                                            </TextBlock>
+                                                                        </UIElementCollection>
+                                                                    </Children>
+                                                                </StackPanel>
+                                                            </UIElementCollection>
+                                                        </Children>
+                                                    </Grid>
+                                                </Child>
+                                            </Border>
+                                        </Template>
+                                    </DataTemplate>
+                                    <DataTemplate x:Key="SleepItemDataTemplate">
+                                        <Template>
+                                            <Border Margin="0,0,0,10">
+                                                <Child>
+                                                    <Grid HorizontalAlignment="Stretch">
+                                                        <ColumnDefinitions>
+                                                            <ColumnDefinitionCollection>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </ColumnDefinitionCollection>
+                                                        </ColumnDefinitions>
+                                                        <RowDefinitions>
+                                                            <RowDefinitionCollection>
+                                                                <RowDefinition Height="Auto" />
+                                                                <RowDefinition Height="Auto" />
+                                                            </RowDefinitionCollection>
+                                                        </RowDefinitions>
+                                                        <Children>
+                                                            <UIElementCollection>
+                                                                <TextBlock FontSize="30" FontWeight="Light">
+                                <TextBlock.Text>
+                                <Binding Path="DaySummary.Date" ConverterParameter="{0:dddd}" Mode="OneTime">
+                                    <Converter>
+                                    <StaticResource ResourceKey="StringFormatConverter" />
+                                    </Converter>
+                                </Binding>
+                                </TextBlock.Text>
+                                                                </TextBlock>
+                                                                <StackPanel Row="0" Column="1" HorizontalAlignment="Right" Orientation="Vertical">
+                                                                    <Resources>
+                                                                        <ResourceDictionary>
+                                                                            <Style TargetType="TextBlock">
+                                                                                <Setters>
+                                                                                    <SetterBaseCollection>
+                                                                                        <Setter Property="FontSize" Value="30" />
+                                                                                    </SetterBaseCollection>
+                                                                                </Setters>
+                                                                            </Style>
+                                                                        </ResourceDictionary>
+                                                                    </Resources>
+                                                                    <Children>
+                                                                        <UIElementCollection>
+                                                                            <TextBlock>
+                                    <Text>
+                                        <Binding Path="DaySummary.SleepMinutes" Mode="OneTime">
+                                        <Converter>
+                                            <StaticResource ResourceKey="MinutesToStringConverter" />
+                                        </Converter>
+                                        </Binding>
+                                    </Text>
+                                                                            </TextBlock>
+                                                                        </UIElementCollection>
+                                                                    </Children>
+                                                                </StackPanel>
+                                                                <StackPanel Row="1" Column="0" ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
+                                                                    <Resources>
+                                                                        <ResourceDictionary>
+                                                                            <Style TargetType="TextBlock">
+                                                                                <BasedOn>
+                                                                                    <StaticResource ResourceKey="ActivityItemSecondaryWrappableTextBlockStyle" />
+                                                                                </BasedOn>
+                                                                                <Setters>
+                                                                                    <SetterBaseCollection>
+                                                                                        <Setter Property="Margin" Value="10 0 0 0" />
+                                                                                    </SetterBaseCollection>
+                                                                                </Setters>
+                                                                            </Style>
+                                                                        </ResourceDictionary>
+                                                                    </Resources>
+                                                                    <Children>
+                                                                        <UIElementCollection>
+                                                                            <TextBlock>
+                                    <Inlines>
+                                        <InlineCollection>
+                                        <Run x:Uid="SleepingActivityDeepSleep" Text="Deep sleep" />
+                                        <Run Text=": " />
+                                        <Run>
+                                            <Text>
+                                            <Binding Path="DeepSleepMinutes" Mode="OneTime">
+                                                <Converter>
+                                                <StaticResource ResourceKey="MinutesToStringConverter" />
+                                                </Converter>
+                                            </Binding>
+                                            </Text>
+                                        </Run>
+                                        </InlineCollection>
+                                    </Inlines>
+                                                                            </TextBlock>
+                                                                        </UIElementCollection>
+                                                                    </Children>
+                                                                </StackPanel>
+                                                            </UIElementCollection>
+                                                        </Children>
+                                                    </Grid>
+                                                </Child>
+                                            </Border>
+                                        </Template>
+                                    </DataTemplate>
+                                </ResourceDictionary>
+                            </Resources>
+                            <Content>
+                                
+                                <ListView x:Name="DaysListView" Margin="15,0,15,0" HorizontalContentAlignment="Stretch" Attach="[Tapped]=[Action GoToDay($this)]">
+                                    <ItemTemplate>
+                                        <StaticResource ResourceKey="WalkItemDataTemplate" />
+                                    </ItemTemplate>
+                                    <ItemsSource>
+                                        <Binding Path="Week.Days" />
+                                    </ItemsSource>
                                     <Resources>
                                         <ResourceDictionary>
-                                            <DataTemplate x:Key="WalkItemDataTemplate">
-                                                <Template>
-                                                    <Border Margin="0,0,0,10">
-                                                        <Child>
-                                                            <Grid HorizontalAlignment="Stretch">
-                                                                <ColumnDefinitions>
-                                                                    <ColumnDefinitionCollection>
-                                                                        <ColumnDefinition Width="Auto" />
-                                                                        <ColumnDefinition Width="Auto" />
-                                                                        <ColumnDefinition Width="*" />
-                                                                    </ColumnDefinitionCollection>
-                                                                </ColumnDefinitions>
-                                                                <RowDefinitions>
-                                                                    <RowDefinitionCollection>
-                                                                        <RowDefinition Height="Auto" />
-                                                                        <RowDefinition Height="Auto" />
-                                                                    </RowDefinitionCollection>
-                                                                </RowDefinitions>
-                                                                <Children>
-                                                                    <UIElementCollection>
-                                                                        <TextBlock FontSize="30" FontWeight="Light">
-                                      <Text>
-                                        <Binding Path="DaySummary.Date" ConverterParameter="{0:dddd}" Mode="OneTime">
-                                          <Converter>
-                                            <StaticResource ResourceKey="StringFormatConverter" />
-                                          </Converter>
-                                        </Binding>
-                                      </Text>
-                                                                        </TextBlock>
-                                                                        <BitmapIcon Row="0" Column="1" Height="20" Margin="0,5,0,5" VerticalAlignment="Bottom" UriSource="../Resources/Images/run.png">
-                                                                            <Visibility>
-                                                                                <Binding Path="DaySummary.WasRunning" Mode="OneTime">
-                                                                                    <Converter>
-                                                                                        <StaticResource ResourceKey="BoolToVis" />
-                                                                                    </Converter>
-                                                                                </Binding>
-                                                                            </Visibility>
-                                                                        </BitmapIcon>
-                                                                        <TextBlock Row="0" Column="2" HorizontalAlignment="Right" FontSize="30">
-                                      <Text>
-                                        <Binding Path="DaySummary.Steps" Mode="OneTime" />
-                                      </Text>
-                                                                        </TextBlock>
-                                                                        <StackPanel Row="1" Column="0" ColumnSpan="3" HorizontalAlignment="Right" Orientation="Horizontal">
-                                                                            <Resources>
-                                                                                <ResourceDictionary>
-                                                                                    <Style TargetType="TextBlock">
-                                                                                        <BasedOn>
-                                                                                            <StaticResource ResourceKey="ActivityItemSecondaryWrappableTextBlockStyle" />
-                                                                                        </BasedOn>
-                                                                                        <Setters>
-                                                                                            <SetterBaseCollection>
-                                                                                                <Setter Property="Margin" Value="10 0 0 0" />
-                                                                                            </SetterBaseCollection>
-                                                                                        </Setters>
-                                                                                    </Style>
-                                                                                </ResourceDictionary>
-                                                                            </Resources>
-                                                                            <Children>
-                                                                                <UIElementCollection>
-                                                                                    <TextBlock>
-                                            <Text>
-                                              <Binding Path="DaySummary.Distance" Mode="OneTime">
-                                                <Converter>
-                                                  <StaticResource ResourceKey="DistanceKmToFormattedStringConverter" />
-                                                </Converter>
-                                              </Binding>
-                                            </Text>
-                                                                                    </TextBlock>
-                                                                                    <TextBlock>
-                                            <Text>
-                                              <Binding Path="DaySummary.Calories" Mode="OneTime">
-                                                <Converter>
-                                                  <StaticResource ResourceKey="CaloriesToFormattedStringConverter" />
-                                                </Converter>
-                                              </Binding>
-                                            </Text>
-                                                                                    </TextBlock>
-                                                                                </UIElementCollection>
-                                                                            </Children>
-                                                                        </StackPanel>
-                                                                    </UIElementCollection>
-                                                                </Children>
-                                                            </Grid>
-                                                        </Child>
-                                                    </Border>
-                                                </Template>
-                                            </DataTemplate>
-                                            <DataTemplate x:Key="SleepItemDataTemplate">
-                                                <Template>
-                                                    <Border Margin="0,0,0,10">
-                                                        <Child>
-                                                            <Grid HorizontalAlignment="Stretch">
-                                                                <ColumnDefinitions>
-                                                                    <ColumnDefinitionCollection>
-                                                                        <ColumnDefinition Width="Auto" />
-                                                                        <ColumnDefinition Width="*" />
-                                                                    </ColumnDefinitionCollection>
-                                                                </ColumnDefinitions>
-                                                                <RowDefinitions>
-                                                                    <RowDefinitionCollection>
-                                                                        <RowDefinition Height="Auto" />
-                                                                        <RowDefinition Height="Auto" />
-                                                                    </RowDefinitionCollection>
-                                                                </RowDefinitions>
-                                                                <Children>
-                                                                    <UIElementCollection>
-                                                                        <TextBlock FontSize="30" FontWeight="Light">
-                                      <Text>
-                                        <Binding Path="DaySummary.Date" ConverterParameter="{0:dddd}" Mode="OneTime">
-                                          <Converter>
-                                            <StaticResource ResourceKey="StringFormatConverter" />
-                                          </Converter>
-                                        </Binding>
-                                      </Text>
-                                                                        </TextBlock>
-                                                                        <StackPanel Row="0" Column="1" HorizontalAlignment="Right" Orientation="Vertical">
-                                                                            <Resources>
-                                                                                <ResourceDictionary>
-                                                                                    <Style TargetType="TextBlock">
-                                                                                        <Setters>
-                                                                                            <SetterBaseCollection>
-                                                                                                <Setter Property="FontSize" Value="30" />
-                                                                                            </SetterBaseCollection>
-                                                                                        </Setters>
-                                                                                    </Style>
-                                                                                </ResourceDictionary>
-                                                                            </Resources>
-                                                                            <Children>
-                                                                                <UIElementCollection>
-                                                                                    <TextBlock>
-                                            <Text>
-                                              <Binding Path="DaySummary.SleepMinutes" Mode="OneTime">
-                                                <Converter>
-                                                  <StaticResource ResourceKey="MinutesToStringConverter" />
-                                                </Converter>
-                                              </Binding>
-                                            </Text>
-                                                                                    </TextBlock>
-                                                                                </UIElementCollection>
-                                                                            </Children>
-                                                                        </StackPanel>
-                                                                        <StackPanel Row="1" Column="0" ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
-                                                                            <Resources>
-                                                                                <ResourceDictionary>
-                                                                                    <Style TargetType="TextBlock">
-                                                                                        <BasedOn>
-                                                                                            <StaticResource ResourceKey="ActivityItemSecondaryWrappableTextBlockStyle" />
-                                                                                        </BasedOn>
-                                                                                        <Setters>
-                                                                                            <SetterBaseCollection>
-                                                                                                <Setter Property="Margin" Value="10 0 0 0" />
-                                                                                            </SetterBaseCollection>
-                                                                                        </Setters>
-                                                                                    </Style>
-                                                                                </ResourceDictionary>
-                                                                            </Resources>
-                                                                            <Children>
-                                                                                <UIElementCollection>
-                                                                                    <TextBlock>
-                                            <Inlines>
-                                              <InlineCollection>
-                                                <Run x:Uid="SleepingActivityDeepSleep" Text="Deep sleep" />
-                                                <Run Text=": " />
-                                                <Run>
-                                                  <Text>
-                                                    <Binding Path="DeepSleepMinutes" Mode="OneTime">
-                                                      <Converter>
-                                                        <StaticResource ResourceKey="MinutesToStringConverter" />
-                                                      </Converter>
-                                                    </Binding>
-                                                  </Text>
-                                                </Run>
-                                              </InlineCollection>
-                                            </Inlines>
-                                                                                    </TextBlock>
-                                                                                </UIElementCollection>
-                                                                            </Children>
-                                                                        </StackPanel>
-                                                                    </UIElementCollection>
-                                                                </Children>
-                                                            </Grid>
-                                                        </Child>
-                                                    </Border>
-                                                </Template>
-                                            </DataTemplate>
+                                            <Style TargetType="ListViewItem">
+                                                <Setters>
+                                                    <SetterBaseCollection>
+                                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                    </SetterBaseCollection>
+                                                </Setters>
+                                            </Style>
                                         </ResourceDictionary>
                                     </Resources>
-                                    <Content>
-                                        <ListView x:Name="DaysListView" Margin="15,0,15,0" HorizontalContentAlignment="Stretch" Attach="[Tapped]=[Action GoToDay($this)]">
-                                            <ItemTemplate>
-                                                <StaticResource ResourceKey="WalkItemDataTemplate" />
-                                            </ItemTemplate>
-                                            <ItemsSource>
-                                                <Binding Path="Week.Days" />
-                                            </ItemsSource>
-                                            <Resources>
-                                                <ResourceDictionary>
-                                                    <Style TargetType="ListViewItem">
-                                                        <Setters>
-                                                            <SetterBaseCollection>
-                                                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                                            </SetterBaseCollection>
-                                                        </Setters>
-                                                    </Style>
-                                                </ResourceDictionary>
-                                            </Resources>
-                                        </ListView>
-                                    </Content>
-                                </FlipViewItem>
-                            </ItemCollection>
-                        </Items>
-                    </FlipView>
-                    <Button x:Name="GoLeft" HorizontalAlignment="Left" HorizontalContentAlignment="Left">
-                        <IsEnabled>
-                            <Binding Path="CanGoLeft" />
-                        </IsEnabled>
-                        <Style>
-                            <StaticResource ResourceKey="FlipViewNavigationButttonStyle" />
-                        </Style>
-                        <Content>
-                            <Path Data="M 23,0 13,20 23,40 ">
-                                <Stroke>
-                                    <Binding Path="IsDisplayingSleep" ConverterParameter="HistoryPageNavigationButtons">
-                                        <Converter>
-                                            <StaticResource ResourceKey="CustomConverter" />
-                                        </Converter>
-                                    </Binding>
-                                </Stroke>
-                                <Style>
-                                    <StaticResource ResourceKey="PathFlipViewNavigationButttonStyle" />
-                                </Style>
-                            </Path>
-                        </Content>
-                    </Button>
-                    <Button x:Name="GoRight" HorizontalAlignment="Right" HorizontalContentAlignment="Right">
-                        <IsEnabled>
-                            <Binding Path="CanGoRight" />
-                        </IsEnabled>
-                        <Style>
-                            <StaticResource ResourceKey="FlipViewNavigationButttonStyle" />
-                        </Style>
-                        <Content>
-                            <Path Margin="10,0,10,0" Data="M 0,0 10,20 0,40 ">
-                                <Stroke>
-                                    <Binding Path="IsDisplayingSleep" ConverterParameter="HistoryPageNavigationButtons">
-                                        <Converter>
-                                            <StaticResource ResourceKey="CustomConverter" />
-                                        </Converter>
-                                    </Binding>
-                                </Stroke>
-                                <Style>
-                                    <StaticResource ResourceKey="PathFlipViewNavigationButttonStyle" />
-                                </Style>
-                            </Path>
-                        </Content>
-                    </Button>
-                </UIElementCollection>
-            </Children>
+                                </ListView>
+                            </Content>
+                       </FlipViewItem-->
+
+                    </Grid>
+
+                </DataTemplate>
+            </FlipView.ItemTemplate>
+        </FlipView>
+       
+
+        <Grid>
+            <!-- Left Navigation Button -->
+            <Button x:Name="GoLeft" 
+                HorizontalAlignment="Left" 
+                HorizontalContentAlignment="Left" 
+                IsEnabled="{Binding Path=CanGoLeft}" 
+                Style="{StaticResource FlipViewNavigationButttonStyle}">
+                <Path Data="M 23,0 13,20 23,40" 
+                  Stroke="{Binding Path=IsDisplayingSleep, Converter={StaticResource CustomConverter}, ConverterParameter=HistoryPageNavigationButtons}" 
+                  Style="{StaticResource PathFlipViewNavigationButttonStyle}" />
+            </Button>
+
+            <!-- Right Navigation Button -->
+            <Button x:Name="GoRight" 
+                HorizontalAlignment="Right" 
+                HorizontalContentAlignment="Right" 
+                IsEnabled="{Binding Path=CanGoRight}" 
+                Style="{StaticResource FlipViewNavigationButttonStyle}">
+                <Path Margin="10,0,10,0" 
+                  Data="M 0,0 10,20 0,40" 
+                  Stroke="{Binding Path=IsDisplayingSleep, Converter={StaticResource CustomConverter}, ConverterParameter=HistoryPageNavigationButtons}" 
+                  Style="{StaticResource PathFlipViewNavigationButttonStyle}" />
+            </Button>
         </Grid>
+        </StackPanel>
     </Page.Content>
 </Page>
-<!--Page
-    x:Class="MiBandApp.Views.HistoryPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:MiBandApp.Views"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    <Grid>
-
-    </Grid>
-</Page-->

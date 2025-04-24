@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.ViewModels.UserInfoPageViewModel
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using Caliburn.Micro;
 using MiBand.SDK.Configuration;
@@ -136,19 +136,19 @@ namespace MiBandApp.ViewModels
     {
       string str = this._settings.GetUserId().ToString();
       ContentDialog contentDialog = new ContentDialog();
-      contentDialog.put_Title((object) "User ID");
-      contentDialog.put_IsPrimaryButtonEnabled(true);
-      contentDialog.put_PrimaryButtonText("Ok");
+      contentDialog.Title = "User ID";
+      contentDialog.IsPrimaryButtonEnabled = true;
+      contentDialog.PrimaryButtonText = "Ok";
       TextBox textBox = new TextBox();
-      textBox.put_Text(str);
-      textBox.put_IsReadOnly(true);
-      ((ContentControl) contentDialog).put_Content((object) textBox);
+      textBox.Text = str;
+      textBox.IsReadOnly = true;
+      contentDialog.Content = textBox;
       ContentDialogResult contentDialogResult = await contentDialog.ShowAsync();
     }
 
     protected override async Task OnActivate()
     {
-      this._navigationService.BackPressed += new EventHandler<BackPressedEventArgs>(this.NavigationServiceOnBackPressed);
+      //this._navigationService.BackPressed += new EventHandler<EventArgs>(this.NavigationServiceOnBackPressed);
       this.Info = this._settings.GetSavedUserInfo();
       GoalInfo savedGoalInfo = this._settings.GetSavedGoalInfo();
       this.GoalSteps = savedGoalInfo.StepsGoal;
@@ -156,14 +156,15 @@ namespace MiBandApp.ViewModels
       this.GenderIndex = this.Info.IsMale ? 0 : 1;
       if (!this.IsInitiallyActivated)
         return;
-      IUICommand iuiCommand = await new MessageDialog(this._resourceLoader.GetString("UserInfoPageWelcomeMessage"), this._resourceLoader.GetString("UserInfoPageWelcomeMessageTitle")).ShowAsyncSafe();
+      IUICommand iuiCommand = await new MessageDialog(this._resourceLoader.GetString("UserInfoPageWelcomeMessage"),
+          this._resourceLoader.GetString("UserInfoPageWelcomeMessageTitle")).ShowAsyncSafe();
     }
 
     private async void NavigationServiceOnBackPressed(
       object sender,
-      BackPressedEventArgs backPressedEventArgs)
+      EventArgs backPressedEventArgs)
     {
-      backPressedEventArgs.put_Handled(true);
+      //backPressedEventArgs.Handled = true;
       if (this._isExiting)
         return;
       this._isExiting = true;
@@ -179,18 +180,24 @@ namespace MiBandApp.ViewModels
         SleepGoalMinutes = this._goalSleepMinutes,
         StepsGoal = this._goalSteps
       };
-      if (this._settings.GetSavedUserInfo().Equals(this._info) && this._settings.GetSavedGoalInfo().Equals(goalInfo))
+      if (this._settings.GetSavedUserInfo().Equals(this._info) 
+                && this._settings.GetSavedGoalInfo().Equals(goalInfo))
         return;
       this.IsPageEnabled = false;
-      StatusBarProgressItem statusBarMessage = this._statusBarNotificationService.Show<StatusBarProgressItem>(new StatusBarProgressItem(this._resourceLoader.GetString("StatusSavingOnDevice"), new double?()));
+      StatusBarProgressItem statusBarMessage = this._statusBarNotificationService.Show<StatusBarProgressItem>(
+          new StatusBarProgressItem(this._resourceLoader.GetString("StatusSavingOnDevice"), new double?()));
       try
       {
         if (this._bandController.BindingState.Value == BindingState.Binded)
         {
           await this._bandController.MiBand.SetUserInfo(this._info, false).ConfigureAwait(true);
-          ConfiguredTaskAwaitable configuredTaskAwaitable = this._bandController.MiBand.SetDateTime((DateTimeOffset) DateTime.Now).ConfigureAwait(true);
+          ConfiguredTaskAwaitable configuredTaskAwaitable = this._bandController.MiBand.SetDateTime(
+              (DateTimeOffset) DateTime.Now).ConfigureAwait(true);
+
           await configuredTaskAwaitable;
-          configuredTaskAwaitable = this._bandController.MiBand.SetStepsGoal(goalInfo.StepsGoal).ConfigureAwait(true);
+
+          configuredTaskAwaitable = 
+                        this._bandController.MiBand.SetStepsGoal(goalInfo.StepsGoal).ConfigureAwait(true);
           await configuredTaskAwaitable;
         }
         this._settings.SaveUserInfo(this._info);
@@ -198,7 +205,9 @@ namespace MiBandApp.ViewModels
       }
       catch (Exception ex)
       {
-        this._statusBarNotificationService.Show<StatusBarMessage>(new StatusBarMessage(this._resourceLoader.GetString("StatusFailedToSaveTryAgainLater"), TimeSpan.FromSeconds(3.0)));
+        this._statusBarNotificationService.Show<StatusBarMessage>(
+            new StatusBarMessage(this._resourceLoader.GetString("StatusFailedToSaveTryAgainLater"), 
+            TimeSpan.FromSeconds(3.0)));
       }
       statusBarMessage.Hide();
       this.IsPageEnabled = true;
@@ -206,7 +215,7 @@ namespace MiBandApp.ViewModels
 
     protected override async Task OnDeactivate(bool close)
     {
-      this._navigationService.BackPressed -= new EventHandler<BackPressedEventArgs>(this.NavigationServiceOnBackPressed);
+      //this._navigationService.BackPressed -= new EventHandler<EventArgs>(this.NavigationServiceOnBackPressed);
     }
   }
 }

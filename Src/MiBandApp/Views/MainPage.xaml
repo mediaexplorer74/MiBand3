@@ -15,120 +15,113 @@
     </Page.Style>
     <Page.BottomAppBar>
         <CommandBar ClosedDisplayMode="Compact">
-            <PrimaryCommands>
-                <CommandBarElementCollection>
-                    <AppBarButton x:Uid="MainPageRefreshButton" x:Name="RefreshAll" Icon="Sync" Label="refresh">
-                        <IsEnabled>
-                            <Binding Path="IsRefreshing" ConverterParameter="False">
-                                <Converter>
-                                    <StaticResource ResourceKey="BoolToBool" />
-                                </Converter>
-                            </Binding>
-                        </IsEnabled>
-                    </AppBarButton>
-                    <AppBarButton x:Uid="MainPageAlarmsButton" x:Name="OpenAlarms" Label="alarms">
-                        <IsEnabled>
-                            <Binding Path="IsBinded" />
-                        </IsEnabled>
-                        <Icon>
-                            <BitmapIcon UriSource="../Resources/Images/appbar.clock.png" />
-                        </Icon>
-                    </AppBarButton>
-                    <AppBarButton x:Uid="MainPageHistoryButton" x:Name="OpenHistory" Label="history">
-                        <Icon>
-                            <BitmapIcon UriSource="../Resources/Images/appbar.graph.line.png" />
-                        </Icon>
-                    </AppBarButton>
-                </CommandBarElementCollection>
-            </PrimaryCommands>
-            <SecondaryCommands>
-                <CommandBarElementCollection>
-                    <AppBarButton x:Uid="MainPageDeviceButton" x:Name="ManageDevice" Label="device">
-                        <IsEnabled>
-                            <Binding Path="IsBinded" />
-                        </IsEnabled>
-                    </AppBarButton>
-                    <AppBarButton x:Uid="MainPageProfileButton" x:Name="OpenUserInfo" Label="profile" />
-                    <AppBarButton x:Uid="MainPageSettingsButton" x:Name="OpenSettingsPage" Label="settings" />
-                    <AppBarButton x:Uid="MainPageAboutButton" x:Name="OpenAboutPage" Label="about" />
-                </CommandBarElementCollection>
-            </SecondaryCommands>
+            <AppBarButton x:Uid="MainPageRefreshButton" x:Name="RefreshAll" Icon="Sync" Label="refresh">
+                <AppBarButton.IsEnabled>
+                    <Binding Path="IsRefreshing" ConverterParameter="False">
+                        <Binding.Converter>
+                            <StaticResource ResourceKey="BoolToBool" />
+                        </Binding.Converter>
+                    </Binding>
+                </AppBarButton.IsEnabled>
+            </AppBarButton>
+            <AppBarButton x:Uid="MainPageAlarmsButton" x:Name="OpenAlarms" Label="alarms">
+                <AppBarButton.IsEnabled>
+                    <Binding Path="IsBinded" />
+                </AppBarButton.IsEnabled>
+                <AppBarButton.Icon>
+                    <BitmapIcon UriSource="../Resources/Images/appbar.clock.png" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Uid="MainPageHistoryButton" x:Name="OpenHistory" Label="history">
+                <AppBarButton.Icon>
+                    <BitmapIcon UriSource="../Resources/Images/appbar.graph.line.png" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Uid="MainPageDeviceButton" x:Name="ManageDevice" Label="device">
+                <AppBarButton.IsEnabled>
+                    <Binding Path="IsBinded" />
+                </AppBarButton.IsEnabled>
+            </AppBarButton>
+            <AppBarButton x:Uid="MainPageProfileButton" x:Name="OpenUserInfo" Label="profile" />
+            <AppBarButton x:Uid="MainPageSettingsButton" x:Name="OpenSettingsPage" Label="settings" />
+            <AppBarButton x:Uid="MainPageAboutButton" x:Name="OpenAboutPage" Label="about" />
         </CommandBar>
     </Page.BottomAppBar>
     <Page.Resources>
         <ResourceDictionary>
-            <MergedDictionaries>
-                <ResourceDictionaryCollection>
-                    <ResourceDictionary Source="../Resources/SpecificStyles.xaml" />
-                </ResourceDictionaryCollection>
-            </MergedDictionaries>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/SpecificStyles.xaml" />            
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
+
+
     <Grid>
         <Grid VerticalAlignment="Stretch">
-            <Margin>
+            <!--Grid.Margin>
                 <StaticResource ResourceKey="RootContainerThickness" />
-            </Margin>
-            <Background>
+            </Grid.Margin-->
+            <Grid.Background>
                 <StaticResource ResourceKey="AppBackgroundBrush" />
-            </Background>
-            <RowDefinitions>
-                <RowDefinitionCollection>
+            </Grid.Background>
+            <Grid.RowDefinitions>  
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </RowDefinitionCollection>
-            </RowDefinitions>
-            <Children>
-                <UIElementCollection>
+                    <RowDefinition Height="Auto" />       
+            </Grid.RowDefinitions>
+            
+            <StackPanel>
                     <Grid Row="0">
-                        <Children>
-                            <UIElementCollection>
-                                <TextBlock VerticalAlignment="Top">
-                  <Style>
-                    <StaticResource ResourceKey="AppTitleStyle" />
-                  </Style>
+                        <StackPanel>
+                        <TextBlock VerticalAlignment="Top">
+                            <TextBlock.Style>
+                                <StaticResource ResourceKey="AppTitleStyle" />
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
+                                    <Grid>
+                                        
+                                        <controls:Band Height="15" Margin="0,5,0,0" VerticalAlignment="Top">
+                                            <!--controls:Animation>
+                                                <Binding Path="BandAnimationType" />
+                                            </controls:Animation-->
+                                            <!--controls:DotsVisibility>
+                                                <Binding Path="ShowConnectivityControlDots">
+                                                    <Converter>
+                                                        <StaticResource ResourceKey="BoolToVis" />
+                                                    </Converter>
+                                                </Binding>
+                                            </controls:DotsVisibility-->
+                                            <!--controls:Band.Foreground>
+                                                <Binding Path="DevicePageHasWarning" ConverterParameter="DeviceWarningToColor">
+                                                    <Converter>
+                                                        <StaticResource ResourceKey="CustomConverter" />
+                                                    </Converter>
+                                                </Binding>
+                                            </Foreground-->
+                                            <!--controls:Value>
+                                                <Binding Path="BatteryValue" />
+                                            </controls:Value-->
+                                        </controls:Band>
+                                        
+                                        <TextBlock MinWidth="20" 
+                                                   Margin="5,0,0,0" 
+                                                   HorizontalAlignment="Center" 
+                                                   VerticalAlignment="Top">
+                                    <TextBlock.Style>
+                                        <StaticResource ResourceKey="AppTitleStyle" />
+                                    </TextBlock.Style>
+                                    <TextBlock.Text>
+                                        <Binding Path="BatteryPercentString" />
+                                    </TextBlock.Text>
                                 </TextBlock>
-                                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
-                                    <Children>
-                                        <UIElementCollection>
-                                            <controls:Band Height="15" Margin="0,5,0,0" VerticalAlignment="Top">
-                                                <controls:Animation>
-                                                    <Binding Path="BandAnimationType" />
-                                                </controls:Animation>
-                                                <controls:DotsVisibility>
-                                                    <Binding Path="ShowConnectivityControlDots">
-                                                        <Converter>
-                                                            <StaticResource ResourceKey="BoolToVis" />
-                                                        </Converter>
-                                                    </Binding>
-                                                </controls:DotsVisibility>
-                                                <Foreground>
-                                                    <Binding Path="DevicePageHasWarning" ConverterParameter="DeviceWarningToColor">
-                                                        <Converter>
-                                                            <StaticResource ResourceKey="CustomConverter" />
-                                                        </Converter>
-                                                    </Binding>
-                                                </Foreground>
-                                                <controls:Value>
-                                                    <Binding Path="BatteryValue" />
-                                                </controls:Value>
-                                            </controls:Band>
-                                            <TextBlock MinWidth="20" Margin="5,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Top">
-                        <Style>
-                          <StaticResource ResourceKey="AppTitleStyle" />
-                        </Style>
-                        <Text>
-                          <Binding Path="BatteryPercentString" />
-                        </Text>
-                                            </TextBlock>
-                                        </UIElementCollection>
-                                    </Children>
+                                    
+                                    </Grid>
                                 </StackPanel>
-                            </UIElementCollection>
-                        </Children>
+                            </StackPanel>
                     </Grid>
-                    <ScrollViewer Row="1" IsZoomInertiaEnabled="True" MaxZoomFactor="1" VerticalScrollBarVisibility="Hidden" VerticalSnapPointsType="Optional" ZoomMode="Disabled">
+                
+                    <!--ScrollViewer Row="1" IsZoomInertiaEnabled="True" MaxZoomFactor="1" VerticalScrollBarVisibility="Hidden" VerticalSnapPointsType="Optional" ZoomMode="Disabled">
                         <Visibility>
                             <Binding Path="MessagesViewModel.IsMessageDisplayed" ConverterParameter="False">
                                 <Converter>
@@ -177,23 +170,25 @@
                                                                 </Style>
                                                             </ResourceDictionary>
                                                         </Resources>
-                                                        <Items>
+                                                        
+                                                        <ListView.Items>
                                                             <ItemCollection>
                                                                 <ListViewItem>
-                                                                    <Content>
+                                                                <ListViewItem.Content>
                                                                         <BitmapIcon Height="50" Margin="0,0,20,0" UriSource="../Resources/Images/footsteps.png" />
-                                                                    </Content>
+                                                                    </ListViewItem.Content>
                                                                 </ListViewItem>
                                                                 <ListViewItem>
-                                                                    <Content>
+                                                                <ListViewItem.Content>
                                                                         <BitmapIcon Height="50" Margin="0,0,20,0" UriSource="../Resources/Images/moon-sleep-512-000000.png" />
-                                                                    </Content>
+                                                                    </ListViewItem.Content>
                                                                 </ListViewItem>
                                                             </ItemCollection>
-                                                        </Items>
+                                                        </ListView.Items>
                                                     </ListView>
+                                                    
                                                     <ListViewItem Column="1" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Attach="[Event Tapped] = [Action OpenUserInfo()];">
-                                                        <Content>
+                                                    <ListViewItem.Content>
                                                             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                                                                 <Children>
                                                                     <UIElementCollection>
@@ -232,7 +227,7 @@
                                                                     </UIElementCollection>
                                                                 </Children>
                                                             </StackPanel>
-                                                        </Content>
+                                                        </ListViewItem.Content>
                                                     </ListViewItem>
                                                 </UIElementCollection>
                                             </Children>
@@ -348,30 +343,18 @@
                                 </Children>
                             </StackPanel>
                         </Content>
-                    </ScrollViewer>
+                    </ScrollViewer-->
                     <Grid Row="1" VerticalAlignment="Center">
-                        <Children>
-                            <UIElementCollection>
+                        <Grid.Children>
+                            
                                 <ContentControl x:Name="MessagesViewModel" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
-                            </UIElementCollection>
-                        </Children>
+                          
+                        </Grid.Children>
                     </Grid>
-                </UIElementCollection>
-            </Children>
+            </StackPanel>
+            
         </Grid>
     </Grid>
+
 </Page>
-<!--Page
-    x:Class="MiBandApp.MainPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:MiBandApp"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-
-    </Grid>
-</Page-->

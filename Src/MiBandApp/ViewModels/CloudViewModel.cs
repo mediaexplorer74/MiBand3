@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.ViewModels.CloudViewModel
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using Caliburn.Micro;
 using MiBandApp.Services;
@@ -125,28 +125,33 @@ namespace MiBandApp.ViewModels
       this.UpdateVisibilityOneDrive();
     }
 
-    public async void LoginOneDrive()
-    {
-      if (!this._licensingService.IsPro)
-      {
-        MessageDialog messageDialog = new MessageDialog(this._stringsLoader.GetString("OneDriveOnlyInProMessage"), this._stringsLoader.GetString("MessageInformationHeader"));
-        // ISSUE: reference to a compiler-generated field
-        // ISSUE: reference to a compiler-generated field
-        // ISSUE: reference to a compiler-generated field
-        // ISSUE: method pointer
-        messageDialog.Commands.Add((IUICommand) new UICommand(this._stringsLoader.GetString("MessageAnswerOk"), CloudViewModel.\u003C\u003Ec.\u003C\u003E9__25_0 ?? (CloudViewModel.\u003C\u003Ec.\u003C\u003E9__25_0 = new UICommandInvokedHandler((object) CloudViewModel.\u003C\u003Ec.\u003C\u003E9, __methodptr(\u003CLoginOneDrive\u003Eb__25_0)))));
-        messageDialog.put_CancelCommandIndex(0U);
-        IUICommand iuiCommand = await messageDialog.ShowAsync();
-      }
-      else
-      {
-        await this._oneDriveSessionService.ShowLogInUi().ConfigureAwait(true);
-        if (this._oneDriveSessionService.Status != OneDriveSessionService.OneDriveStatus.Authorized)
-          return;
-        this._settings.OneDriveSyncEnabled = true;
-        this.UpdateVisibilityOneDrive();
-      }
-    }
+        public async void LoginOneDrive()
+        {
+            if (!this._licensingService.IsPro)
+            {
+                MessageDialog messageDialog = new MessageDialog(
+                    this._stringsLoader.GetString("OneDriveOnlyInProMessage"),
+                    this._stringsLoader.GetString("MessageInformationHeader")
+                );
+
+                messageDialog.Commands.Add(new UICommand(
+                    this._stringsLoader.GetString("MessageAnswerOk"),
+                    command => { /* No-op or additional logic here */ }
+                ));
+
+                messageDialog.CancelCommandIndex = 0;
+                await messageDialog.ShowAsync();
+            }
+            else
+            {
+                await this._oneDriveSessionService.ShowLogInUi().ConfigureAwait(true);
+                if (this._oneDriveSessionService.Status != OneDriveSessionService.OneDriveStatus.Authorized)
+                    return;
+
+                this._settings.OneDriveSyncEnabled = true;
+                this.UpdateVisibilityOneDrive();
+            }
+        }
 
     public void OneDriveSyncNow() => this._oneDriveSyncService.Sync().ConfigureAwait(false);
 

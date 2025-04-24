@@ -1,4 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: Ian.Controls.ListSelectorFlyout
 // Assembly: Ian.Controls, Version=0.8.2.0, Culture=neutral, PublicKeyToken=null
 // MVID: C384A7D9-D254-451C-A544-CD6C2993240A
@@ -13,7 +13,7 @@ using Windows.UI.Xaml.Input;
 #nullable disable
 namespace Ian.Controls
 {
-  [Windows.UI.Xaml.Markup.ContentProperty(Name = "Content")]
+  //[Windows.UI.Xaml.Markup.ContentProperty(Name = "Content")]
   public class ListSelectorFlyout : PickerFlyoutBase
   {
     public static DependencyProperty ContentProperty = 

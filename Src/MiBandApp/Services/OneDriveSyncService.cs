@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.Services.OneDriveSyncService
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using MetroLog;
 using MiBandApp.Storage.DataBases;
@@ -130,61 +130,48 @@ namespace MiBandApp.Services
       return true;
     }
 
-    private async Task<string> GetOneDriveFolderId(LiveConnectClient liveConnectClient)
-    {
-      try
-      {
-        object result = (object) (await liveConnectClient.GetAsync("me/skydrive/files").ConfigureAwait(false)).Result;
-        // ISSUE: reference to a compiler-generated field
-        if (OneDriveSyncService.\u003C\u003Eo__26.\u003C\u003Ep__2 == null)
+        private async Task<string> GetOneDriveFolderId(LiveConnectClient liveConnectClient)
         {
-          // ISSUE: reference to a compiler-generated field
-          OneDriveSyncService.\u003C\u003Eo__26.\u003C\u003Ep__2 = CallSite<Func<CallSite, object, IEnumerable>>.Create(Binder.Convert(CSharpBinderFlags.None, typeof (IEnumerable), typeof (OneDriveSyncService)));
+            try
+            {
+                var result = (await liveConnectClient.GetAsync("me/skydrive/files").ConfigureAwait(false)).Result;
+
+                // Ensure proper casting and avoid dynamic binding issues
+                if (result is IDictionary<string, object> resultDict && resultDict.TryGetValue("data", out var dataObj) && dataObj is IEnumerable<object> data)
+                {
+                    foreach (var item in data)
+                    {
+                        if (item is IDictionary<string, object> itemDict &&
+                            itemDict.TryGetValue("name", out var nameObj) &&
+                            string.Equals(nameObj as string, FolderName, StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (itemDict.TryGetValue("id", out var idObj))
+                            {
+                                return idObj as string;
+                            }
+                        }
+                    }
+                }
+
+                // Create folder if it doesn't exist
+                var folderCreationResult = await liveConnectClient.PostAsync("me/skydrive", new Dictionary<string, object>
+                {
+                    { "name", FolderName }
+                }).ConfigureAwait(false);
+
+                if (folderCreationResult.Result is IDictionary<string, object> creationResultDict &&
+                    creationResultDict.TryGetValue("id", out var createdFolderId))
+                {
+                    return createdFolderId as string;
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error($"Couldn't create folder in OneDrive with name: {FolderName}. Exception: {ex}", _logSourceName);
+            }
+
+            return null;
         }
-        // ISSUE: reference to a compiler-generated field
-        Func<CallSite, object, IEnumerable> target = OneDriveSyncService.\u003C\u003Eo__26.\u003C\u003Ep__2.Target;
-        // ISSUE: reference to a compiler-generated field
-        CallSite<Func<CallSite, object, IEnumerable>> p2 = OneDriveSyncService.\u003C\u003Eo__26.\u003C\u003Ep__2;
-        // ISSUE: reference to a compiler-generated field
-        if (OneDriveSyncService.\u003C\u003Eo__26.\u003C\u003Ep__0 == null)
-        {
-          // ISSUE: reference to a compiler-generated field
-          OneDriveSyncService.\u003C\u003Eo__26.\u003C\u003Ep__0 = CallSite<Func<CallSite, object, object>>.Create(Binder.GetMember(CSharpBinderFlags.None, "data", typeof (OneDriveSyncService), (IEnumerable<CSharpArgumentInfo>) new CSharpArgumentInfo[1]
-          {
-            CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None, (string) null)
-          }));
-        }
-        // ISSUE: reference to a compiler-generated field
-        // ISSUE: reference to a compiler-generated field
-        object obj1 = OneDriveSyncService.\u003C\u003Eo__26.\u003C\u003Ep__0.Target((CallSite) OneDriveSyncService.\u003C\u003Eo__26.\u003C\u003Ep__0, result);
-        foreach (object obj2 in target((CallSite) p2, obj1))
-        {
-          // ISSUE: reference to a compiler-generated field
-          if (OneDriveSyncService.\u003C\u003Eo__26.\u003C\u003Ep__1 == null)
-          {
-            // ISSUE: reference to a compiler-generated field
-            OneDriveSyncService.\u003C\u003Eo__26.\u003C\u003Ep__1 = CallSite<Func<CallSite, object, IDictionary<string, object>>>.Create(Binder.Convert(CSharpBinderFlags.ConvertExplicit, typeof (IDictionary<string, object>), typeof (OneDriveSyncService)));
-          }
-          // ISSUE: reference to a compiler-generated field
-          // ISSUE: reference to a compiler-generated field
-          IDictionary<string, object> dictionary = OneDriveSyncService.\u003C\u003Eo__26.\u003C\u003Ep__1.Target((CallSite) OneDriveSyncService.\u003C\u003Eo__26.\u003C\u003Ep__1, obj2);
-          if ("Bind Mi Band".Equals(dictionary["name"] as string, StringComparison.OrdinalIgnoreCase))
-            return (string) dictionary["id"];
-        }
-        return (string) (await liveConnectClient.PostAsync("me/skydrive", (IDictionary<string, object>) new Dictionary<string, object>()
-        {
-          {
-            "name",
-            (object) "Bind Mi Band"
-          }
-        }).ConfigureAwait(false)).Result["id"];
-      }
-      catch (Exception ex)
-      {
-        this._log.Error("Couldn't create folder in OneDrive with name: Bind Mi Band", (object) this._logSourceName);
-      }
-      return (string) null;
-    }
 
     private async Task<bool> ImportAllData(LiveConnectClient liveConnectClient, string folderId)
     {

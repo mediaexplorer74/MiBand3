@@ -1,7 +1,67 @@
 ﻿<UserControl 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    xmlns:controls="using:IanSavchenko.Controls" 
+    xmlns:controls="using:Ian.Controls" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="using:MiBandApp.Controls.Pickers" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    x:Class="MiBandApp.Controls.Pickers.StepsGoalPicker" 
+    x:Name="Root" 
+    Height="60" 
+    HorizontalAlignment="Stretch"
+    mc:Ignorable="d">
+    <Grid>
+        <Button x:Name="MainButton" Style="{StaticResource PickerButtonStyle}">
+            <Button.Width>
+                <Binding ElementName="Root" Path="ActualWidth" />
+            </Button.Width>
+            <Button.Height>
+                <Binding ElementName="Root" Path="ActualHeight" />
+            </Button.Height>
+            <Button.Flyout>
+                <Flyout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Uid="UserInfoPageSleepGoal" Grid.ColumnSpan="3" Style="{StaticResource PickerTitleTextBlockStyle}">
+                            <TextBlock.Inlines>
+                                <Run Text="Sleep goal" />
+                            </TextBlock.Inlines>
+                        </TextBlock>
+                        <!-- Hour Selector -->
+                        <!--controls:ListSelector x:Name="HourListSelector" HorizontalAlignment="Right" ItemWidth="150" Grid.Column="0" Margin="{StaticResource PickerListSelectorMargin}">
+                            <controls:ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel VerticalAlignment="Bottom" Margin="{StaticResource PickerListSelectorItemContentMargin}">
+                                        <TextBlock Style="{StaticResource PickerMainTextBlockStyle}" Text="{Binding}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </controls:ItemTemplate>
+                        </controls:ListSelector-->
+                        <!-- Minute Selector -->
+                        <!--controls:ListSelector x:Name="MinutesListSelector" Grid.Column="2" HorizontalAlignment="Left" ItemWidth="150" Margin="{StaticResource PickerListSelectorMargin}">
+                            <controls:ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel VerticalAlignment="Bottom" Margin="{StaticResource PickerListSelectorItemContentMargin}">
+                                        <TextBlock Style="{StaticResource PickerMainTextBlockStyle}" Text="{Binding}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </controls:ItemTemplate>
+                        </controls:ListSelector-->
+                    </Grid>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
+    </Grid>
+</UserControl>
+
+<!--UserControl 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:controls="using:Ian.Controls" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:local="using:MiBandApp.Controls.Pickers" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -76,7 +136,7 @@
             </Flyout>
         </Button>
     </Grid>
-</UserControl>
+</UserControl-->
 <!--UserControl
     x:Class="MiBandApp.Controls.Pickers.StepsGoalPicker"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"

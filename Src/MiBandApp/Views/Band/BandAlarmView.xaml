@@ -6,315 +6,160 @@
              xmlns:micro="using:Caliburn.Micro" 
              xmlns:band="using:MiBandApp.ViewModels.Band" 
              x:Class="MiBandApp.Views.Band.BandAlarmView">
-    <Resources>
+    <UserControl.Resources>
         <ResourceDictionary>
-            <MergedDictionaries>
-                <ResourceDictionaryCollection>
-                    <ResourceDictionary Source="../../Resources/SpecificStyles.xaml" />
-                </ResourceDictionaryCollection>
-            </MergedDictionaries>
+            <ResourceDictionary.MergedDictionaries>              
+                <ResourceDictionary Source="../../Resources/SpecificStyles.xaml" />   
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </Resources>
-    <UserControl.Content>
-        <Grid VerticalAlignment="Top">
-            <Children>
-                <UIElementCollection>
-                    <Border x:Name="DataTemplateRoot" BorderThickness="0,0,0,2" Padding="0,20,0,10">
-                        <BorderBrush>
-                            <ThemeResource ResourceKey="AppForegroundDisabledBrush" />
-                        </BorderBrush>
-                        <micro:Model>
-                            <Binding />
-                        </micro:Model>
-                        <Child>
-                            <Grid>
-                                <ColumnDefinitions>
-                                    <ColumnDefinitionCollection>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </ColumnDefinitionCollection>
-                                </ColumnDefinitions>
-                                <RowDefinitions>
-                                    <RowDefinitionCollection>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </RowDefinitionCollection>
-                                </RowDefinitions>
-                                <Children>
-                                    <UIElementCollection>
-                                        <TimePicker x:Name="AlarmTimePicker" Column="0" VerticalAlignment="Center">
-                                            <IsHitTestVisible>
-                                                <Binding Path="IsUnfolded" />
-                                            </IsHitTestVisible>
-                                            <Time>
-                                                <Binding Path="Time" Mode="TwoWay" />
-                                            </Time>
-                                        </TimePicker>
-                                        <Grid Row="0" Column="1" IsTapEnabled="False" Attach="[Event Tapped] = [Action OnAlarmTapped($this)]">
-                                            <Background>
-                                                <StaticResource ResourceKey="AppBackgroundBrush" />
-                                            </Background>
-                                            <Visibility>
-                                                <Binding Path="IsUnfolded">
-                                                    <Converter>
-                                                        <StaticResource ResourceKey="BoolToVis" />
-                                                    </Converter>
-                                                </Binding>
-                                            </Visibility>
-                                        </Grid>
-                                        <ToggleSwitch x:Uid="AlarmsPage_AlarmToggle" x:Name="StateSwitch" Row="0" Column="2" VerticalAlignment="Center" OffContent="Off" OnContent="On" Padding="0,2,0,2">
-                                            <IsOn>
-                                                <Binding Path="IsEnabled" Mode="TwoWay" />
-                                            </IsOn>
-                                        </ToggleSwitch>
-                                        <Grid Row="1" Column="0" ColumnSpan="3">
-                                            <Visibility>
-                                                <Binding Path="IsUnfolded" ConverterParameter="False">
-                                                    <Converter>
-                                                        <StaticResource ResourceKey="BoolToVis" />
-                                                    </Converter>
-                                                </Binding>
-                                            </Visibility>
-                                            <Children>
-                                                <UIElementCollection>
-                                                    <TextBlock>
-                            <Style>
-                              <StaticResource ResourceKey="BaseTextBlockStyle" />
-                            </Style>
-                            <Text>
-                              <Binding Path="Description" />
-                            </Text>
-                                                    </TextBlock>
-                                                    <TextBlock x:Uid="AlarmsPageAlarmFoldedSmart" HorizontalAlignment="Right" Text="smart">
-                            <Style>
-                              <StaticResource ResourceKey="GrayTextBlockStyle" />
-                            </Style>
-                            <Visibility>
-                              <Binding Path="IsChecked" ElementName="IsSmartCheckBox">
-                                <Converter>
-                                  <StaticResource ResourceKey="BoolToVis" />
-                                </Converter>
-                              </Binding>
-                            </Visibility>
-                                                    </TextBlock>
-                                                </UIElementCollection>
-                                            </Children>
-                                        </Grid>
-                                        <StackPanel Row="1" Column="0" ColumnSpan="3">
-                                            <Visibility>
-                                                <Binding Path="IsUnfolded">
-                                                    <Converter>
-                                                        <StaticResource ResourceKey="BoolToVis" />
-                                                    </Converter>
-                                                </Binding>
-                                            </Visibility>
-                                            <Children>
-                                                <UIElementCollection>
-                                                    <CheckBox x:Name="IsSmartCheckBox" Margin="0,-5,0,0">
-                                                        <Visibility>
-                                                            <Binding Path="IsSmartSupported">
-                                                                <Converter>
-                                                                    <StaticResource ResourceKey="BoolToVis" />
-                                                                </Converter>
-                                                            </Binding>
-                                                        </Visibility>
-                                                        <IsChecked>
-                                                            <Binding Path="IsSmart" Mode="TwoWay" />
-                                                        </IsChecked>
-                                                        <Content>
-                                                            <TextBlock Margin="0,-8,0,-8" TextWrapping="Wrap">
-                                <FontSize>
-                                  <StaticResource ResourceKey="TextStyleSmallFontSize" />
-                                </FontSize>
-                                <Inlines>
-                                  <InlineCollection>
-                                    <Run x:Uid="AlarmsPageSmartCheckBoxTitle" Text="smart">
-                                      <FontSize>
-                                        <StaticResource ResourceKey="TextStyleMediumFontSize" />
-                                      </FontSize>
-                                    </Run>
-                                    <LineBreak />
-                                    <Run x:Uid="AlarmsPageSmartCheckBoxDescription" Text="rings 30 min earlier or less, when your body is awake" />
-                                  </InlineCollection>
-                                </Inlines>
-                                                            </TextBlock>
-                                                        </Content>
-                                                    </CheckBox>
-                                                    <CheckBox x:Uid="AlarmsPage_RepeatCheckBox" x:Name="RepeatCheckBox" Margin="0,-5,0,0" Content="repeat">
-                                                        <IsChecked>
-                                                            <Binding Path="Repeat" Mode="TwoWay" />
-                                                        </IsChecked>
-                                                    </CheckBox>
-                                                    <Grid Margin="0,-5,0,5" HorizontalAlignment="Stretch">
-                                                        <Visibility>
-                                                            <Binding Path="IsChecked" ElementName="RepeatCheckBox">
-                                                                <Converter>
-                                                                    <StaticResource ResourceKey="BoolToVis" />
-                                                                </Converter>
-                                                            </Binding>
-                                                        </Visibility>
-                                                        <ColumnDefinitions>
-                                                            <ColumnDefinitionCollection>
-                                                                <ColumnDefinition />
-                                                                <ColumnDefinition />
-                                                                <ColumnDefinition />
-                                                                <ColumnDefinition />
-                                                                <ColumnDefinition />
-                                                                <ColumnDefinition />
-                                                                <ColumnDefinition />
-                                                            </ColumnDefinitionCollection>
-                                                        </ColumnDefinitions>
-                                                        <RowDefinitions>
-                                                            <RowDefinitionCollection>
-                                                                <RowDefinition />
-                                                                <RowDefinition />
-                                                                <RowDefinition />
-                                                            </RowDefinitionCollection>
-                                                        </RowDefinitions>
-                                                        <Resources>
-                                                            <ResourceDictionary>
-                                                                <Style TargetType="ToggleButton">
-                                                                    <BasedOn>
-                                                                        <StaticResource ResourceKey="RoundedToggleButtonStyle" />
-                                                                    </BasedOn>
-                                                                    <Setters>
-                                                                        <SetterBaseCollection>
-                                                                            <Setter Property="Grid.Row" Value="1" />
-                                                                            <Setter Property="MinWidth" Value="20" />
-                                                                            <Setter Property="MinHeight" Value="20" />
-                                                                            <Setter Property="MaxHeight" Value="50" />
-                                                                            <Setter Property="HorizontalAlignment" Value="Stretch" />
-                                                                            <Setter Property="Height" Value="50" />
-                                                                            <Setter Property="Padding" Value="0" />
-                                                                            <Setter Property="Margin" Value="2,0" />
-                                                                            <Setter Property="FontSize" Value="14" />
-                                                                            <Setter Property="FontWeight" Value="Normal" />
-                                                                            <Setter Property="IsTextScaleFactorEnabled" Value="False" />
-                                                                            <Setter Property="Foreground">
-                                                                                <Value>
-                                                                                    <StaticResource ResourceKey="AppForegroundBrush" />
-                                                                                </Value>
-                                                                            </Setter>
-                                                                        </SetterBaseCollection>
-                                                                    </Setters>
-                                                                </Style>
-                                                            </ResourceDictionary>
-                                                        </Resources>
-                                                        <Children>
-                                                            <UIElementCollection>
-                                                                <ToggleButton x:Name="Mo" Column="0" Tag="0">
-                                                                    <Content>
-                                                                        <Binding Path="Tag" ElementName="Mo" ConverterParameter="{0:ddd}">
-                                                                            <Converter>
-                                                                                <StaticResource ResourceKey="DayNameConverter" />
-                                                                            </Converter>
-                                                                        </Binding>
-                                                                    </Content>
-                                                                    <IsChecked>
-                                                                        <Binding Path="Days[0]" Mode="TwoWay" />
-                                                                    </IsChecked>
-                                                                </ToggleButton>
-                                                                <ToggleButton x:Name="Tu" Column="1" Tag="1">
-                                                                    <Content>
-                                                                        <Binding Path="Tag" ElementName="Tu" ConverterParameter="{0:ddd}">
-                                                                            <Converter>
-                                                                                <StaticResource ResourceKey="DayNameConverter" />
-                                                                            </Converter>
-                                                                        </Binding>
-                                                                    </Content>
-                                                                    <IsChecked>
-                                                                        <Binding Path="Days[1]" Mode="TwoWay" />
-                                                                    </IsChecked>
-                                                                </ToggleButton>
-                                                                <ToggleButton x:Name="We" Column="2" Tag="2">
-                                                                    <Content>
-                                                                        <Binding Path="Tag" ElementName="We" ConverterParameter="{0:ddd}">
-                                                                            <Converter>
-                                                                                <StaticResource ResourceKey="DayNameConverter" />
-                                                                            </Converter>
-                                                                        </Binding>
-                                                                    </Content>
-                                                                    <IsChecked>
-                                                                        <Binding Path="Days[2]" Mode="TwoWay" />
-                                                                    </IsChecked>
-                                                                </ToggleButton>
-                                                                <ToggleButton x:Name="Th" Column="3" Tag="3">
-                                                                    <Content>
-                                                                        <Binding Path="Tag" ElementName="Th" ConverterParameter="{0:ddd}">
-                                                                            <Converter>
-                                                                                <StaticResource ResourceKey="DayNameConverter" />
-                                                                            </Converter>
-                                                                        </Binding>
-                                                                    </Content>
-                                                                    <IsChecked>
-                                                                        <Binding Path="Days[3]" Mode="TwoWay" />
-                                                                    </IsChecked>
-                                                                </ToggleButton>
-                                                                <ToggleButton x:Name="Fr" Column="4" Tag="4">
-                                                                    <Content>
-                                                                        <Binding Path="Tag" ElementName="Fr" ConverterParameter="{0:ddd}">
-                                                                            <Converter>
-                                                                                <StaticResource ResourceKey="DayNameConverter" />
-                                                                            </Converter>
-                                                                        </Binding>
-                                                                    </Content>
-                                                                    <IsChecked>
-                                                                        <Binding Path="Days[4]" Mode="TwoWay" />
-                                                                    </IsChecked>
-                                                                </ToggleButton>
-                                                                <ToggleButton x:Name="Sa" Column="5" Tag="5">
-                                                                    <Foreground>
-                                                                        <StaticResource ResourceKey="AppAccentBrush" />
-                                                                    </Foreground>
-                                                                    <BorderBrush>
-                                                                        <StaticResource ResourceKey="AppAccentBrush" />
-                                                                    </BorderBrush>
-                                                                    <Content>
-                                                                        <Binding Path="Tag" ElementName="Sa" ConverterParameter="{0:ddd}">
-                                                                            <Converter>
-                                                                                <StaticResource ResourceKey="DayNameConverter" />
-                                                                            </Converter>
-                                                                        </Binding>
-                                                                    </Content>
-                                                                    <IsChecked>
-                                                                        <Binding Path="Days[5]" Mode="TwoWay" />
-                                                                    </IsChecked>
-                                                                </ToggleButton>
-                                                                <ToggleButton x:Name="Su" Column="6" Tag="6">
-                                                                    <Foreground>
-                                                                        <StaticResource ResourceKey="AppAccentBrush" />
-                                                                    </Foreground>
-                                                                    <BorderBrush>
-                                                                        <StaticResource ResourceKey="AppAccentBrush" />
-                                                                    </BorderBrush>
-                                                                    <Content>
-                                                                        <Binding Path="Tag" ElementName="Su" ConverterParameter="{0:ddd}">
-                                                                            <Converter>
-                                                                                <StaticResource ResourceKey="DayNameConverter" />
-                                                                            </Converter>
-                                                                        </Binding>
-                                                                    </Content>
-                                                                    <IsChecked>
-                                                                        <Binding Path="Days[6]" Mode="TwoWay" />
-                                                                    </IsChecked>
-                                                                </ToggleButton>
-                                                            </UIElementCollection>
-                                                        </Children>
-                                                    </Grid>
-                                                    <Button x:Uid="AlarmsPage_RemoveAlarm" BorderThickness="1,1,1,1" FontWeight="SemiLight" Attach="[Event Tapped] = [Action RemoveAlarm()]" HorizontalAlignment="Right" Foreground="Red" BorderBrush="Red" HorizontalContentAlignment="Center" Margin="0,-5,0,-5" Content="remove" />
-                                                </UIElementCollection>
-                                            </Children>
-                                        </StackPanel>
-                                    </UIElementCollection>
-                                </Children>
-                            </Grid>
-                        </Child>
-                    </Border>
-                </UIElementCollection>
-            </Children>
-        </Grid>
-    </UserControl.Content>
+    </UserControl.Resources>
+
+    <Grid VerticalAlignment="Top">
+        <Border x:Name="DataTemplateRoot" BorderThickness="0,0,0,2" Padding="0,20,0,10" 
+                BorderBrush="{ThemeResource AppForegroundDisabledBrush}">
+           <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TimePicker x:Name="AlarmTimePicker" Grid.Column="0" VerticalAlignment="Center">
+                    <TimePicker.IsHitTestVisible>
+                        <Binding Path="IsUnfolded" />
+                    </TimePicker.IsHitTestVisible>
+                    <TimePicker.Time>
+                        <Binding Path="Time" Mode="TwoWay" />
+                    </TimePicker.Time>
+                </TimePicker>
+                <Grid Grid.Row="0" Grid.Column="1" IsTapEnabled="False" micro:Message.Attach="[Event Tapped] = [Action OnAlarmTapped($this)]">
+                    <Grid.Background>
+                        <StaticResource ResourceKey="AppBackgroundBrush" />
+                    </Grid.Background>
+                    <Grid.Visibility>
+                        <Binding Path="IsUnfolded">
+                            <Binding.Converter>
+                                <StaticResource ResourceKey="BoolToVis" />
+                            </Binding.Converter>
+                        </Binding>
+                    </Grid.Visibility>
+                </Grid>
+                <ToggleSwitch x:Uid="AlarmsPage_AlarmToggle" x:Name="StateSwitch" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" OffContent="Off" OnContent="On" Padding="0,2,0,2">
+                    <ToggleSwitch.IsOn>
+                        <Binding Path="IsEnabled" Mode="TwoWay" />
+                    </ToggleSwitch.IsOn>
+                </ToggleSwitch>
+                <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+                    <Grid.Visibility>
+                        <Binding Path="IsUnfolded" ConverterParameter="False">
+                            <Binding.Converter>
+                                <StaticResource ResourceKey="BoolToVis" />
+                            </Binding.Converter>
+                        </Binding>
+                    </Grid.Visibility>
+                    <TextBlock>
+                        <TextBlock.Style>
+                            <StaticResource ResourceKey="BaseTextBlockStyle" />
+                        </TextBlock.Style>
+                        <TextBlock.Text>
+                            <Binding Path="Description" />
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock x:Uid="AlarmsPageAlarmFoldedSmart" HorizontalAlignment="Right" Text="smart">
+                        <TextBlock.Style>
+                            <StaticResource ResourceKey="GrayTextBlockStyle" />
+                        </TextBlock.Style>
+                        <TextBlock.Visibility>
+                            <Binding Path="IsChecked" ElementName="IsSmartCheckBox">
+                                <Binding.Converter>
+                                    <StaticResource ResourceKey="BoolToVis" />
+                                </Binding.Converter>
+                            </Binding>
+                        </TextBlock.Visibility>
+                    </TextBlock>
+                </Grid>
+                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+                    <StackPanel.Visibility>
+                        <Binding Path="IsUnfolded">
+                            <Binding.Converter>
+                                <StaticResource ResourceKey="BoolToVis" />
+                            </Binding.Converter>
+                        </Binding>
+                    </StackPanel.Visibility>
+                    <CheckBox x:Name="IsSmartCheckBox" Margin="0,-5,0,0">
+                        <CheckBox.Visibility>
+                            <Binding Path="IsSmartSupported">
+                                <Binding.Converter>
+                                    <StaticResource ResourceKey="BoolToVis" />
+                                </Binding.Converter>
+                            </Binding>
+                        </CheckBox.Visibility>
+                        <CheckBox.IsChecked>
+                            <Binding Path="IsSmart" Mode="TwoWay" />
+                        </CheckBox.IsChecked>
+                        <CheckBox.Content>
+                            <TextBlock Margin="0,-8,0,-8" TextWrapping="Wrap">
+                                <TextBlock.FontSize>
+                                    <StaticResource ResourceKey="TextStyleSmallFontSize" />
+                                </TextBlock.FontSize>
+                                <Run x:Uid="AlarmsPageSmartCheckBoxTitle" Text="smart" FontSize="8"/>
+                                   
+                                
+                                <LineBreak />
+                                <Run x:Uid="AlarmsPageSmartCheckBoxDescription" 
+                                     Text="rings 30 min earlier or less, when your body is awake" />
+                            </TextBlock>
+                        </CheckBox.Content>
+                    </CheckBox>
+                    <CheckBox x:Uid="AlarmsPage_RepeatCheckBox" x:Name="RepeatCheckBox" Margin="0,-5,0,0" Content="repeat">
+                        <CheckBox.IsChecked>
+                            <Binding Path="Repeat" Mode="TwoWay" />
+                        </CheckBox.IsChecked>
+                    </CheckBox>
+                    <Grid Margin="0,-5,0,5" HorizontalAlignment="Stretch">
+                        <Grid.Visibility>
+                            <Binding Path="IsChecked" ElementName="RepeatCheckBox">
+                                <Binding.Converter>
+                                    <StaticResource ResourceKey="BoolToVis" />
+                                </Binding.Converter>
+                            </Binding>
+                        </Grid.Visibility>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <ToggleButton x:Name="Mo" Grid.Column="0" Tag="0">
+                            <ToggleButton.Content>
+                                <Binding Path="Tag" ElementName="Mo">
+                                    <Binding.Converter>
+                                        <StaticResource ResourceKey="DayNameConverter" />
+                                    </Binding.Converter>
+                                </Binding>
+                            </ToggleButton.Content>
+                            <ToggleButton.IsChecked>
+                                <Binding Path="Days[0]" Mode="TwoWay" />
+                            </ToggleButton.IsChecked>
+                        </ToggleButton>
+                        <!-- Repeat similar ToggleButton definitions for other days -->
+                    </Grid>
+                    <Button x:Uid="AlarmsPage_RemoveAlarm" BorderThickness="1,1,1,1" FontWeight="SemiLight" micro:Message.Attach="[Event Tapped] = [Action RemoveAlarm()]" HorizontalAlignment="Right" Foreground="Red" BorderBrush="Red" HorizontalContentAlignment="Center" Margin="0,-5,0,-5" Content="remove" />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
 </UserControl>
 <!--UserControl
     x:Class="MiBandApp.Views.Band.BandAlarmView"

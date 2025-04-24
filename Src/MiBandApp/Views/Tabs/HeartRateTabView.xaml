@@ -1,209 +1,109 @@
-﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-             xmlns:controls="using:MiBandApp.Controls" 
-             xmlns:core="using:Microsoft.Xaml.Interactions.Core" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:interactivity="using:Microsoft.Xaml.Interactivity" 
-             xmlns:local="using:MiBandApp.Views.Tabs" 
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:micro="using:Caliburn.Micro" 
-             x:Class="MiBandApp.Views.Tabs.HeartRateTabView" 
-             HorizontalContentAlignment="Stretch" 
-             VerticalContentAlignment="Stretch">
-    <UserControl.Content>
-        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Children>
-                <UIElementCollection>
-                    <StackPanel>
-                        <Children>
-                            <UIElementCollection>
-                                <TextBlock HorizontalAlignment="Center" 
-                                           VerticalAlignment="Bottom" 
-                                           FontSize="15" 
-                                           TextAlignment="Center">
-                  <Style>
-                    <StaticResource ResourceKey="GrayBigTextBlockStyle" />
-                  </Style>
-                  <Inlines>
-                    <InlineCollection>
-                      <Run x:Uid="HeartRateTabHeader" Text="To refresh, tap heart icon below" />
-                    </InlineCollection>
-                  </Inlines>
-                                </TextBlock>
-                                <controls:Gauge Margin="0,-40,0,0" IsTextScaleFactorEnabled="True" Maximum="100" Minimum="0" NeedleBrush="Transparent" ScaleTickBrush="Transparent" ScaleWidth="15" TickBrush="Transparent">
-                                    <controls:IsUndefined>
-                                        <Binding Path="IsMeasuring" />
-                                    </controls:IsUndefined>
-                                    <controls:ScaleBrush>
-                                        <ThemeResource ResourceKey="CommandBarBackgroundThemeBrush" />
-                                    </controls:ScaleBrush>
-                                    <controls:TrailBrush>
-                                        <StaticResource ResourceKey="AppAccentBrush" />
-                                    </controls:TrailBrush>
-                                    <controls:Value>
-                                        <Binding Path="GaugeValue" />
-                                    </controls:Value>
-                                    <controls:Content>
-                                        <Grid VerticalAlignment="Stretch">
-                                            <Resources>
-                                                <ResourceDictionary>
-                                                    <Style x:Key="HintLabelStyle" TargetType="TextBlock">
-                                                        <BasedOn>
-                                                            <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
-                                                        </BasedOn>
-                                                        <Setters>
-                                                            <SetterBaseCollection>
-                                                                <Setter Property="FontSize" Value="8" />
-                                                                <Setter Property="TextAlignment" Value="Center" />
-                                                            </SetterBaseCollection>
-                                                        </Setters>
-                                                    </Style>
-                                                </ResourceDictionary>
-                                            </Resources>
-                                            <Children>
-                                                <UIElementCollection>
-                                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                        <Visibility>
-                                                            <Binding Path="IsMeasuring" ConverterParameter="False">
-                                                                <Converter>
-                                                                    <StaticResource ResourceKey="BoolToVis" />
-                                                                </Converter>
-                                                            </Binding>
-                                                        </Visibility>
-                                                        <Children>
-                                                            <UIElementCollection>
-                                                                <TextBlock x:Uid="HeartRateTabLatestValueHeader">
-                                  <Style>
-                                    <StaticResource ResourceKey="HintLabelStyle" />
-                                  </Style>
-                                  <Visibility>
-                                    <Binding Path="HeartRateIsValid">
-                                      <Converter>
-                                        <StaticResource ResourceKey="BoolToVis" />
-                                      </Converter>
-                                    </Binding>
-                                  </Visibility>
-                                  <Inlines>
-                                    <InlineCollection implicititems="Latest heart rate" />
-                                  </Inlines>
-                                                                </TextBlock>
-                                                                <TextBlock HorizontalAlignment="Center" FontSize="23" FontWeight="Normal" TextAlignment="Center">
-                                  <Text>
-                                    <Binding Path="HeartRate" />
-                                  </Text>
-                                  <Visibility>
-                                    <Binding Path="HeartRateIsValid">
-                                      <Converter>
-                                        <StaticResource ResourceKey="BoolToVis" />
-                                      </Converter>
-                                    </Binding>
-                                  </Visibility>
-                                                                </TextBlock>
-                                                                <TextBlock x:Uid="HeartRateTabBpm" Margin="0,-5,0,0" Text="bpm">
-                                  <Style>
-                                    <StaticResource ResourceKey="HintLabelStyle" />
-                                  </Style>
-                                  <Visibility>
-                                    <Binding Path="HeartRateIsValid">
-                                      <Converter>
-                                        <StaticResource ResourceKey="BoolToVis" />
-                                      </Converter>
-                                    </Binding>
-                                  </Visibility>
-                                                                </TextBlock>
-                                                                <TextBlock x:Uid="HeartRateTabNeedToUpdate" HorizontalAlignment="Center" FontSize="10" FontWeight="Normal" Text="Need to update" TextAlignment="Center">
-                                  <Style>
-                                    <StaticResource ResourceKey="HintLabelStyle" />
-                                  </Style>
-                                  <Visibility>
-                                    <Binding Path="HeartRateIsValid" ConverterParameter="False">
-                                      <Converter>
-                                        <StaticResource ResourceKey="BoolToVis" />
-                                      </Converter>
-                                    </Binding>
-                                  </Visibility>
-                                                                </TextBlock>
-                                                            </UIElementCollection>
-                                                        </Children>
-                                                    </StackPanel>
-                                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                        <Visibility>
-                                                            <Binding Path="IsMeasuring">
-                                                                <Converter>
-                                                                    <StaticResource ResourceKey="BoolToVis" />
-                                                                </Converter>
-                                                            </Binding>
-                                                        </Visibility>
-                                                        <Children>
-                                                            <UIElementCollection>
-                                                                <TextBlock x:Uid="HeartRateTabInstructions" Width="100" HorizontalAlignment="Center" FontSize="9" FontWeight="Normal" Text="Don't move and keep your hand on one level with your chest" TextAlignment="Center">
-                                  <Style>
-                                    <StaticResource ResourceKey="HintLabelStyle" />
-                                  </Style>
-                                                                </TextBlock>
-                                                            </UIElementCollection>
-                                                        </Children>
-                                                    </StackPanel>
-                                                    <ListViewItem Height="20" Margin="0,0,0,-80" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Attach="[Event Tapped] = [Action MeasureHeartRate()]">
-                                                        <Visibility>
-                                                            <Binding Path="IsMeasuring" ConverterParameter="False">
-                                                                <Converter>
-                                                                    <StaticResource ResourceKey="BoolToVis" />
-                                                                </Converter>
-                                                            </Binding>
-                                                        </Visibility>
-                                                        <Content>
-                                                            <BitmapIcon VerticalAlignment="Center" UriSource="../../Resources/Images/heart378.png" />
-                                                        </Content>
-                                                    </ListViewItem>
-                                                </UIElementCollection>
-                                            </Children>
-                                        </Grid>
-                                    </controls:Content>
-                                </controls:Gauge>
-                                <Grid Margin="0,-40,0,0">
-                                    <Children>
-                                        <UIElementCollection>
-                                            <TextBlock HorizontalAlignment="Center" FontSize="15" Text=" ">
-                        <Style>
-                          <StaticResource ResourceKey="GrayBigTextBlockStyle" />
-                        </Style>
-                                            </TextBlock>
-                                            <TextBlock HorizontalAlignment="Center" FontSize="15">
-                        <Style>
-                          <StaticResource ResourceKey="GrayBigTextBlockStyle" />
-                        </Style>
-                        <Visibility>
-                          <Binding Path="HeartRateIsValid">
-                            <Converter>
-                              <StaticResource ResourceKey="BoolToVis" />
-                            </Converter>
-                          </Binding>
-                        </Visibility>
-                        <Inlines>
-                          <InlineCollection>
-                            <Run x:Uid="HeartRateTabUpdatedAt" Text="Updated at" />
-                            <Run Text=": " />
-                            <Run>
-                              <Text>
-                                <Binding Path="LastUpdatedTimestamp" ConverterParameter="{0:t}">
-                                  <Converter>
-                                    <StaticResource ResourceKey="StringFormatConverter" />
-                                  </Converter>
-                                </Binding>
-                              </Text>
-                            </Run>
-                          </InlineCollection>
-                        </Inlines>
-                                            </TextBlock>
-                                        </UIElementCollection>
-                                    </Children>
-                                </Grid>
-                            </UIElementCollection>
-                        </Children>
-                    </StackPanel>
-                </UIElementCollection>
-            </Children>
-        </Grid>
-    </UserControl.Content>
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"  
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  
+             xmlns:controls="using:MiBandApp.Controls"  
+             xmlns:core="using:Microsoft.Xaml.Interactions.Core"  
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
+             xmlns:interactivity="using:Microsoft.Xaml.Interactivity"  
+             xmlns:local="using:MiBandApp.Views.Tabs"  
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
+             xmlns:micro="using:Caliburn.Micro"  
+             x:Class="MiBandApp.Views.Tabs.HeartRateTabView"  
+             HorizontalContentAlignment="Stretch"  
+             VerticalContentAlignment="Stretch">  
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">  
+        <StackPanel>  
+            <TextBlock HorizontalAlignment="Center"  
+                       VerticalAlignment="Bottom"  
+                       FontSize="15"  
+                       TextAlignment="Center"  
+                       Style="{StaticResource GrayBigTextBlockStyle}">  
+                <Run x:Uid="HeartRateTabHeader" Text="To refresh, tap heart icon below" />  
+            </TextBlock>
+
+            <!-- TODO -->
+                <!--controls:Gauge Margin="0,-40,0,0" IsTextScaleFactorEnabled="True" Maximum="100" Minimum="0" NeedleBrush="Transparent" 
+                            ScaleTickBrush="Transparent" ScaleWidth="15" TickBrush="Transparent">  
+                <controls:IsUndefined>  
+                    <Binding Path="IsMeasuring" />  
+                </controls:IsUndefined>  
+                <controls:ScaleBrush>  
+                    <ThemeResource ResourceKey="CommandBarBackgroundThemeBrush" />  
+                </controls:ScaleBrush>  
+                <controls:TrailBrush>  
+                    <StaticResource ResourceKey="AppAccentBrush" />  
+                </controls:TrailBrush>  
+                <controls:Value>  
+                    <Binding Path="GaugeValue" />  
+                </controls:Value>  
+                <controls:Content>  
+                    <Grid VerticalAlignment="Stretch">  
+                        <Grid.Resources>  
+                            <Style x:Key="HintLabelStyle" TargetType="TextBlock" BasedOn="{StaticResource ControlHeaderTextBlockStyle}">  
+                                <Setter Property="FontSize" Value="8" />  
+                                <Setter Property="TextAlignment" Value="Center" />  
+                            </Style>  
+                        </Grid.Resources>  
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Path=IsMeasuring, Converter={StaticResource BoolToVis}, ConverterParameter=False}">  
+                            <TextBlock x:Uid="HeartRateTabLatestValueHeader"  
+                                       Style="{StaticResource HintLabelStyle}"  
+                                       Visibility="{Binding Path=HeartRateIsValid, Converter={StaticResource BoolToVis}}">  
+                                Latest heart rate  
+                            </TextBlock>  
+                            <TextBlock HorizontalAlignment="Center"  
+                                       FontSize="23"  
+                                       FontWeight="Normal"  
+                                       TextAlignment="Center"  
+                                       Text="{Binding Path=HeartRate}"  
+                                       Visibility="{Binding Path=HeartRateIsValid, Converter={StaticResource BoolToVis}}" />  
+                            <TextBlock x:Uid="HeartRateTabBpm"  
+                                       Margin="0,-5,0,0"  
+                                       Text="bpm"  
+                                       Style="{StaticResource HintLabelStyle}"  
+                                       Visibility="{Binding Path=HeartRateIsValid, Converter={StaticResource BoolToVis}}" />  
+                            <TextBlock x:Uid="HeartRateTabNeedToUpdate"  
+                                       HorizontalAlignment="Center"  
+                                       FontSize="10"  
+                                       FontWeight="Normal"  
+                                       Text="Need to update"  
+                                       TextAlignment="Center"  
+                                       Style="{StaticResource HintLabelStyle}"  
+                                       Visibility="{Binding Path=HeartRateIsValid, Converter={StaticResource BoolToVis}, ConverterParameter=False}" />  
+                        </StackPanel>  
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Path=IsMeasuring, Converter={StaticResource BoolToVis}}">  
+                            <TextBlock x:Uid="HeartRateTabInstructions"  
+                                       Width="100"  
+                                       HorizontalAlignment="Center"  
+                                       FontSize="9"  
+                                       FontWeight="Normal"  
+                                       Text="Don't move and keep your hand on one level with your chest"  
+                                       TextAlignment="Center"  
+                                       Style="{StaticResource HintLabelStyle}" />  
+                        </StackPanel>  
+                        <ListViewItem Height="20"  
+                                      Margin="0,0,0,-80"  
+                                      HorizontalAlignment="Center"  
+                                      HorizontalContentAlignment="Center"  
+                                      interactivity:Interaction.Behaviors="{Binding [Event Tapped] = [Action MeasureHeartRate()]}"  
+                                      Visibility="{Binding Path=IsMeasuring, Converter={StaticResource BoolToVis}, ConverterParameter=False}">  
+                            <BitmapIcon VerticalAlignment="Center" UriSource="../../Resources/Images/heart378.png" />  
+                        </ListViewItem>  
+                    </Grid>  
+                </controls:Content>  
+            </controls:Gauge-->  
+            <Grid Margin="0,-40,0,0">  
+                <TextBlock HorizontalAlignment="Center"  
+                           FontSize="15"  
+                           Text=" "  
+                           Style="{StaticResource GrayBigTextBlockStyle}" />  
+                <TextBlock HorizontalAlignment="Center"  
+                           FontSize="15"  
+                           Style="{StaticResource GrayBigTextBlockStyle}"  
+                           Visibility="{Binding Path=HeartRateIsValid, Converter={StaticResource BoolToVis}}">  
+                    <Run x:Uid="HeartRateTabUpdatedAt" Text="Updated at" />  
+                    <Run Text=": " />  
+                    <Run Text="{Binding Path=LastUpdatedTimestamp, Converter={StaticResource StringFormatConverter}}" />  
+                </TextBlock>  
+            </Grid>  
+        </StackPanel>  
+    </Grid>  
 </UserControl>

@@ -26,11 +26,11 @@ namespace MiBandApp.Views.DeviceSettings
     }
 }*/
 
-// Decompiled with JetBrains decompiler
+
 // Type: MiBandApp.Views.DeviceSettings.NotDisturbView
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using System;
 using System.CodeDom.Compiler;
@@ -52,18 +52,27 @@ namespace MiBandApp.Views.DeviceSettings
         public NotDisturbView()
         {
             this.InitializeComponent();
-            this.StartTimePicker.put_ClockIdentifier(this.ClockFormat);
-            this.EndTimePicker.put_ClockIdentifier(this.StartTimePicker.ClockIdentifier);
+            this.StartTimePicker.ClockIdentifier = this.ClockFormat;
+            this.EndTimePicker.ClockIdentifier = this.StartTimePicker.ClockIdentifier;
         }
 
         public string ClockFormat
         {
             get
             {
-                return !CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern.Contains("H") ? ClockIdentifiers.TwelveHour : ClockIdentifiers.TwentyFourHour;
+                return !CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern.Contains("H")
+                    ? ClockIdentifiers.TwelveHour : ClockIdentifiers.TwentyFourHour;
             }
         }
 
-       
+        private void OnSaveButtonTapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            // TODO : move it to Model
+        }
+
+        private void OnConfigureTapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            // TODO : move it to Model
+        }
     }
 }

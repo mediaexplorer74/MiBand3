@@ -1,15 +1,15 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.Services.BandController
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using MetroLog;
 using MiBand.SDK;
 using MiBand.SDK.Bluetooth;
 using MiBand.SDK.Core;
 using MiBandApp.Tools;
-using Microsoft.HockeyApp;
+//using Microsoft.HockeyApp;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -169,7 +169,8 @@ namespace MiBandApp.Services
         this._deviceInfo.Value = await this.MiBand.GetBandDeviceInfo().ConfigureAwait(false);
         if (this.BindingState.Value == MiBandApp.Services.BindingState.Unbinded || this.BindingState.Value == MiBandApp.Services.BindingState.New)
           return BandController.ConnectResult.Fail;
-        HockeyClient.Current.TrackEvent("MiBandModel." + (object) this.DeviceInfo.Value.Model);
+        
+        //HockeyClient.Current.TrackEvent("MiBandModel." + (object) this.DeviceInfo.Value.Model);
         switch (await this.MiBand.Authenticate(this._settings.GetSavedUserInfo()).ConfigureAwait(false))
         {
           case AuthenticationResult.None:

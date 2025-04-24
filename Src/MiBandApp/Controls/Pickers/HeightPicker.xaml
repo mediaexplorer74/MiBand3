@@ -1,6 +1,6 @@
 ﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-             xmlns:controls="using:IanSavchenko.Controls" 
+             xmlns:controls="using:Ian.Controls" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="using:MiBandApp.Controls.Pickers" 
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,90 +8,60 @@
              x:Name="Root" Height="60" 
              HorizontalAlignment="Stretch">
     <Grid>
-        <Button x:Name="MainButton">
-            <Width>
+        <Button x:Name="MainButton" Style="{StaticResource PickerButtonStyle}">
+            <Button.Width>
                 <Binding ElementName="Root" Path="ActualWidth" />
-            </Width>
-            <Height>
+            </Button.Width>
+            <Button.Height>
                 <Binding ElementName="Root" Path="ActualHeight" />
-            </Height>
-            <Style>
-                <StaticResource ResourceKey="PickerButtonStyle" />
-            </Style>
-            <Flyout>
-                <controls:ListSelectorFlyout x:ConnectionId="1" x:Name="OptionsFlyout" ConfirmationButtonsVisible="False">
-                    <controls:Content>
+            </Button.Height>
+            <!--TEMP -->
+            <!--Button.Flyout>
+                <controls:ListSelectorFlyout x:Name="OptionsFlyout" ConfirmationButtonsVisible="False">
+                    <controls:ListSelectorFlyout.Content>
                         <Grid>
-                            <Children>
-                                <UIElementCollection>
-                                    <TextBlock x:Uid="UserInfoPageHeight">
-                    <Style>
-                      <StaticResource ResourceKey="PickerTitleTextBlockStyle" />
-                    </Style>
-                    <Inlines>
-                      <InlineCollection implicititems="Height" />
-                    </Inlines>
-                                    </TextBlock>
-                                    <controls:ListSelector x:Name="OptionsListSelector" ItemWidth="150">
-                                        <Margin>
-                                            <StaticResource ResourceKey="PickerListSelectorMargin" />
-                                        </Margin>
-                                        <controls:ItemTemplate>
-                                            <DataTemplate>
-                                                <Template>
-                                                    <StackPanel VerticalAlignment="Bottom">
-                                                        <Margin>
-                                                            <StaticResource ResourceKey="PickerListSelectorItemContentMargin" />
-                                                        </Margin>
-                                                        <Children>
-                                                            <UIElementCollection>
-                                                                <TextBlock>
-                                  <Style>
-                                    <StaticResource ResourceKey="PickerMainTextBlockStyle" />
-                                  </Style>
-                                  <Text>
-                                    <Binding Path="CmString" Mode="OneTime" />
-                                  </Text>
-                                                                </TextBlock>
-                                                                <TextBlock>
-                                  <Style>
-                                    <StaticResource ResourceKey="PickerSecondaryTextBlockStyle" />
-                                  </Style>
-                                  <Text>
-                                    <Binding Path="ImperialString" Mode="OneTime" />
-                                  </Text>
-                                  <Visibility>
-                                    <Binding Path="ImperialLabelVisibility" Mode="OneTime" />
-                                  </Visibility>
-                                                                </TextBlock>
-                                                            </UIElementCollection>
-                                                        </Children>
-                                                    </StackPanel>
-                                                </Template>
-                                            </DataTemplate>
-                                        </controls:ItemTemplate>
-                                    </controls:ListSelector>
-                                </UIElementCollection>
-                            </Children>
+                            <TextBlock x:Uid="UserInfoPageHeight" Style="{StaticResource PickerTitleTextBlockStyle}">
+                                <TextBlock.Inlines>
+                                    <Run Text="Height" />
+                                </TextBlock.Inlines>
+                            </TextBlock>
+                            <controls:ListSelector x:Name="OptionsListSelector" ItemWidth="150" Margin="{StaticResource PickerListSelectorMargin}">
+                                <controls:ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel VerticalAlignment="Bottom" Margin="{StaticResource PickerListSelectorItemContentMargin}">
+                                            <TextBlock Style="{StaticResource PickerMainTextBlockStyle}" Text="{Binding CmString, Mode=OneTime}" />
+                                            <TextBlock Style="{StaticResource PickerSecondaryTextBlockStyle}" Text="{Binding ImperialString, Mode=OneTime}"
+                                                       Visibility="{Binding ImperialLabelVisibility, Mode=OneTime}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </controls:ItemTemplate>
+                            </controls:ListSelector>
                         </Grid>
-                    </controls:Content>
+                    </controls:ListSelectorFlyout.Content>
                 </controls:ListSelectorFlyout>
-            </Flyout>
+                </Button.Flyout-->
+                <!--RnD | TODO -->
+                <!--Button.Flyout>
+                <controls:ListSelectorFlyout x:Name="OptionsFlyout" ConfirmationButtonsVisible="False">
+                      <Grid>
+                            <TextBlock x:Uid="UserInfoPageHeight" Style="{StaticResource PickerTitleTextBlockStyle}">
+                                <TextBlock.Inlines>
+                                    <Run Text="Height" />
+                                </TextBlock.Inlines>
+                            </TextBlock>
+                            <controls:ListSelector x:Name="OptionsListSelector" ItemWidth="150" Margin="{StaticResource PickerListSelectorMargin}">
+                                <controls:ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel VerticalAlignment="Bottom" Margin="{StaticResource PickerListSelectorItemContentMargin}">
+                                            <TextBlock Style="{StaticResource PickerMainTextBlockStyle}" Text="{Binding CmString, Mode=OneTime}" />
+                                            <TextBlock Style="{StaticResource PickerSecondaryTextBlockStyle}" Text="{Binding ImperialString, Mode=OneTime}" Visibility="{Binding ImperialLabelVisibility, Mode=OneTime}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </controls:ItemTemplate>
+                            </controls:ListSelector>
+                        </Grid>
+                 </controls:ListSelectorFlyout>
+            </Button.Flyout-->
         </Button>
     </Grid>
 </UserControl>
-<!--UserControl
-    x:Class="MiBandApp.Controls.Pickers.HeightPicker"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:MiBandApp.Controls.Pickers"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
-
-    <Grid>
-
-    </Grid>
-</UserControl-->

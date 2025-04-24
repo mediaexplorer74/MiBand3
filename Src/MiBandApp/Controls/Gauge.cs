@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.Controls.Gauge
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using System;
 using System.Collections.Generic;
@@ -24,20 +24,32 @@ namespace MiBandApp.Controls
     private const string ScalePartName = "PART_Scale";
     private const string TrailPartName = "PART_Trail";
     private const double Degrees2Radians = 0.017453292519943295;
-    public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(nameof (Content), typeof (UIElement), typeof (Gauge), new PropertyMetadata((object) null));
-    public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(nameof (Minimum), typeof (double), typeof (Gauge), new PropertyMetadata((object) 0.0));
-    public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register(nameof (Maximum), typeof (double), typeof (Gauge), new PropertyMetadata((object) 100.0));
-    public static readonly DependencyProperty ScaleWidthProperty = DependencyProperty.Register(nameof (ScaleWidth), typeof (double), typeof (Gauge), new PropertyMetadata((object) 26.0));
-    public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof (Value), typeof (double), typeof (Gauge), new PropertyMetadata((object) 0.0, new PropertyChangedCallback(Gauge.OnValueChanged)));
-    public static readonly DependencyProperty NeedleBrushProperty = DependencyProperty.Register(nameof (NeedleBrush), typeof (Brush), typeof (Gauge), new PropertyMetadata((object) new SolidColorBrush(Colors.Red)));
-    public static readonly DependencyProperty ScaleBrushProperty = DependencyProperty.Register(nameof (ScaleBrush), typeof (Brush), typeof (Gauge), new PropertyMetadata((object) new SolidColorBrush(Colors.DarkGray)));
-    public static readonly DependencyProperty TickBrushProperty = DependencyProperty.Register(nameof (TickBrush), typeof (Brush), typeof (Gauge), new PropertyMetadata((object) new SolidColorBrush(Colors.White)));
-    public static readonly DependencyProperty TrailBrushProperty = DependencyProperty.Register(nameof (TrailBrush), typeof (Brush), typeof (Gauge), new PropertyMetadata((object) new SolidColorBrush(Colors.Orange)));
-    public static readonly DependencyProperty ScaleTickBrushProperty = DependencyProperty.Register(nameof (ScaleTickBrush), typeof (Brush), typeof (Gauge), new PropertyMetadata((object) new SolidColorBrush(Colors.Black)));
-    public static readonly DependencyProperty IsUndefinedProperty = DependencyProperty.Register(nameof (IsUndefined), typeof (bool), typeof (Gauge), new PropertyMetadata((object) false, new PropertyChangedCallback(Gauge.OnUndefinedChanged)));
-    protected static readonly DependencyProperty ValueAngleProperty = DependencyProperty.Register(nameof (ValueAngle), typeof (double), typeof (Gauge), new PropertyMetadata((object) null));
+    public static readonly DependencyProperty ContentProperty = 
+            DependencyProperty.Register(nameof (Content), typeof (UIElement), typeof (Gauge), new PropertyMetadata((object) null));
+    public static readonly DependencyProperty MinimumProperty = 
+            DependencyProperty.Register(nameof (Minimum), typeof (double), typeof (Gauge), new PropertyMetadata((object) 0.0));
+    public static readonly DependencyProperty MaximumProperty = 
+            DependencyProperty.Register(nameof (Maximum), typeof (double), typeof (Gauge), new PropertyMetadata((object) 100.0));
+    public static readonly DependencyProperty ScaleWidthProperty = 
+            DependencyProperty.Register(nameof (ScaleWidth), typeof (double), typeof (Gauge), new PropertyMetadata((object) 26.0));
+    public static readonly DependencyProperty ValueProperty = 
+            DependencyProperty.Register(nameof (Value), typeof (double), typeof (Gauge), new PropertyMetadata((object) 0.0, new PropertyChangedCallback(Gauge.OnValueChanged)));
+    public static readonly DependencyProperty NeedleBrushProperty = 
+            DependencyProperty.Register(nameof (NeedleBrush), typeof (Brush), typeof (Gauge), new PropertyMetadata((object) new SolidColorBrush(Colors.Red)));
+    public static readonly DependencyProperty ScaleBrushProperty = 
+            DependencyProperty.Register(nameof (ScaleBrush), typeof (Brush), typeof (Gauge), new PropertyMetadata((object) new SolidColorBrush(Colors.DarkGray)));
+    public static readonly DependencyProperty TickBrushProperty = 
+            DependencyProperty.Register(nameof (TickBrush), typeof (Brush), typeof (Gauge), new PropertyMetadata((object) new SolidColorBrush(Colors.White)));
+    public static readonly DependencyProperty TrailBrushProperty = 
+            DependencyProperty.Register(nameof (TrailBrush), typeof (Brush), typeof (Gauge), new PropertyMetadata((object) new SolidColorBrush(Colors.Orange)));
+    public static readonly DependencyProperty ScaleTickBrushProperty = 
+            DependencyProperty.Register(nameof (ScaleTickBrush), typeof (Brush), typeof (Gauge), new PropertyMetadata((object) new SolidColorBrush(Colors.Black)));
+    public static readonly DependencyProperty IsUndefinedProperty = 
+            DependencyProperty.Register(nameof (IsUndefined), typeof (bool), typeof (Gauge), new PropertyMetadata((object) false, new PropertyChangedCallback(Gauge.OnUndefinedChanged)));
+    protected static readonly DependencyProperty ValueAngleProperty = 
+            DependencyProperty.Register(nameof (ValueAngle), typeof (double), typeof (Gauge), new PropertyMetadata((object) null));
 
-    public Gauge() => this.put_DefaultStyleKey((object) typeof (Gauge));
+    public Gauge() => this.DefaultStyleKey = typeof (Gauge);
 
     public UIElement Content
     {
@@ -111,27 +123,27 @@ namespace MiBandApp.Controls
       set => ((DependencyObject) this).SetValue(Gauge.ValueAngleProperty, (object) value);
     }
 
-    protected virtual void OnApplyTemplate()
+    protected override void OnApplyTemplate()
     {
       if (this.GetTemplateChild("PART_Scale") is Path templateChild)
       {
         PathGeometry pathGeometry = new PathGeometry();
         PathFigure pathFigure = new PathFigure();
-        pathFigure.put_IsClosed(false);
+        pathFigure.IsClosed = false;
         double num = 77.0 - this.ScaleWidth / 2.0;
-        pathFigure.put_StartPoint(this.ScalePoint(0.0, num));
+        pathFigure.StartPoint = this.ScalePoint(0.0, num);
         ArcSegment arcSegment = new ArcSegment();
-        arcSegment.put_SweepDirection((SweepDirection) 1);
-        arcSegment.put_IsLargeArc(true);
-        arcSegment.put_Size(new Size(num, num));
-        arcSegment.put_Point(this.ScalePoint(359.99, num));
+        arcSegment.SweepDirection = SweepDirection.Clockwise;
+        arcSegment.IsLargeArc = true;
+        arcSegment.Size = new Size(num, num);
+        arcSegment.Point = this.ScalePoint(359.99, num);
         ((ICollection<PathSegment>) pathFigure.Segments).Add((PathSegment) arcSegment);
         ((ICollection<PathFigure>) pathGeometry.Figures).Add(pathFigure);
-        templateChild.put_Data((Geometry) pathGeometry);
+        templateChild.Data = (Geometry) pathGeometry;
       }
       Gauge.OnValueChanged((DependencyObject) this);
       Gauge.OnUndefinedChanged((DependencyObject) this);
-      ((FrameworkElement) this).OnApplyTemplate();
+      this.OnApplyTemplate();
     }
 
     private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -152,31 +164,34 @@ namespace MiBandApp.Controls
         return;
       if (!gauge.IsUndefined)
       {
-        ((UIElement) templateChild).put_RenderTransform((Transform) null);
+        ((UIElement) templateChild).RenderTransform = (Transform) null;
         Gauge.OnValueChanged(d);
       }
       else
       {
-        ((UIElement) templateChild).put_RenderTransformOrigin(new Point(0.5, 0.5));
-        ((UIElement) templateChild).put_Visibility((Visibility) 0);
+        templateChild.RenderTransformOrigin = new Point(0.5, 0.5);
+        templateChild.Visibility = Visibility.Visible;
         EllipseGeometry ellipseGeometry = new EllipseGeometry();
-        ellipseGeometry.put_Center(gauge.ScalePoint(0.0, middleOfScale));
-        ellipseGeometry.put_RadiusX(0.0);
-        ellipseGeometry.put_RadiusY(0.0);
-        templateChild.put_Data((Geometry) ellipseGeometry);
+        ellipseGeometry.Center = gauge.ScalePoint(0.0, middleOfScale);
+        ellipseGeometry.RadiusX = 0.0;
+        ellipseGeometry.RadiusY = 0.0;
+        templateChild.Data = (Geometry) ellipseGeometry;
+
         RotateTransform rotateTransform = new RotateTransform();
-        ((UIElement) templateChild).put_RenderTransform((Transform) rotateTransform);
+        templateChild.RenderTransform = (Transform)rotateTransform;
         Storyboard storyboard = new Storyboard();
         DoubleAnimationUsingKeyFrames animationUsingKeyFrames = new DoubleAnimationUsingKeyFrames();
+
         EasingDoubleKeyFrame easingDoubleKeyFrame1 = new EasingDoubleKeyFrame();
-        ((DoubleKeyFrame) easingDoubleKeyFrame1).put_KeyTime((KeyTime) TimeSpan.FromSeconds(1.5));
-        ((DoubleKeyFrame) easingDoubleKeyFrame1).put_Value(360.0);
+        easingDoubleKeyFrame1.KeyTime = ((KeyTime) TimeSpan.FromSeconds(1.5));
+        easingDoubleKeyFrame1.Value = (360.0);
         QuadraticEase quadraticEase = new QuadraticEase();
-        ((EasingFunctionBase) quadraticEase).put_EasingMode((EasingMode) 0);
-        easingDoubleKeyFrame1.put_EasingFunction((EasingFunctionBase) quadraticEase);
+        quadraticEase.EasingMode = EasingMode.EaseOut;
+
+        easingDoubleKeyFrame1.EasingFunction = (EasingFunctionBase) quadraticEase;
         EasingDoubleKeyFrame easingDoubleKeyFrame2 = easingDoubleKeyFrame1;
-        ((ICollection<DoubleKeyFrame>) animationUsingKeyFrames.KeyFrames).Add((DoubleKeyFrame) easingDoubleKeyFrame2);
-        ((Timeline) animationUsingKeyFrames).put_RepeatBehavior(RepeatBehavior.Forever);
+        animationUsingKeyFrames.KeyFrames.Add((DoubleKeyFrame) easingDoubleKeyFrame2);
+        animationUsingKeyFrames.RepeatBehavior = RepeatBehavior.Forever;
         Storyboard.SetTarget((Timeline) animationUsingKeyFrames, (DependencyObject) rotateTransform);
         Storyboard.SetTargetProperty((Timeline) animationUsingKeyFrames, "Angle");
         ((ICollection<Timeline>) storyboard.Children).Add((Timeline) animationUsingKeyFrames);
@@ -195,42 +210,43 @@ namespace MiBandApp.Controls
         return;
       if (gauge.ValueAngle <= 0.0)
       {
-        ((UIElement) templateChild).put_Visibility((Visibility) 1);
+        templateChild.Visibility = Visibility.Collapsed;
       }
       else
       {
-        ((UIElement) templateChild).put_Visibility((Visibility) 0);
-        ((UIElement) templateChild).put_RenderTransform((Transform) null);
+        templateChild.Visibility = Visibility.Visible;
+        templateChild.RenderTransform = (Transform) null;
         PathGeometry pathGeometry = new PathGeometry();
         PathFigure pathFigure = new PathFigure();
-        pathFigure.put_IsClosed(false);
-        pathFigure.put_StartPoint(gauge.ScalePoint(0.0, num));
+        pathFigure.IsClosed = false;
+        pathFigure.StartPoint = gauge.ScalePoint(0.0, num);
         ArcSegment arcSegment = new ArcSegment();
-        arcSegment.put_SweepDirection((SweepDirection) 1);
-        arcSegment.put_IsLargeArc(gauge.ValueAngle > 180.0);
-        arcSegment.put_Size(new Size(num, num));
-        arcSegment.put_Point(gauge.ScalePoint(gauge.ValueAngle, num));
+        arcSegment.SweepDirection = ((SweepDirection) 1);
+        arcSegment.IsLargeArc = (gauge.ValueAngle > 180.0);
+        arcSegment.Size = (new Size(num, num));
+        arcSegment.Point = (gauge.ScalePoint(gauge.ValueAngle, num));
         ((ICollection<PathSegment>) pathFigure.Segments).Add((PathSegment) arcSegment);
         ((ICollection<PathFigure>) pathGeometry.Figures).Add(pathFigure);
         EllipseGeometry ellipseGeometry1 = new EllipseGeometry();
-        ellipseGeometry1.put_Center(gauge.ScalePoint(0.0, num));
-        ellipseGeometry1.put_RadiusX(0.0);
-        ellipseGeometry1.put_RadiusY(0.0);
+        ellipseGeometry1.Center = gauge.ScalePoint(0.0, num);
+        ellipseGeometry1.RadiusX = 0.0;
+        ellipseGeometry1.RadiusY = 0.0;
         EllipseGeometry ellipseGeometry2 = new EllipseGeometry();
-        ellipseGeometry2.put_Center(gauge.ScalePoint(gauge.ValueAngle, num));
-        ellipseGeometry2.put_RadiusX(0.0);
-        ellipseGeometry2.put_RadiusY(0.0);
+        ellipseGeometry2.Center = gauge.ScalePoint(gauge.ValueAngle, num);
+        ellipseGeometry2.RadiusX = 0.0;
+        ellipseGeometry2.RadiusY = 0.0;
         GeometryGroup geometryGroup = new GeometryGroup();
         ((ICollection<Geometry>) geometryGroup.Children).Add((Geometry) pathGeometry);
         ((ICollection<Geometry>) geometryGroup.Children).Add((Geometry) ellipseGeometry1);
         ((ICollection<Geometry>) geometryGroup.Children).Add((Geometry) ellipseGeometry2);
-        templateChild.put_Data((Geometry) geometryGroup);
+        templateChild.Data = (Geometry) geometryGroup;
       }
     }
 
     private Point ScalePoint(double angle, double middleOfScale)
     {
-      return new Point(100.0 + Math.Sin(0.017453292519943295 * angle) * middleOfScale, 100.0 - Math.Cos(0.017453292519943295 * angle) * middleOfScale);
+      return new Point(100.0 + Math.Sin(0.017453292519943295 * angle) 
+          * middleOfScale, 100.0 - Math.Cos(0.017453292519943295 * angle) * middleOfScale);
     }
 
     private double ValueToAngle(double value)

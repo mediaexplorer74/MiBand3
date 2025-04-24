@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.ViewModels.AlarmsPageViewModel
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using Caliburn.Micro;
 using MiBand.SDK.Configuration;
@@ -147,23 +147,24 @@ namespace MiBandApp.ViewModels
 
     private async void NavigationServiceOnBackPressed(
       object sender,
-      BackPressedEventArgs backPressedEventArgs)
+      EventArgs backPressedEventArgs)
     {
       if (this.Alarms.Any<BandAlarmViewModel>((Func<BandAlarmViewModel, bool>) (t => t.IsUnfolded)))
       {
         this.FoldAllAlarms();
-        backPressedEventArgs.put_Handled(true);
+        //backPressedEventArgs.Handled = true;
       }
       else
       {
-        backPressedEventArgs.put_Handled(true);
+        //backPressedEventArgs.Handled = true;
         if (this._isExitingPage)
           return;
         this._isExitingPage = true;
-        if (this.Alarms.Any<BandAlarmViewModel>((Func<BandAlarmViewModel, bool>) (t => t.HasChanged)) || this._alarmsChanged)
+        if (this.Alarms.Any<BandAlarmViewModel>((Func<BandAlarmViewModel, bool>) (t => t.HasChanged))
+                    || this._alarmsChanged)
           await this.SaveAll().ConfigureAwait(true);
         this._navigationService.GoBack();
-        this._navigationService.BackPressed -= new EventHandler<BackPressedEventArgs>(this.NavigationServiceOnBackPressed);
+        //this._navigationService.BackPressed -= new EventHandler<EventArgs>(this.NavigationServiceOnBackPressed);
       }
     }
 
@@ -177,13 +178,15 @@ namespace MiBandApp.ViewModels
     private async Task SaveAll()
     {
       this.IsPageEnabled = false;
-      StatusBarProgressItem statusBarMessage = this._statusBarNotificationService.Show<StatusBarProgressItem>(new StatusBarProgressItem(this._resourceLoader.GetString("StatusSavingOnDevice"), new double?()));
+      StatusBarProgressItem statusBarMessage = this._statusBarNotificationService.Show<StatusBarProgressItem>(
+          new StatusBarProgressItem(this._resourceLoader.GetString("StatusSavingOnDevice"), new double?()));
       try
       {
         ConfiguredTaskAwaitable configuredTaskAwaitable;
         if (this._bandController.DeviceInfo.Value.Model == MiBandModel.MiBand1)
         {
-          configuredTaskAwaitable = this._bandController.MiBand.SetUserInfo(this._settings.GetSavedUserInfo(), false).ConfigureAwait(true);
+          configuredTaskAwaitable = this._bandController.MiBand.SetUserInfo(
+              this._settings.GetSavedUserInfo(), false).ConfigureAwait(true);
           await configuredTaskAwaitable;
         }
         List<Alarm> savedAlarms = this._settings.Alarms.GetAllSaved(false).ToList<Alarm>();
@@ -208,10 +211,12 @@ namespace MiBandApp.ViewModels
         }
         for (int i = savedAlarms.Count; i < this.Alarms.Count; ++i)
         {
-          configuredTaskAwaitable = this._bandController.MiBand.SetAlarm(i, this.Alarms[i].GetAlarm()).ConfigureAwait(true);
+          configuredTaskAwaitable = this._bandController.MiBand.SetAlarm(i, 
+              this.Alarms[i].GetAlarm()).ConfigureAwait(true);
           await configuredTaskAwaitable;
         }
-        this._settings.Alarms.SaveAll((IList<Alarm>) this.Alarms.Select<BandAlarmViewModel, Alarm>((Func<BandAlarmViewModel, Alarm>) (t => t.GetAlarm())).ToList<Alarm>());
+        this._settings.Alarms.SaveAll((IList<Alarm>) this.Alarms.Select<BandAlarmViewModel, Alarm>(
+            (Func<BandAlarmViewModel, Alarm>) (t => t.GetAlarm())).ToList<Alarm>());
         savedAlarms = (List<Alarm>) null;
       }
       catch (Exception ex)
@@ -224,13 +229,13 @@ namespace MiBandApp.ViewModels
 
     protected override async Task OnActivate()
     {
-      this._navigationService.BackPressed += new EventHandler<BackPressedEventArgs>(this.NavigationServiceOnBackPressed);
+      //this._navigationService.BackPressed += new EventHandler<EventArgs>(this.NavigationServiceOnBackPressed);
       this._clockService.MinuteTick += new EventHandler<ClockTickEventArgs>(this.ClockServiceOnMinuteTick);
     }
 
     protected override async Task OnDeactivate(bool close)
     {
-      this._navigationService.BackPressed -= new EventHandler<BackPressedEventArgs>(this.NavigationServiceOnBackPressed);
+      //this._navigationService.BackPressed -= new EventHandler<EventArgs>(this.NavigationServiceOnBackPressed);
       this._clockService.MinuteTick -= new EventHandler<ClockTickEventArgs>(this.ClockServiceOnMinuteTick);
     }
 

@@ -1,10 +1,10 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.Controls.Pickers.StepsGoalPicker
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
-using IanSavchenko.Controls;
+using Ian.Controls;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections;
@@ -73,8 +73,9 @@ namespace MiBandApp.Controls.Pickers
             }
             else
             {
-                this.OptionsListSelector.SelectedIndex = (this.Value - 2000) / 1000;
-                ((ContentControl)this.MainButton).put_Content((object)this.CreateClosedStateString(this.Value));
+                //TODO
+                //this.OptionsListSelector.SelectedIndex = (this.Value - 2000) / 1000;
+                this.MainButton.Content = this.CreateClosedStateString(this.Value);
             }
         }
 
@@ -87,7 +88,8 @@ namespace MiBandApp.Controls.Pickers
                     Steps = index,
                     StepsString = this._resourceLoader.GetString("UserInfoPageSteps")
                 });
-            this.OptionsListSelector.ItemsSource = (IList)goalOptionList;
+            //TODO
+            //this.OptionsListSelector.ItemsSource = (IList)goalOptionList;
         }
 
         private string CreateClosedStateString(int steps)
@@ -97,13 +99,15 @@ namespace MiBandApp.Controls.Pickers
 
         private void ListSelectorFlyout_OnConfirmed(object sender, EventArgs e)
         {
-            this.Value = this.OptionsListSelector.SelectedIndex * 1000 + 2000;
-            ((FlyoutBase)this.OptionsFlyout).Hide();
+            //TODO
+            //this.Value = this.OptionsListSelector.SelectedIndex * 1000 + 2000;
+            //this.OptionsFlyout.Hide();
         }
 
         private void OptionsFlyout_OnOpened(object sender, object e)
         {
-            this.OptionsListSelector.IsActive = true;
+            //TODO
+            //this.OptionsListSelector.IsActive = true;
         }
 
         private void OptionsFlyout_OnClosed(object sender, object e)

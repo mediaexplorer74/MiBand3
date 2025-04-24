@@ -2,11 +2,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:local="using:Ian.Controls">
-    <!--Style TargetType="local:ListSelector">
+    <Style TargetType="local:ListSelector">
         <Style.Setters>
                 <Setter Property="ItemTemplate">
                 <Setter.Value>
-                    <Setter.DataTemplate>
+                    <DataTemplate>
                         <ContentPresenter Margin="5,5,5,5" HorizontalAlignment="Left" 
                                           VerticalAlignment="Bottom" FontFamily="Segoe WP" FontSize="50" 
                                           FontWeight="SemiBold">
@@ -14,7 +14,7 @@
                                 <Binding Mode="OneWay" />
                             </ContentPresenter.Content>
                         </ContentPresenter>
-                    </Setter.DataTemplate>
+                    </DataTemplate>
                 </Setter.Value>
             </Setter>
             <Setter Property="Template">
@@ -36,10 +36,9 @@
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="ItemMargin" Value="0,5" />
         </Style.Setters>
-    </Style-->
-    <!--Style TargetType="local:ListSelectorItem">
-        <Setters>
-            <SetterBaseCollection>
+    </Style>
+    <Style TargetType="local:ListSelectorItem">
+        <Style.Setters>      
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="local:ListSelectorItem">
@@ -65,9 +64,8 @@
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
-                </Setter>
-            </SetterBaseCollection>
-        </Setters>
-    </Style-->
+                </Setter>       
+        </Style.Setters>
+    </Style>
 </ResourceDictionary>
 

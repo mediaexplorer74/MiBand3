@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.Services.StatusBarNotificationService
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using Caliburn.Micro;
 using System;
@@ -50,9 +50,10 @@ namespace MiBandApp.Services
         return;
       ((System.Action) (async () =>
       {
-        StatusBarProgressIndicator progressIndicator = StatusBar.GetForCurrentView().ProgressIndicator;
-        progressIndicator.put_ProgressValue(this._currentProgressItem.Progress);
-        await progressIndicator.ShowAsync();
+          //TODO
+        //StatusBarProgressIndicator progressIndicator = StatusBar.GetForCurrentView().ProgressIndicator;
+        //progressIndicator.ProgressValue = this._currentProgressItem.Progress;
+        //await progressIndicator.ShowAsync();
       })).OnUIThread();
     }
 
@@ -100,10 +101,11 @@ namespace MiBandApp.Services
       this._displayedItem = (StatusBarItem) item;
       ((System.Action) (async () =>
       {
-        StatusBarProgressIndicator progressIndicator = StatusBar.GetForCurrentView().ProgressIndicator;
-        progressIndicator.put_ProgressValue(new double?(0.0));
-        progressIndicator.put_Text(item.Text);
-        await progressIndicator.ShowAsync();
+        //TODO
+        //StatusBarProgressIndicator progressIndicator = StatusBar.GetForCurrentView().ProgressIndicator;
+        //progressIndicator.put_ProgressValue(new double?(0.0));
+        //progressIndicator.put_Text(item.Text);
+        //await progressIndicator.ShowAsync();
       })).OnUIThread();
     }
 
@@ -120,7 +122,10 @@ namespace MiBandApp.Services
       lock (this._progressItemLock)
       {
         this._displayedItem = (StatusBarItem) null;
-        ((System.Action) (async () => await StatusBar.GetForCurrentView().ProgressIndicator.HideAsync())).OnUIThread();
+        ((System.Action) (async () =>
+        {
+            //await StatusBar.GetForCurrentView().ProgressIndicator.HideAsync();
+        })).OnUIThread();
       }
     }
 
@@ -136,10 +141,11 @@ namespace MiBandApp.Services
           currentProgressItem = this._currentProgressItem;
           this._displayedItem = (StatusBarItem) this._currentProgressItem;
         }
-        StatusBarProgressIndicator progressIndicator = StatusBar.GetForCurrentView().ProgressIndicator;
-        progressIndicator.put_ProgressValue(currentProgressItem.Progress);
-        progressIndicator.put_Text(currentProgressItem.Text);
-        await progressIndicator.ShowAsync();
+        //TODO
+        //StatusBarProgressIndicator progressIndicator = StatusBar.GetForCurrentView().ProgressIndicator;
+        //progressIndicator.put_ProgressValue(currentProgressItem.Progress);
+        //progressIndicator.put_Text(currentProgressItem.Text);
+        //await progressIndicator.ShowAsync();
       })).OnUIThreadAsync().ConfigureAwait(true);
     }
   }

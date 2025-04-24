@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.ViewModels.HistoryPageViewModel
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using Caliburn.Micro;
 using MiBand.SDK.Configuration;
@@ -135,20 +135,20 @@ namespace MiBandApp.ViewModels
 
     protected override async Task OnActivate()
     {
-      this._navigationService.BackPressed += new EventHandler<BackPressedEventArgs>(this.NavigationServiceOnBackPressed);
+      //this._navigationService.BackPressed += new EventHandler<EventArgs>(this.NavigationServiceOnBackPressed);
     }
 
     protected override async Task OnDeactivate(bool close = true)
     {
-      this._navigationService.BackPressed -= new EventHandler<BackPressedEventArgs>(this.NavigationServiceOnBackPressed);
+      //this._navigationService.BackPressed -= new EventHandler<EventArgs>(this.NavigationServiceOnBackPressed);
       if (!this._realGoBack)
         return;
-      this._view.put_NavigationCacheMode((NavigationCacheMode) 0);
+      this._view.NavigationCacheMode = NavigationCacheMode.Disabled;
     }
 
     private void NavigationServiceOnBackPressed(
       object sender,
-      BackPressedEventArgs backPressedEventArgs)
+      EventArgs backPressedEventArgs)
     {
       this._realGoBack = true;
     }
@@ -180,7 +180,12 @@ namespace MiBandApp.ViewModels
     private bool TryAddWeek(DateTime weekStartDate)
     {
       GoalInfo savedGoalInfo = this._settings.GetSavedGoalInfo();
-      Dictionary<DateTime, DaySummaryViewModel> dictionary = this._daySummaryDataBase.GetDays(weekStartDate, weekStartDate.AddDays(6.0)).Select<DaySummary, DaySummaryViewModel>((Func<DaySummary, DaySummaryViewModel>) (t => new DaySummaryViewModel(t))).ToDictionary<DaySummaryViewModel, DateTime>((Func<DaySummaryViewModel, DateTime>) (t => t.DaySummary.Date));
+      Dictionary<DateTime, DaySummaryViewModel> dictionary = 
+                this._daySummaryDataBase.GetDays(weekStartDate, weekStartDate.AddDays(6.0))
+                .Select<DaySummary, DaySummaryViewModel>((Func<DaySummary, DaySummaryViewModel>)
+                (t => new DaySummaryViewModel(t))).ToDictionary<DaySummaryViewModel, DateTime>(
+                    (Func<DaySummaryViewModel, DateTime>) (t => t.DaySummary.Date));
+
       List<DaySummaryViewModel> days = new List<DaySummaryViewModel>(7);
       DateTime dateTime = weekStartDate;
       int num = 0;
@@ -193,7 +198,8 @@ namespace MiBandApp.ViewModels
         ++num;
         dateTime = dateTime.AddDays(1.0);
       }
-      this._weeks.Add(new HistoryWeekViewModel(weekStartDate, days, savedGoalInfo.StepsGoal, savedGoalInfo.SleepGoalMinutes));
+      this._weeks.Add(new HistoryWeekViewModel(weekStartDate, days, savedGoalInfo.StepsGoal, 
+          savedGoalInfo.SleepGoalMinutes));
       return true;
     }
   }

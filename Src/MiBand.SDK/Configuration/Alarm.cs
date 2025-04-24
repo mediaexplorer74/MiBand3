@@ -1,4 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBand.SDK.Configuration.Alarm
 // Assembly: MiBand.SDK, Version=0.1.1.0, Culture=neutral, PublicKeyToken=null
 // MVID: 152FA565-3249-4054-A361-01D9C0AFA7F1

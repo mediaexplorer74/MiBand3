@@ -1,14 +1,15 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.Services.LicensingService
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using MetroLog;
 using MiBandApp.Tools;
-using Microsoft.HockeyApp;
+//using Microsoft.HockeyApp;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Store;
 using Windows.Storage;
@@ -33,7 +34,8 @@ namespace MiBandApp.Services
     {
       this._logger = logManager.GetLogger<LicensingService>();
       this._localSettings = ApplicationData.Current.LocalSettings;
-      this._licenseInformationLazy = new Lazy<LicenseInformation>((Func<LicenseInformation>) (() => CurrentApp.LicenseInformation));
+      this._licenseInformationLazy = new Lazy<LicenseInformation>( 
+          () => CurrentApp.LicenseInformation);
       Task.Run((Action) (() => this.UpdateLicensesStatus()));
     }
 
@@ -45,11 +47,15 @@ namespace MiBandApp.Services
       {
         try
         {
-          return (DateTime.Now - this.LifeTimeCheckTime).TotalDays < 50.0 && this.LifeTimeCheckTime < DateTime.Now && ((IDictionary<string, object>) this._localSettings.Values).GetValueOrDefault<bool>("ProLifetimeStatus") || this._licenseInformationLazy.Value.ProductLicenses["BindMiBandProForever"].IsActive;
+          return (DateTime.Now - this.LifeTimeCheckTime).TotalDays < 50.0 
+                && this.LifeTimeCheckTime < DateTime.Now 
+                && this._localSettings.Values.GetValueOrDefault<bool>("ProLifetimeStatus") 
+                || this._licenseInformationLazy.Value
+                                       .ProductLicenses["BindMiBandProForever"].IsActive;
         }
         catch
         {
-          return false;
+           return true;//false;
         }
       }
     }
@@ -64,7 +70,7 @@ namespace MiBandApp.Services
         }
         catch
         {
-          return false;
+          return true;//false;
         }
       }
     }
@@ -73,11 +79,11 @@ namespace MiBandApp.Services
     {
       get
       {
-        return new DateTime(((IDictionary<string, object>) this._localSettings.Values).GetValueOrDefault<long>("ProLifetimeRefreshTime"));
+        return new DateTime(this._localSettings.Values.GetValueOrDefault<long>("ProLifetimeRefreshTime"));
       }
       set
       {
-        ((IDictionary<string, object>) this._localSettings.Values)["ProLifetimeRefreshTime"] = (object) value.Ticks;
+        this._localSettings.Values["ProLifetimeRefreshTime"] = (object) value.Ticks;
       }
     }
 
@@ -85,11 +91,11 @@ namespace MiBandApp.Services
     {
       get
       {
-        return new DateTime(((IDictionary<string, object>) this._localSettings.Values).GetValueOrDefault<long>("Pro1YearRefreshTime"));
+        return new DateTime(this._localSettings.Values.GetValueOrDefault<long>("Pro1YearRefreshTime"));
       }
       set
       {
-        ((IDictionary<string, object>) this._localSettings.Values)["Pro1YearRefreshTime"] = (object) value.Ticks;
+        this._localSettings.Values["Pro1YearRefreshTime"] = (object) value.Ticks;
       }
     }
 
@@ -97,11 +103,11 @@ namespace MiBandApp.Services
     {
       get
       {
-        return ((IDictionary<string, object>) this._localSettings.Values).GetValueOrDefault<bool>("ProLifetimeStatus");
+        return this._localSettings.Values.GetValueOrDefault<bool>("ProLifetimeStatus");
       }
       set
       {
-        ((IDictionary<string, object>) this._localSettings.Values)["ProLifetimeStatus"] = (object) value;
+        this._localSettings.Values["ProLifetimeStatus"] = (object) value;
         this.LifeTimeCheckTime = DateTime.Now;
       }
     }
@@ -110,11 +116,11 @@ namespace MiBandApp.Services
     {
       get
       {
-        return ((IDictionary<string, object>) this._localSettings.Values).GetValueOrDefault<bool>("Pro1YearStatus");
+        return this._localSettings.Values.GetValueOrDefault<bool>("Pro1YearStatus");
       }
       set
       {
-        ((IDictionary<string, object>) this._localSettings.Values)["Pro1YearStatus"] = (object) value;
+        this._localSettings.Values["Pro1YearStatus"] = (object) value;
         this.OneYearCheckTime = DateTime.Now;
       }
     }
@@ -122,7 +128,7 @@ namespace MiBandApp.Services
     public async Task PurchaseLifetime()
     {
       ProductPurchaseStatus productPurchaseStatus = await this.PurchaseItem("BindMiBandProForever").ConfigureAwait(true);
-      if (productPurchaseStatus != null && productPurchaseStatus != 1)
+      if (productPurchaseStatus != null && productPurchaseStatus != ProductPurchaseStatus.AlreadyPurchased)
         return;
       this.LifeTimeSavedStatus = true;
     }
@@ -130,7 +136,7 @@ namespace MiBandApp.Services
     public async Task Purchase1Year()
     {
       ProductPurchaseStatus productPurchaseStatus = await this.PurchaseItem("BindMiBandPRO1Year").ConfigureAwait(true);
-      if (productPurchaseStatus != null && productPurchaseStatus != 1)
+      if (productPurchaseStatus != null && productPurchaseStatus != ProductPurchaseStatus.AlreadyPurchased)
         return;
       this.OneYearSavedStatus = true;
     }
@@ -139,10 +145,22 @@ namespace MiBandApp.Services
     {
       if (this._licenseInformationLazy.Value.ProductLicenses[itemId].IsActive)
         return (ProductPurchaseStatus) 1;
-      HockeyClient.Current.TrackEvent("RequestProductPurchaseAsync" + itemId);
-      PurchaseResults purchaseResults = await CurrentApp.RequestProductPurchaseAsync(itemId);
+
+            //HockeyClient.Current.TrackEvent("RequestProductPurchaseAsync" + itemId);
+            PurchaseResults purchaseResults = default;
+
+            try
+            {
+                purchaseResults = default;//await CurrentApp.RequestProductPurchaseAsync(itemId);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("[ex] RequestProductPurchaseAsync error: " + ex.Message);
+            }
+
       this.UpdateLicensesStatus();
-      HockeyClient.Current.TrackEvent("RequestProductPurchaseAsync" + itemId + (object) purchaseResults.Status);
+
+      //HockeyClient.Current.TrackEvent("RequestProductPurchaseAsync" + itemId + (object) purchaseResults.Status);
       return purchaseResults.Status;
     }
 
@@ -150,10 +168,10 @@ namespace MiBandApp.Services
     {
       try
       {
-        if (this._licenseInformationLazy.Value.ProductLicenses["BindMiBandPRO1Year"].IsActive)
-          this.OneYearSavedStatus = true;
-        if (!this._licenseInformationLazy.Value.ProductLicenses["BindMiBandProForever"].IsActive)
-          return;
+        //if (this._licenseInformationLazy.Value.ProductLicenses["BindMiBandPRO1Year"].IsActive)
+        //  this.OneYearSavedStatus = true;
+        //if (!this._licenseInformationLazy.Value.ProductLicenses["BindMiBandProForever"].IsActive)
+        //  return;
         this.LifeTimeSavedStatus = true;
       }
       catch (Exception ex)

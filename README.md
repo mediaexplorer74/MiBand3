@@ -12,6 +12,9 @@ RnD of MiBandApp, Unofficial UWP Client for Mi Band 2 ( [Windows Store link](htt
 ![WP8](Images/retro05.png)
 ![WP8](Images/retro06.png)
 
+## Screenshot
+![W11](Images/sshot01.png)
+
 ## Tech details
 - I found old (xap) version of MiBandApp and decompiled it via DotPeek.
 - I already fixed all modules (except "main project", and XAML of Ian.Controls is still bad...).

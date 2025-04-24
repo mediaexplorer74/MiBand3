@@ -6,109 +6,43 @@
              x:Class="MiBandApp.Views.DeviceSettings.WearingLocationView">
     <UserControl.Content>
         <StackPanel>
-            <Children>
-                <UIElementCollection>
-                    <TextBlock x:Uid="DevicePageWearLocationHeader" Margin="0,0,0,10">
-            <Style>
-              <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
-            </Style>
-            <Inlines>
-              <InlineCollection implicititems="Wear location" />
-            </Inlines>
-                    </TextBlock>
-                    <Grid>
-                        <ColumnDefinitions>
-                            <ColumnDefinitionCollection>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </ColumnDefinitionCollection>
-                        </ColumnDefinitions>
-                        <Resources>
-                            <ResourceDictionary>
-                                <Style TargetType="RadioButton">
-                                    <Setters>
-                                        <SetterBaseCollection>
-                                            <Setter Property="BorderThickness" Value="0" />
-                                            <Setter Property="IsTextScaleFactorEnabled" Value="False" />
-                                            <Setter Property="HorizontalAlignment" Value="Center" />
-                                            <Setter Property="Template">
-                                                <Value>
-                                                    <ControlTemplate TargetType="RadioButton">
-                                                        <Template>
-                                                            <Grid>
-                                                                <Children>
-                                                                    <UIElementCollection>
-                                                                        <ToggleButton Height="70" Margin="0,-10,0,-10" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0" IsHitTestVisible="True">
-                                                                            <Content>
-                                                                                <TemplateBinding Property="Content" />
-                                                                            </Content>
-                                                                            <IsChecked>
-                                                                                <Binding Path="IsChecked" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
-                                                                                    <RelativeSource>
-                                                                                        <RelativeSource Mode="TemplatedParent" />
-                                                                                    </RelativeSource>
-                                                                                </Binding>
-                                                                            </IsChecked>
-                                                                            <ContentTemplate>
-                                                                                <DataTemplate>
-                                                                                    <Template>
-                                                                                        <TextBlock TextWrapping="Wrap">
-                                              <Text>
-                                                <Binding />
-                                              </Text>
-                                                                                        </TextBlock>
-                                                                                    </Template>
-                                                                                </DataTemplate>
-                                                                            </ContentTemplate>
-                                                                        </ToggleButton>
-                                                                        <Border Background="Transparent" />
-                                                                    </UIElementCollection>
-                                                                </Children>
-                                                            </Grid>
-                                                        </Template>
-                                                    </ControlTemplate>
-                                                </Value>
-                                            </Setter>
-                                        </SetterBaseCollection>
-                                    </Setters>
-                                </Style>
-                            </ResourceDictionary>
-                        </Resources>
-                        <Children>
-                            <UIElementCollection>
-                                <RadioButton x:Uid="DevicePageLeftHand" Column="0" Content="left hand" GroupName="WearLocation">
-                                    <IsChecked>
-                                        <Binding Path="WearLocation" ConverterParameter="1" Mode="TwoWay">
-                                            <Converter>
-                                                <StaticResource ResourceKey="FlaggedEnumToBool" />
-                                            </Converter>
-                                        </Binding>
-                                    </IsChecked>
-                                </RadioButton>
-                                <RadioButton x:Uid="DevicePageNeck" Column="1" Content="neck" GroupName="WearLocation">
-                                    <IsChecked>
-                                        <Binding Path="WearLocation" ConverterParameter="4" Mode="TwoWay">
-                                            <Converter>
-                                                <StaticResource ResourceKey="FlaggedEnumToBool" />
-                                            </Converter>
-                                        </Binding>
-                                    </IsChecked>
-                                </RadioButton>
-                                <RadioButton x:Uid="DevicePageRightHand" Column="2" Content="right hand" GroupName="WearLocation">
-                                    <IsChecked>
-                                        <Binding Path="WearLocation" ConverterParameter="2" Mode="TwoWay">
-                                            <Converter>
-                                                <StaticResource ResourceKey="FlaggedEnumToBool" />
-                                            </Converter>
-                                        </Binding>
-                                    </IsChecked>
-                                </RadioButton>
-                            </UIElementCollection>
-                        </Children>
-                    </Grid>
-                </UIElementCollection>
-            </Children>
+            <TextBlock x:Uid="DevicePageWearLocationHeader" Margin="0,0,0,10"
+                       Style="{StaticResource ControlHeaderTextBlockStyle}">
+                Wear location
+            </TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="RadioButton">
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="IsTextScaleFactorEnabled" Value="False" />
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="RadioButton">
+                                    <Grid>
+                                        <ToggleButton Height="70" Margin="0,-10,0,-10" HorizontalAlignment="Stretch" BorderThickness="0"
+                                                      IsHitTestVisible="True" IsChecked="{TemplateBinding IsChecked}">
+                                            <ContentPresenter Content="{TemplateBinding Content}" />
+                                        </ToggleButton>
+                                        <Border Background="Transparent" />
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Grid.Resources>
+                <RadioButton x:Uid="DevicePageLeftHand" Grid.Column="0" Content="left hand" GroupName="WearLocation"
+                             IsChecked="{Binding Path=WearLocation, ConverterParameter=1, Mode=TwoWay, Converter={StaticResource FlaggedEnumToBool}}" />
+                <RadioButton x:Uid="DevicePageNeck" Grid.Column="1" Content="neck" GroupName="WearLocation"
+                             IsChecked="{Binding Path=WearLocation, ConverterParameter=4, Mode=TwoWay, Converter={StaticResource FlaggedEnumToBool}}" />
+                <RadioButton x:Uid="DevicePageRightHand" Grid.Column="2" Content="right hand" GroupName="WearLocation"
+                             IsChecked="{Binding Path=WearLocation, ConverterParameter=2, Mode=TwoWay, Converter={StaticResource FlaggedEnumToBool}}" />
+            </Grid>
         </StackPanel>
     </UserControl.Content>
 </UserControl>

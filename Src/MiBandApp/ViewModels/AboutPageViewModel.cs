@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.ViewModels.AboutPageViewModel
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using MetroLog;
 using MiBandApp.Services;
@@ -42,22 +42,35 @@ namespace MiBandApp.ViewModels
 
     public string Version => this._settings.AppVersion.ToString();
 
+ 
     public async void SendEmail()
     {
-      MessageDialog dialog = new MessageDialog(this._resourceLoader.GetString("AboutPage_DiagnosticPackageMessage_Body"), this._resourceLoader.GetString("AboutPage_DiagnosticPackageMessage_Header"));
-      // ISSUE: method pointer
-      dialog.Commands.Add((IUICommand) new UICommand(this._resourceLoader.GetString("AboutPage_DiagnosticPackageMessage_Yes"), new UICommandInvokedHandler((object) this, __methodptr(\u003CSendEmail\u003Eb__9_0))));
-      // ISSUE: method pointer
-      dialog.Commands.Add((IUICommand) new UICommand(this._resourceLoader.GetString("AboutPage_DiagnosticPackageMessage_No"), new UICommandInvokedHandler((object) this, __methodptr(\u003CSendEmail\u003Eb__9_1))));
-      dialog.put_DefaultCommandIndex(1U);
-      IUICommand iuiCommand = await dialog.ShowAsyncSafe();
+        MessageDialog dialog = new MessageDialog(
+            this._resourceLoader.GetString("AboutPage_DiagnosticPackageMessage_Body"),
+            this._resourceLoader.GetString("AboutPage_DiagnosticPackageMessage_Header")
+        );
+
+        dialog.Commands.Add(new UICommand(
+            this._resourceLoader.GetString("AboutPage_DiagnosticPackageMessage_Yes"),
+            command => HandleYesCommand()
+        ));
+
+        dialog.Commands.Add(new UICommand(
+            this._resourceLoader.GetString("AboutPage_DiagnosticPackageMessage_No"),
+            command => HandleNoCommand()
+        ));
+
+        dialog.DefaultCommandIndex = 1;
+        await dialog.ShowAsync();
     }
+
 
     public List<UpdateHistoryItem> Updates
     {
       get
       {
-        return this._updatesHistoryService.AllUpdates.OrderByDescending<UpdateHistoryItem, int>((Func<UpdateHistoryItem, int>) (t => t.Id)).ToList<UpdateHistoryItem>();
+        return this._updatesHistoryService.AllUpdates.OrderByDescending<UpdateHistoryItem, int>(
+            (Func<UpdateHistoryItem, int>) (t => t.Id)).ToList<UpdateHistoryItem>();
       }
     }
 
@@ -68,5 +81,17 @@ namespace MiBandApp.ViewModels
         return;
       this._emailComposer.ComposeEmail(diagnosticFile, "BMB Diagnostics");
     }
+        private void HandleYesCommand()
+        {
+            // TODO : Implement the logic for the "Yes" command here.
+            // For example, you might want to call SendExtraDiagnostics or perform another action.
+            SendExtraDiagnostics();
+        }
+
+        private void HandleNoCommand()
+        {
+            // TODO : Implement the logic for the "No" command here.
+            // This could be a no-op or some other action.
+        }
   }
 }

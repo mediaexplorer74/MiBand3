@@ -28,11 +28,11 @@ namespace MiBandApp.Views
         }
     }
 }*/
-// Decompiled with JetBrains decompiler
+
 // Type: MiBandApp.Views.HistoryPage
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using MiBandApp.ViewModels.History;
 using System;
@@ -75,12 +75,13 @@ namespace MiBandApp.Views
         public HistoryPage()
         {
             this.InitializeComponent();
-            this.put_NavigationCacheMode((NavigationCacheMode)1);
-            ((NumericAxis)this.SleepChart.Axes[0]).Minimum = new double?(0.0);
-            ((NumericAxis)this.WalkChart.Axes[0]).Minimum = new double?(0.0);
+            this.NavigationCacheMode = NavigationCacheMode.Required;
+            //TODO
+            //this.SleepChart.Axes[0].Minimum = new double?(0.0);
+            //this.WalkChart.Axes[0].Minimum = new double?(0.0);
         }
 
-        protected virtual void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
         }
 
@@ -95,15 +96,16 @@ namespace MiBandApp.Views
             this._isSleep = isSleep;
             if (this._isSleep)
             {
-                ((FrameworkElement)this.WalkChart).put_Width(0.0);
-                ((FrameworkElement)this.SleepChart).put_Width(double.NaN);
-                ((ItemsControl)this.DaysListView).put_ItemTemplate((DataTemplate)((IDictionary<object, object>)((FrameworkElement)this.DownFlipViewItem).Resources)[(object)"SleepItemDataTemplate"]);
+                //this.WalkChart.Width = 0.0;
+                //this.SleepChart.Width = double.NaN;
+                //this.DaysListView.ItemTemplate = 
+                //    this.DownFlipViewItem.Resources[(object)"SleepItemDataTemplate"];
             }
             else
             {
-                ((FrameworkElement)this.SleepChart).put_Width(0.0);
-                ((FrameworkElement)this.WalkChart).put_Width(double.NaN);
-                ((ItemsControl)this.DaysListView).put_ItemTemplate((DataTemplate)((IDictionary<object, object>)((FrameworkElement)this.DownFlipViewItem).Resources)[(object)"WalkItemDataTemplate"]);
+                //this.SleepChart.Width = (0.0);
+                //this.WalkChart.Width = (double.NaN);
+                //this.DaysListView.ItemTemplate = this.DownFlipViewItem.Resources["WalkItemDataTemplate"];
             }
             this.UpdateCharts();
         }
@@ -113,17 +115,17 @@ namespace MiBandApp.Views
             if (this._week == null)
                 return;
             List<DaySummaryViewModel> days = this._week.Days;
-            SeriesDefinition seriesDefinition1 = ((DefinitionSeries)this.SleepChart.Series[0]).SeriesDefinitions[0];
-            SeriesDefinition seriesDefinition2 = ((DefinitionSeries)this.SleepChart.Series[0]).SeriesDefinitions[1];
-            ColumnSeries columnSeries = (ColumnSeries)this.WalkChart.Series[0];
-            if (this._isSleep && seriesDefinition1.ItemsSource != days)
-            {
-                seriesDefinition1.ItemsSource = (IEnumerable)days;
-                seriesDefinition2.ItemsSource = (IEnumerable)days;
-            }
-            if (this._isSleep || columnSeries.ItemsSource == days)
-                return;
-            columnSeries.ItemsSource = (IEnumerable)this._week.Days;
+            //SeriesDefinition seriesDefinition1 = this.SleepChart.Series[0].SeriesDefinitions[0];
+            //SeriesDefinition seriesDefinition2 = this.SleepChart.Series[0].SeriesDefinitions[1];
+            //ColumnSeries columnSeries = this.WalkChart.Series[0];
+            //if (this._isSleep && seriesDefinition1.ItemsSource != days)
+            //{
+            //    seriesDefinition1.ItemsSource = (IEnumerable)days;
+            //    seriesDefinition2.ItemsSource = (IEnumerable)days;
+            //}
+            //if (this._isSleep || columnSeries.ItemsSource == days)
+            //    return;
+            //columnSeries.ItemsSource = (IEnumerable)this._week.Days;
         }
 
     

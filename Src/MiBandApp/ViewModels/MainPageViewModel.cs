@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.ViewModels.MainPageViewModel
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using Caliburn.Micro;
 using MiBand.SDK.Configuration;
@@ -20,6 +20,7 @@ using MiBandApp.ViewModels.Tabs;
 using MiBandApp.Views;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
@@ -78,7 +79,9 @@ namespace MiBandApp.ViewModels
       this._bandSyncController = bandSyncController;
       this._bandSyncReminderService = bandSyncReminderService;
       this._stringsLoader = new ResourceLoader();
-      StatusBar.GetForCurrentView().put_BackgroundOpacity(1.0);
+
+      //StatusBar.GetForCurrentView().BackgroundOpacity = 1.0;
+
       this._bandController.StatusChanged += new EventHandler(this.BandControllerOnStatusChanged);
       this._bandController.BindingState.Updated += new EventHandler<MonitorableUpdatedEventArgs<BindingState>>(this.BindingStateOnUpdated);
       this._bandController.CommunicationOperation.Updated += new EventHandler<MonitorableUpdatedEventArgs<CommunicationOperation>>(this.CommunicationOperationOnUpdated);
@@ -96,7 +99,9 @@ namespace MiBandApp.ViewModels
       });
       this._bandSyncController.LatestHeartRate.Updated += (EventHandler<MonitorableUpdatedEventArgs<HeartRateMeasurement>>) ((sender, args) => ((System.Action) (() => this.ActivitiesListViewModel.Refresh())).OnUIThread());
       this.ActivitiesListViewModel = new ActivitiesListViewModel(new Func<List<IDbUserActivity>>(this.GetActivityItems), 5, true, true);
-      this._navigationService.BackPressed += new EventHandler<BackPressedEventArgs>(this.NavigationServiceOnBackPressed);
+      
+      //TODO
+      //this._navigationService.BackPressed += new EventHandler<EventArgs>(this.NavigationServiceOnBackPressed);
     }
 
     public WalkTabViewModel WalkTabViewModel { get; }
@@ -181,135 +186,188 @@ namespace MiBandApp.ViewModels
       }
     }
 
-    public async void OpenHistory()
-    {
-      if (!this._licensingService.IsPro)
-      {
-        MessageDialog dialog = new MessageDialog(this._stringsLoader.GetString("MainPageHistoryOnlyInProMessage"), this._stringsLoader.GetString("MessageInformationHeader"));
-        // ISSUE: reference to a compiler-generated field
-        // ISSUE: reference to a compiler-generated field
-        // ISSUE: reference to a compiler-generated field
-        // ISSUE: method pointer
-        dialog.Commands.Add((IUICommand) new UICommand(this._stringsLoader.GetString("MessageAnswerOk"), MainPageViewModel.\u003C\u003Ec.\u003C\u003E9__51_0 ?? (MainPageViewModel.\u003C\u003Ec.\u003C\u003E9__51_0 = new UICommandInvokedHandler((object) MainPageViewModel.\u003C\u003Ec.\u003C\u003E9, __methodptr(\u003COpenHistory\u003Eb__51_0)))));
-        // ISSUE: method pointer
-        dialog.Commands.Add((IUICommand) new UICommand(this._stringsLoader.GetString("MainPageBuyProAnswer"), new UICommandInvokedHandler((object) this, __methodptr(\u003COpenHistory\u003Eb__51_1))));
-        dialog.put_CancelCommandIndex(0U);
-        IUICommand iuiCommand = await dialog.ShowAsyncSafe();
-      }
-      else
-      {
-        StatusBarNotificationService notificationService = IoC.Get<StatusBarNotificationService>();
-        StatusBarProgressItem pageLoadingMessage = new StatusBarProgressItem(this._stringsLoader.GetString("HistoryPageLoadingDataStatus"), new double?());
-        StatusBarProgressItem statusBarItem = pageLoadingMessage;
-        notificationService.Show<StatusBarProgressItem>(statusBarItem);
-        Task.Delay(4500).ContinueWith((Action<Task>) (t => pageLoadingMessage.Hide())).ConfigureAwait(false);
-        await Task.Delay(100).ConfigureAwait(true);
-        this._navigationService.UriFor<HistoryPageViewModel>().Navigate();
-      }
-    }
+        // Replace all occurrences of UriFor<TViewModel>() with For<TViewModel>() as per the updated API.
 
-    public void GoToSubscriptionPage()
-    {
-      this._navigationService.UriFor<SettingsPageViewModel>().WithParam<bool>((Expression<Func<SettingsPageViewModel, bool>>) (t => t.ShowSubscription), true).Navigate();
-    }
+        public async void OpenHistory()
+        {
+            if (!this._licensingService.IsPro)
+            {
+                MessageDialog dialog = new MessageDialog(
+                    this._stringsLoader.GetString("MainPageHistoryOnlyInProMessage"),
+                    this._stringsLoader.GetString("MessageInformationHeader")
+                );
 
-    public void ManageDevice() => this._navigationService.UriFor<DevicePageViewModel>().Navigate();
+                dialog.Commands.Add(new UICommand(
+                    this._stringsLoader.GetString("MessageAnswerOk"),
+                    command => HandleOkCommand()
+                ));
 
-    public void OpenUserInfo()
-    {
-      this._navigationService.UriFor<UserInfoPageViewModel>().Navigate();
-    }
+                dialog.Commands.Add(new UICommand(
+                    this._stringsLoader.GetString("MainPageBuyProAnswer"),
+                    command => HandleBuyProCommand()
+                ));
 
-    public void OpenAlarms() => this._navigationService.UriFor<AlarmsPageViewModel>().Navigate();
+                dialog.CancelCommandIndex = 0;
+                await dialog.ShowAsync();
+            }
+            else
+            {
+                StatusBarNotificationService notificationService = IoC.Get<StatusBarNotificationService>();
+                StatusBarProgressItem pageLoadingMessage = new StatusBarProgressItem(
+                    this._stringsLoader.GetString("HistoryPageLoadingDataStatus"),
+                    new double?()
+                );
 
-    public void OpenAboutPage() => this._navigationService.UriFor<AboutPageViewModel>().Navigate();
+                notificationService.Show<StatusBarProgressItem>(pageLoadingMessage);
+                await Task.Delay(4500).ContinueWith(t => pageLoadingMessage.Hide()).ConfigureAwait(false);
+                await Task.Delay(100).ConfigureAwait(true);
+                this._navigationService.For<HistoryPageViewModel>().Navigate(); // Updated from UriFor to For
+            }
+        }
 
-    public void OpenSettingsPage()
-    {
-      this._navigationService.UriFor<SettingsPageViewModel>().Navigate();
-    }
+        public void GoToSubscriptionPage()
+        {
+            this._navigationService.For<SettingsPageViewModel>().WithParam<bool>((Expression<Func<SettingsPageViewModel, bool>>)(t => t.ShowSubscription), true).Navigate();
+        }
+
+        public void ManageDevice() => this._navigationService.For<DevicePageViewModel>().Navigate();
+
+        public void OpenUserInfo()
+        {
+            this._navigationService.For<UserInfoPageViewModel>().Navigate();
+        }
+
+        public void OpenAlarms() => this._navigationService.For<AlarmsPageViewModel>().Navigate();
+
+        public void OpenAboutPage() => this._navigationService.For<AboutPageViewModel>().Navigate();
+
+        public void OpenSettingsPage()
+        {
+            this._navigationService.For<SettingsPageViewModel>().Navigate();
+        }
 
     public async void ShowSyncHelp()
     {
-      IUICommand iuiCommand = await new MessageDialog(this._stringsLoader.GetString("MainPageSynchronizationErrorTip"), this._stringsLoader.GetString("MessageOopsHeader")).ShowAsync();
+      IUICommand iuiCommand = await new MessageDialog(
+          this._stringsLoader.GetString("MainPageSynchronizationErrorTip"),
+          this._stringsLoader.GetString("MessageOopsHeader")).ShowAsync();
     }
 
     protected override async Task OnActivate()
     {
-      if (await this.TryShowWhatsNew().ConfigureAwait(true))
-        return;
+      //if (await this.TryShowWhatsNew().ConfigureAwait(true))
+      //  return;
       if (await this.NeedToUpdateUserInfo().ConfigureAwait(true))
         return;
-      this.NotifyOfPropertyChange<bool>((Expression<Func<bool>>) (() => this.IsPro));
+      this.NotifyOfPropertyChange<bool>(() => this.IsPro);
       this.RefreshAll();
       this.Refresh();
     }
 
-    private async Task<bool> TryShowWhatsNew()
-    {
-      if (!this._updatesHistoryService.HasNotShowedUpdates)
-        return false;
-      Task task = await Task.Delay(100).ContinueWith<Task>((Func<Task, Task>) (t => ((System.Action) (() => this._navigationService.UriFor<WhatsNewPageViewModel>().Navigate())).OnUIThreadAsync())).ConfigureAwait(false);
-      return true;
-    }
+        // Replace all occurrences of UriFor<TViewModel>() with For<TViewModel>()
+        // as per the updated API.
 
-    private async Task<bool> NeedToUpdateUserInfo()
-    {
-      this._settings.CreateDefaultUserInfo();
-      if (!this._settings.UserInfoNeedsUpdate)
-        return false;
-      this._settings.UserInfoNeedsUpdate = false;
-      ConfiguredTaskAwaitable configuredTaskAwaitable = await Task.Delay(1500).ContinueWith<ConfiguredTaskAwaitable>((Func<Task, ConfiguredTaskAwaitable>) (task => ((System.Action) (() => this._navigationService.UriFor<UserInfoPageViewModel>().WithParam<bool>((Expression<Func<UserInfoPageViewModel, bool>>) (t => t.IsInitiallyActivated), true).Navigate())).OnUIThreadAsync().ConfigureAwait(false))).ConfigureAwait(false);
-      return true;
-    }
+        private async Task<bool> TryShowWhatsNew()
+        {
+            if (!this._updatesHistoryService.HasNotShowedUpdates)
+                return false;
+
+            Task task = default;
+
+            try
+            {
+                /*task = await Task.Delay(100).ContinueWith<Task>(
+                (t => ((System.Action)(()
+                =>
+                this._navigationService.For<WhatsNewPageViewModel>().Navigate()))
+                .OnUIThreadAsync())).ConfigureAwait(false);*/
+
+                // Plan B
+                this._navigationService.For<WhatsNewPageViewModel>().Navigate();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("[ex] MainPageViewModel bug: " + ex.Message);
+            }
+
+            return true;
+        }
+
+        private async Task<bool> NeedToUpdateUserInfo()
+        {
+            this._settings.CreateDefaultUserInfo();
+            if (!this._settings.UserInfoNeedsUpdate)
+                return false;
+            this._settings.UserInfoNeedsUpdate = false;
+            ConfiguredTaskAwaitable configuredTaskAwaitable = default;
+
+            try
+            {
+                configuredTaskAwaitable = await Task.Delay(1500).ContinueWith<ConfiguredTaskAwaitable>(
+                    (task => ((System.Action)(() =>
+                        this._navigationService.For<UserInfoPageViewModel>().WithParam<bool>(
+                        (t => t.IsInitiallyActivated), true).Navigate())).OnUIThreadAsync()
+                        .ConfigureAwait(false))).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("[ex] MainPageViewModel - ConfiguredTask... bug: " + ex.Message);
+                return default;
+            }
+
+            return true;
+        }
 
     private void BandControllerOnStatusChanged(object sender, EventArgs eventArgs)
     {
-      this.NotifyOfPropertyChange<bool>((Expression<Func<bool>>) (() => this.DevicePageHasWarning));
+      this.NotifyOfPropertyChange<bool>(() => this.DevicePageHasWarning);
     }
 
     private void BindingStateOnUpdated(
       object sender,
       MonitorableUpdatedEventArgs<BindingState> updatedEventArgs)
     {
-      this.NotifyOfPropertyChange<string>((Expression<Func<string>>) (() => this.BatteryPercentString));
-      this.NotifyOfPropertyChange<bool>((Expression<Func<bool>>) (() => this.IsBinded));
+      this.NotifyOfPropertyChange<string>(() => this.BatteryPercentString);
+      this.NotifyOfPropertyChange<bool>(() => this.IsBinded);
     }
 
-    private void BandControllerOnSyncStateChanged(object sender, EventArgs eventArgs)
-    {
-      this.NotifyOfPropertyChange<BandSyncState>((Expression<Func<BandSyncState>>) (() => this.SyncState));
-      if (this._bandSyncController.SyncState.Value == BandSyncState.Binding)
-      {
-        ((System.Action) (() => this._navigationService.UriFor<PairingPageViewModel>().WithParam<bool>((Expression<Func<PairingPageViewModel, bool>>) (t => t.AlreadyStarted), true).Navigate())).OnUIThread();
-      }
-      else
-      {
-        if (this._bandSyncController.SyncState.Value != BandSyncState.Success)
-          return;
-        ((System.Action) (() => this.ActivitiesListViewModel.Refresh())).OnUIThread();
-      }
-    }
+        private void BandControllerOnSyncStateChanged(object sender, EventArgs eventArgs)
+        {
+            this.NotifyOfPropertyChange<BandSyncState>(() => this.SyncState);
+            if (this._bandSyncController.SyncState.Value == BandSyncState.Binding)
+            {
+                ((System.Action)(() => 
+                this._navigationService.For<PairingPageViewModel>().WithParam<bool>
+                ((t => t.AlreadyStarted), true).Navigate())).OnUIThread(); // Updated from UriFor to For
+            }
+            else
+            {
+                if (this._bandSyncController.SyncState.Value != BandSyncState.Success)
+                    return;
+                ((System.Action)(() => this.ActivitiesListViewModel.Refresh())).OnUIThread();
+            }
+        }
 
     private void CommunicationOperationOnUpdated(
       object sender,
       MonitorableUpdatedEventArgs<CommunicationOperation> updatedEventArgs)
     {
-      this.NotifyOfPropertyChangeAsync<bool>((Expression<Func<bool>>) (() => this.IsRefreshing));
-      this.NotifyOfPropertyChangeAsync<bool>((Expression<Func<bool>>) (() => this.IsCommunicating));
-      this.NotifyOfPropertyChangeAsync<bool>((Expression<Func<bool>>) (() => this.ShowConnectivityControlDots));
-      this.NotifyOfPropertyChangeAsync<BandAnimation>((Expression<Func<BandAnimation>>) (() => this.BandAnimationType));
+      this.NotifyOfPropertyChangeAsync<bool>((() => this.IsRefreshing));
+      this.NotifyOfPropertyChangeAsync<bool>( (() => this.IsCommunicating));
+      this.NotifyOfPropertyChangeAsync<bool>((() => this.ShowConnectivityControlDots));
+      this.NotifyOfPropertyChangeAsync<BandAnimation>((() => this.BandAnimationType));
     }
 
     private List<IDbUserActivity> GetActivityItems()
     {
       List<IDbUserActivity> list = this._activitiesDataBase.GetActivitiesInDay(DateTime.Now.Date).ToList<IDbUserActivity>();
-      return this._licensingService.IsPro ? list : list.Where<IDbUserActivity>((Func<IDbUserActivity, bool>) (t => !(t is SleepingActivity))).ToList<IDbUserActivity>();
+      return this._licensingService.IsPro ? list : list.Where<IDbUserActivity>(
+          (t => !(t is SleepingActivity))).ToList<IDbUserActivity>();
     }
 
     private void NavigationServiceOnBackPressed(
       object sender,
-      BackPressedEventArgs backPressedEventArgs)
+      EventArgs backPressedEventArgs)
     {
       if (this._navigationService.CanGoBack)
         return;
@@ -322,6 +380,18 @@ namespace MiBandApp.ViewModels
     }
 
     public object GetView(object context = null) => throw new NotImplementedException();
+
+        // TODO: Ensure all identifiers are properly named and declared.
+
+        private void HandleOkCommand()
+        {
+            // Logic for handling OK command
+        }
+
+        private void HandleBuyProCommand()
+        {
+            // Logic for handling Buy Pro command
+        }
 
     public event EventHandler<ViewAttachedEventArgs> ViewAttached;
   }

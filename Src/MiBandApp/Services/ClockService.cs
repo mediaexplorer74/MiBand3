@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.Services.ClockService
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using System;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -41,26 +41,26 @@ namespace MiBandApp.Services
       }
     }
 
-    private void EnableMinuteTicks()
-    {
-      if (this._minuteTimer != null)
-        return;
-      this.InitTimer();
-      Application current1 = Application.Current;
-      WindowsRuntimeMarshal.AddEventHandler<SuspendingEventHandler>(new Func<SuspendingEventHandler, EventRegistrationToken>(current1.add_Suspending), new Action<EventRegistrationToken>(current1.remove_Suspending), new SuspendingEventHandler(this.AppOnSuspending));
-      Application current2 = Application.Current;
-      WindowsRuntimeMarshal.AddEventHandler<EventHandler<object>>(new Func<EventHandler<object>, EventRegistrationToken>(current2.add_Resuming), new Action<EventRegistrationToken>(current2.remove_Resuming), new EventHandler<object>(this.AppOnResuming));
-    }
+        private void EnableMinuteTicks()
+        {
+            if (this._minuteTimer != null)
+                return;
+            this.InitTimer();
+            Application current1 = Application.Current;
+            current1.Suspending += this.AppOnSuspending; // Use event subscription syntax
+            Application current2 = Application.Current;
+            current2.Resuming += this.AppOnResuming; // Use event subscription syntax
+        }
 
-    private void DisableMinuteTicks()
-    {
-      if (this._minuteTimer == null)
-        return;
-      this._minuteTimer.Dispose();
-      this._minuteTimer = (Timer) null;
-      WindowsRuntimeMarshal.RemoveEventHandler<SuspendingEventHandler>(new Action<EventRegistrationToken>(Application.Current.remove_Suspending), new SuspendingEventHandler(this.AppOnSuspending));
-      WindowsRuntimeMarshal.RemoveEventHandler<EventHandler<object>>(new Action<EventRegistrationToken>(Application.Current.remove_Resuming), new EventHandler<object>(this.AppOnResuming));
-    }
+        private void DisableMinuteTicks()
+        {
+            if (this._minuteTimer == null)
+                return;
+            this._minuteTimer.Dispose();
+            this._minuteTimer = (Timer)null;
+            Application.Current.Suspending -= this.AppOnSuspending; // Use event unsubscription syntax
+            Application.Current.Resuming -= this.AppOnResuming; // Use event unsubscription syntax
+        }
 
     private void InitTimer()
     {

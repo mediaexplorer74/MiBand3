@@ -4,121 +4,35 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              x:Class="MiBandApp.Views.DeviceSettings.BatteryView">
-    <UserControl.Content>
-        <StackPanel>
-            <Children>
-                <UIElementCollection>
-                    <Grid>
-                        <Children>
-                            <UIElementCollection>
-                                <StackPanel>
-                                    <Children>
-                                        <UIElementCollection>
-                                            <TextBlock x:Uid="DevicePageBatteryChargeHeader">
-                        <Style>
-                          <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
-                        </Style>
-                        <Inlines>
-                          <InlineCollection implicititems="Battery charge" />
-                        </Inlines>
-                                            </TextBlock>
-                                            <TextBlock FontSize="40">
-                        <Inlines>
-                          <InlineCollection>
-                            <Run>
-                              <Text>
-                                <Binding Path="BatteryInfo.ChargedPercent" ConverterParameter="{0}%">
-                                  <Converter>
-                                    <StaticResource ResourceKey="StringFormatConverter" />
-                                  </Converter>
-                                </Binding>
-                              </Text>
-                            </Run>
-                          </InlineCollection>
-                        </Inlines>
-                                            </TextBlock>
-                                        </UIElementCollection>
-                                    </Children>
-                                </StackPanel>
-                                <Grid>
-                                    <Children>
-                                        <UIElementCollection>
-                                            <StackPanel>
-                                                <Visibility>
-                                                    <Binding Path="BatteryInfo.IsCharging" ConverterParameter="False">
-                                                        <Converter>
-                                                            <StaticResource ResourceKey="BoolToVis" />
-                                                        </Converter>
-                                                    </Binding>
-                                                </Visibility>
-                                                <Children>
-                                                    <UIElementCollection>
-                                                        <TextBlock x:Uid="DevicePageLastChargedHeader" HorizontalAlignment="Right" IsTextScaleFactorEnabled="True">
-                              <Style>
-                                <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
-                              </Style>
-                              <Inlines>
-                                <InlineCollection implicititems="Last charged" />
-                              </Inlines>
-                                                        </TextBlock>
-                                                        <TextBlock HorizontalAlignment="Right" IsTextScaleFactorEnabled="True">
-                              <Style>
-                                <StaticResource ResourceKey="BaseTextBlockStyle" />
-                              </Style>
-                              <Text>
-                                <Binding Path="BatteryInfo.LastCharged" ConverterParameter="{0:M}">
-                                  <Converter>
-                                    <StaticResource ResourceKey="StringFormatConverter" />
-                                  </Converter>
-                                </Binding>
-                              </Text>
-                                                        </TextBlock>
-                                                    </UIElementCollection>
-                                                </Children>
-                                            </StackPanel>
-                                            <TextBlock x:Uid="DevicePage_ChargingNow" Margin="0,0,0,5" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsTextScaleFactorEnabled="True">
-                        <Style>
-                          <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
-                        </Style>
-                        <Visibility>
-                          <Binding Path="BatteryInfo.IsCharging">
-                            <Converter>
-                              <StaticResource ResourceKey="BoolToVis" />
-                            </Converter>
-                          </Binding>
-                        </Visibility>
-                        <Inlines>
-                          <InlineCollection implicititems="charging now" />
-                        </Inlines>
-                                            </TextBlock>
-                                        </UIElementCollection>
-                                    </Children>
-                                </Grid>
-                            </UIElementCollection>
-                        </Children>
-                    </Grid>
-                    <ProgressBar Maximum="100" Minimum="0">
-                        <Value>
-                            <Binding Path="BatteryInfo.ChargedPercent" />
-                        </Value>
-                    </ProgressBar>
-                </UIElementCollection>
-            </Children>
-        </StackPanel>
-    </UserControl.Content>
+    <StackPanel>
+        <Grid>
+            <TextBlock x:Uid="DevicePageBatteryChargeHeader" Style="{StaticResource ControlHeaderTextBlockStyle}">
+                <TextBlock.Inlines>
+                    <Run Text="Battery charge" />
+                </TextBlock.Inlines>
+            </TextBlock>
+            <TextBlock FontSize="40">
+                <TextBlock.Text>
+                    <Binding Path="BatteryInfo.ChargedPercent"/>
+                </TextBlock.Text>
+            </TextBlock>
+        </Grid>
+        <Grid>
+            <StackPanel Visibility="{Binding BatteryInfo.IsCharging, Converter={StaticResource BoolToVis}, ConverterParameter=False}">
+                <TextBlock x:Uid="DevicePageLastChargedHeader" HorizontalAlignment="Right" Style="{StaticResource ControlHeaderTextBlockStyle}">
+                    <TextBlock.Inlines>
+                        <Run Text="Last charged" />
+                    </TextBlock.Inlines>
+                </TextBlock>
+                <TextBlock HorizontalAlignment="Right" Style="{StaticResource BaseTextBlockStyle}" Text="{Binding BatteryInfo.LastCharged}" />
+            </StackPanel>
+            <TextBlock x:Uid="DevicePage_ChargingNow" Margin="0,0,0,5" HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                       Style="{StaticResource ControlHeaderTextBlockStyle}" Visibility="{Binding BatteryInfo.IsCharging, Converter={StaticResource BoolToVis}}">
+                <TextBlock.Inlines>
+                    <Run Text="charging now" />
+                </TextBlock.Inlines>
+            </TextBlock>
+        </Grid>
+        <ProgressBar Maximum="100" Minimum="0" Value="{Binding BatteryInfo.ChargedPercent}" />
+    </StackPanel>
 </UserControl>
-<!--UserControl
-    x:Class="MiBandApp.Views.DeviceSettings.BatteryView"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:MiBandApp.Views.DeviceSettings"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
-
-    <Grid>
-
-    </Grid>
-</UserControl-->

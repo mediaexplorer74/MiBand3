@@ -1,0 +1,191 @@
+﻿<UserControl 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="using:MiBandApp.Views.MainPageComponents" 
+    xmlns:mainPageComponents="using:MiBandApp.ViewModels.MainPageComponents" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    x:Class="MiBandApp.Views.MainPageComponents.MessagesView"
+>
+    
+<Grid>
+    <StackPanel>
+        <StackPanel VerticalAlignment="Center">
+            <StackPanel.Visibility>
+                        <Binding Path="ShowUnreachableError">
+                            <!--Converter>
+                                <StaticResource ResourceKey="BoolToVis" />
+                            </Converter-->
+                        </Binding>
+             </StackPanel.Visibility>
+
+
+                <StackPanel>
+
+                    <TextBlock VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap">
+                        <TextBlock.Style>
+                            <StaticResource ResourceKey="GrayBigTextBlockStyle" />
+                        </TextBlock.Style>
+                        <TextBlock.Inlines>
+
+                            <Run x:Uid="MainPageErrorWPCantContactMiBand" Text="Windows Phone is not able to contact your Mi Band." />
+                            <LineBreak />
+                            <Run x:Uid="MainPageErrorWPCantContactMiBandHint" 
+                                 Text="Check if it is near and charged, turn off/on Bluetooth or try to pair Mi Band again."
+                                 FontSize="8"/>
+
+                            <LineBreak />
+
+                        </TextBlock.Inlines>
+                    </TextBlock>
+
+                    <HyperlinkButton x:Uid="MainPageGoToBluetoothSettings" 
+                    HorizontalAlignment="Center" Content="Go to Bluetooth settings"
+                    FontSize="8">                        
+                        <!--Foreground>
+                            <StaticResource ResourceKey="PhoneMidBrush" />
+                        </Foreground-->
+                        <!--NavigateUri>
+                            <Binding Path="GoToBluetoothSettingsLink" />
+                        </NavigateUri-->
+                    </HyperlinkButton>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Center">
+                <StackPanel.Visibility>
+                        <Binding Path="ShowUnpairedToPhone">
+                            <!--Converter>
+                                <StaticResource ResourceKey="BoolToVis" />
+                            </Converter-->
+                        </Binding>
+                    </StackPanel.Visibility>
+                    <!--Grid>
+                            <TextBlock VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap">
+                <Style>
+                <StaticResource ResourceKey="GrayBigTextBlockStyle" />
+                </Style>
+                <Inlines>
+                <InlineCollection>
+                    <Run x:Uid="MainPageMessageTurnOnBt" Text="Turn on Bluetooth and pair your Windows Phone to Mi Band" />
+                </InlineCollection>
+                </Inlines>
+                            </TextBlock>
+                            <HyperlinkButton x:Uid="MainPageGoToBluetoothSettings" 
+                                Margin="0,5,0,5" 
+                                HorizontalAlignment="Center" 
+                                FontSize="8"
+                                Content="Go to Bluetooth settings">                               
+                                <Foreground>
+                                    <StaticResource ResourceKey="PhoneMidBrush" />
+                                </Foreground>
+                                <NavigateUri>
+                                    <Binding Path="GoToBluetoothSettingsLink" />
+                                </NavigateUri>
+                            </HyperlinkButton>
+                            <TextBlock VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap">
+                <Style>
+                <StaticResource ResourceKey="GrayBigTextBlockStyle" />
+                </Style>
+                <Inlines>
+                <InlineCollection>
+                    <Run x:Uid="MainPageMessageTurnOnBtHint" 
+                    Text="If you experience difficulties, try first to update firmware of Mi Band with official Android (iOS) app"
+                    FontSize="8">                   
+                    </Run>
+                </InlineCollection>
+                </Inlines>
+                            </TextBlock>
+                 </Grid-->
+                </StackPanel>
+                <StackPanel VerticalAlignment="Center">
+                <StackPanel.Visibility>
+                        <Binding Path="ShowUnbindedScreen">
+                            <!--Converter>
+                                <StaticResource ResourceKey="BoolToVis" />
+                            </Converter-->
+                        </Binding>
+                    </StackPanel.Visibility>
+                    <!--Children>
+                        <UIElementCollection>
+                            <TextBlock VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap">
+                <Style>
+                <StaticResource ResourceKey="GrayBigTextBlockStyle" />
+                </Style>
+                <Inlines>
+                <InlineCollection>
+                    <Run x:Uid="MainPageMessageMiBandIsPaired" 
+                    Text="Mi Band is paired to Windows Phone and ready to go!" />
+                    <LineBreak />
+                    <Run x:Uid="MainPageMessagePressBindButton" 
+                    Text="Press the button to pair it with application"
+                    FontSize="8">                   
+                    </Run>
+                </InlineCollection>
+                </Inlines>
+                            </TextBlock>
+                            <Button x:Uid="MainPageBindButton" x:Name="Bind" HorizontalAlignment="Center" BorderThickness="0,0,0,0" Foreground="White" Content="bind">
+                                <Background>
+                                    <StaticResource ResourceKey="AppAccentBrush" />
+                                </Background>
+                            </Button>
+                        </UIElementCollection>
+                    </Children-->
+                </StackPanel>
+                <StackPanel VerticalAlignment="Center">
+                <StackPanel.Visibility>
+                        <Binding Path="ShowMoreThanOnePaired">
+                            <!--Converter>
+                                <StaticResource ResourceKey="BoolToVis" />
+                            </Converter-->
+                        </Binding>
+                    </StackPanel.Visibility>
+                    <!--Children>
+                        <UIElementCollection>
+                            <TextBlock VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap">
+                <Style>
+                <StaticResource ResourceKey="GrayBigTextBlockStyle" />
+                </Style>
+                <Inlines>
+                <InlineCollection>
+                    <Run x:Uid="MainPage_Messages_MoreThanOnePaired" Text="!More than one Mi Band paired" />
+                    <LineBreak />
+                    <Run x:Uid="MainPage_Messages_MoreThanOnePaired_Subtitle" 
+                     Text="Make sure to have only one Mi Band paired in Bluetooth settings!"
+                     FontSize="8">                   
+                    </Run>
+                </InlineCollection>
+                </Inlines>
+                            </TextBlock>
+                            <HyperlinkButton x:Uid="MainPageGoToBluetoothSettings" 
+                            HorizontalAlignment="Center" 
+                            FontSize="8"
+                            Content="Go to Bluetooth settings">
+                                
+                                <Foreground>
+                                    <StaticResource ResourceKey="PhoneMidBrush" />
+                                </Foreground>
+                                <NavigateUri>
+                                    <Binding Path="GoToBluetoothSettingsLink" />
+                                </NavigateUri>
+                            </HyperlinkButton>
+                        </UIElementCollection>
+                    </Children-->
+                </StackPanel>                
+        </StackPanel>
+    </Grid>
+</UserControl>
+<!--UserControl
+    x:Class="MiBandApp.Views.MainPageComponents.MessagesView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MiBandApp.Views.MainPageComponents"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+
+    </Grid>
+</UserControl-->

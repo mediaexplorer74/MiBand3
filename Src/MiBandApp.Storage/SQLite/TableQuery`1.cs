@@ -1,4 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: SQLite.TableQuery`1
 // Assembly: MiBandApp.Storage, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 12BDBED5-65C6-40FC-A182-B057969144FE

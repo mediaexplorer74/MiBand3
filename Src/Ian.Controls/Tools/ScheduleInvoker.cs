@@ -1,4 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: Ian.Controls.Tools.ScheduleInvoker
 // Assembly: Ian.Controls, Version=0.8.2.0, Culture=neutral, PublicKeyToken=null
 // MVID: C384A7D9-D254-451C-A544-CD6C2993240A

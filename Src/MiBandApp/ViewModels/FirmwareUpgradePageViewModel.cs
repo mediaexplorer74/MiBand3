@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.ViewModels.FirmwareUpgradePageViewModel
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using Caliburn.Micro;
 using MetroLog;
@@ -124,7 +124,8 @@ namespace MiBandApp.ViewModels
       this.IsExitButtonVisible = false;
       try
       {
-        if (!await this._bandController.MiBand.UpgradeFirmware(this.Parameter, (IFirmwareUpgradeProgress) this).ConfigureAwait(true))
+        if (!await this._bandController.MiBand.UpgradeFirmware(
+            this.Parameter, this).ConfigureAwait(true))
           return;
         this.FinishSuccessfullUpgrade();
       }
@@ -148,25 +149,25 @@ namespace MiBandApp.ViewModels
 
     protected override Task OnActivate()
     {
-      this._navigationService.BackPressed += new EventHandler<BackPressedEventArgs>(this.NavigationServiceOnBackPressed);
+      //this._navigationService.BackPressed += new EventHandler<EventArgs>(this.NavigationServiceOnBackPressed);
       this._displayRequest.RequestActive();
       return base.OnActivate();
     }
 
     protected override Task OnDeactivate(bool close = true)
     {
-      this._navigationService.BackPressed -= new EventHandler<BackPressedEventArgs>(this.NavigationServiceOnBackPressed);
+      //this._navigationService.BackPressed -= new EventHandler<EventArgs>(this.NavigationServiceOnBackPressed);
       this._displayRequest.RequestRelease();
       return base.OnDeactivate(close);
     }
 
     private void NavigationServiceOnBackPressed(
       object sender,
-      BackPressedEventArgs backPressedEventArgs)
+      EventArgs backPressedEventArgs)
     {
       if (this.IsExitButtonVisible || !this.HasUpgradeStarted)
         return;
-      backPressedEventArgs.put_Handled(true);
+      //backPressedEventArgs.Handled = true;
     }
 
     public void ReportUpload(int percents) => this.ProgressPercent = percents;

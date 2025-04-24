@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.Controls.Band
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using System;
 using System.Collections.Generic;
@@ -32,7 +32,7 @@ namespace MiBandApp.Controls
     private DispatcherTimer _animationTimer;
     private BandAnimation _timerMode;
 
-    public Band() => this.put_DefaultStyleKey((object) typeof (Band));
+    public Band() => this.DefaultStyleKey = typeof (Band);
 
     public double Value
     {
@@ -52,14 +52,14 @@ namespace MiBandApp.Controls
       set => ((DependencyObject) this).SetValue(Band.DotsVisibilityProperty, (object) value);
     }
 
-    protected virtual void OnApplyTemplate()
+    protected /*virtual*/override void OnApplyTemplate()
     {
       this._ellipses.Add(this.GetTemplateChild("PART_EllipseLeft") as Ellipse);
       this._ellipses.Add(this.GetTemplateChild("PART_EllipseCenter") as Ellipse);
       this._ellipses.Add(this.GetTemplateChild("PART_EllipseRight") as Ellipse);
       Band.OnValueChanged((DependencyObject) this);
       Band.OnAnimationChanged((DependencyObject) this);
-      ((FrameworkElement) this).OnApplyTemplate();
+      this.OnApplyTemplate();
     }
 
     private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -97,31 +97,37 @@ namespace MiBandApp.Controls
       }
     }
 
-    private void AnimationChanged()
-    {
-      if (this.Animation == BandAnimation.None)
-      {
-        if (this._animationTimer != null)
-          this._animationTimer.Stop();
-        this._animationLightenedEllipse = 0;
-        this._animationTimer = (DispatcherTimer) null;
-        this._timerMode = BandAnimation.None;
-        this.ValueChanged();
-      }
-      else
-      {
-        if (this._ellipses.Count == 0 || this._animationTimer != null && this._timerMode == this.Animation)
-          return;
-        this._animationTimer?.Stop();
-        DispatcherTimer dispatcherTimer1 = new DispatcherTimer();
-        dispatcherTimer1.put_Interval(TimeSpan.FromMilliseconds(this.Animation == BandAnimation.Communicating ? 75.0 : 500.0));
-        DispatcherTimer dispatcherTimer2 = dispatcherTimer1;
-        WindowsRuntimeMarshal.AddEventHandler<EventHandler<object>>(new Func<EventHandler<object>, EventRegistrationToken>(dispatcherTimer2.add_Tick), new Action<EventRegistrationToken>(dispatcherTimer2.remove_Tick), new EventHandler<object>(this.OnAnimationTimerTick));
-        dispatcherTimer1.Start();
-        this._animationTimer = dispatcherTimer1;
-        this._timerMode = this.Animation;
-      }
-    }
+        private void AnimationChanged()
+        {
+            if (this.Animation == BandAnimation.None)
+            {
+                if (this._animationTimer != null)
+                    this._animationTimer.Stop();
+                this._animationLightenedEllipse = 0;
+                this._animationTimer = null;
+                this._timerMode = BandAnimation.None;
+                this.ValueChanged();
+            }
+            else
+            {
+                if (this._ellipses.Count == 0 || this._animationTimer != null && this._timerMode == this.Animation)
+                    return;
+
+                this._animationTimer?.Stop();
+                DispatcherTimer dispatcherTimer = new DispatcherTimer
+                {
+                    Interval = TimeSpan.FromMilliseconds(
+                        this.Animation == BandAnimation.Communicating ? 75.0 : 500.0)
+                };
+
+                // Use += operator to subscribe to the Tick event
+                dispatcherTimer.Tick += this.OnAnimationTimerTick;
+
+                dispatcherTimer.Start();
+                this._animationTimer = dispatcherTimer;
+                this._timerMode = this.Animation;
+            }
+        }
 
     private void OnAnimationTimerTick(object sender, object o)
     {
@@ -139,12 +145,12 @@ namespace MiBandApp.Controls
 
     private void LightEllipse(int index)
     {
-      ((Shape) this._ellipses[index]).put_Fill(this.Foreground);
+      ((Shape) this._ellipses[index]).Fill = this.Foreground;
     }
 
     private void UnlightEllipse(int index)
     {
-      ((Shape) this._ellipses[index]).put_Fill((Brush) new SolidColorBrush(Colors.Transparent));
+      ((Shape) this._ellipses[index]).Fill = (Brush) new SolidColorBrush(Colors.Transparent);
     }
   }
 }

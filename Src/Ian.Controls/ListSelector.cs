@@ -1,4 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: Ian.Controls.ListSelector
 // Assembly: Ian.Controls, Version=0.8.2.0, Culture=neutral, PublicKeyToken=null
 // MVID: C384A7D9-D254-451C-A544-CD6C2993240A
@@ -166,7 +166,8 @@ namespace Ian.Controls
       DependencyObject dependencyObject,
       DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
     {
-      await ((ListSelector) dependencyObject).SelectItem((int) dependencyPropertyChangedEventArgs.NewValue).ConfigureAwait(true);
+      await ((ListSelector) dependencyObject)
+                .SelectItem((int) dependencyPropertyChangedEventArgs.NewValue).ConfigureAwait(true);
     }
 
     private static async void OnItemsSourceChanged(

@@ -6,150 +6,73 @@
       xmlns:services="using:MiBandApp.Services" 
       xmlns:viewModels="using:MiBandApp.ViewModels" 
       x:Class="MiBandApp.Views.WhatsNewPage">
+
     <Page.Style>
         <StaticResource ResourceKey="DefaultPageStyle" />
     </Page.Style>
+
     <Page.Resources>
         <ResourceDictionary>
-            <MergedDictionaries>
-                <ResourceDictionaryCollection>
-                    <ResourceDictionary Source="../Resources/SpecificStyles.xaml" />
-                </ResourceDictionaryCollection>
-            </MergedDictionaries>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/SpecificStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
-    <Page.Content>
-        <Grid>
-            <Margin>
-                <StaticResource ResourceKey="RootContainerThickness" />
-            </Margin>
-            <Resources>
-                <ResourceDictionary>
-                    <Style x:Key="SectionHeaderTextBlockStyle" TargetType="TextBlock">
-                        <BasedOn>
-                            <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
-                        </BasedOn>
-                        <Setters>
-                            <SetterBaseCollection>
-                                <Setter Property="FontSize" Value="25" />
-                            </SetterBaseCollection>
-                        </Setters>
-                    </Style>
-                    <Style x:Key="SectionBodyTextBlockStyle" TargetType="TextBlock">
-                        <BasedOn>
-                            <StaticResource ResourceKey="BodyTextBlockStyle" />
-                        </BasedOn>
-                        <Setters>
-                            <SetterBaseCollection>
-                                <Setter Property="FontSize" Value="20" />
-                                <Setter Property="Margin" Value="12,0,0,10" />
-                            </SetterBaseCollection>
-                        </Setters>
-                    </Style>
-                    <Style x:Key="SectionNoteTextBlockStyle" TargetType="TextBlock">
-                        <Setters>
-                            <SetterBaseCollection>
-                                <Setter Property="FontSize">
-                                    <Value>
-                                        <StaticResource ResourceKey="TextStyleSmallFontSize" />
-                                    </Value>
-                                </Setter>
-                                <Setter Property="Margin" Value="12,-5,0,10" />
-                                <Setter Property="TextWrapping" Value="Wrap" />
-                            </SetterBaseCollection>
-                        </Setters>
-                    </Style>
-                    <Style TargetType="HyperlinkButton">
-                        <BasedOn>
-                            <StaticResource ResourceKey="DefaultHyperlinkButtonStyle" />
-                        </BasedOn>
-                        <Setters>
-                            <SetterBaseCollection>
-                                <Setter Property="FontSize" Value="20" />
-                                <Setter Property="Margin" Value="12,0,0,10" />
-                            </SetterBaseCollection>
-                        </Setters>
-                    </Style>
-                </ResourceDictionary>
-            </Resources>
-            <RowDefinitions>
-                <RowDefinitionCollection>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition />
-                </RowDefinitionCollection>
-            </RowDefinitions>
-            <Children>
-                <UIElementCollection>
-                    <StackPanel Row="0">
-                        <Children>
-                            <UIElementCollection>
-                                <TextBlock>
-                  <Style>
-                    <StaticResource ResourceKey="AppTitleStyle" />
-                  </Style>
-                                </TextBlock>
-                                <TextBlock x:Uid="WhatsNewPageTitle" Text="what's new">
-                  <Style>
-                    <StaticResource ResourceKey="PageTitleStyle" />
-                  </Style>
-                                </TextBlock>
-                            </UIElementCollection>
-                        </Children>
-                    </StackPanel>
-                    <Grid Row="1">
-                        <RowDefinitions>
-                            <RowDefinitionCollection>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </RowDefinitionCollection>
-                        </RowDefinitions>
-                        <Children>
-                            <UIElementCollection>
-                                <ListView>
-                                    <ItemTemplate>
-                                        <StaticResource ResourceKey="UpdateHistoryItemDataTemplate" />
-                                    </ItemTemplate>
-                                    <ItemsSource>
-                                        <Binding Path="Updates" />
-                                    </ItemsSource>
-                                </ListView>
-                                <Border Row="1" BorderThickness="0,2,0,0">
-                                    <BorderBrush>
-                                        <ThemeResource ResourceKey="AppForegroundDisabledBrush" />
-                                    </BorderBrush>
-                                    <Child>
-                                        <TextBlock Margin="0,10,0,10" FontSize="18" LineHeight="30" TextAlignment="Left">
-                      <Style>
-                        <StaticResource ResourceKey="GrayBigTextBlockStyle" />
-                      </Style>
-                      <Text>
-                        <Binding Path="LastMessage" />
-                      </Text>
-                                        </TextBlock>
-                                    </Child>
-                                </Border>
-                                <Button x:Uid="WhatsNewPageSkipButton" x:Name="Skip" Row="3" HorizontalAlignment="Right" Content="ok, cool!" />
-                            </UIElementCollection>
-                        </Children>
-                    </Grid>
-                </UIElementCollection>
-            </Children>
-        </Grid>
-    </Page.Content>
-</Page>
-<!--Page
-    x:Class="MiBandApp.Views.WhatsNewPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:MiBandApp.Views"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <Grid.Resources>
+            <ResourceDictionary>
+                <Style x:Key="SectionHeaderTextBlockStyle" TargetType="TextBlock">
+                    <Style.BasedOn>
+                        <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
+                    </Style.BasedOn>
+                    <Setter Property="FontSize" Value="25" />
+                </Style>
+                <Style x:Key="SectionBodyTextBlockStyle" TargetType="TextBlock">
+                    <Style.BasedOn>
+                        <StaticResource ResourceKey="BodyTextBlockStyle" />
+                    </Style.BasedOn>
+                    <Setter Property="FontSize" Value="20" />
+                    <Setter Property="Margin" Value="12,0,0,10" />
+                </Style>
+                <Style x:Key="SectionNoteTextBlockStyle" TargetType="TextBlock">
+                    <Setter Property="FontSize" Value="{StaticResource TextStyleSmallFontSize}" />
+                    <Setter Property="Margin" Value="12,-5,0,10" />
+                    <Setter Property="TextWrapping" Value="Wrap" />
+                </Style>
+                <Style TargetType="HyperlinkButton">
+                    <Style.BasedOn>
+                        <StaticResource ResourceKey="DefaultHyperlinkButtonStyle" />
+                    </Style.BasedOn>
+                    <Setter Property="FontSize" Value="20" />
+                    <Setter Property="Margin" Value="12,0,0,10" />
+                </Style>
+            </ResourceDictionary>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
+        <StackPanel Grid.Row="0">
+            <TextBlock Style="{StaticResource AppTitleStyle}" />
+            <TextBlock x:Uid="WhatsNewPageTitle" Text="what's new" Style="{StaticResource PageTitleStyle}" />
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ListView ItemsSource="{Binding Updates}" ItemTemplate="{StaticResource UpdateHistoryItemDataTemplate}" />
+            <Border Grid.Row="1" BorderThickness="0,2,0,0" BorderBrush="{ThemeResource AppForegroundDisabledBrush}">
+                <TextBlock Margin="0,10,0,10" FontSize="18" LineHeight="30" TextAlignment="Left"
+                           Style="{StaticResource GrayBigTextBlockStyle}" Text="{Binding LastMessage}" />
+            </Border>
+            <Button x:Uid="WhatsNewPageSkipButton" x:Name="Skip" 
+                    Grid.Row="3" HorizontalAlignment="Right" Content="ok, cool!" />
+        </Grid>
     </Grid>
-</Page-->
+</Page>

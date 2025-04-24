@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.Services.BandSyncReminderService
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using MetroLog;
 using MiBandApp.Tools;
@@ -74,10 +74,14 @@ namespace MiBandApp.Services
         return;
       this._logger.Debug(string.Format("Scheduling notification at {0}", (object) dateTimeOffset), (Exception) null);
       XmlDocument templateContent = ToastNotificationManager.GetTemplateContent((ToastTemplateType) 5);
-      ((IXmlNodeSerializer) ((IReadOnlyList<IXmlNode>) templateContent.GetElementsByTagName("text"))[0]).put_InnerText(this._resourceLoader.GetString("Notification_SynchronizeBand_Title"));
-      ((IXmlNodeSerializer) ((IReadOnlyList<IXmlNode>) templateContent.GetElementsByTagName("text"))[1]).put_InnerText(this._resourceLoader.GetString("Notification_SynchronizeBand_Subtitle"));
+    
+      templateContent.GetElementsByTagName("text")[0].InnerText =
+                this._resourceLoader.GetString("Notification_SynchronizeBand_Title");
+      templateContent.GetElementsByTagName("text")[1].InnerText =
+                 this._resourceLoader.GetString("Notification_SynchronizeBand_Subtitle");
+
       ScheduledToastNotification toastNotification1 = new ScheduledToastNotification(templateContent, dateTimeOffset);
-      toastNotification1.put_Id("Syncrhonize" + (object) days);
+      toastNotification1.Id = "Syncrhonize" + (object) days;
       ScheduledToastNotification toastNotification2 = toastNotification1;
       ToastNotificationManager.CreateToastNotifier().AddToSchedule(toastNotification2);
     }

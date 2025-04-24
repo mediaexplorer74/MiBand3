@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.Converters.MinutesToStringConverter
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using System;
 using Windows.ApplicationModel.Resources;
@@ -19,10 +19,10 @@ namespace MiBandApp.Converters
 
     public object Convert(object value, Type targetType, object parameter, string language)
     {
-      result1 = 0;
+      int result1 = 0;
       if (value is double num1)
         result1 = (int) num1;
-      else if (!(value is int result1) && value is string && !int.TryParse((string) value, out result1))
+      else if (!(value is int) && value is string && !int.TryParse((string) value, out result1))
       {
         double result;
         if (!double.TryParse((string) value, out result))

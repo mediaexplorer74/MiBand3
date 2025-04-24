@@ -25,14 +25,14 @@ namespace MiBandApp.Controls.Pickers
         }
     }
 }*/
-// Decompiled with JetBrains decompiler
+
 // Type: MiBandApp.Controls.Pickers.WeightPicker
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using Caliburn.Micro;
-using IanSavchenko.Controls;
+using Ian.Controls;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections;
@@ -106,13 +106,15 @@ namespace MiBandApp.Controls.Pickers
                 string str = this.CreateKgString(this.Value);
                 if (this._settings.ShowImperialUnits)
                     str = str + " (" + this.CreateImperialString(this.Value) + ")";
-                ((ContentControl)this.MainButton).put_Content((object)str);
+                this.MainButton.Content = str;
             }
         }
 
         private void InitializeListSelector()
         {
-            List<WeightPicker.WeightOption> list = Enumerable.Range(30, 121).Select<int, WeightPicker.WeightOption>((Func<int, WeightPicker.WeightOption>)(t => new WeightPicker.WeightOption()
+            List<WeightPicker.WeightOption> list = 
+                Enumerable.Range(30, 121).Select<int, WeightPicker.WeightOption>(
+                    (Func<int, WeightPicker.WeightOption>)(t => new WeightPicker.WeightOption()
             {
                 WeightKg = t,
                 KgString = this.CreateKgString(t)
@@ -139,7 +141,8 @@ namespace MiBandApp.Controls.Pickers
 
         private string CreateImperialString(int weightKg)
         {
-            return ((int)((double)weightKg * 2.204)).ToString() + " " + this._resourceLoader.GetString("UserInfoPagePounds");
+            return ((int)((double)weightKg * 2.204)).ToString() + " " 
+                + this._resourceLoader.GetString("UserInfoPagePounds");
         }
 
         private void ListSelectorFlyout_OnConfirmed(object sender, EventArgs e)

@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.App
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using Caliburn.Micro;
 using MetroLog;
@@ -93,8 +93,21 @@ namespace MiBandApp
             this._container.RegisterSingleton(typeof(SleepTabViewModel), (string)null, typeof(SleepTabViewModel));
             this._container.RegisterSingleton(typeof(HeartRateTabViewModel), (string)null, typeof(HeartRateTabViewModel));
             this._container.RegisterSingleton(typeof(MessagesViewModel), (string)null, typeof(MessagesViewModel));
-            this._container.PerRequest<DevicePageViewModel>().PerRequest<UserInfoPageViewModel>().PerRequest<AlarmsPageViewModel>().PerRequest<AboutPageViewModel>().PerRequest<PairingPageViewModel>().PerRequest<WhatsNewPageViewModel>().PerRequest<SettingsPageViewModel>().PerRequest<HistoryPageViewModel>().PerRequest<SleepDetailsPageViewModel>().PerRequest<DayDetailsPageViewModel>().PerRequest<FirmwareUpgradePageViewModel>();
-            this._container.PerRequest<CloudViewModel>().PerRequest<BatteryViewModel>().PerRequest<FirmwareViewModel>().PerRequest<WearingLocationViewModel>().PerRequest<LedsColorViewModel>().PerRequest<HeartRateDuringSleepViewModel>().PerRequest<HighlightOnWristLiftViewModel>().PerRequest<DisplayViewModel>().PerRequest<ActivityReminderViewModel>().PerRequest<GoalReachedNotificationViewModel>().PerRequest<NotDisturbViewModel>().PerRequest<FlipDisplayOnWristRotateViewModel>();
+            
+            this._container.PerRequest<DevicePageViewModel>().PerRequest<UserInfoPageViewModel>()
+                .PerRequest<AlarmsPageViewModel>().PerRequest<AboutPageViewModel>()
+                .PerRequest<PairingPageViewModel>().PerRequest<WhatsNewPageViewModel>()
+                .PerRequest<SettingsPageViewModel>().PerRequest<HistoryPageViewModel>()
+                .PerRequest<SleepDetailsPageViewModel>().PerRequest<DayDetailsPageViewModel>()
+                .PerRequest<FirmwareUpgradePageViewModel>();
+
+            this._container.PerRequest<CloudViewModel>().PerRequest<BatteryViewModel>()
+                .PerRequest<FirmwareViewModel>().PerRequest<WearingLocationViewModel>()
+                .PerRequest<LedsColorViewModel>().PerRequest<HeartRateDuringSleepViewModel>()
+                .PerRequest<HighlightOnWristLiftViewModel>().PerRequest<DisplayViewModel>()
+                .PerRequest<ActivityReminderViewModel>().PerRequest<GoalReachedNotificationViewModel>()
+                .PerRequest<NotDisturbViewModel>().PerRequest<FlipDisplayOnWristRotateViewModel>();
+
             this.PrepareViewFirst();
         }
 
@@ -121,13 +134,19 @@ namespace MiBandApp
         // PrepareViewFirst
         protected override void PrepareViewFirst(Frame rootFrame)
         {
-            ((IDictionary<object, object>)Application.Current.Resources)[(object)"AppSleepColor"] = (object)((Color)((IDictionary<object, object>)Application.Current.Resources)[(object)"PhoneForegroundColor"]).DarkenHsl(0.0);
-            ((IDictionary<object, object>)Application.Current.Resources)[(object)"AppSleepBrush"] = (object)new SolidColorBrush((Color)((IDictionary<object, object>)Application.Current.Resources)[(object)"AppSleepColor"]);
+            //Application.Current.Resources["AppSleepColor"] 
+            //    = (object)((Color)((IDictionary<object, object>)Application.Current.Resources)[(object)"PhoneForegroundColor"]).DarkenHsl(0.0);
+            //Application.Current.Resources["AppSleepBrush"] 
+            //    = (object)new SolidColorBrush((Color)((IDictionary<object, object>)Application.Current.Resources)[(object)"AppSleepColor"]);
             ResourceDictionary resources = Application.Current.Resources;
-            SolidColorBrush solidColorBrush = new SolidColorBrush((Color)((IDictionary<object, object>)Application.Current.Resources)[(object)"AppSleepColor"]);
+            SolidColorBrush solidColorBrush = new SolidColorBrush(
+                /*Application.Current.Resources["AppSleepColor"]*/Color.FromArgb(180,180,180,180));
             solidColorBrush.Opacity = 0.7;
             ((IDictionary<object, object>)resources)[(object)"AppLightSleepBrush"] = (object)solidColorBrush;
-            ((IDictionary<object, object>)Application.Current.Resources)[(object)"AppDeepSleepBrush"] = (object)new SolidColorBrush((Color)((IDictionary<object, object>)Application.Current.Resources)[(object)"AppSleepColor"]);
+            ((IDictionary<object, object>)Application.Current.Resources)[(object)"AppDeepSleepBrush"] 
+                = new SolidColorBrush(
+                    /*(Color)((IDictionary<object, object>)Application.Current.Resources)[(object)"AppSleepColor"]*/
+                    Color.FromArgb(80, 80, 80, 80));
             this._container.RegisterNavigationService(rootFrame);
         }
 
@@ -135,24 +154,32 @@ namespace MiBandApp
         // OnActivated
         protected override async void OnActivated(IActivatedEventArgs args)
         {
-            if (args.PreviousExecutionState != 1 && args.PreviousExecutionState != 2)
+            if (args.PreviousExecutionState != ApplicationExecutionState.Running 
+                && args.PreviousExecutionState != ApplicationExecutionState.Suspended)
                 this.DisplayRootView<MainPage>();
-            if (args.Kind != 4)
+
+            if (args.Kind != ActivationKind.Protocol)
                 return;
-            this._container.GetInstance<ILogManager>().GetLogger<App>().Debug(string.Format("Protocol activation in {0}", (object)nameof(OnActivated)), (Exception)null);
+
+            this._container.GetInstance<ILogManager>().GetLogger<App>().Debug(
+                string.Format("Protocol activation in {0}", (object)nameof(OnActivated)), (Exception)null);
             ProtocolActivatedEventArgs args1 = args as ProtocolActivatedEventArgs;
-            await this._container.GetInstance<ProtocolActivationHandler>().HandleProtocolActivation(args1).ConfigureAwait(false);
+
+            await this._container.GetInstance<ProtocolActivationHandler>()
+                .HandleProtocolActivation(args1).ConfigureAwait(false);
         }
 
 
         // OnLaunched
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
-            if (args.PreviousExecutionState == 1 || args.PreviousExecutionState == 2)
+            if (args.PreviousExecutionState == ApplicationExecutionState.Running 
+                || args.PreviousExecutionState == ApplicationExecutionState.Suspended)
                 return;
-            int num = await HockeyClient.Current.SendCrashesAsync(true).ConfigureAwait(true) ? 1 : 0;
+            //int num = await HockeyClient.Current.SendCrashesAsync(true).ConfigureAwait(true) ? 1 : 0;
             this.DisplayRootView<MainPage>();
             //HockeyClient.Current.TrackEvent(nameof(OnLaunched));
+            Debug.WriteLine("[i] App OnLaunched result : " + nameof(OnLaunched));
         }
 
 
@@ -195,7 +222,8 @@ namespace MiBandApp
         // LogUnhandledException
         private void LogUnhandledException(Exception ex)
         {
-            this._container.GetInstance<ILogManager>().GetLogger<App>().Error("CRASH: " + (object)ex, (Exception)null);
+            this._container.GetInstance<ILogManager>().GetLogger<App>().Error("CRASH: "
+                + (object)ex, (Exception)null);
         }
 
         // SetupTimeFormat
@@ -203,7 +231,8 @@ namespace MiBandApp
         {
             try
             {
-                App.RegionalFormatCulture = new CultureInfo(new DateTimeFormatter("longdate", (IEnumerable<string>)new string[1]
+                App.RegionalFormatCulture = new CultureInfo(new DateTimeFormatter("longdate",
+                    (IEnumerable<string>)new string[1]
                 {
           "US"
                 }).ResolvedLanguage);

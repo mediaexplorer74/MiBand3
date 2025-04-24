@@ -1,4 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: Gregstoll.UniversalWrapPanel
 // Assembly: UniversalWrapPanel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 60235FB9-3146-43DC-9650-8467765D36E9

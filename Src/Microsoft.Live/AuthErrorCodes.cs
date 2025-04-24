@@ -1,4 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: Microsoft.Live.AuthErrorCodes
 // Assembly: Microsoft.Live, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
 // MVID: 84D9FE74-951C-4BB4-80F8-EDD369EAC36D

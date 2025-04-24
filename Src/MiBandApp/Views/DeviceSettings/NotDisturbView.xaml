@@ -1,118 +1,106 @@
-﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:micro="using:Caliburn.Micro" 
-             x:Class="MiBandApp.Views.DeviceSettings.NotDisturbView">
-    <UserControl.Content>
-        <StackPanel>
-            <Children>
-                <UIElementCollection>
-                    <TextBlock x:Uid="DevicePage_NotDisturb_Header" Margin="0,0,0,-10" Text="Do not disturb">
-            <Style>
-              <ThemeResource ResourceKey="GrayTextBlockStyle" />
-            </Style>
-                    </TextBlock>
-                    <ToggleSwitch x:Uid="SettingsPageToggleSwitch" x:Name="IsEnabledToggleSwitch" OffContent="Disabled" OnContent="Enabled">
-                        <IsEnabled>
-                            <Binding Path="DetailedSettingsVisible" ConverterParameter="False">
-                                <Converter>
-                                    <StaticResource ResourceKey="BoolToBool" />
-                                </Converter>
-                            </Binding>
-                        </IsEnabled>
-                        <IsOn>
-                            <Binding Path="IsEnabled" Mode="TwoWay" />
-                        </IsOn>
-                    </ToggleSwitch>
-                    <StackPanel>
-                        <Visibility>
-                            <Binding ElementName="IsEnabledToggleSwitch" Path="IsOn">
-                                <Converter>
-                                    <StaticResource ResourceKey="BoolToVis" />
-                                </Converter>
-                            </Binding>
-                        </Visibility>
-                        <Children>
-                            <UIElementCollection>
-                                <TextBlock x:Uid="DeivcePage_NotDisturb_Tip" Margin="0,0,0,10" HorizontalAlignment="Stretch" Attach="[Event Tapped] = [Action OnConfigureTapped()]" IsTapEnabled="False">
-                  <Foreground>
-                    <StaticResource ResourceKey="AppAccentBrush" />
-                  </Foreground>
-                  <Style>
-                    <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
-                  </Style>
-                  <Visibility>
-                    <Binding Path="DetailedSettingsVisible" ConverterParameter="False">
-                      <Converter>
-                        <StaticResource ResourceKey="BoolToVis" />
-                      </Converter>
-                    </Binding>
-                  </Visibility>
-                  <Inlines>
-                    <InlineCollection implicititems="Tap to configure settings" />
-                  </Inlines>
-                                </TextBlock>
-                                <StackPanel x:Name="DetailedSettingsDialog" Margin="12,0,12,0">
-                                    <Visibility>
-                                        <Binding Path="DetailedSettingsVisible">
-                                            <Converter>
-                                                <StaticResource ResourceKey="BoolToVis" />
-                                            </Converter>
-                                        </Binding>
-                                    </Visibility>
-                                    <Children>
-                                        <UIElementCollection>
-                                            <CheckBox>
-                                                <IsChecked>
-                                                    <Binding Path="AllowHighlightOnWristLift" Mode="TwoWay" />
-                                                </IsChecked>
-                                                <Content>
-                                                    <TextBlock x:Uid="DevicePage_NotDisturb_AllowHighlight" TextWrapping="Wrap">
-                            <Inlines>
-                              <InlineCollection implicititems="Allow display highlight on wrist lift" />
-                            </Inlines>
-                                                    </TextBlock>
-                                                </Content>
-                                            </CheckBox>
-                                            <CheckBox x:Uid="DevicePage_NotDisturb_AutomaticSchedule" x:Name="AutomaticScheduleCheckBox" Content="Automatic schedule">
-                                                <IsChecked>
-                                                    <Binding Path="IsSmart" Mode="TwoWay" />
-                                                </IsChecked>
-                                            </CheckBox>
-                                            <TimePicker x:Uid="DevicePage_NotDisturb_StartTime" x:Name="StartTimePicker" Header="Start time">
-                                                <IsEnabled>
-                                                    <Binding ElementName="AutomaticScheduleCheckBox" Path="IsChecked" ConverterParameter="False">
-                                                        <Converter>
-                                                            <StaticResource ResourceKey="BoolToBool" />
-                                                        </Converter>
-                                                    </Binding>
-                                                </IsEnabled>
-                                                <Time>
-                                                    <Binding Path="StartTime" Mode="TwoWay" />
-                                                </Time>
-                                            </TimePicker>
-                                            <TimePicker x:Uid="DevicePage_NotDisturb_EndTime" x:Name="EndTimePicker" Header="End time">
-                                                <IsEnabled>
-                                                    <Binding ElementName="AutomaticScheduleCheckBox" Path="IsChecked" ConverterParameter="False">
-                                                        <Converter>
-                                                            <StaticResource ResourceKey="BoolToBool" />
-                                                        </Converter>
-                                                    </Binding>
-                                                </IsEnabled>
-                                                <Time>
-                                                    <Binding Path="EndTime" Mode="TwoWay" />
-                                                </Time>
-                                            </TimePicker>
-                                            <Button x:Uid="DevicePage_NotDisturb_Save" Attach="[Event Tapped] = [Action OnSaveButtonTapped()]" Content="Save" />
-                                        </UIElementCollection>
-                                    </Children>
-                                </StackPanel>
-                            </UIElementCollection>
-                        </Children>
-                    </StackPanel>
-                </UIElementCollection>
-            </Children>
-        </StackPanel>
-    </UserControl.Content>
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"  
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
+             xmlns:micro="using:Caliburn.Micro"  
+             x:Class="MiBandApp.Views.DeviceSettings.NotDisturbView">  
+    <UserControl.Content>  
+        <StackPanel>  
+            <TextBlock x:Uid="DevicePage_NotDisturb_Header" Margin="0,0,0,-10" Text="Do not disturb">  
+                <TextBlock.Style>  
+                    <StaticResource ResourceKey="GrayTextBlockStyle" />  
+                </TextBlock.Style>  
+            </TextBlock>  
+            <ToggleSwitch x:Uid="SettingsPageToggleSwitch" x:Name="IsEnabledToggleSwitch" OffContent="Disabled" OnContent="Enabled">  
+                <ToggleSwitch.IsEnabled>  
+                    <Binding Path="DetailedSettingsVisible" ConverterParameter="False">  
+                        <Binding.Converter>  
+                            <StaticResource ResourceKey="BoolToBool" />  
+                        </Binding.Converter>  
+                    </Binding>  
+                </ToggleSwitch.IsEnabled>  
+                <ToggleSwitch.IsOn>  
+                    <Binding Path="IsEnabled" Mode="TwoWay" />  
+                </ToggleSwitch.IsOn>  
+            </ToggleSwitch>  
+            <StackPanel>  
+                <StackPanel.Visibility>  
+                    <Binding ElementName="IsEnabledToggleSwitch" Path="IsOn">  
+                        <Binding.Converter>  
+                            <StaticResource ResourceKey="BoolToVis" />  
+                        </Binding.Converter>  
+                    </Binding>  
+                </StackPanel.Visibility>  
+                <TextBlock x:Uid="DeivcePage_NotDisturb_Tip" Margin="0,0,0,10" HorizontalAlignment="Stretch"  
+                           IsTapEnabled="True"  
+                           Tapped="OnConfigureTapped">  
+                    <TextBlock.Foreground>  
+                        <StaticResource ResourceKey="AppAccentBrush" />  
+                    </TextBlock.Foreground>  
+                    <TextBlock.Style>  
+                        <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />  
+                    </TextBlock.Style>  
+                    <TextBlock.Visibility>  
+                        <Binding Path="DetailedSettingsVisible" ConverterParameter="False">  
+                            <Binding.Converter>  
+                                <StaticResource ResourceKey="BoolToVis" />  
+                            </Binding.Converter>  
+                        </Binding>  
+                    </TextBlock.Visibility>  
+                    <TextBlock.Inlines>  
+                        <Run Text="Tap to configure settings" />  
+                    </TextBlock.Inlines>  
+                </TextBlock>  
+                <StackPanel x:Name="DetailedSettingsDialog" Margin="12,0,12,0">  
+                    <StackPanel.Visibility>  
+                        <Binding Path="DetailedSettingsVisible">  
+                            <Binding.Converter>  
+                                <StaticResource ResourceKey="BoolToVis" />  
+                            </Binding.Converter>  
+                        </Binding>  
+                    </StackPanel.Visibility>  
+                    <CheckBox>  
+                        <CheckBox.IsChecked>  
+                            <Binding Path="AllowHighlightOnWristLift" Mode="TwoWay" />  
+                        </CheckBox.IsChecked>  
+                        <CheckBox.Content>  
+                            <TextBlock x:Uid="DevicePage_NotDisturb_AllowHighlight" TextWrapping="Wrap">  
+                                <Run Text="Allow display highlight on wrist lift" />  
+                            </TextBlock>  
+                        </CheckBox.Content>  
+                    </CheckBox>  
+                    <CheckBox x:Uid="DevicePage_NotDisturb_AutomaticSchedule" x:Name="AutomaticScheduleCheckBox" Content="Automatic schedule">  
+                        <CheckBox.IsChecked>  
+                            <Binding Path="IsSmart" Mode="TwoWay" />  
+                        </CheckBox.IsChecked>  
+                    </CheckBox>  
+                    <TimePicker x:Uid="DevicePage_NotDisturb_StartTime" x:Name="StartTimePicker" Header="Start time">  
+                        <TimePicker.IsEnabled>  
+                            <Binding ElementName="AutomaticScheduleCheckBox" Path="IsChecked" ConverterParameter="False">  
+                                <Binding.Converter>  
+                                    <StaticResource ResourceKey="BoolToBool" />  
+                                </Binding.Converter>  
+                            </Binding>  
+                        </TimePicker.IsEnabled>  
+                        <TimePicker.Time>  
+                            <Binding Path="StartTime" Mode="TwoWay" />  
+                        </TimePicker.Time>  
+                    </TimePicker>  
+                    <TimePicker x:Uid="DevicePage_NotDisturb_EndTime" x:Name="EndTimePicker" Header="End time">  
+                        <TimePicker.IsEnabled>  
+                            <Binding ElementName="AutomaticScheduleCheckBox" Path="IsChecked" ConverterParameter="False">  
+                                <Binding.Converter>  
+                                    <StaticResource ResourceKey="BoolToBool" />  
+                                </Binding.Converter>  
+                            </Binding>  
+                        </TimePicker.IsEnabled>  
+                        <TimePicker.Time>  
+                            <Binding Path="EndTime" Mode="TwoWay" />  
+                        </TimePicker.Time>  
+                    </TimePicker>  
+                    <Button x:Uid="DevicePage_NotDisturb_Save" Content="Save" Tapped="OnSaveButtonTapped" />  
+                </StackPanel>  
+            </StackPanel>  
+        </StackPanel>  
+    </UserControl.Content>  
 </UserControl>

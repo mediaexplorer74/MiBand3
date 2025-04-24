@@ -1,8 +1,8 @@
-﻿// Decompiled with JetBrains decompiler
+﻿
 // Type: MiBandApp.ViewModels.PairingPageViewModel
 // Assembly: MiBandApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
 // MVID: 5DE7A56E-45AD-4B21-9740-D9903F766DB3
-// Assembly location: C:\Users\Admin\Desktop\RE\MiBandApp_1.21.4.60\MiBandApp.exe
+// 
 
 using Caliburn.Micro;
 using MetroLog;
@@ -77,13 +77,13 @@ namespace MiBandApp.ViewModels
 
     protected override async Task OnActivate()
     {
-      this._navigationService.BackPressed += new EventHandler<BackPressedEventArgs>(this.NavigationServiceOnBackPressed);
+      //this._navigationService.BackPressed += new EventHandler<EventArgs>(this.NavigationServiceOnBackPressed);
       this.Pair(this.AlreadyStarted);
     }
 
     protected override async Task OnDeactivate(bool close)
     {
-      this._navigationService.BackPressed -= new EventHandler<BackPressedEventArgs>(this.NavigationServiceOnBackPressed);
+      //this._navigationService.BackPressed -= new EventHandler<EventArgs>(this.NavigationServiceOnBackPressed);
       this._currentStatusBarProgressItem?.Hide();
     }
 
@@ -133,13 +133,14 @@ label_12:
       MessageDialog dialog = new MessageDialog(this._stringsLoader.GetString("PairingPageBindingFailedTryAgainMessage"), this._stringsLoader.GetString("MessageOopsHeader"));
       IList<IUICommand> commands1 = dialog.Commands;
       UICommand uiCommand1 = new UICommand(this._stringsLoader.GetString("PairingPageTryAgainOption"));
-      uiCommand1.put_Id((object) 1);
+      uiCommand1.Id = (object) 1;
       commands1.Add((IUICommand) uiCommand1);
       IList<IUICommand> commands2 = dialog.Commands;
       UICommand uiCommand2 = new UICommand(this._stringsLoader.GetString("PairingPageIgnoreOption"));
-      uiCommand2.put_Id((object) 2);
+      uiCommand2.Id = (object) 2;
       commands2.Add((IUICommand) uiCommand2);
-      dialog.put_CancelCommandIndex(1U);
+      dialog.CancelCommandIndex = 1U;
+
       IUICommand iuiCommand = await dialog.ShowAsyncSafe();
       return iuiCommand != null && (int) iuiCommand.Id == 1;
     }
@@ -238,9 +239,9 @@ label_12:
 
     private void NavigationServiceOnBackPressed(
       object sender,
-      BackPressedEventArgs backPressedEventArgs)
+      EventArgs backPressedEventArgs)
     {
-      backPressedEventArgs.put_Handled(true);
+      //backPressedEventArgs.Handled = true;
     }
   }
 }

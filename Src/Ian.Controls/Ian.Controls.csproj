@@ -7,8 +7,8 @@
     <ProjectGuid>{A47DE50A-546B-4384-8739-5CDB558D7641}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IanSavchenko.Controls</RootNamespace>
-    <AssemblyName>IanSavchenko.Controls</AssemblyName>
+    <RootNamespace>Ian.Controls</RootNamespace>
+    <AssemblyName>Ian.Controls</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
