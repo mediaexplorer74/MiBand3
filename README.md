@@ -1,21 +1,25 @@
-## MiBand3 vx.x.x - dev branch
+## MiBand3 vx.x.x - dev branch (MiBandApp codename)
 ![Logo](Images/logo.png)
 
 ## About 
 RnD of MiBandApp, Unofficial UWP Client for Mi Band 2 ( [Windows Store link](https://apps.microsoft.com/detail/9p9p4lqh99c7?hl=ru-RU&gl=RU)  ).
 
-FitForMiBand is/was a [simple VB.NET implementation](https://github.com/AL3X1/FitForMiBand) to control some aspects of the Xiaomi Mi Band 2. 
+## Design of WP8 retro-version (not my screenshots)
+![WP8](Images/retro01.png)
+![WP8](Images/retro02.png)
+![WP8](Images/retro03.png)
+![WP8](Images/retro04.png)
+![WP8](Images/retro05.png)
+![WP8](Images/retro06.png)
+
+## Tech details
+- I found old (xap) version of MiBandApp and decompiled it via DotPeek.
+- I already fixed all modules (except "main project", and XAML of Ian.Controls is still bad...).
+- I research Ian's Cariburn Micro "high-level coding" to fix all MiBandApp logics (c# & xaml code). 
  
-I'll ty to port ("translate") VB to C# and "upgrade" it for Xaiomi Band 3 (or even 4?) compatibilty.
-
-## Status / progress
-- Min. Win. SDK = 15063
-- Code R.E. (via DotPeek C# decompiler) completed. Only "main part" (MiBandApp) failed to build/compile..
-- Draft / damaged / 100500 bugs still here/there!
-
-
 ## ToDo
-- Fix 100500 bugs after MiBandp R.E.
+- Try to fix +-100500 bugs after MiBandp R.E.
+- Try to add Mi Band 3,4, and 5 compatibility.
 
 
 ## Reference(s)
@@ -23,6 +27,7 @@ I'll ty to port ("translate") VB to C# and "upgrade" it for Xaiomi Band 3 (or ev
 - https://github.com/superhans205, Brave VB.NET Developer (GitHub profile page deleted)
 - https://4pda.to/forum/index.php?showtopic=792038 4PDA, "Архив носимых устройств - Bind Mi Band Версия: 1.21.4.60" (Rus.)
 - https://web.archive.org/web/20181224120806/http://www.bindmiband.com/ Bind Mi Band (deleted; viewing available via WayBackMachine service)
+- bindmiband.blogspot.com/ "Shadow copy" of Bind Mi Band site (interestion blog about original MiBandApp "app family")
 
 ## .
 As is. No support. DIY. Learn purposes only.
