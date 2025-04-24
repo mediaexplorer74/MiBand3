@@ -16,6 +16,19 @@ RnD of MiBandApp, Unofficial UWP Client for Mi Band 2 ( [Windows Store link](htt
 - I found old (xap) version of MiBandApp and decompiled it via DotPeek.
 - I already fixed all modules (except "main project", and XAML of Ian.Controls is still bad...).
 - I research Ian's Cariburn Micro "high-level coding" to fix all MiBandApp logics (c# & xaml code). 
+
+## Planned features (to reconstruct)
+- Counting steps and setting goals
+- Smart alarm clocks
+- Sleep tracking (PRO function)
+- Step History (PRO function)
+- Display of distance traveled and calories burned (PRO function)
+- Full customization of the wristband
+- Pulse measurement
+- Syncing your history with OneDrive
+- Mi Band Firmware Update
+- Running detection
+- Deep/Light sleep Recognition
  
 ## ToDo
 - Try to fix +-100500 bugs after MiBandp R.E.
