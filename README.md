@@ -37,10 +37,10 @@ RnD of MiBandApp, Unofficial UWP Client for Mi Band 2 ( [Windows Store link](htt
 
 ## Reference(s)
 - https://github.com/superhans205/FitForMiBand Original src code (deleted by superhans205 in/at 2018)
-- https://github.com/superhans205, Brave VB.NET Developer (GitHub profile page deleted)
+- https://github.com/superhans205, Brave VB/C# Developer (GitHub profile page deleted)
 - https://4pda.to/forum/index.php?showtopic=792038 4PDA, "Архив носимых устройств - Bind Mi Band Версия: 1.21.4.60" (Rus.)
 - https://web.archive.org/web/20181224120806/http://www.bindmiband.com/ Bind Mi Band (deleted; viewing available via WayBackMachine service)
-- https://bindmiband.blogspot.com/ "Shadow copy" of Bind Mi Band site (interestion blog about original MiBandApp "app family")
+- https://bindmiband.blogspot.com/ "Shadow copy" of Bind Mi Band site (Very interesting blog about original MiBandApp "app family")
 
 ## .
 As is. No support. DIY. Learn purposes only.
