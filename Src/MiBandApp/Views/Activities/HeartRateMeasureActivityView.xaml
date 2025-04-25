@@ -20,7 +20,7 @@
 
         <!-- Replacing <Children> with direct child elements inside the Grid -->  
         <BitmapIcon Grid.RowSpan="2" Grid.Column="0" Width="30" Margin="0,0,10,0" 
-                    VerticalAlignment="Center" UriSource="../../Resources/Images/pulse1.png" />  
+                    VerticalAlignment="Center" UriSource="/Resources/Images/pulse1.png" />  
         <TextBlock Grid.Row="0" Grid.Column="1">  
             <TextBlock.Style>  
                 <StaticResource ResourceKey="ActivityItemTimeTextBlockStyle" />  

@@ -10,6 +10,7 @@ using MiBand.SDK.Core.MiBandOne;
 using MiBand.SDK.Tools;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.Bluetooth;
@@ -28,22 +29,34 @@ namespace MiBand.SDK
     public async Task<IEnumerable<IMiBandInfo>> FindMiBands()
     {
       this._log.Debug("Trying to find all devices");
-      DeviceInformationCollection source = await DeviceInformation.FindAllAsync(GattDeviceService.GetDeviceSelectorFromUuid(ServiceUuid.Mili)).AsTask<DeviceInformationCollection>().ConfigureAwait(false);
-      this._log.Debug(string.Format("Found {0} devices", (object) ((IReadOnlyCollection<DeviceInformation>) source).Count));
-      return (IEnumerable<IMiBandInfo>) ((IEnumerable<DeviceInformation>) source).Select<DeviceInformation, MiBandInfo>((Func<DeviceInformation, MiBandInfo>) (t => new MiBandInfo(t.Name, t.Id)));
+      DeviceInformationCollection source =
+                await DeviceInformation.FindAllAsync(
+                    GattDeviceService.GetDeviceSelectorFromUuid(ServiceUuid.Mili))
+                .AsTask<DeviceInformationCollection>().ConfigureAwait(false);
+      this._log.Debug(string.Format("Found {0} devices", 
+          (object) ((IReadOnlyCollection<DeviceInformation>) source).Count));
+      return (IEnumerable<IMiBandInfo>) ((IEnumerable<DeviceInformation>) source)
+                .Select<DeviceInformation, MiBandInfo>( t => new MiBandInfo(t.Name, t.Id) );
     }
 
     public async Task<IMiBand> CreateMiBand(IMiBandInfo miBandInfo)
     {
-      return (IMiBand) await this.FindDeviceInternal(miBandInfo.DeviceId).ConfigureAwait(false);
+      return (IMiBand) await this.FindDeviceInternal(miBandInfo.DeviceId)
+                .ConfigureAwait(false);
     }
 
     private async Task<MiBandBase> FindDeviceInternal(string knownDeviceId)
     {
-      GattDeviceService gattService = await this.FindBandGattService(knownDeviceId).ConfigureAwait(false);
+      GattDeviceService gattService = await this.FindBandGattService(knownDeviceId)
+                .ConfigureAwait(false);
+
       if (gattService == null)
         return (MiBandBase) null;
-      return gattService.GetCharacteristics(MiBand.SDK.Core.MiBandOne.CharacteristicGuid.DeviceInfo).Count == 1 ? await this.CreateMiBand1(gattService).ConfigureAwait(false) : this.CreateMiBand2(gattService);
+      return 
+          gattService.GetCharacteristics(
+              MiBand.SDK.Core.MiBandOne.CharacteristicGuid.DeviceInfo ).Count == 1
+          ? await this.CreateMiBand1(gattService).ConfigureAwait(false)
+          : this.CreateMiBand2(gattService);
     }
 
     private MiBandBase CreateMiBand2(GattDeviceService gattService)
@@ -54,9 +67,13 @@ namespace MiBand.SDK
 
     private async Task<MiBandBase> CreateMiBand1(GattDeviceService gattService)
     {
-      byte[] arraySafe = (await gattService.GetCharacteristics(MiBand.SDK.Core.MiBandOne.CharacteristicGuid.DeviceInfo)[0].ReadValueAsync((BluetoothCacheMode) 1)).Value.ToArraySafe();
+      byte[] arraySafe = (await gattService.GetCharacteristics(
+          MiBand.SDK.Core.MiBandOne.CharacteristicGuid.DeviceInfo)[0]
+          .ReadValueAsync((BluetoothCacheMode) 1)).Value.ToArraySafe();
+
       if (arraySafe == null)
         return (MiBandBase) null;
+
       BandDeviceInfo bandDeviceInfo = BandDeviceInfo.FromMiBand1Bytes(arraySafe);
       this._log.Debug("Creating Mi Band 1. Firmware: " + (object) bandDeviceInfo.FirmwareVersion);
       switch (bandDeviceInfo.FirmwareVersion.Major)
@@ -74,31 +91,48 @@ namespace MiBand.SDK
 
     private async Task<GattDeviceService> FindBandGattService(string knownDeviceId)
     {
-      this._log.Debug(string.Format("Looking for known device id: {0}", (object) knownDeviceId));
-      GattDeviceService bandGattService = await this.GetGattDeviceServiceForDeviceId(knownDeviceId).ConfigureAwait(false);
+      this._log.Debug(string.Format("Looking for known device id: {0}",  knownDeviceId));
+      GattDeviceService bandGattService = null;
+
+      try
+      {
+        bandGattService = await this.GetGattDeviceServiceForDeviceId(knownDeviceId)
+                    .ConfigureAwait(false);
+      }
+      catch (Exception ex)
+      {
+        Debug.WriteLine(ex.Message);
+      }
+
       if (bandGattService != null)
       {
         this._log.Debug("Gatt device found");
         return bandGattService;
       }
-      this._log.Warning(string.Format("Gatt device not found by id: {0}", (object) knownDeviceId));
-      return (GattDeviceService) null;
+      this._log.Warning(string.Format("Gatt device not found by id: {0}",
+          knownDeviceId));
+      return null;
     }
 
     private async Task<GattDeviceService> GetGattDeviceServiceForDeviceId(string deviceId)
     {
+      GattDeviceService serviceForDeviceId = null;
       try
       {
-        return await GattDeviceService.FromIdAsync(deviceId).AsTask<GattDeviceService>().ConfigureAwait(false);
+        //return
+        serviceForDeviceId  = await GattDeviceService.FromIdAsync(deviceId)
+                    .AsTask<GattDeviceService>().ConfigureAwait(false);
       }
       catch (Exception ex)
       {
-        this._log.Info(string.Format("Not found gatt service for device id {0} with {1}", (object) deviceId, (object) ex));
-        //return await Task.FromResult<GattDeviceService>((GattDeviceService) null);
+        this._log.Info(string.Format("Not found gatt service for device id {0} with {1}",
+            deviceId, ex));
+        return await Task.FromResult<GattDeviceService>(null);
       }
-            //GattDeviceService serviceForDeviceId;
-        //return serviceForDeviceId;
-        return await Task.FromResult<GattDeviceService>((GattDeviceService)null);
+       
+      //GattDeviceService serviceForDeviceId;
+      return serviceForDeviceId;
+      //return await Task.FromResult<GattDeviceService>((GattDeviceService)null);
     }
   }
 }

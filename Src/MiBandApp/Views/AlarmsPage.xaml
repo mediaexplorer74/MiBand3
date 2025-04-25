@@ -1,0 +1,155 @@
+﻿<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:micro="using:Caliburn.Micro" 
+      x:Class="MiBandApp.Views.AlarmsPage" 
+      x:Name="PageRoot">
+    <Page.IsEnabled>
+        <Binding Path="IsPageEnabled" />
+    </Page.IsEnabled>
+    <Page.Style>
+        <StaticResource ResourceKey="DefaultPageStyle" />
+    </Page.Style>
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>               
+                    <ResourceDictionary Source="/Resources/SpecificStyles.xaml" />   
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Compact">
+            <CommandBar.IsEnabled>
+                <Binding Path="IsPageEnabled" />
+            </CommandBar.IsEnabled>
+            <CommandBar.PrimaryCommands>
+               
+                    <AppBarButton x:Uid="AlarmsPage_AddAlarm"
+                                  x:Name="AddAlarm" 
+                                  Icon="add" 
+                                  Label="add alarm" />
+                
+            </CommandBar.PrimaryCommands>
+            <CommandBar.SecondaryCommands>
+              
+                    <AppBarButton x:Uid="AlarmsPage_Help" 
+                                  x:Name="AlarmsNotWorking"
+                                  Label="help" />
+              
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+    
+    <Page.Content>
+        <Grid>
+            <!--Grid.Margin>
+                <StaticResource ResourceKey="RootContainerThickness" />
+            </Grid.Margin-->
+            <Grid.RowDefinitions>
+               
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+              
+            </Grid.RowDefinitions>
+            
+            <Grid>
+                    <StackPanel Grid.Row="0">
+                        <Grid>
+                          <TextBlock>
+                            <TextBlock.Style>
+                        <StaticResource ResourceKey="AppTitleStyle" />
+                          </TextBlock.Style>
+                                        </TextBlock>
+                                        <TextBlock x:Uid="AlarmsPageTitle" Text="alarms">
+                          <TextBlock.Style>
+                            <StaticResource ResourceKey="PageTitleStyle" />
+                          </TextBlock.Style>
+                        </TextBlock>
+                            </Grid>
+                    </StackPanel>
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible" VerticalScrollMode="Auto">
+                        <!--Grid>
+                            <ListView Attach="[Event SelectionChanged] = [Action OnSelectedChanged($eventArgs)];" IsItemClickEnabled="True" SelectionMode="Single">
+                                <ItemsSource>
+                                    <Binding Path="Alarms" />
+                                </ItemsSource>
+                                <SelectedIndex>
+                                    <Binding Path="SelectionIndex" Mode="TwoWay" />
+                                </SelectedIndex>
+                                <Resources>
+                                    <ResourceDictionary>
+                                        <Style TargetType="ListViewItem">
+                                            <BasedOn>
+                                                <StaticResource ResourceKey="ListViewItemWithNoPressedAnimationStyle" />
+                                            </BasedOn>
+                                            <Setters>
+                                                <SetterBaseCollection>
+                                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                                </SetterBaseCollection>
+                                            </Setters>
+                                        </Style>
+                                    </ResourceDictionary>
+                                </Resources>
+                                <ItemTemplate>
+                                    <DataTemplate>
+                                        <Template>
+                                            <ContentControl HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                                <micro:Model>
+                                                    <Binding />
+                                                </micro:Model>
+                                            </ContentControl>
+                                        </Template>
+                                    </DataTemplate>
+                                </ItemTemplate>
+                            </ListView>
+                        </Grid-->
+                    </ScrollViewer>
+                    <TextBlock x:Uid="AlarmsPage_NoAlarms" Grid.Row="1" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock.Style>
+                        <StaticResource ResourceKey="GrayBigTextBlockStyle" />
+                    </TextBlock.Style>
+                    <TextBlock.Visibility>
+                        <Binding Path="AlarmsEmpty">
+                            <!--Converter>
+                                <StaticResource ResourceKey="BoolToVis" />
+                            </Converter-->
+                        </Binding>
+                    </TextBlock.Visibility>
+                    <TextBlock.Inlines>
+                    <!--InlineCollection implicititems="You have no alarms configured" /-->
+                        <Run Text="You have no alarms configured" />
+                    </TextBlock.Inlines>
+                    </TextBlock>
+                    <TextBlock Grid.Row="2" VerticalAlignment="Bottom">
+                <TextBlock.Style>
+                  <ThemeResource ResourceKey="GrayTextBlockStyle" />
+                </TextBlock.Style>
+                    <TextBlock.Inlines>
+                        <!--InlineCollection-->
+                <Run Text="← " />
+                <Run x:Uid="PressBackButton" Text="Press back button when you are done." />
+              <!--/InlineCollection-->
+            </TextBlock.Inlines>
+                    </TextBlock>
+            </Grid>
+        </Grid>
+    </Page.Content>
+</Page>
+<!--Page
+    x:Class="MiBandApp.Views.AlarmsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MiBandApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+
+    </Grid>
+</Page-->
+    

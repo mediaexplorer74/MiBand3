@@ -115,6 +115,15 @@
                 </Style.Setters>
             </Style>
 
+            <Style x:Key="GrayTextBlockStyle" TargetType="TextBlock">
+                <Style.BasedOn>
+                    <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
+                </Style.BasedOn>
+                <Style.Setters>                    
+                        <Setter Property="LineHeight" Value="NaN" />                  
+                </Style.Setters>
+            </Style>
+
 
             <Style x:Key="GrayBigTextBlockStyle" TargetType="TextBlock">
                 <Style.BasedOn>

@@ -23,18 +23,18 @@
                         <Setter Property="Margin" Value="0,0,10,10" />  
                     </Style>  
                 </StackPanel.Resources>  
-                <BitmapIcon UriSource="../../Resources/Images/clock.png" />  
-                <BitmapIcon UriSource="../../Resources/Images/iconmonstr-calendar-5-240.png"  
+                <BitmapIcon UriSource="/Resources/Images/clock.png" />  
+                <BitmapIcon UriSource="/Resources/Images/iconmonstr-calendar-5-240.png"  
                             Visibility="{Binding Path=IsDateShown, Converter={StaticResource BoolToVis}}" />  
-                <BitmapIcon UriSource="../../Resources/Images/footsteps.png"  
+                <BitmapIcon UriSource="/Resources/Images/footsteps.png"  
                             Visibility="{Binding Path=DisplayItems[0], Converter={StaticResource BoolToVis}}" />  
-                <BitmapIcon UriSource="../../Resources/Images/road-with-two-placeholders.png"  
+                <BitmapIcon UriSource="/Resources/Images/road-with-two-placeholders.png"  
                             Visibility="{Binding Path=DisplayItems[1], Converter={StaticResource BoolToVis}}" />  
-                <BitmapIcon UriSource="../../Resources/Images/calories.png"  
+                <BitmapIcon UriSource="/Resources/Images/calories.png"  
                             Visibility="{Binding Path=DisplayItems[2], Converter={StaticResource BoolToVis}}" />  
-                <BitmapIcon UriSource="../../Resources/Images/heart305.png"  
+                <BitmapIcon UriSource="/Resources/Images/heart305.png"  
                             Visibility="{Binding Path=DisplayItems[3], Converter={StaticResource BoolToVis}}" />  
-                <BitmapIcon UriSource="../../Resources/Images/half-battery.png"  
+                <BitmapIcon UriSource="/Resources/Images/half-battery.png"  
                             Visibility="{Binding Path=DisplayItems[4], Converter={StaticResource BoolToVis}}" />  
             </StackPanel>  
             <TextBlock x:Uid="DevicePage_DisplaySettingsTip" IsTapEnabled="False"  

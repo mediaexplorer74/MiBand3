@@ -49,7 +49,9 @@ namespace MiBandApp.ViewModels
       this._clockService = clockService;
       this._settings = settings;
       this._navigationService = navigationService;
-      this.Alarms = new ObservableCollection<BandAlarmViewModel>(this._settings.Alarms.GetAllSaved().Select<Alarm, BandAlarmViewModel>((Func<Alarm, BandAlarmViewModel>) (t => new BandAlarmViewModel(t, this))));
+      this.Alarms = new ObservableCollection<BandAlarmViewModel>(
+          this._settings.Alarms.GetAllSaved().Select<Alarm, BandAlarmViewModel>
+            (t => new BandAlarmViewModel(t, this)));
     }
 
     public ObservableCollection<BandAlarmViewModel> Alarms { get; set; }
@@ -72,7 +74,8 @@ namespace MiBandApp.ViewModels
     {
       get
       {
-        return this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum) Capability.SmartAlarm);
+        return this._bandController.DeviceInfo.Value.Capabilities.HasFlag(
+            (Enum) Capability.SmartAlarm);
       }
     }
 
@@ -88,7 +91,18 @@ namespace MiBandApp.ViewModels
       }
     }
 
-    public int MaxAlarmCount => this._bandController.DeviceInfo.Value.AlarmsCount;
+    public int MaxAlarmCount
+    {
+        get
+        {
+            int maxalarmscount = 1; // temp
+
+            if (this._bandController.DeviceInfo.Value != null)
+                maxalarmscount = this._bandController.DeviceInfo.Value.AlarmsCount;
+           
+            return maxalarmscount;
+        }
+    }
 
     public void OnSelectedChanged(SelectionChangedEventArgs args)
     {
@@ -105,7 +119,13 @@ namespace MiBandApp.ViewModels
       this.FoldAllAlarms();
     }
 
-    public bool CanAddAlarm => this.Alarms.Count < this.MaxAlarmCount;
+    public bool CanAddAlarm
+    {
+        get
+        {
+            return this.Alarms.Count < this.MaxAlarmCount;
+        }
+    }
 
     public void AddAlarm()
     {
@@ -130,12 +150,17 @@ namespace MiBandApp.ViewModels
 
     public async void AlarmsNotWorking()
     {
-      IUICommand iuiCommand = await new MessageDialog(this._resourceLoader.GetString("AlarmsPage_NotWorkingTip"), this._resourceLoader.GetString("MessageInformationHeader")).ShowAsync();
+      IUICommand iuiCommand = 
+                await new MessageDialog(this._resourceLoader.GetString(
+                    "AlarmsPage_NotWorkingTip"), 
+                    this._resourceLoader.GetString("MessageInformationHeader")).ShowAsync();
     }
 
     private void CheckOneTimeAlarms()
     {
-      foreach (BandAlarmViewModel bandAlarmViewModel in this.Alarms.Where<BandAlarmViewModel>((Func<BandAlarmViewModel, bool>) (t => !t.Repeat && t.IsEnabled && !t.HasChanged)))
+      foreach (BandAlarmViewModel bandAlarmViewModel
+                in this.Alarms.Where<BandAlarmViewModel>
+                  (t => !t.Repeat && t.IsEnabled && !t.HasChanged))
       {
         if (this._settings.Alarms.IsAlarmExpired(bandAlarmViewModel.GetAlarm()))
         {
@@ -149,7 +174,7 @@ namespace MiBandApp.ViewModels
       object sender,
       EventArgs backPressedEventArgs)
     {
-      if (this.Alarms.Any<BandAlarmViewModel>((Func<BandAlarmViewModel, bool>) (t => t.IsUnfolded)))
+      if (this.Alarms.Any<BandAlarmViewModel>(t => t.IsUnfolded))
       {
         this.FoldAllAlarms();
         //backPressedEventArgs.Handled = true;
@@ -160,7 +185,7 @@ namespace MiBandApp.ViewModels
         if (this._isExitingPage)
           return;
         this._isExitingPage = true;
-        if (this.Alarms.Any<BandAlarmViewModel>((Func<BandAlarmViewModel, bool>) (t => t.HasChanged))
+        if (this.Alarms.Any<BandAlarmViewModel>(t => t.HasChanged)
                     || this._alarmsChanged)
           await this.SaveAll().ConfigureAwait(true);
         this._navigationService.GoBack();
@@ -178,8 +203,10 @@ namespace MiBandApp.ViewModels
     private async Task SaveAll()
     {
       this.IsPageEnabled = false;
-      StatusBarProgressItem statusBarMessage = this._statusBarNotificationService.Show<StatusBarProgressItem>(
-          new StatusBarProgressItem(this._resourceLoader.GetString("StatusSavingOnDevice"), new double?()));
+      StatusBarProgressItem statusBarMessage = 
+        this._statusBarNotificationService.Show<StatusBarProgressItem>(
+          new StatusBarProgressItem(this._resourceLoader.GetString("StatusSavingOnDevice"),
+          new double?()));
       try
       {
         ConfiguredTaskAwaitable configuredTaskAwaitable;
@@ -199,7 +226,8 @@ namespace MiBandApp.ViewModels
             Alarm alarm2 = this.Alarms[i].GetAlarm();
             if (alarm2 != alarm1 || this.Alarms[i].HasChanged)
             {
-              configuredTaskAwaitable = this._bandController.MiBand.SetAlarm(i, alarm2).ConfigureAwait(true);
+              configuredTaskAwaitable = 
+                    this._bandController.MiBand.SetAlarm(i, alarm2).ConfigureAwait(true);
               await configuredTaskAwaitable;
             }
           }
@@ -215,13 +243,16 @@ namespace MiBandApp.ViewModels
               this.Alarms[i].GetAlarm()).ConfigureAwait(true);
           await configuredTaskAwaitable;
         }
-        this._settings.Alarms.SaveAll((IList<Alarm>) this.Alarms.Select<BandAlarmViewModel, Alarm>(
-            (Func<BandAlarmViewModel, Alarm>) (t => t.GetAlarm())).ToList<Alarm>());
+        this._settings.Alarms.SaveAll(this.Alarms.Select<BandAlarmViewModel, Alarm>(
+            t => t.GetAlarm()).ToList<Alarm>());
         savedAlarms = (List<Alarm>) null;
       }
       catch (Exception ex)
       {
-        this._statusBarNotificationService.Show<StatusBarMessage>(new StatusBarMessage(this._resourceLoader.GetString("StatusFailedToSaveTryAgainLater"), TimeSpan.FromSeconds(3.0)));
+        this._statusBarNotificationService.Show<StatusBarMessage>(
+            new StatusBarMessage(
+                this._resourceLoader.GetString("StatusFailedToSaveTryAgainLater"), 
+                TimeSpan.FromSeconds(3.0)));
       }
       statusBarMessage.Hide();
       this.IsPageEnabled = true;
@@ -230,16 +261,20 @@ namespace MiBandApp.ViewModels
     protected override async Task OnActivate()
     {
       //this._navigationService.BackPressed += new EventHandler<EventArgs>(this.NavigationServiceOnBackPressed);
-      this._clockService.MinuteTick += new EventHandler<ClockTickEventArgs>(this.ClockServiceOnMinuteTick);
+      this._clockService.MinuteTick
+                += new EventHandler<ClockTickEventArgs>(this.ClockServiceOnMinuteTick);
     }
 
     protected override async Task OnDeactivate(bool close)
     {
-      //this._navigationService.BackPressed -= new EventHandler<EventArgs>(this.NavigationServiceOnBackPressed);
-      this._clockService.MinuteTick -= new EventHandler<ClockTickEventArgs>(this.ClockServiceOnMinuteTick);
+      //this._navigationService.BackPressed
+      //               -= new EventHandler<EventArgs>(this.NavigationServiceOnBackPressed);
+      this._clockService.MinuteTick 
+                -= new EventHandler<ClockTickEventArgs>(this.ClockServiceOnMinuteTick);
     }
 
-    private void ClockServiceOnMinuteTick(object sender, ClockTickEventArgs clockTickEventArgs)
+    private void ClockServiceOnMinuteTick(object sender, 
+                            ClockTickEventArgs clockTickEventArgs)
     {
       this.CheckOneTimeAlarms();
     }

@@ -85,7 +85,7 @@
                                       HorizontalContentAlignment="Center"  
                                       interactivity:Interaction.Behaviors="{Binding [Event Tapped] = [Action MeasureHeartRate()]}"  
                                       Visibility="{Binding Path=IsMeasuring, Converter={StaticResource BoolToVis}, ConverterParameter=False}">  
-                            <BitmapIcon VerticalAlignment="Center" UriSource="../../Resources/Images/heart378.png" />  
+                            <BitmapIcon VerticalAlignment="Center" UriSource="/Resources/Images/heart378.png" />  
                         </ListViewItem>  
                     </Grid>  
                 </controls:Content>  

@@ -10,7 +10,7 @@
     <UserControl.Resources>  
         <ResourceDictionary>  
             <ResourceDictionary.MergedDictionaries>  
-                <ResourceDictionary Source="../../Resources/SpecificStyles.xaml" />  
+                <ResourceDictionary Source="/Resources/SpecificStyles.xaml" />  
             </ResourceDictionary.MergedDictionaries>  
         </ResourceDictionary>  
     </UserControl.Resources>  

@@ -32,10 +32,11 @@
 
         <!-- Fix for XDG0049 and related issues -->
         <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" VerticalAlignment="Center">
-            <BitmapIcon Height="30" Margin="0,0,10,0" UriSource="../../Resources/Images/run.png" />
+            <BitmapIcon Height="30" Margin="0,0,10,0" UriSource="/Resources/Images/run.png" />
             <interactivity:Interaction.Behaviors>
                 <core:DataTriggerBehavior Binding="{Binding IsSmallRun}" Value="True">
-                    <core:ChangePropertyAction TargetObject="{Binding ElementName=BitmapIcon}" PropertyName="Height" Value="20" />
+                    <core:ChangePropertyAction TargetObject="{Binding ElementName=BitmapIcon}" 
+                                               PropertyName="Height" Value="20" />
                 </core:DataTriggerBehavior>
             </interactivity:Interaction.Behaviors>
         </Grid>

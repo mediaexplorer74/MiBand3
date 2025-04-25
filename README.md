@@ -14,11 +14,12 @@ RnD of MiBandApp, Unofficial UWP Client for Mi Band 2 ( [Windows Store link](htt
 
 ## Screenshot
 ![W11](Images/sshot01.png)
+![W11](Images/sshot02.png)
 
 ## Tech details
 - I found old (xap) version of MiBandApp and decompiled it via DotPeek.
-- I already fixed all modules (except "main project", and XAML of Ian.Controls is still bad...).
-- At now, I'm doing research of Ian's Cariburn Micro "high-level coding" to fix all MiBandApp logics (c# & xaml code). 
+- I already fixed main app parts (except some usercontrols, main app views & viewmodels)
+- At now, I'm doing research of Ian's Cariburn Micro "high-level coding" to fix all MiBandApp MVVM logics ;) 
 
 ## Planned features (to reconstruct)
 - Counting steps and setting goals

@@ -17,7 +17,7 @@
           
         <BitmapIcon Grid.Row="0" Grid.Column="0" MinHeight="0" Margin="0,-2,10,-2"   
                     VerticalAlignment="Center"   
-                    UriSource="../../Resources/Images/bed29.png" />  
+                    UriSource="/Resources/Images/bed29.png" />  
         <StackPanel Grid.Column="1">  
             <StackPanel Orientation="Horizontal">  
                 <TextBlock>  

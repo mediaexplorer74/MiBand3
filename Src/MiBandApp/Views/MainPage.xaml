@@ -29,12 +29,12 @@
                     <Binding Path="IsBinded" />
                 </AppBarButton.IsEnabled>
                 <AppBarButton.Icon>
-                    <BitmapIcon UriSource="../Resources/Images/appbar.clock.png" />
+                    <BitmapIcon UriSource="/Resources/Images/appbar.clock.png" />
                 </AppBarButton.Icon>
             </AppBarButton>
             <AppBarButton x:Uid="MainPageHistoryButton" x:Name="OpenHistory" Label="history">
                 <AppBarButton.Icon>
-                    <BitmapIcon UriSource="../Resources/Images/appbar.graph.line.png" />
+                    <BitmapIcon UriSource="/Resources/Images/appbar.graph.line.png" />
                 </AppBarButton.Icon>
             </AppBarButton>
             <AppBarButton x:Uid="MainPageDeviceButton" x:Name="ManageDevice" Label="device">
@@ -50,7 +50,7 @@
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Resources/SpecificStyles.xaml" />            
+                <ResourceDictionary Source="/Resources/SpecificStyles.xaml" />            
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
@@ -164,7 +164,7 @@
                                                                         <SetterBaseCollection>
                                                                             <Setter Property="Height" Value="50" />
                                                                             <Setter Property="Margin" Value="5 0 20 0" />
-                                                                            <Setter Property="UriSource" Value="../Resources/Images/heart305.png" />
+                                                                            <Setter Property="UriSource" Value="/Resources/Images/heart305.png" />
                                                                         </SetterBaseCollection>
                                                                     </Setters>
                                                                 </Style>
@@ -175,12 +175,12 @@
                                                             <ItemCollection>
                                                                 <ListViewItem>
                                                                 <ListViewItem.Content>
-                                                                        <BitmapIcon Height="50" Margin="0,0,20,0" UriSource="../Resources/Images/footsteps.png" />
+                                                                        <BitmapIcon Height="50" Margin="0,0,20,0" UriSource="/Resources/Images/footsteps.png" />
                                                                     </ListViewItem.Content>
                                                                 </ListViewItem>
                                                                 <ListViewItem>
                                                                 <ListViewItem.Content>
-                                                                        <BitmapIcon Height="50" Margin="0,0,20,0" UriSource="../Resources/Images/moon-sleep-512-000000.png" />
+                                                                        <BitmapIcon Height="50" Margin="0,0,20,0" UriSource="/Resources/Images/moon-sleep-512-000000.png" />
                                                                     </ListViewItem.Content>
                                                                 </ListViewItem>
                                                             </ItemCollection>
@@ -192,7 +192,7 @@
                                                             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                                                                 <Children>
                                                                     <UIElementCollection>
-                                                                        <BitmapIcon Height="40" HorizontalAlignment="Right" UriSource="../Resources/Images/business57.png">
+                                                                        <BitmapIcon Height="40" HorizontalAlignment="Right" UriSource="/Resources/Images/business57.png">
                                                                             <Foreground>
                                                                                 <ThemeResource ResourceKey="PhoneDisabledBrush" />
                                                                             </Foreground>
@@ -204,7 +204,7 @@
                                                                                 </Binding>
                                                                             </Visibility>
                                                                         </BitmapIcon>
-                                                                        <BitmapIcon Height="40" HorizontalAlignment="Right" UriSource="../Resources/Images/business64.png">
+                                                                        <BitmapIcon Height="40" HorizontalAlignment="Right" UriSource="/Resources/Images/business64.png">
                                                                             <Foreground>
                                                                                 <ThemeResource ResourceKey="PhoneDisabledBrush" />
                                                                             </Foreground>

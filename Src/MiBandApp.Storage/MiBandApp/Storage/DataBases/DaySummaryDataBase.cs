@@ -72,8 +72,11 @@ namespace MiBandApp.Storage.DataBases
         using (SQLiteConnection connection = this.CreateConnection())
         {
           DaySummary orAddDay = this.GetOrAddDay(DateTime.Now.Date, connection);
+          if (realtimeStepsData == null)
+              return;
           if (orAddDay.Steps >= realtimeStepsData.TotalSteps)
             return;
+
           orAddDay.Steps = realtimeStepsData.TotalSteps;
           orAddDay.StepsGoal = this._settings.GetSavedGoalInfo().StepsGoal;
           connection.Update((object) orAddDay);
