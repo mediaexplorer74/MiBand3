@@ -17,7 +17,7 @@ RnD of MiBandApp, Unofficial UWP Client for Mi Band 2 ( [Windows Store link](htt
 ![W11](Images/sshot02.png)
 
 ## Tech details
-- I found old (xap) version of MiBandApp and decompiled it via DotPeek.
+- I found [old xap version of MiBandApp](https://4pda.to/forum/index.php?showtopic=792038) and decompiled it via DotPeek.
 - I already fixed main app parts (except some usercontrols, main app views & viewmodels)
 - At now, I'm doing research of Ian's Cariburn Micro "high-level coding" to fix all MiBandApp MVVM logics ;) 
 
@@ -35,7 +35,7 @@ RnD of MiBandApp, Unofficial UWP Client for Mi Band 2 ( [Windows Store link](htt
 - Deep/Light sleep Recognition
  
 ## ToDo
-- Try to fix +-100500 bugs after MiBandp R.E.
+- Try to fix +-100500 bugs after MiBand R.E.
 - Try to add Mi Band 3,4, and 5 compatibility.
 
 
