@@ -94,19 +94,25 @@ namespace MiBandApp.ViewModels
     {
       get
       {
-        switch (this._bandController.DeviceInfo.Value.Model)
+        if (this._bandController.DeviceInfo.Value != null)
         {
-          case MiBandModel.MiBand1:
-            return "Mi Band 1.0";
-          case MiBandModel.MiBand1A:
-            return "Mi Band 1A";
-          case MiBandModel.MiBand1S:
-            return "Mi Band 1S";
-          case MiBandModel.MiBand2:
-            return "Mi Band 2";
-          default:
-            return "";
+            switch (this._bandController.DeviceInfo.Value.Model)
+            {
+                case MiBandModel.MiBand1:
+                    return "Mi Band 1.0";
+                case MiBandModel.MiBand1A:
+                    return "Mi Band 1A";
+                case MiBandModel.MiBand1S:
+                    return "Mi Band 1S";
+                case MiBandModel.MiBand2:
+                    return "Mi Band 2";
+                default:
+                    return "";
+            }
         }
+
+        // Temp / Debug
+        return "Mi Band 3";
       }
     }
 
@@ -114,7 +120,8 @@ namespace MiBandApp.ViewModels
     {
       if (!this._locateWarningShown)
       {
-        IUICommand iuiCommand = await new MessageDialog(this._stringsLoader.GetString("DevicePageLocateWarning"), 
+        IUICommand iuiCommand = await new MessageDialog(
+            this._stringsLoader.GetString("DevicePageLocateWarning"), 
             this._stringsLoader.GetString("MessageInformationHeader")).ShowAsync();
         this._locateWarningShown = true;
       }
@@ -193,9 +200,7 @@ namespace MiBandApp.ViewModels
                 await errorDialog.ShowAsyncSafe();
                 this._navigationService.GoBack();
             }
-            // Fix for CS0103: The name '__methodptr' does not exist in the current context
-            // Replace the usage of '__methodptr' with lambda expressions for method references.
-
+           
             messageDialog.Commands.Add(new UICommand(
                 this._stringsLoader.GetString("DevicePageUnbindYesAnswer"),
                 command => this.DoUnbind()));
@@ -204,9 +209,7 @@ namespace MiBandApp.ViewModels
                 this._stringsLoader.GetString("DevicePageUnbindNoAnswer"),
                 command => { /* No action needed for "No" */ }));
 
-            // Fix for CS1056: Unexpected character '\u003C' and '\u003E'
-            // These errors are caused by invalid characters in the code. Replace them with valid syntax.
-
+          
             messageDialog.Commands.Add(new UICommand(
                 this._stringsLoader.GetString("DevicePage_RebootYesAnswer"),
                 command => this.DoRebootDevice()));
@@ -215,40 +218,38 @@ namespace MiBandApp.ViewModels
                 this._stringsLoader.GetString("DevicePage_RebootNoAnswer"),
                 command => { /* No action needed for "No" */ }));
 
-            // Fix for CS0103: The name 'b__28_1' does not exist in the current context
-            // This error occurs because the compiler-generated method reference is missing. Replace it with a lambda.
-
+          
             messageDialog.Commands.Add(new UICommand(
                 this._stringsLoader.GetString("DevicePageUnbindNoAnswer"),
                 command => { /* No action needed for "No" */ }));
 
-            // Fix for CS1003: Syntax error, ',' expected
-            // Ensure that all method calls and constructors have the correct number of arguments and proper syntax.
-
+           
             messageDialog.DefaultCommandIndex = 0;
             messageDialog.CancelCommandIndex = 1;
 
-            // Fix for CS1002: ; expected
-            // Ensure that all statements are properly terminated with a semicolon.
-
+          
             IUICommand iuiCommand1 = await messageDialog.ShowAsync();
 
-            // Fix for CS1513: } expected
-            // Ensure that all blocks are properly closed with a closing brace.
+           
 
             if (errorDialog != null)
             {
                 await errorDialog.ShowAsyncSafe();
                 this._navigationService.GoBack();
             }
-      messageDialog.CancelCommandIndex = (1U);
-      messageDialog.DefaultCommandIndex = (1U);
-      IUICommand iuiCommand2 = await messageDialog.ShowAsync();
-    }
+
+          messageDialog.CancelCommandIndex = (1U);
+          messageDialog.DefaultCommandIndex = (1U);
+          IUICommand iuiCommand2 = await messageDialog.ShowAsync();
+        }
 
         public async void TryReboot()
         {
-            if (!this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum)Capability.Reboot) && this._bandController.DeviceInfo.Value.Model == MiBandModel.MiBand2)
+            if 
+            (
+                !this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum)Capability.Reboot) 
+                && this._bandController.DeviceInfo.Value.Model == MiBandModel.MiBand2
+            )
             {
                 IUICommand iuiCommand1 = await new MessageDialog(
                     this._stringsLoader.GetString("DevicePage_MiBand2RebootMessage"),
@@ -277,61 +278,98 @@ namespace MiBandApp.ViewModels
             }
         }
 
+    // OnActivate
     protected override async Task OnActivate()
     {
       this.SettingItems.Clear();
       this.SettingItems.Add((DeviceSettingViewModelBase) this._batteryViewModel);
       this.SettingItems.Add((DeviceSettingViewModelBase) this._firmwareViewModel);
       this.SettingItems.Add((DeviceSettingViewModelBase) this._wearingLocationViewModel);
-      if (this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum) Capability.LedColors))
-        this.SettingItems.Add((DeviceSettingViewModelBase) this._ledsColorViewModel);
-      if (this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum) Capability.DisplayItems))
-        this.SettingItems.Add((DeviceSettingViewModelBase) this._displayViewModel);
-      if (this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum) Capability.ActivityReminder))
-        this.SettingItems.Add((DeviceSettingViewModelBase) this._activityReminderViewModel);
-      if (this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum) Capability.NotDisturbMode))
-        this.SettingItems.Add((DeviceSettingViewModelBase) this._notDisturbViewModel);
-      if (this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum) Capability.WristLiftHighlight))
-        this.SettingItems.Add((DeviceSettingViewModelBase) this._highlightOnWristLiftViewModel);
-      if (this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum) Capability.FlipDisplayOnWristRotate))
-        this.SettingItems.Add((DeviceSettingViewModelBase) this._flipDisplayOnWristRotateViewModel);
-      if (this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum) Capability.GoalReachedNotificationConfigurable))
-        this.SettingItems.Add((DeviceSettingViewModelBase) this._goalReachedNotificationViewModel);
-      if (this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum) Capability.HeartRate))
-        this.SettingItems.Add((DeviceSettingViewModelBase) this._heartRateDuringSleepViewModel);
+
+      // RnD / Test
+      if (this._bandController.DeviceInfo.Value != null)
+      {
+            if (this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum)Capability.LedColors))
+                this.SettingItems.Add((DeviceSettingViewModelBase)this._ledsColorViewModel);
+
+            if (this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum)Capability.DisplayItems))
+                this.SettingItems.Add((DeviceSettingViewModelBase)this._displayViewModel);
+
+            if (this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum)Capability.ActivityReminder))
+                this.SettingItems.Add((DeviceSettingViewModelBase)this._activityReminderViewModel);
+
+            if (this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum)Capability.NotDisturbMode))
+                this.SettingItems.Add((DeviceSettingViewModelBase)this._notDisturbViewModel);
+
+            if (this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum)Capability.WristLiftHighlight))
+                this.SettingItems.Add((DeviceSettingViewModelBase)this._highlightOnWristLiftViewModel);
+
+            if (this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum)Capability.FlipDisplayOnWristRotate))
+                this.SettingItems.Add((DeviceSettingViewModelBase)this._flipDisplayOnWristRotateViewModel);
+
+            if (this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum)Capability.GoalReachedNotificationConfigurable))
+                this.SettingItems.Add((DeviceSettingViewModelBase)this._goalReachedNotificationViewModel);
+
+            if (this._bandController.DeviceInfo.Value.Capabilities.HasFlag((Enum)Capability.HeartRate))
+                this.SettingItems.Add((DeviceSettingViewModelBase)this._heartRateDuringSleepViewModel);
+      }
+
       await this.LoadAllData().ConfigureAwait(true);
-    }
+    }//OnActivate
+
 
     protected override async Task OnDeactivate(bool close)
     {
-      foreach (DeviceSettingViewModelBase settingItem in (Collection<DeviceSettingViewModelBase>) this.SettingItems)
+      foreach (DeviceSettingViewModelBase settingItem in this.SettingItems)
         await settingItem.Save();
       this.IsPageEnabled = false;
     }
 
     private async Task LoadAllData()
     {
-      StatusBarProgressItem statusBar = this._statusBarNotificationService.Show<StatusBarProgressItem>(new StatusBarProgressItem(this._stringsLoader.GetString("StatusLoadingData"), new double?()));
-      MessageDialog errorDialog = (MessageDialog) null;
-      try
-      {
+      StatusBarProgressItem statusBar = 
+                this._statusBarNotificationService.Show<StatusBarProgressItem>
+                (new StatusBarProgressItem(this._stringsLoader.GetString("StatusLoadingData"),
+                new double?()));
+
+      //MessageDialog errorDialog = (MessageDialog) null;
+      //try
+      //{
         this.IsPageEnabled = false;
-        foreach (DeviceSettingViewModelBase settingItem in (Collection<DeviceSettingViewModelBase>) this.SettingItems)
-          await settingItem.Load();
-      }
-      catch (Exception ex)
-      {
-        errorDialog = new MessageDialog(this._stringsLoader.GetString("DevicePageLoadingDataFailedMessage") + " " + ex.Message, this._stringsLoader.GetString("MessageOopsHeader"));
-      }
-      finally
-      {
+        MessageDialog errorDialog1 = (MessageDialog)null;
+
+        foreach (DeviceSettingViewModelBase settingItem in this.SettingItems)
+        {                    
+            try
+            {
+                await settingItem.Load();
+            }
+            catch (Exception ex1)
+            {
+                errorDialog1 = 
+                    new MessageDialog(this._stringsLoader.GetString("DevicePageLoadingDataFailedMessage")
+                    + " " + ex1.Message, this._stringsLoader.GetString("MessageOopsHeader"));
+                
+            }
+       }
+      //}
+      //catch (Exception ex)
+      //{
+      //  errorDialog = new MessageDialog(this._stringsLoader.GetString("DevicePageLoadingDataFailedMessage") + " " + ex.Message, this._stringsLoader.GetString("MessageOopsHeader"));
+      //}
+      //finally
+      //{
         this.IsPageEnabled = true;
-      }
+      //}
+      
       statusBar.Hide();
-      if (errorDialog == null)
-        return;
-      IUICommand iuiCommand = await errorDialog.ShowAsyncSafe();
-      this._navigationService.GoBack();
+      
+      //if (errorDialog1 == null)//(errorDialog == null)
+      //   return;
+
+
+        //IUICommand iuiCommand = await errorDialog1.ShowAsyncSafe(); //IUICommand iuiCommand = await errorDialog.ShowAsyncSafe();
+        //this._navigationService.GoBack();
     }
 
     private async void DoUnbind()
@@ -339,17 +377,25 @@ namespace MiBandApp.ViewModels
       this._bandController.Unbind();
       this._bandController.Reset();
       this._bandSyncReminderService.Cancel();
-      IUICommand iuiCommand = await new MessageDialog(this._stringsLoader.GetString("DevicePageOnUnbindMessage"), this._stringsLoader.GetString("MessageInformationHeader")).ShowAsync();
+
+      IUICommand iuiCommand = await new MessageDialog(
+          this._stringsLoader.GetString("DevicePageOnUnbindMessage"), 
+          this._stringsLoader.GetString("MessageInformationHeader")).ShowAsync();
       this._navigationService.GoBack();
     }
 
     private async void DoRebootDevice()
     {
-      StatusBarProgressItem progressItem = this._statusBarNotificationService.Show<StatusBarProgressItem>(new StatusBarProgressItem(this._stringsLoader.GetString("DevicePage_RebootingMessage"), new double?()));
+      StatusBarProgressItem progressItem = 
+                this._statusBarNotificationService.Show<StatusBarProgressItem>(
+                    new StatusBarProgressItem(this._stringsLoader.GetString("DevicePage_RebootingMessage"),
+                    new double?()));
       this.IsPageEnabled = false;
       try
       {
-        ConfiguredTaskAwaitable configuredTaskAwaitable = this._bandController.MiBand.Reboot().ConfigureAwait(true);
+        ConfiguredTaskAwaitable configuredTaskAwaitable
+                    = this._bandController.MiBand.Reboot().ConfigureAwait(true);
+
         await configuredTaskAwaitable;
         this._bandController.Reset();
         configuredTaskAwaitable = Task.Delay(5000).ConfigureAwait(true);

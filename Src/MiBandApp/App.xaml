@@ -53,6 +53,7 @@
                 <Setter Property="Foreground" Value="{StaticResource AppForegroundBrush}" />
                 <Setter Property="IsTextScaleFactorEnabled" Value="True" />
             </Style>
+            
             <Style x:Key="AppTitleStyle" TargetType="TextBlock" BasedOn="{StaticResource ControlHeaderTextBlockStyle}">
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="Text" Value="BIND MI BAND" />
@@ -61,11 +62,13 @@
                 <Setter Property="IsTextScaleFactorEnabled" Value="False" />
                 <Setter Property="LineHeight" Value="NaN" />
             </Style>
+            
             <Style x:Key="PageTitleStyle" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="48" />
                 <Setter Property="FontWeight" Value="SemiLight" />
                 <Setter Property="MinHeight" Value="0" />
             </Style>
+            
             <Style x:Key="DefaultHyperlinkButtonStyle" TargetType="HyperlinkButton">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -79,13 +82,105 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            
             <Style TargetType="HyperlinkButton" BasedOn="{StaticResource DefaultHyperlinkButtonStyle}" />
          
-            <!-- Other styles remain unchanged -->
-            <!-- TODO: return all needed styles... -->
+            <!-- ******************************** -->
+            <Thickness x:Key="RootContainerThickness">19, 10</Thickness>
+            <Style x:Key="ActivityItemSecondaryTextBlockStyle" TargetType="TextBlock">
+                <Style.BasedOn>
+                    <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
+                </Style.BasedOn>
+                <Style.Setters>                   
+                        <Setter Property="FontSize" Value="13" />
+                        <Setter Property="LineHeight" Value="NaN" />                  
+                </Style.Setters>
+            </Style>
 
+            <Style x:Key="ActivityItemSecondaryWrappableTextBlockStyle" TargetType="TextBlock">
+                <Style.BasedOn>
+                    <StaticResource ResourceKey="ActivityItemSecondaryTextBlockStyle" />
+                </Style.BasedOn>
+                <Style.Setters>
+                      <Setter Property="Margin" Value="0 3 10 0" />                
+                </Style.Setters>
+            </Style>
 
-            <Style x:Key="PickerTitleTextBlockStyle" TargetType="TextBlock">
+            <Style x:Key="ActivityItemTimeTextBlockStyle" TargetType="TextBlock">
+                <Style.BasedOn>
+                    <StaticResource ResourceKey="ActivityItemSecondaryTextBlockStyle" />
+                </Style.BasedOn>
+                <Style.Setters>                    
+                        <Setter Property="FontWeight" Value="Normal" />
+                        <Setter Property="Foreground">
+                            <Setter.Value>
+                                <ThemeResource ResourceKey="AppAccentBrush" />
+                            </Setter.Value>
+                        </Setter>                   
+                </Style.Setters>
+            </Style>
+            <Style x:Key="ActivityItemDurationTextBlockStyle" TargetType="TextBlock">
+                <Style.BasedOn>
+                    <StaticResource ResourceKey="ActivityItemTimeTextBlockStyle" />
+                </Style.BasedOn>
+                <Style.Setters>                 
+                        <Setter Property="FontWeight" Value="Light" />
+                        <Setter Property="Margin" Value="10 0 0 0" />                  
+                </Style.Setters>
+            </Style>
+            <Style x:Key="ActivityItemMainContentTextBlockStyle" TargetType="TextBlock">
+                <Style.BasedOn>
+                    <StaticResource ResourceKey="BodyTextBlockStyle" />
+                </Style.BasedOn>
+                <Style.Setters>                  
+                        <Setter Property="FontSize" Value="16" />
+                        <Setter Property="Margin" Value="0 0 10 0" />
+                        <Setter Property="FontFamily" Value="Segoe UI" />
+                        <Setter Property="FontWeight" Value="Medium" />
+                        <Setter Property="Foreground">
+                            <Setter.Value>
+                                <StaticResource ResourceKey="AppForegroundBrush" />
+                            </Setter.Value>
+                        </Setter>                  
+                </Style.Setters>
+            </Style>
+            <Style x:Key="SecondaryPageHeaderTextBlockStyle" TargetType="TextBlock">
+                <Style.BasedOn>
+                    <StaticResource ResourceKey="BaseTextBlockStyle" />
+                </Style.BasedOn>
+                <Style.Setters>                   
+                        <Setter Property="FontSize" Value="16">                          
+                        </Setter>
+                        <Setter Property="FontWeight" Value="Light" />                  
+                </Style.Setters>
+            </Style>
+            <Style x:Key="PickerMainTextBlockStyle" TargetType="TextBlock">
+                <Style.Setters>                   
+                        <Setter Property="FontSize" Value="16">                         
+                        </Setter>
+                        <Setter Property="FontFamily" Value="Segoe WP" />
+                        <Setter Property="FontStretch" Value="Condensed" />
+                        <Setter Property="FontWeight" Value="SemiBold" />               
+                </Style.Setters>
+            </Style>
+            <Style x:Key="PickerSecondaryTextBlockStyle" TargetType="TextBlock">
+                <Style.Setters>                  
+                        <Setter Property="FontSize" Value="14">                         
+                        </Setter>                 
+                </Style.Setters>
+            </Style>
+            <Style x:Key="PickerButtonStyle" TargetType="Button">
+                <Style.Setters>                 
+                        <Setter Property="Padding" Value="5 0" />
+                        <Setter Property="HorizontalContentAlignment" Value="Left" />                
+                </Style.Setters>
+            </Style>
+            <Thickness x:Key="PickerListSelectorMargin">0,70</Thickness>
+            <Thickness x:Key="PickerListSelectorItemContentMargin">10,0,0,10</Thickness>
+
+            <!-- ******************************* -->
+
+                <Style x:Key="PickerTitleTextBlockStyle" TargetType="TextBlock">
                 <Style.BasedOn>
                     <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
                 </Style.BasedOn>
@@ -93,10 +188,7 @@
               
                         <Setter Property="FontFamily" Value="Segoe WP" />
                         <Setter Property="FontWeight" Value="Light" />
-                        <Setter Property="FontSize">
-                            <Setter.Value>
-                                <StaticResource ResourceKey="TextStyleExtraLargePlusFontSize" />
-                            </Setter.Value>
+                        <Setter Property="FontSize" Value="16">                          
                         </Setter>
                         <Setter Property="Margin" Value="19 20" />
                         <Setter Property="LineHeight" Value="NaN" />

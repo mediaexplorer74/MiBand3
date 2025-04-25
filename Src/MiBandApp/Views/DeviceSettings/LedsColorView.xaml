@@ -46,7 +46,7 @@
         <TextBlock x:Uid="DevicePageLedsColorHint"  
                    Margin="5,0,5,5"  
                    Text="Select LEDs color and check how it looks on your band."  
-                   FontSize="{StaticResource TextStyleSmallFontSize}"  
+                   FontSize="8"  
                    Style="{ThemeResource GrayTextBlockStyle}" />  
     </StackPanel>  
 </UserControl>

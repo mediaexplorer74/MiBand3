@@ -152,12 +152,6 @@
     <Compile Include="Converters\StringFormatConverter.cs" />
     <Compile Include="Converters\SyncStateConverter.cs" />
     <Compile Include="DebugLogger.cs" />
-    <Compile Include="Strings\en-US\Resources.generated.cs" />
-    <Compile Include="Strings\en-US\UpdatesHistoryResources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UpdatesHistoryResources.resw</DependentUpon>
-    </Compile>
     <Compile Include="Views\Activities\ActivitiesListView.xaml.cs">
       <DependentUpon>ActivitiesListView.xaml</DependentUpon>
     </Compile>
@@ -181,6 +175,15 @@
     </Compile>
     <Compile Include="Views\Band\BandAlarmView.xaml.cs">
       <DependentUpon>BandAlarmView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CloudView.xaml.cs">
+      <DependentUpon>CloudView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DayDetailsPage.xaml.cs">
+      <DependentUpon>DayDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DevicePage.xaml.cs">
+      <DependentUpon>DevicePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DeviceSettings\ActivityReminderView.xaml.cs">
       <DependentUpon>ActivityReminderView.xaml</DependentUpon>
@@ -214,6 +217,9 @@
     </Compile>
     <Compile Include="Views\DeviceSettings\WearingLocationView.xaml.cs">
       <DependentUpon>WearingLocationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FirmwareUpgradePage.xaml.cs">
+      <DependentUpon>FirmwareUpgradePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HistoryPage.xaml.cs">
       <DependentUpon>HistoryPage.xaml</DependentUpon>
@@ -311,6 +317,9 @@
     <Compile Include="Views\PairingPage.xaml.cs">
       <DependentUpon>PairingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Tabs\HeartRateTabView.xaml.cs">
       <DependentUpon>HeartRateTabView.xaml</DependentUpon>
     </Compile>
@@ -319,6 +328,9 @@
     </Compile>
     <Compile Include="Views\Tabs\WalkTabView.xaml.cs">
       <DependentUpon>WalkTabView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserInfoPage.xaml.cs">
+      <DependentUpon>UserInfoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WhatsNewPage.xaml.cs">
       <DependentUpon>WhatsNewPage.xaml</DependentUpon>
@@ -526,6 +538,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\CloudView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DayDetailsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DevicePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\DeviceSettings\ActivityReminderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -570,6 +594,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\FirmwareUpgradePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\HistoryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -602,6 +630,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Tabs\HeartRateTabView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -613,6 +645,10 @@
     <Page Include="Views\Tabs\WalkTabView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserInfoPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\WhatsNewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -665,16 +701,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="Strings\en-US\UpdatesHistoryResources.resw">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>UpdatesHistoryResources.Designer.cs</LastGenOutput>
-    </PRIResource>
-  </ItemGroup>
-  <ItemGroup>
-    <PRIResource Include="Strings\en-US\Resources.resw" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="MiBandApp_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\ru-RU\Resources.resw" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

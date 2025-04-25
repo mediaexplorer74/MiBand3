@@ -1,0 +1,152 @@
+﻿<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="using:MiBandApp.Views" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:viewModels="using:MiBandApp.ViewModels" 
+      x:Class="MiBandApp.Views.FirmwareUpgradePage">
+    <Page.Style>
+        <StaticResource ResourceKey="DefaultPageStyle" />
+    </Page.Style>
+    <Page.Content>
+        <Grid>
+            <!--Grid.Margin>
+                <StaticResource ResourceKey="RootContainerThickness" />
+            </Grid.Margin-->
+            <Grid.RowDefinitions>                
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />                
+            </Grid.RowDefinitions>
+            <Grid>
+          <StackPanel Grid.Row="0">
+            <Grid>
+              <TextBlock>
+                  <TextBlock.Style>
+                    <StaticResource ResourceKey="AppTitleStyle" />
+                  </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock x:Uid="FirmwareUpgradePage_Title" Text="firmware upgrade">
+                  <TextBlock.Style>
+                    <StaticResource ResourceKey="PageTitleStyle" />
+                  </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                    </StackPanel>
+                    <Grid Row="1" Margin="0,20,0,0" VerticalAlignment="Stretch">
+                        <Grid.Visibility>
+                            <Binding Path="HasUpgradeStarted" ConverterParameter="False"
+                                     Converter="{StaticResource BoolToVis}">                              
+                            </Binding>
+                        </Grid.Visibility>
+                        <Grid.RowDefinitions>                           
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />                     
+                        </Grid.RowDefinitions>
+                   <Grid>
+                     <ScrollViewer Grid.Row="0">
+                       <ScrollViewer.Content>
+                     <TextBlock x:Uid="FirmwareUpgradePage_Warning" Margin="1,1,1,1"
+                                FontSize="20" FontWeight="Light" LineHeight="30" 
+                                TextWrapping="Wrap">
+                      <TextBlock.Style>
+                        <StaticResource ResourceKey="BodyTextBlockStyle" />
+                      </TextBlock.Style>
+                       <TextBlock.Inlines>
+                       
+                          <Run Text="This application is not official Mi Band app, so firmware upgrade can cause unpredictable effects. Your Mi Band can be damaged or come out of order. We are not responsible for any possible harm." />
+                          <LineBreak />
+                          <LineBreak />
+                          <Run Text="We strongly recommend to use official Mi Fit application to upgrade firmware of your Mi Band." />
+                          <LineBreak />
+                          <LineBreak />
+                          <Run Text="You are performing this action on your own risk!" />
+                       
+                      </TextBlock.Inlines>
+                      </TextBlock>
+                    </ScrollViewer.Content>
+                   </ScrollViewer>
+                   <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
+                    <Grid>
+                            <CheckBox x:Uid="FirmwareUpgradePage_AgreeCheckBox" x:Name="AgreeCheckBox" Content="I understand and totally agree" />
+                            <Button x:Uid="FirmwareUpgradePage_StartUpgrade" x:Name="StartUpgrade" HorizontalAlignment="Left" Content="start upgrade">
+                                    <Button.IsEnabled>
+                                    <Binding ElementName="AgreeCheckBox" Path="IsChecked" />
+                                </Button.IsEnabled>
+                            </Button>
+                        </Grid>
+                </StackPanel>
+            </Grid>
+                    </Grid>
+                    <Grid Row="1">
+                        <Grid.Visibility>
+                            <Binding Path="HasUpgradeStarted" 
+                                     Converter="{StaticResource BoolToVis}">
+                               
+                            </Binding>
+                        </Grid.Visibility>
+                        <Grid.RowDefinitions>                          
+                                <RowDefinition />
+                                <RowDefinition Height="20px" />
+                                <RowDefinition />                           
+                        </Grid.RowDefinitions>
+                        
+                <Grid>
+                <TextBlock HorizontalAlignment="Center" 
+                                VerticalAlignment="Bottom" 
+                                TextAlignment="Center" 
+                                TextWrapping="Wrap">
+                 <TextBlock.Style>
+                    <StaticResource ResourceKey="SubheaderTextBlockStyle" />
+                  </TextBlock.Style>
+                  <TextBlock.Text>
+                    <Binding Path="ActionTitle" />
+                  </TextBlock.Text>
+                   </TextBlock>
+                 <ProgressBar Grid.Row="1" Maximum="100" Minimum="0">
+                   <ProgressBar.IsIndeterminate>
+                        <Binding Path="IsProgressIndeterminate" />
+                    </ProgressBar.IsIndeterminate>
+                    <ProgressBar.Value>
+                        <Binding Path="ProgressPercent" />
+                    </ProgressBar.Value>
+                </ProgressBar>
+                <TextBlock Grid.Row="2" HorizontalAlignment="Center" 
+                           VerticalAlignment="Top" 
+                           TextAlignment="Center" TextWrapping="Wrap">
+                  <TextBlock.Text>
+                    <Binding Path="ActionDetails" />
+                  </TextBlock.Text>
+               </TextBlock>
+            </Grid>
+                        
+            </Grid>
+                
+             <Button x:Uid="FirmwareUpgradePage_Exit" x:Name="Exit" 
+                     Grid.Row="1" 
+                     HorizontalAlignment="Right" 
+                     VerticalAlignment="Bottom" 
+                     Content="exit">
+                    <Button.Visibility>
+                       <Binding Path="IsExitButtonVisible" Converter="{StaticResource BoolToVis}">                              
+                        </Binding>
+                     </Button.Visibility>
+                    </Button>
+                </Grid>
+        </Grid>
+    </Page.Content>
+</Page>
+
+<!--Page
+    x:Class="MiBandApp.Views.FirmwareUpgradePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MiBandApp.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+
+    </Grid>
+</Page-->

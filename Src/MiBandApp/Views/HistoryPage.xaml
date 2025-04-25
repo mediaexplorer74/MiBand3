@@ -143,88 +143,77 @@
                     <RowDefinition />           
             </Grid.RowDefinitions>
             
-            <!--Children>
-                <UIElementCollection>
-                    <StackPanel Row="0">
-                        <Children>
-                            <UIElementCollection>
-                                <TextBlock>
-                  <Style>
+            <!--Grid-->
+           <StackPanel Grid.Row="0">
+                        
+                  <Grid>
+                  <TextBlock>
+                  <TextBlock.Style>
                     <StaticResource ResourceKey="AppTitleStyle" />
-                  </Style>
-                                </TextBlock>
-                                <TextBlock x:Uid="HistoryPageTitle" Text="history">
-                  <Style>
-                    <StaticResource ResourceKey="PageTitleStyle" />
-                  </Style>
-                                </TextBlock>
-                            </UIElementCollection>
-                        </Children>
-                    </StackPanel>
-                    <Grid Row="1">
-                        <Resources>
-                            <ResourceDictionary>
-                                <Style x:Key="DisplayContentTextBlockStyle" TargetType="TextBlock">
-                                    <BasedOn>
+                  </TextBlock.Style>
+                 </TextBlock>
+                <TextBlock x:Uid="HistoryPageTitle" Text="history">
+                <TextBlock.Style>
+                   <StaticResource ResourceKey="PageTitleStyle" />
+                 </TextBlock.Style>
+                </TextBlock>
+               </Grid>
+              </StackPanel>
+              <Grid Row="1">
+                <Grid.Resources>
+                    <ResourceDictionary>
+                              <Style x:Key="DisplayContentTextBlockStyle" TargetType="TextBlock">
+                                <Style.BasedOn>
                                         <StaticResource ResourceKey="ControlHeaderTextBlockStyle" />
-                                    </BasedOn>
-                                    <Setters>
-                                        <SetterBaseCollection>
+                                </Style.BasedOn>
+                                <Style.Setters>                                     
                                             <Setter Property="HorizontalAlignment" Value="Right" />
                                             <Setter Property="VerticalAlignment" Value="Bottom" />
                                             <Setter Property="Margin" Value="0 0 17 0" />
-                                            <Setter Property="FontSize" Value="20" />
-                                        </SetterBaseCollection>
-                                    </Setters>
-                                </Style>
-                                <Style x:Key="DisplaySubHeaderContentTextBlockStyle" TargetType="TextBlock">
-                                    <BasedOn>
+                                            <Setter Property="FontSize" Value="20" />                                      
+                                </Style.Setters>
+                              </Style>
+                              <Style x:Key="DisplaySubHeaderContentTextBlockStyle" TargetType="TextBlock">
+                                <Style.BasedOn>
                                         <StaticResource ResourceKey="DisplayContentTextBlockStyle" />
-                                    </BasedOn>
-                                    <Setters>
-                                        <SetterBaseCollection>
-                                            <Setter Property="FontSize" Value="14" />
-                                        </SetterBaseCollection>
-                                    </Setters>
-                                </Style>
+                                    </Style.BasedOn>
+                                <Style.Setters>                                   
+                                        <Setter Property="FontSize" Value="14" />                      
+                                </Style.Setters>
+                              </Style>
                             </ResourceDictionary>
-                        </Resources>
-                        <Children>
-                            <UIElementCollection>
-                                <TextBlock HorizontalAlignment="Left">
-                  <Style>
+                        </Grid.Resources>
+                  
+                    <Grid>
+                        <TextBlock HorizontalAlignment="Left">
+                  <TextBlock.Style>
                     <StaticResource ResourceKey="SecondaryPageHeaderTextBlockStyle" />
-                  </Style>
-                  <Inlines>
-                    <InlineCollection>
+                  </TextBlock.Style>
+                  <TextBlock.Inlines>                 
                       <Run>
-                        <Text>
-                          <Binding Path="Week.WeekStartDate" ConverterParameter="{0:MMM d}">
-                            <Converter>
-                              <StaticResource ResourceKey="StringFormatConverter" />
-                            </Converter>
+                        <Run.Text>
+                          <Binding Path="Week.WeekStartDate" Converter="{StaticResource StringFormatConverter}">                         
                           </Binding>
-                        </Text>
+                        </Run.Text>
                       </Run>
                       <Run Text="-" />
                       <Run>
-                        <Text>
-                          <Binding Path="Week.WeekEndDate" ConverterParameter="{0:MMM d}">
-                            <Converter>
-                              <StaticResource ResourceKey="StringFormatConverter" />
-                            </Converter>
+                        <Run.Text>
+                          <Binding Path="Week.WeekEndDate" Converter="{StaticResource StringFormatConverter}">                          
                           </Binding>
-                        </Text>
+                        </Run.Text>
                       </Run>
-                    </InlineCollection>
-                  </Inlines>
-                                </TextBlock-->
+             
+                  </TextBlock.Inlines>
+                </TextBlock>
+               </Grid>
 
-            <StackPanel>
+               <StackPanel>
                 <TextBlock Style="{StaticResource AppTitleStyle}" />
                 <TextBlock x:Uid="HistoryPageTitle" Text="history" Style="{StaticResource PageTitleStyle}" />
             </StackPanel>
 
+            
             <Grid>
                 <Grid.Resources>
                     <ResourceDictionary>
@@ -246,23 +235,19 @@
                     </ResourceDictionary>
                 </Grid.Resources>
                 <TextBlock HorizontalAlignment="Left" Style="{StaticResource SecondaryPageHeaderTextBlockStyle}">
-        <Run Text="{Binding Path=Week.WeekStartDate, ConverterParameter={StaticResource StringFormatConverter}}" />
-        <Run Text="-" />
-        <Run Text="{Binding Path=Week.WeekEndDate, ConverterParameter={StaticResource StringFormatConverter}}" />
+                    <Run Text="{Binding Path=Week.WeekStartDate, ConverterParameter={StaticResource StringFormatConverter}}" />
+                    <Run Text="-" />
+                    <Run Text="{Binding Path=Week.WeekEndDate, ConverterParameter={StaticResource StringFormatConverter}}" />
                 </TextBlock>
             </Grid>
 
+           <TextBlock x:Uid="HistoryPageSleepHeader" 
+               Text="sleep" 
+               Style="{StaticResource DisplayContentTextBlockStyle}" 
+               Visibility="{Binding Path=IsDisplayingSleep, Converter={StaticResource BoolToVis}}" />
 
 
-            <TextBlock x:Uid="HistoryPageSleepHeader" 
-           Text="sleep" 
-           Style="{StaticResource DisplayContentTextBlockStyle}" 
-           Visibility="{Binding Path=IsDisplayingSleep, Converter={StaticResource BoolToVis}}" />
-
-
-
-
-            <TextBlock x:Uid="HistoryPageStepsHeader" 
+       <TextBlock x:Uid="HistoryPageStepsHeader" 
            Text="steps" 
            Style="{StaticResource DisplayContentTextBlockStyle}" 
            Visibility="{Binding Path=IsDisplayingSleep, Converter={StaticResource BoolToVis}, ConverterParameter=False}" />
@@ -283,50 +268,50 @@
                 <DataTemplate>
 
                     <Grid>
-                                <Grid.RowDefinitions>
-                                        
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
-                                       
-                                </Grid.RowDefinitions>
-                                <!--Children>
-                            <UIElementCollection>
-                                <Charting:Chart x:Name="SleepChart" Row="1" Width="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
-                                                <interactivity:Behaviors>
-                                                    <interactivity:BehaviorCollection>
-                                                        <core:EventTriggerBehavior EventName="Loaded">
-                                                            <core:Actions>
-                                                                <interactivity:ActionCollection>
-                                                                    <core:ChangePropertyAction PropertyName="Visibility">
-                                                                        <core:Value>
-                                                                            <Visibility>Visible</Visibility>
-                                                                        </core:Value>
-                                                                    </core:ChangePropertyAction>
-                                                                </interactivity:ActionCollection>
-                                                            </core:Actions>
-                                                        </core:EventTriggerBehavior>
-                                                    </interactivity:BehaviorCollection>
-                                                </interactivity:Behaviors>
-                                                <Charting:Title>
-                                                    <TextBlock>
-                        <Inlines>
-                            <InlineCollection>
-                            <Run x:Uid="SleepDetailsPage_LightSleep" Text="Light sleep132456">
-                                <Foreground>
-                                <StaticResource ResourceKey="AppLightSleepBrush" />
-                                </Foreground>
-                            </Run>
-                            <Run Text=" | " />
-                            <Run x:Uid="SleepDetailsPage_DeepSleep" Text="Deep sleep123456">
-                                <Foreground>
-                                <StaticResource ResourceKey="AppDeepSleepBrush" />
-                                </Foreground>
-                            </Run>
-                            </InlineCollection>
-                        </Inlines>
-                                                    </TextBlock>
-                                                </Charting:Title>
-                                                <Charting:Series>
+                       <Grid.RowDefinitions>                                        
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />                                       
+                   </Grid.RowDefinitions>
+                        
+                        
+                <Grid>
+                                    
+                    <!--Charting:Chart x:Name="SleepChart" Row="1" Width="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
+                                    <interactivity:Behaviors>
+                                        <interactivity:BehaviorCollection>
+                                            <core:EventTriggerBehavior EventName="Loaded">
+                                                <core:Actions>
+                                                    <interactivity:ActionCollection>
+                                                        <core:ChangePropertyAction PropertyName="Visibility">
+                                                            <core:Value>
+                                                                <Visibility>Visible</Visibility>
+                                                            </core:Value>
+                                                        </core:ChangePropertyAction>
+                                                    </interactivity:ActionCollection>
+                                                </core:Actions>
+                                            </core:EventTriggerBehavior>
+                                        </interactivity:BehaviorCollection>
+                                    </interactivity:Behaviors>
+                                    <Charting:Title>
+                                        <TextBlock>
+            <Inlines>
+                <InlineCollection>
+                <Run x:Uid="SleepDetailsPage_LightSleep" Text="Light sleep132456">
+                    <Foreground>
+                    <StaticResource ResourceKey="AppLightSleepBrush" />
+                    </Foreground>
+                </Run>
+                <Run Text=" | " />
+                <Run x:Uid="SleepDetailsPage_DeepSleep" Text="Deep sleep123456">
+                    <Foreground>
+                    <StaticResource ResourceKey="AppDeepSleepBrush" />
+                    </Foreground>
+                </Run>
+                </InlineCollection>
+            </Inlines>
+                                        </TextBlock>
+                                    </Charting:Title>
+                                    <Charting:Series>
                                                     <Collection1WinRTXamlToolkitControlsDataVisualizationChartingISeries xmlns="using:System.Collections.ObjectModel">
                                                         <Charting:StackedColumnSeries>
                                                             <Charting:SeriesDefinitions>
@@ -477,8 +462,10 @@
                                                         </Charting:LinearAxis>
                                                     </Collection1WinRTXamlToolkitControlsDataVisualizationChartingIAxis>
                                                 </Charting:Axes>
-                                            </Charting:Chart>
-                                            <Charting:Chart x:Name="WalkChart" Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
+                                            </Charting:Chart-->
+                                    
+                                    
+                    <!--Charting:Chart x:Name="WalkChart" Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
                                                 <interactivity:Behaviors>
                                                     <interactivity:BehaviorCollection>
                                                         <core:EventTriggerBehavior EventName="Loaded">
@@ -626,235 +613,225 @@
                                                         </Charting:LinearAxis>
                                                     </Collection1WinRTXamlToolkitControlsDataVisualizationChartingIAxis>
                                                 </Charting:Axes>
-                                            </Charting:Chart>
-                                        </UIElementCollection>
-                                    </Children-->
-                               
-                    
-                         <!--FlipViewItem x:Name="DownFlipViewItem">
-                            <Resources>
-                                <ResourceDictionary>
-                                    <DataTemplate x:Key="WalkItemDataTemplate">
-                                        <Template>
-                                            <Border Margin="0,0,0,10">
-                                                <Child>
-                                                    <Grid HorizontalAlignment="Stretch">
-                                                        <ColumnDefinitions>
-                                                            <ColumnDefinitionCollection>
-                                                                <ColumnDefinition Width="Auto" />
-                                                                <ColumnDefinition Width="Auto" />
-                                                                <ColumnDefinition Width="*" />
-                                                            </ColumnDefinitionCollection>
-                                                        </ColumnDefinitions>
-                                                        <RowDefinitions>
-                                                            <RowDefinitionCollection>
-                                                                <RowDefinition Height="Auto" />
-                                                                <RowDefinition Height="Auto" />
-                                                            </RowDefinitionCollection>
-                                                        </RowDefinitions>
-                                                        <Children>
-                                                            <UIElementCollection>
-                                                                <TextBlock FontSize="30" FontWeight="Light">
-                                <Text>
-                                <Binding Path="DaySummary.Date" ConverterParameter="{0:dddd}" Mode="OneTime">
-                                    <Converter>
-                                    <StaticResource ResourceKey="StringFormatConverter" />
-                                    </Converter>
-                                </Binding>
-                                </Text>
-                            </TextBlock>
-                            <BitmapIcon Row="0" Column="1" Height="20" Margin="0,5,0,5" VerticalAlignment="Bottom" 
-                                UriSource="/Resources/Images/run.png">
-                                <Visibility>
-                                    <Binding Path="DaySummary.WasRunning" Mode="OneTime">
-                                        <Converter>
-                                            <StaticResource ResourceKey="BoolToVis" />
-                                        </Converter>
-                                    </Binding>
-                                </Visibility>
-                            </BitmapIcon>
-                            <TextBlock Row="0" Column="2" HorizontalAlignment="Right" FontSize="30">
-                                <Text>
-                                <Binding Path="DaySummary.Steps" Mode="OneTime" />
-                                </Text>
-                                                                </TextBlock>
-                                                                <StackPanel Row="1" Column="0" ColumnSpan="3" HorizontalAlignment="Right" Orientation="Horizontal">
-                                                                    <Resources>
-                                                                        <ResourceDictionary>
-                                                                            <Style TargetType="TextBlock">
-                                                                                <BasedOn>
-                                                                                    <StaticResource ResourceKey="ActivityItemSecondaryWrappableTextBlockStyle" />
-                                                                                </BasedOn>
-                                                                                <Setters>
-                                                                                    <SetterBaseCollection>
-                                                                                        <Setter Property="Margin" Value="10 0 0 0" />
-                                                                                    </SetterBaseCollection>
-                                                                                </Setters>
-                                                                            </Style>
-                                                                        </ResourceDictionary>
-                                                                    </Resources>
-                                                                    <Children>
-                                                                        <UIElementCollection>
-                                                                            <TextBlock>
-                                    <Text>
-                                        <Binding Path="DaySummary.Distance" Mode="OneTime">
-                                        <Converter>
-                                            <StaticResource ResourceKey="DistanceKmToFormattedStringConverter" />
-                                        </Converter>
-                                        </Binding>
-                                    </Text>
-                                                                            </TextBlock>
-                                                                            <TextBlock>
-                                    <Text>
-                                        <Binding Path="DaySummary.Calories" Mode="OneTime">
-                                        <Converter>
-                                            <StaticResource ResourceKey="CaloriesToFormattedStringConverter" />
-                                        </Converter>
-                                        </Binding>
-                                    </Text>
-                                                                            </TextBlock>
-                                                                        </UIElementCollection>
-                                                                    </Children>
-                                                                </StackPanel>
-                                                            </UIElementCollection>
-                                                        </Children>
-                                                    </Grid>
-                                                </Child>
-                                            </Border>
-                                        </Template>
-                                    </DataTemplate>
-                                    <DataTemplate x:Key="SleepItemDataTemplate">
-                                        <Template>
-                                            <Border Margin="0,0,0,10">
-                                                <Child>
-                                                    <Grid HorizontalAlignment="Stretch">
-                                                        <ColumnDefinitions>
-                                                            <ColumnDefinitionCollection>
-                                                                <ColumnDefinition Width="Auto" />
-                                                                <ColumnDefinition Width="*" />
-                                                            </ColumnDefinitionCollection>
-                                                        </ColumnDefinitions>
-                                                        <RowDefinitions>
-                                                            <RowDefinitionCollection>
-                                                                <RowDefinition Height="Auto" />
-                                                                <RowDefinition Height="Auto" />
-                                                            </RowDefinitionCollection>
-                                                        </RowDefinitions>
-                                                        <Children>
-                                                            <UIElementCollection>
-                                                                <TextBlock FontSize="30" FontWeight="Light">
-                                <TextBlock.Text>
-                                <Binding Path="DaySummary.Date" ConverterParameter="{0:dddd}" Mode="OneTime">
-                                    <Converter>
-                                    <StaticResource ResourceKey="StringFormatConverter" />
-                                    </Converter>
-                                </Binding>
-                                </TextBlock.Text>
-                                                                </TextBlock>
-                                                                <StackPanel Row="0" Column="1" HorizontalAlignment="Right" Orientation="Vertical">
-                                                                    <Resources>
-                                                                        <ResourceDictionary>
-                                                                            <Style TargetType="TextBlock">
-                                                                                <Setters>
-                                                                                    <SetterBaseCollection>
-                                                                                        <Setter Property="FontSize" Value="30" />
-                                                                                    </SetterBaseCollection>
-                                                                                </Setters>
-                                                                            </Style>
-                                                                        </ResourceDictionary>
-                                                                    </Resources>
-                                                                    <Children>
-                                                                        <UIElementCollection>
-                                                                            <TextBlock>
-                                    <Text>
-                                        <Binding Path="DaySummary.SleepMinutes" Mode="OneTime">
-                                        <Converter>
-                                            <StaticResource ResourceKey="MinutesToStringConverter" />
-                                        </Converter>
-                                        </Binding>
-                                    </Text>
-                                                                            </TextBlock>
-                                                                        </UIElementCollection>
-                                                                    </Children>
-                                                                </StackPanel>
-                                                                <StackPanel Row="1" Column="0" ColumnSpan="2" HorizontalAlignment="Right" Orientation="Horizontal">
-                                                                    <Resources>
-                                                                        <ResourceDictionary>
-                                                                            <Style TargetType="TextBlock">
-                                                                                <BasedOn>
-                                                                                    <StaticResource ResourceKey="ActivityItemSecondaryWrappableTextBlockStyle" />
-                                                                                </BasedOn>
-                                                                                <Setters>
-                                                                                    <SetterBaseCollection>
-                                                                                        <Setter Property="Margin" Value="10 0 0 0" />
-                                                                                    </SetterBaseCollection>
-                                                                                </Setters>
-                                                                            </Style>
-                                                                        </ResourceDictionary>
-                                                                    </Resources>
-                                                                    <Children>
-                                                                        <UIElementCollection>
-                                                                            <TextBlock>
-                                    <Inlines>
-                                        <InlineCollection>
-                                        <Run x:Uid="SleepingActivityDeepSleep" Text="Deep sleep" />
-                                        <Run Text=": " />
-                                        <Run>
-                                            <Text>
-                                            <Binding Path="DeepSleepMinutes" Mode="OneTime">
-                                                <Converter>
-                                                <StaticResource ResourceKey="MinutesToStringConverter" />
-                                                </Converter>
-                                            </Binding>
-                                            </Text>
-                                        </Run>
-                                        </InlineCollection>
-                                    </Inlines>
-                                                                            </TextBlock>
-                                                                        </UIElementCollection>
-                                                                    </Children>
-                                                                </StackPanel>
-                                                            </UIElementCollection>
-                                                        </Children>
-                                                    </Grid>
-                                                </Child>
-                                            </Border>
-                                        </Template>
-                                    </DataTemplate>
-                                </ResourceDictionary>
-                            </Resources>
-                            <Content>
-                                
-                                <ListView x:Name="DaysListView" Margin="15,0,15,0" HorizontalContentAlignment="Stretch" Attach="[Tapped]=[Action GoToDay($this)]">
-                                    <ItemTemplate>
-                                        <StaticResource ResourceKey="WalkItemDataTemplate" />
-                                    </ItemTemplate>
-                                    <ItemsSource>
-                                        <Binding Path="Week.Days" />
-                                    </ItemsSource>
-                                    <Resources>
+                                            </Charting:Chart-->
+                 </Grid>
+
+
+                                <FlipViewItem x:Name="DownFlipViewItem">
+                                    <FlipViewItem.Resources>
                                         <ResourceDictionary>
-                                            <Style TargetType="ListViewItem">
-                                                <Setters>
-                                                    <SetterBaseCollection>
-                                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                                    </SetterBaseCollection>
-                                                </Setters>
-                                            </Style>
-                                        </ResourceDictionary>
-                                    </Resources>
-                                </ListView>
-                            </Content>
-                       </FlipViewItem-->
+                                            <DataTemplate x:Key="WalkItemDataTemplate">
 
-                    </Grid>
+                                                <Border Margin="0,0,0,10">
+                                                    <Border.Child>
+                                                        <Grid HorizontalAlignment="Stretch">
+                                                            <Grid.ColumnDefinitions>
 
-                </DataTemplate>
-            </FlipView.ItemTemplate>
-        </FlipView>
-       
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
 
-        <Grid>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+
+                                                                <RowDefinition Height="Auto" />
+                                                                <RowDefinition Height="Auto" />
+
+                                                            </Grid.RowDefinitions>
+
+                                                            <Grid>
+                                                                <TextBlock FontSize="30" FontWeight="Light">
+                                                                    <TextBlock.Text>
+                                                                        <Binding Path="DaySummary.Date" Mode="OneTime" 
+                                                                    Converter="{StaticResource StringFormatConverter}">
+                                                                        </Binding>
+                                                                    </TextBlock.Text>
+                                                                </TextBlock>
+                                                                <BitmapIcon Grid.Row="0" Grid.Column="1" Height="20" Margin="0,5,0,5"
+                                                                    VerticalAlignment="Bottom" 
+                                                        UriSource="/Resources/Images/run.png">
+                                                                    <BitmapIcon.Visibility>
+                                                                        <Binding Path="DaySummary.WasRunning" Mode="OneTime"
+                                                                        Converter="{StaticResource BoolToVis}">
+
+                                                                        </Binding>
+                                                                    </BitmapIcon.Visibility>
+                                                                </BitmapIcon>
+                                                                <TextBlock Grid.Row="0" Grid.Column="2"
+                                                                HorizontalAlignment="Right"
+                                                                FontSize="30">
+                                                                    <TextBlock.Text>
+                                                                        <Binding Path="DaySummary.Steps" Mode="OneTime" />
+                                                                    </TextBlock.Text>
+                                                                </TextBlock>
+
+                                                                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" 
+                                                                HorizontalAlignment="Right" Orientation="Horizontal">
+                                                                    <StackPanel.Resources>
+                                                                        <ResourceDictionary>
+                                                                            <Style TargetType="TextBlock">
+                                                                                <Style.BasedOn>
+                                                                                    <StaticResource ResourceKey="ActivityItemSecondaryWrappableTextBlockStyle" />
+                                                                                </Style.BasedOn>
+                                                                                <Style.Setters>                                                                                  
+                                                                                        <Setter Property="Margin" Value="10 0 0 0" />                                                                                  
+                                                                                </Style.Setters>
+                                                                            </Style>
+                                                                        </ResourceDictionary>
+                                                                    </StackPanel.Resources>
+
+                                                                    <Grid>
+                                                                        <TextBlock>
+                                                                            <TextBlock.Text>
+                                                                                <Binding Path="DaySummary.Distance" Mode="OneTime" 
+                                        Converter="{StaticResource DistanceKmToFormattedStringConverter}">
+                                                                                </Binding>
+                                                                            </TextBlock.Text>
+                                                                        </TextBlock>
+                                                                        <TextBlock>
+                                                                            <TextBlock.Text>
+                                                                                <Binding Path="DaySummary.Calories" Mode="OneTime" 
+                                        Converter="{StaticResource CaloriesToFormattedStringConverter}">
+                                                                                </Binding>
+                                                                            </TextBlock.Text>
+                                                                        </TextBlock>
+                                                                    </Grid>
+                                                                </StackPanel>
+                                                            </Grid>
+
+                                                        </Grid>
+                                                    </Border.Child>
+                                                </Border>
+
+                                            </DataTemplate>
+
+                                            <DataTemplate x:Key="SleepItemDataTemplate">
+
+                                                <Border Margin="0,0,0,10">
+                                                    <Border.Child>
+                                                        <Grid HorizontalAlignment="Stretch">
+                                                            <Grid.ColumnDefinitions>
+
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto" />
+                                                                <RowDefinition Height="Auto" />
+                                                            </Grid.RowDefinitions>
+
+                                                            <Grid>
+                                                                <TextBlock FontSize="30" FontWeight="Light">
+                                                                    <TextBlock.Text>
+                                                                        <Binding Path="DaySummary.Date" Mode="OneTime"
+                                    Converter="{StaticResource StringFormatConverter}">
+                                                                        </Binding>
+                                                                    </TextBlock.Text>
+                                                                </TextBlock>
+                                                                <StackPanel Grid.Row="0" Grid.Column="1" 
+                                                        HorizontalAlignment="Right" 
+                                                        Orientation="Vertical">
+                                                                    <StackPanel.Resources>
+                                                                        <ResourceDictionary>
+                                                                            <Style TargetType="TextBlock">
+                                                                                <Style.Setters>
+                                                                                    
+                                                                                        <Setter Property="FontSize" Value="30" />
+                                                                                 
+                                                                                </Style.Setters>
+                                                                            </Style>
+                                                                        </ResourceDictionary>
+                                                                    </StackPanel.Resources>
+                                                                    <!--Children>
+                                                                        <UIElementCollection>
+                                                                            <TextBlock>
+                            <Text>
+                                <Binding Path="DaySummary.SleepMinutes" Mode="OneTime"
+                                            Converter="{StaticResource MinutesToStringConverter}">                                   
+                                </Binding>
+                        </Text>
+                                                                            </TextBlock>
+                                                                        </UIElementCollection>
+                                                                    </Children-->
+                                                                </StackPanel>
+                                                                
+                                                                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                                                HorizontalAlignment="Right" Orientation="Horizontal">
+                                                                    <StackPanel.Resources>
+                                                                        <ResourceDictionary>
+                                                                            <Style TargetType="TextBlock">
+                                                                                <Style.BasedOn>
+                                                                                    <StaticResource ResourceKey="ActivityItemSecondaryWrappableTextBlockStyle" />
+                                                                                </Style.BasedOn>
+                                                                                <Style.Setters>                                                                                 
+                                                                                        <Setter Property="Margin" Value="10 0 0 0" />                                                                               
+                                                                                </Style.Setters>
+                                                                            </Style>
+                                                                        </ResourceDictionary>
+                                                                    </StackPanel.Resources>
+                                                                    <Grid>
+                                                                            <TextBlock>
+                            <TextBlock.Inlines>
+                              
+                                <Run x:Uid="SleepingActivityDeepSleep" Text="Deep sleep" />
+                                <Run Text=": " />
+                                <Run>
+                                    <Run.Text>
+                                    <Binding Path="DeepSleepMinutes" Mode="OneTime"
+                                             Converter="{StaticResource MinutesToStringConverter}">                                     
+                                    </Binding>
+                                    </Run.Text>
+                                </Run>
+                               
+                              </TextBlock.Inlines>
+                            </TextBlock>
+                        </Grid>
+                </StackPanel>
+                </Grid>
+            </Grid>
+        </Border.Child>
+   </Border>
+
+ </DataTemplate>
+ </ResourceDictionary>
+  </FlipViewItem.Resources>
+
+  <FlipViewItem.Content>
+
+    <!-- ListView ...                                          
+        HorizontalContentAlignment="Stretch" Attach="[Tapped]=[Action GoToDay($this)]"
+        -->
+        <ListView x:Name="DaysListView" Margin="15,0,15,0"
+                        HorizontalContentAlignment="Stretch">
+                   <ListView.ItemTemplate>
+                      <StaticResource ResourceKey="WalkItemDataTemplate" />
+                   </ListView.ItemTemplate>
+                    <ListView.ItemsSource>
+                            <Binding Path="Week.Days" />
+                        </ListView.ItemsSource>
+                                <ListView.Resources>
+                            <ResourceDictionary>
+                                <Style TargetType="ListViewItem">
+                                            <Style.Setters>                                                
+                                                <Setter Property="HorizontalContentAlignment" 
+                                                    Value="Stretch" />                                               
+                                    </Style.Setters>
+                                </Style>
+                            </ResourceDictionary>
+                        </ListView.Resources>
+                    </ListView>
+                </FlipViewItem.Content>
+            </FlipViewItem>
+
+            </Grid>
+
+        </DataTemplate>
+      </FlipView.ItemTemplate>
+               
+    </FlipView>
+        
+    <Grid>
             <!-- Left Navigation Button -->
             <Button x:Name="GoLeft" 
                 HorizontalAlignment="Left" 
@@ -878,6 +855,9 @@
                   Style="{StaticResource PathFlipViewNavigationButttonStyle}" />
             </Button>
         </Grid>
-        </StackPanel>
+     
+     </Grid>
+     
+     </StackPanel>
     </Page.Content>
 </Page>

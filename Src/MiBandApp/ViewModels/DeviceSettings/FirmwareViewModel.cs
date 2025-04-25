@@ -66,21 +66,34 @@ namespace MiBandApp.ViewModels.DeviceSettings
 
     public override async Task Load()
     {
-      this.FirmwareVersion = this._bandController.DeviceInfo.Value.FirmwareVersion.ToString();
-      string recommendedFileName = Firmware.GetRecommendedFileName(this._bandController.DeviceInfo.Value);
+      this.FirmwareVersion = "0";
+
+      if (this._bandController.DeviceInfo.Value != null)
+         this.FirmwareVersion = this._bandController.DeviceInfo.Value.FirmwareVersion.ToString();
+
+      string recommendedFileName = null;
+      if (this._bandController.DeviceInfo.Value != null)
+        recommendedFileName = Firmware.GetRecommendedFileName(this._bandController.DeviceInfo.Value);
+
       if (recommendedFileName != null)
-        this._firmware = Firmware.CreateForBand(this._bandController.DeviceInfo.Value, await FirmwareViewModel.ReadFirmwareFile(recommendedFileName).ConfigureAwait(true));
+        this._firmware = Firmware.CreateForBand(this._bandController.DeviceInfo.Value, 
+            await FirmwareViewModel.ReadFirmwareFile(recommendedFileName).ConfigureAwait(true));
+
       this.NotifyOfPropertyChange("IsFirmwareUpgradeAvailable");
       this.NotifyOfPropertyChange("IsFirmwareNeedingUpgrade");
       this.NotifyOfPropertyChange("IsFirmwareUpgradeEnabled");
       this.NotifyOfPropertyChange("IsFirmwareUpToDate");
       this.NotifyOfPropertyChange("NewerFirmwareVersion");
-      this._bandController.CommunicationOperation.Updated += new EventHandler<MonitorableUpdatedEventArgs<CommunicationOperation>>(this.CommunicationOperationOnUpdated);
+      this._bandController.CommunicationOperation.Updated += 
+                new EventHandler<MonitorableUpdatedEventArgs<CommunicationOperation>>(
+                    this.CommunicationOperationOnUpdated);
     }
 
     public override async Task Save()
     {
-      this._bandController.CommunicationOperation.Updated -= new EventHandler<MonitorableUpdatedEventArgs<CommunicationOperation>>(this.CommunicationOperationOnUpdated);
+      this._bandController.CommunicationOperation.Updated -= 
+                new EventHandler<MonitorableUpdatedEventArgs<CommunicationOperation>>(
+                    this.CommunicationOperationOnUpdated);
     }
 
     public void UpgradeFirmware()
@@ -90,14 +103,20 @@ namespace MiBandApp.ViewModels.DeviceSettings
 
     private static async Task<byte[]> ReadFirmwareFile(string fileName)
     {
-      return (await FileIO.ReadBufferAsync((IStorageFile) await Package.Current.InstalledLocation.GetFileAsync("Firmware\\Files\\" + fileName).AsTask<StorageFile>().ConfigureAwait(false)).AsTask<IBuffer>().ConfigureAwait(false)).ToArray();
+      return (await FileIO.ReadBufferAsync( 
+          await Package.Current.InstalledLocation.GetFileAsync(
+              "Firmware\\Files\\" + fileName)
+          .AsTask<StorageFile>().ConfigureAwait(false))
+                .AsTask<IBuffer>().ConfigureAwait(false)).ToArray();
     }
 
-    private void CommunicationOperationOnUpdated(
+    private void CommunicationOperationOnUpdated
+    (
       object sender,
-      MonitorableUpdatedEventArgs<CommunicationOperation> updatedEventArgs)
+      MonitorableUpdatedEventArgs<CommunicationOperation> updatedEventArgs
+    )
     {
-      this.NotifyOfPropertyChangeAsync<bool>((Expression<Func<bool>>) (() => this.IsFirmwareUpgradeEnabled));
+      this.NotifyOfPropertyChangeAsync<bool>( () => this.IsFirmwareUpgradeEnabled);
     }
   }
 }

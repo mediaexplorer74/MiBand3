@@ -37,6 +37,7 @@
             <!--Grid.Margin>
                 <StaticResource ResourceKey="RootContainerThickness" />
             </Grid.Margin-->
+            
             <Grid.Resources>
                 <ResourceDictionary>
                     <Style x:Key="SectionHeaderTextBlockStyle" TargetType="TextBlock">
@@ -59,12 +60,8 @@
                     </Style>
                     <Style x:Key="SectionNoteTextBlockStyle" TargetType="TextBlock">
                         <Style.Setters>
-                          <Setter Property="FontSize">
-                                <Setter.Value>
-                                    <StaticResource ResourceKey="TextStyleSmallFontSize" />
-                                </Setter.Value>
-                        </Setter>
-                        <Setter Property="Margin" Value="12 -5 0 10" />
+                            <Setter Property="FontSize" Value="8" />
+                            <Setter Property="Margin" Value="12 -5 0 10" />
                         <Setter Property="TextWrapping" Value="Wrap" />
                        </Style.Setters>
                     </Style>
@@ -80,11 +77,13 @@
                     </Style>
                 </ResourceDictionary>
             </Grid.Resources>
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Grid.Children>
+            
+            <!--Grid.Children-->
                 <StackPanel Grid.Row="0">
                     <TextBlock>
                         <TextBlock.Style>
@@ -92,13 +91,16 @@
                         </TextBlock.Style>
                     </TextBlock>
                 </StackPanel>
+                
                 <Pivot Grid.Row="1">
-                    <Pivot.Style>
+                    <!--Pivot.Style>
                         <StaticResource ResourceKey="PivotWithoutStupidPaddingStyle" />
-                    </Pivot.Style>
+                    </Pivot.Style-->
+                    
                     <Pivot.TitleTemplate>
                         <DataTemplate />
                     </Pivot.TitleTemplate>
+                    
                     <Pivot.Items>
                         <PivotItem x:Uid="AboutPageAboutTab" Header="about">
                             <Grid>
@@ -188,7 +190,10 @@
                                 </ScrollViewer>
                             </Grid>
                         </PivotItem>
-                        <PivotItem x:Uid="AboutPageChangesHistoryTab" x:Name="ChangesHistoryPivotItem" Header="changes history">
+                        
+                        <PivotItem x:Uid="AboutPageChangesHistoryTab" 
+                                   x:Name="ChangesHistoryPivotItem" 
+                                   Header="changes history">
                             <Grid VerticalAlignment="Stretch">
                                 <ScrollViewer VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled">
                                     <ListView>
@@ -203,8 +208,8 @@
                             </Grid>
                         </PivotItem>
                     </Pivot.Items>
-                </Pivot>
-            </Grid.Children>
+                </Pivot>                
+            <!--/Grid.Children-->            
         </Grid>
     </Grid>
 </Page>

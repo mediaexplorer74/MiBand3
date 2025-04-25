@@ -309,19 +309,29 @@ namespace MiBandApp.ViewModels
             pageLoadingMessage.Hide()).ConfigureAwait(false);
             await Task.Delay(100).ConfigureAwait(true);
 
-            this._navigationService.UriFor<HistoryPageViewModel>().Navigate();
-         }
-    }
+              
+            // Plan A - async
+            var task = await Task.Delay(100).ContinueWith<Task>(
+            (t => ((System.Action)(()
+            =>
+            this._navigationService.UriFor<HistoryPageViewModel>().Navigate()))
+            .OnUIThreadAsync())).ConfigureAwait(false);
+
+            // Plan B - not async
+            //this._navigationService.UriFor<HistoryPageViewModel>().Navigate();
+          }
+        }
 
     public void GoToSubscriptionPage()
     {
         this._navigationService.UriFor<SettingsPageViewModel>()
-            .WithParam<bool>((Expression<Func<SettingsPageViewModel, bool>>)(
-            t => t.ShowSubscription), true).Navigate();
+            .WithParam<bool>(t => t.ShowSubscription, true).Navigate();
     }
 
-    public void ManageDevice() => 
+    public void ManageDevice()
+    {
         this._navigationService.UriFor<DevicePageViewModel>().Navigate();
+    }
 
     public void OpenUserInfo()
     {

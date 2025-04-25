@@ -102,6 +102,224 @@
         </Style.Setters>
     </Style>
 
+
+
+    <!--Style x:Key="PivotWithoutStupidPaddingStyle" TargetType="Pivot">
+        <Style.Setters>
+            <Setter Property="ItemContainerStyle">
+                    <Value>
+                        <Style TargetType="PivotItem">
+                            <Setters>
+                                <SetterBaseCollection>
+                                    <Setter Property="Margin" Value="0" />
+                                </SetterBaseCollection>
+                            </Setters>
+                        </Style>
+                    </Value>
+                </Setter>
+                <Setter Property="HeaderTemplate">
+                    <Value>
+                        <DataTemplate>
+                            <Template>
+                                <TextBlock Margin="-17,0,19,0" FontSize="48">
+                  <Text>
+                    <Binding />
+                  </Text>
+                                </TextBlock>
+                            </Template>
+                        </DataTemplate>
+                    </Value>
+                </Setter>
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Foreground">
+                    <Value>
+                        <ThemeResource ResourceKey="PhoneForegroundBrush" />
+                    </Value>
+                </Setter>
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="ItemsPanel">
+                    <Value>
+                        <ItemsPanelTemplate>
+                            <Template>
+                                <Grid />
+                            </Template>
+                        </ItemsPanelTemplate>
+                    </Value>
+                </Setter>
+                <Setter Property="Template">
+                    <Value>
+                        <ControlTemplate TargetType="Pivot">
+                            <Template>
+                                <Grid x:Name="RootElement">
+                                    <HorizontalAlignment>
+                                        <TemplateBinding Property="HorizontalAlignment" />
+                                    </HorizontalAlignment>
+                                    <VerticalAlignment>
+                                        <TemplateBinding Property="VerticalAlignment" />
+                                    </VerticalAlignment>
+                                    <Background>
+                                        <TemplateBinding Property="Background" />
+                                    </Background>
+                                    <RowDefinitions>
+                                        <RowDefinitionCollection>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                        </RowDefinitionCollection>
+                                    </RowDefinitions>
+                                    <Children>
+                                        <UIElementCollection>
+                                            <ContentControl x:Name="TitleContentControl">
+                                                <Content>
+                                                    <TemplateBinding Property="Title" />
+                                                </Content>
+                                                <ContentTemplate>
+                                                    <TemplateBinding Property="TitleTemplate" />
+                                                </ContentTemplate>
+                                                <Style>
+                                                    <StaticResource ResourceKey="PivotTitleContentControlStyle" />
+                                                </Style>
+                                            </ContentControl>
+                                            <ScrollViewer x:Name="ScrollViewer" Row="1" VerticalContentAlignment="Stretch" HorizontalScrollBarVisibility="Hidden" HorizontalSnapPointsAlignment="Center" HorizontalSnapPointsType="MandatorySingle" VerticalScrollBarVisibility="Disabled" VerticalScrollMode="Disabled" VerticalSnapPointsType="None" ZoomMode="Disabled">
+                                                <Margin>
+                                                    <TemplateBinding Property="Padding" />
+                                                </Margin>
+                                                <Template>
+                                                    <StaticResource ResourceKey="ScrollViewerScrollBarlessTemplate" />
+                                                </Template>
+                                                <Content>
+                                                    <PivotPanel x:Name="Panel" VerticalAlignment="Stretch">
+                                                        <Children>
+                                                            <UIElementCollection>
+                                                                <PivotHeaderPanel x:Name="Header">
+                                                                    <RenderTransform>
+                                                                        <CompositeTransform x:Name="HeaderTranslateTransform" TranslateX="0" />
+                                                                    </RenderTransform>
+                                                                </PivotHeaderPanel>
+                                                                <ItemsPresenter x:Name="PivotItemPresenter">
+                                                                    <RenderTransform>
+                                                                        <TranslateTransform x:Name="ItemsPresenterTranslateTransform" X="0" />
+                                                                    </RenderTransform>
+                                                                </ItemsPresenter>
+                                                            </UIElementCollection>
+                                                        </Children>
+                                                    </PivotPanel>
+                                                </Content>
+                                            </ScrollViewer>
+                                        </UIElementCollection>
+                                    </Children>
+                                    <VisualStateGroups>
+                                        <VisualStateGroupCollection>
+                                            <VisualStateGroup x:Name="Orientation">
+                                                <States>
+                                                    <VisualStateCollection>
+                                                        <VisualState x:Name="Portrait">
+                                                            <DeferredStoryboard>
+                                                                <Storyboard>
+                                                                    <Children>
+                                                                        <TimelineCollection>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="TitleContentControl" TargetProperty="Margin">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0">
+                                                                                            <Value>
+                                                                                                <ThemeResource ResourceKey="PivotPortraitThemePadding" />
+                                                                                            </Value>
+                                                                                        </DiscreteObjectKeyFrame>
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                        </TimelineCollection>
+                                                                    </Children>
+                                                                </Storyboard>
+                                                            </DeferredStoryboard>
+                                                        </VisualState>
+                                                        <VisualState x:Name="Landscape">
+                                                            <DeferredStoryboard>
+                                                                <Storyboard>
+                                                                    <Children>
+                                                                        <TimelineCollection>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="TitleContentControl" TargetProperty="Margin">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0">
+                                                                                            <Value>
+                                                                                                <ThemeResource ResourceKey="PivotLandscapeThemePadding" />
+                                                                                            </Value>
+                                                                                        </DiscreteObjectKeyFrame>
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                        </TimelineCollection>
+                                                                    </Children>
+                                                                </Storyboard>
+                                                            </DeferredStoryboard>
+                                                        </VisualState>
+                                                    </VisualStateCollection>
+                                                </States>
+                                            </VisualStateGroup>
+                                        </VisualStateGroupCollection>
+                                    </VisualStateGroups>
+                                </Grid>
+                            </Template>
+                        </ControlTemplate>
+                    </Value>
+                </Setter>
+        </Style.Setters>
+    </Style-->
+    <Style x:Key="PivotWithoutStupidPaddingStyle" TargetType="Pivot">
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="PivotItem">
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="HeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Margin="-17,0,19,0" FontSize="48" Text="{Binding}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <Grid />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Pivot">
+                    <Grid x:Name="RootElement" Background="{TemplateBinding Background}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <ContentControl x:Name="TitleContentControl" 
+                        Content="{TemplateBinding Title}" 
+                        ContentTemplate="{TemplateBinding TitleTemplate}" 
+                        Style="{StaticResource PivotTitleContentControlStyle}" />
+                        <ScrollViewer x:Name="ScrollViewer" Grid.Row="1" 
+                        HorizontalScrollBarVisibility="Hidden" 
+                        VerticalScrollBarVisibility="Disabled" 
+                        ZoomMode="Disabled">
+                            <PivotPanel x:Name="Panel" VerticalAlignment="Stretch">                               
+                              
+                            </PivotPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
     <DataTemplate x:Key="UpdateHistoryItemDataTemplate">
         <!--Template-->
             <StackPanel Margin="0,0,12,20">
@@ -136,4 +354,556 @@
             </StackPanel>
         <!--/Template-->
     </DataTemplate>
+
+    <ControlTemplate x:Key="NavigationButtonTemplate" TargetType="Button">
+      
+            <Grid x:Name="Grid" Background="Transparent">
+                <StackPanel>                       
+                    <!--Grid.Border x:Name="Border" Opacity="0,5">
+                            <Margin>
+                                <ThemeResource ResourceKey="PhoneTouchTargetOverhang" />
+                            </Margin>
+                            <Background>
+                                <TemplateBinding Property="Background" />
+                            </Background>
+                            <BorderBrush>
+                                <TemplateBinding Property="BorderBrush" />
+                            </BorderBrush>
+                            <BorderThickness>
+                                <TemplateBinding Property="BorderThickness" />
+                            </BorderThickness>
+                        </Grid.Border-->
+                        <!--ContentPresenter x:Name="ContentPresenter" AccessibilityView="Raw">
+                            <Margin>
+                                <TemplateBinding Property="Padding" />
+                            </Margin>
+                            <HorizontalAlignment>
+                                <TemplateBinding Property="HorizontalContentAlignment" />
+                            </HorizontalAlignment>
+                            <VerticalAlignment>
+                                <TemplateBinding Property="VerticalContentAlignment" />
+                            </VerticalAlignment>
+                            <Content>
+                                <TemplateBinding Property="Content" />
+                            </Content>
+                            <ContentTemplate>
+                                <TemplateBinding Property="ContentTemplate" />
+                            </ContentTemplate>
+                            <Foreground>
+                                <TemplateBinding Property="Foreground" />
+                            </Foreground>
+                        </ContentPresenter-->
+                         
+                </StackPanel>
+                
+                <!--VisualStateGroups>
+                    <VisualStateGroupCollection>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <Transitions>
+                                <VisualTransitionCollection>
+                                    <VisualTransition From="Pressed" To="PointerOver">
+                                        <Storyboard>
+                                            <Storyboard>
+                                                <Children>
+                                                    <TimelineCollection>
+                                                        <PointerUpThemeAnimation TargetName="Grid" />
+                                                    </TimelineCollection>
+                                                </Children>
+                                            </Storyboard>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                    <VisualTransition From="PointerOver" To="Normal">
+                                        <Storyboard>
+                                            <Storyboard>
+                                                <Children>
+                                                    <TimelineCollection>
+                                                        <PointerUpThemeAnimation TargetName="Grid" />
+                                                    </TimelineCollection>
+                                                </Children>
+                                            </Storyboard>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                    <VisualTransition From="Pressed" To="Normal">
+                                        <Storyboard>
+                                            <Storyboard>
+                                                <Children>
+                                                    <TimelineCollection>
+                                                        <PointerUpThemeAnimation TargetName="Grid" />
+                                                    </TimelineCollection>
+                                                </Children>
+                                            </Storyboard>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                </VisualTransitionCollection>
+                            </Transitions>
+                            <States>
+                                <VisualStateCollection>
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="PointerOver" />
+                                    <VisualState x:Name="Pressed">
+                                        <DeferredStoryboard>
+                                            <Storyboard>
+                                                <Children>
+                                                    <TimelineCollection>
+                                                        <PointerDownThemeAnimation TargetName="Grid" />
+                                                        <ObjectAnimationUsingKeyFrames TargetName="ContentPresenter" TargetProperty="Foreground">
+                                                            <KeyFrames>
+                                                                <ObjectKeyFrameCollection>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0">
+                                                                        <Value>
+                                                                            <ThemeResource ResourceKey="CommandBarBackgroundThemeBrush" />
+                                                                        </Value>
+                                                                    </DiscreteObjectKeyFrame>
+                                                                </ObjectKeyFrameCollection>
+                                                            </KeyFrames>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <ObjectAnimationUsingKeyFrames TargetName="Border" TargetProperty="Background">
+                                                            <KeyFrames>
+                                                                <ObjectKeyFrameCollection>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0">
+                                                                        <Value>
+                                                                            <ThemeResource ResourceKey="CommandBarBackgroundThemeBrush" />
+                                                                        </Value>
+                                                                    </DiscreteObjectKeyFrame>
+                                                                </ObjectKeyFrameCollection>
+                                                            </KeyFrames>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </TimelineCollection>
+                                                </Children>
+                                            </Storyboard>
+                                        </DeferredStoryboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <DeferredStoryboard>
+                                            <Storyboard>
+                                                <Children>
+                                                    <TimelineCollection>
+                                                        <ObjectAnimationUsingKeyFrames TargetName="ContentPresenter" TargetProperty="Opacity">
+                                                            <KeyFrames>
+                                                                <ObjectKeyFrameCollection>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+                                                                </ObjectKeyFrameCollection>
+                                                            </KeyFrames>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <ObjectAnimationUsingKeyFrames TargetName="Border" TargetProperty="BorderBrush">
+                                                            <KeyFrames>
+                                                                <ObjectKeyFrameCollection>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
+                                                                </ObjectKeyFrameCollection>
+                                                            </KeyFrames>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <ObjectAnimationUsingKeyFrames TargetName="Border" TargetProperty="Background">
+                                                            <KeyFrames>
+                                                                <ObjectKeyFrameCollection>
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent" />
+                                                                </ObjectKeyFrameCollection>
+                                                            </KeyFrames>
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                    </TimelineCollection>
+                                                </Children>
+                                            </Storyboard>
+                                        </DeferredStoryboard>
+                                    </VisualState>
+                                </VisualStateCollection>
+                            </States>
+                        </VisualStateGroup>
+                    </VisualStateGroupCollection>
+                </VisualStateGroups-->
+            </Grid>
+    
+    </ControlTemplate>
+
+
+    <Style x:Key="FlipViewNavigationButttonStyle" TargetType="Button">
+        <Style.Setters>
+           
+                <Setter Property="Grid.Row" Value="2" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Margin" Value="-22 0" />
+                <Setter Property="Height" Value="400" />
+                <Setter Property="Width" Value="60" />
+                <Setter Property="MinWidth" Value="20" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <StaticResource ResourceKey="NavigationButtonTemplate" />
+                    </Setter.Value>
+                </Setter>
+           
+        </Style.Setters>
+    </Style>
+
+    <!--Style x:Key="RoundedToggleButtonStyle" TargetType="ToggleButton">
+        <Setters>
+            <SetterBaseCollection>
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderBrush">
+                    <Value>
+                        <ThemeResource ResourceKey="PhoneForegroundBrush" />
+                    </Value>
+                </Setter>
+                <Setter Property="Foreground">
+                    <Value>
+                        <ThemeResource ResourceKey="PhoneForegroundBrush" />
+                    </Value>
+                </Setter>
+                <Setter Property="BorderThickness">
+                    <Value>
+                        <ThemeResource ResourceKey="PhoneBorderThickness" />
+                    </Value>
+                </Setter>
+                <Setter Property="FontFamily">
+                    <Value>
+                        <ThemeResource ResourceKey="PhoneFontFamilyNormal" />
+                    </Value>
+                </Setter>
+                <Setter Property="FontWeight">
+                    <Value>
+                        <ThemeResource ResourceKey="PhoneButtonFontWeight" />
+                    </Value>
+                </Setter>
+                <Setter Property="FontSize">
+                    <Value>
+                        <ThemeResource ResourceKey="TextStyleLargeFontSize" />
+                    </Value>
+                </Setter>
+                <Setter Property="Padding">
+                    <Value>
+                        <ThemeResource ResourceKey="PhoneButtonContentPadding" />
+                    </Value>
+                </Setter>
+                <Setter Property="MinHeight">
+                    <Value>
+                        <ThemeResource ResourceKey="PhoneButtonMinHeight" />
+                    </Value>
+                </Setter>
+                <Setter Property="MinWidth">
+                    <Value>
+                        <ThemeResource ResourceKey="PhoneButtonMinWidth" />
+                    </Value>
+                </Setter>
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Template">
+                    <Value>
+                        <ControlTemplate TargetType="ToggleButton">
+                            <Template>
+                                <Grid Background="Transparent">
+                                    <Children>
+                                        <UIElementCollection>
+                                            <Border x:Name="EnabledBackground" CornerRadius="10">
+                                                <Margin>
+                                                    <ThemeResource ResourceKey="PhoneTouchTargetOverhang" />
+                                                </Margin>
+                                                <Background>
+                                                    <TemplateBinding Property="Background" />
+                                                </Background>
+                                                <BorderBrush>
+                                                    <TemplateBinding Property="BorderBrush" />
+                                                </BorderBrush>
+                                                <BorderThickness>
+                                                    <TemplateBinding Property="BorderThickness" />
+                                                </BorderThickness>
+                                                <Child>
+                                                    <ContentPresenter x:Name="EnabledContent" AccessibilityView="Raw">
+                                                        <Margin>
+                                                            <TemplateBinding Property="Padding" />
+                                                        </Margin>
+                                                        <HorizontalAlignment>
+                                                            <TemplateBinding Property="HorizontalContentAlignment" />
+                                                        </HorizontalAlignment>
+                                                        <VerticalAlignment>
+                                                            <TemplateBinding Property="VerticalContentAlignment" />
+                                                        </VerticalAlignment>
+                                                        <Content>
+                                                            <TemplateBinding Property="Content" />
+                                                        </Content>
+                                                        <ContentTemplate>
+                                                            <TemplateBinding Property="ContentTemplate" />
+                                                        </ContentTemplate>
+                                                        <Foreground>
+                                                            <TemplateBinding Property="Foreground" />
+                                                        </Foreground>
+                                                    </ContentPresenter>
+                                                </Child>
+                                            </Border>
+                                            <Border x:Name="DisabledBackground" Background="Transparent" CornerRadius="10" IsHitTestVisible="True" Visibility="Collapsed">
+                                                <Margin>
+                                                    <ThemeResource ResourceKey="PhoneTouchTargetOverhang" />
+                                                </Margin>
+                                                <BorderBrush>
+                                                    <ThemeResource ResourceKey="ButtonDisabledBorderThemeBrush" />
+                                                </BorderBrush>
+                                                <BorderThickness>
+                                                    <TemplateBinding Property="BorderThickness" />
+                                                </BorderThickness>
+                                                <Child>
+                                                    <ContentPresenter x:Name="DisabledContent" AccessibilityView="Raw">
+                                                        <Margin>
+                                                            <TemplateBinding Property="Padding" />
+                                                        </Margin>
+                                                        <HorizontalAlignment>
+                                                            <TemplateBinding Property="HorizontalContentAlignment" />
+                                                        </HorizontalAlignment>
+                                                        <VerticalAlignment>
+                                                            <TemplateBinding Property="VerticalContentAlignment" />
+                                                        </VerticalAlignment>
+                                                        <Content>
+                                                            <TemplateBinding Property="Content" />
+                                                        </Content>
+                                                        <ContentTemplate>
+                                                            <TemplateBinding Property="ContentTemplate" />
+                                                        </ContentTemplate>
+                                                        <Foreground>
+                                                            <ThemeResource ResourceKey="ButtonDisabledForegroundThemeBrush" />
+                                                        </Foreground>
+                                                    </ContentPresenter>
+                                                </Child>
+                                            </Border>
+                                        </UIElementCollection>
+                                    </Children>
+                                    <VisualStateGroups>
+                                        <VisualStateGroupCollection>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <States>
+                                                    <VisualStateCollection>
+                                                        <VisualState x:Name="Normal" />
+                                                        <VisualState x:Name="PointerOver" />
+                                                        <VisualState x:Name="Pressed" />
+                                                        <VisualState x:Name="Disabled">
+                                                            <DeferredStoryboard>
+                                                                <Storyboard>
+                                                                    <Children>
+                                                                        <TimelineCollection>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="EnabledBackground" TargetProperty="Visibility">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="DisabledBackground" TargetProperty="Visibility">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                        </TimelineCollection>
+                                                                    </Children>
+                                                                </Storyboard>
+                                                            </DeferredStoryboard>
+                                                        </VisualState>
+                                                        <VisualState x:Name="Checked">
+                                                            <DeferredStoryboard>
+                                                                <Storyboard>
+                                                                    <Children>
+                                                                        <TimelineCollection>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="EnabledBackground" TargetProperty="Background">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0">
+                                                                                            <Value>
+                                                                                                <ThemeResource ResourceKey="PhoneAccentBrush" />
+                                                                                            </Value>
+                                                                                        </DiscreteObjectKeyFrame>
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="EnabledContent" TargetProperty="Foreground">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0">
+                                                                                            <Value>
+                                                                                                <ThemeResource ResourceKey="PhoneButtonBasePressedForegroundBrush" />
+                                                                                            </Value>
+                                                                                        </DiscreteObjectKeyFrame>
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="DisabledBackground" TargetProperty="Background">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0">
+                                                                                            <Value>
+                                                                                                <ThemeResource ResourceKey="PhoneDisabledBrush" />
+                                                                                            </Value>
+                                                                                        </DiscreteObjectKeyFrame>
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="DisabledBackground" TargetProperty="BorderBrush">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0">
+                                                                                            <Value>
+                                                                                                <ThemeResource ResourceKey="PhoneDisabledBrush" />
+                                                                                            </Value>
+                                                                                        </DiscreteObjectKeyFrame>
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="DisabledContent" TargetProperty="Foreground">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0">
+                                                                                            <Value>
+                                                                                                <ThemeResource ResourceKey="PhoneBackgroundBrush" />
+                                                                                            </Value>
+                                                                                        </DiscreteObjectKeyFrame>
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                        </TimelineCollection>
+                                                                    </Children>
+                                                                </Storyboard>
+                                                            </DeferredStoryboard>
+                                                        </VisualState>
+                                                        <VisualState x:Name="CheckedPointerOver">
+                                                            <DeferredStoryboard>
+                                                                <Storyboard>
+                                                                    <Children>
+                                                                        <TimelineCollection>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="EnabledBackground" TargetProperty="Background">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0">
+                                                                                            <Value>
+                                                                                                <ThemeResource ResourceKey="PhoneAccentBrush" />
+                                                                                            </Value>
+                                                                                        </DiscreteObjectKeyFrame>
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="EnabledContent" TargetProperty="Foreground">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0">
+                                                                                            <Value>
+                                                                                                <ThemeResource ResourceKey="PhoneButtonBasePressedForegroundBrush" />
+                                                                                            </Value>
+                                                                                        </DiscreteObjectKeyFrame>
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="DisabledBackground" TargetProperty="Background">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0">
+                                                                                            <Value>
+                                                                                                <ThemeResource ResourceKey="PhoneDisabledBrush" />
+                                                                                            </Value>
+                                                                                        </DiscreteObjectKeyFrame>
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="DisabledBackground" TargetProperty="BorderBrush">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0">
+                                                                                            <Value>
+                                                                                                <ThemeResource ResourceKey="PhoneDisabledBrush" />
+                                                                                            </Value>
+                                                                                        </DiscreteObjectKeyFrame>
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="DisabledContent" TargetProperty="Foreground">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0">
+                                                                                            <Value>
+                                                                                                <ThemeResource ResourceKey="PhoneBackgroundBrush" />
+                                                                                            </Value>
+                                                                                        </DiscreteObjectKeyFrame>
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                        </TimelineCollection>
+                                                                    </Children>
+                                                                </Storyboard>
+                                                            </DeferredStoryboard>
+                                                        </VisualState>
+                                                        <VisualState x:Name="CheckedPressed" />
+                                                        <VisualState x:Name="CheckedDisabled">
+                                                            <DeferredStoryboard>
+                                                                <Storyboard>
+                                                                    <Children>
+                                                                        <TimelineCollection>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="EnabledBackground" TargetProperty="Background">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0">
+                                                                                            <Value>
+                                                                                                <ThemeResource ResourceKey="PhoneAccentBrush" />
+                                                                                            </Value>
+                                                                                        </DiscreteObjectKeyFrame>
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="EnabledBackground" TargetProperty="Opacity">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="0.4" />
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="EnabledContent" TargetProperty="Foreground">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0">
+                                                                                            <Value>
+                                                                                                <ThemeResource ResourceKey="PhoneButtonBasePressedForegroundBrush" />
+                                                                                            </Value>
+                                                                                        </DiscreteObjectKeyFrame>
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                        </TimelineCollection>
+                                                                    </Children>
+                                                                </Storyboard>
+                                                            </DeferredStoryboard>
+                                                        </VisualState>
+                                                        <VisualState x:Name="Indeterminate" />
+                                                        <VisualState x:Name="IndeterminatePointerOver" />
+                                                        <VisualState x:Name="IndeterminatePressed" />
+                                                        <VisualState x:Name="IndeterminateDisabled">
+                                                            <DeferredStoryboard>
+                                                                <Storyboard>
+                                                                    <Children>
+                                                                        <TimelineCollection>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="EnabledBackground" TargetProperty="Visibility">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                            <ObjectAnimationUsingKeyFrames TargetName="DisabledBackground" TargetProperty="Visibility">
+                                                                                <KeyFrames>
+                                                                                    <ObjectKeyFrameCollection>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                                                                                    </ObjectKeyFrameCollection>
+                                                                                </KeyFrames>
+                                                                            </ObjectAnimationUsingKeyFrames>
+                                                                        </TimelineCollection>
+                                                                    </Children>
+                                                                </Storyboard>
+                                                            </DeferredStoryboard>
+                                                        </VisualState>
+                                                    </VisualStateCollection>
+                                                </States>
+                                            </VisualStateGroup>
+                                        </VisualStateGroupCollection>
+                                    </VisualStateGroups>
+                                </Grid>
+                            </Template>
+                        </ControlTemplate>
+                    </Value>
+                </Setter>
+            </SetterBaseCollection>
+        </Setters>
+    </Style-->
+
 </ResourceDictionary>

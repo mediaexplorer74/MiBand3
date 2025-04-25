@@ -18,10 +18,10 @@
                         Visibility="{Binding Path=IsFirmwareUpgradeAvailable, Converter={StaticResource BoolToVis}}" />
             </Grid>
             <TextBlock x:Uid="DevicePage_FirmwareUpToDate" Text="Firmware is up to date."
-                       FontSize="{StaticResource TextStyleSmallFontSize}"
+                       FontSize="8"
                        Style="{ThemeResource GrayTextBlockStyle}"
                        Visibility="{Binding Path=IsFirmwareUpToDate, Converter={StaticResource BoolToVis}}" />
-            <TextBlock FontSize="{StaticResource TextStyleSmallFontSize}"
+            <TextBlock FontSize="8"
                        Style="{ThemeResource GrayTextBlockStyle}"
                        Visibility="{Binding Path=IsFirmwareUpgradeAvailable, Converter={StaticResource BoolToVis}}">
                 <Run x:Uid="DevicePage_NewerFirmwareMessage" Text="Newer firmware version available" />

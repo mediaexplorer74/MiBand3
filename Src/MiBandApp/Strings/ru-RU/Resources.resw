@@ -118,204 +118,33 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppPasswordHelpText" xml:space="preserve">
-    <value>What's an App Password?</value>
-  </data>
-  <data name="BackText" xml:space="preserve">
-    <value>Back</value>
-  </data>
-  <data name="CancelText" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="CloseText" xml:space="preserve">
-    <value>Close</value>
-  </data>
-  <data name="DeleteText" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="FeedsText" xml:space="preserve">
-    <value>Feeds</value>
-  </data>
-  <data name="FollowersText" xml:space="preserve">
-    <value>followers</value>
-  </data>
-  <data name="FollowingFeedName" xml:space="preserve">
-    <value>Following</value>
-  </data>
-  <data name="FollowingText" xml:space="preserve">
-    <value>following</value>
-  </data>
-  <data name="FollowText" xml:space="preserve">
-    <value>Follow</value>
-  </data>
-  <data name="HomeText" xml:space="preserve">
-    <value>Home</value>
-  </data>
-  <data name="IdentifierBoxPlaceholder" xml:space="preserve">
-    <value>Bluesky email or username</value>
-  </data>
-  <data name="ImageSelectText" xml:space="preserve">
-    <value>Add image</value>
-  </data>
-  <data name="LikeText" xml:space="preserve">
-    <value>Like</value>
-  </data>
-  <data name="MainPageSynchronizationErrorTip" xml:space="preserve">
-    <value>MainPageSynchronizationErrorTip</value>
-    <comment>MainPageSynchronizationErrorTip</comment>
-  </data>
-  <data name="ManageAccountText" xml:space="preserve">
-    <value>Manage account</value>
-  </data>
-  <data name="MessageOopsHeader" xml:space="preserve">
-    <value>MessageOopsHeader</value>
-    <comment>MessageOopsHeader</comment>
-  </data>
-  <data name="MyFeedsSubtitle" xml:space="preserve">
-    <value>All the feeds you've saved, all in one place</value>
-  </data>
-  <data name="MyFeedsTitle" xml:space="preserve">
-    <value>My Feeds</value>
-  </data>
-  <data name="NewPostPlaceholder" xml:space="preserve">
-    <value>What's up?</value>
-  </data>
-  <data name="NewPostText" xml:space="preserve">
-    <value>New Post</value>
-  </data>
-  <data name="NotificationsFollowedText" xml:space="preserve">
-    <value>{0} followed you</value>
-  </data>
-  <data name="NotificationsLikedText" xml:space="preserve">
-    <value>{0} liked your post</value>
-  </data>
-  <data name="NotificationsRepostedText" xml:space="preserve">
-    <value>{0} reposted your post</value>
-  </data>
-  <data name="NotificationsText" xml:space="preserve">
-    <value>Notifications</value>
-  </data>
-  <data name="OkayText" xml:space="preserve">
-    <value>Okay</value>
-  </data>
-  <data name="PasswordBoxPlaceholder" xml:space="preserve">
-    <value>Your special App Password</value>
-  </data>
-  <data name="PeopleText" xml:space="preserve">
-    <value>People</value>
-  </data>
-  <data name="PinnedFeedsSubtitle" xml:space="preserve">
-    <value>Select a feed to change your view</value>
-  </data>
-  <data name="PinnedFeedsTitle" xml:space="preserve">
-    <value>Pinned Feeds</value>
-  </data>
-  <data name="PinToHomeText" xml:space="preserve">
-    <value>Pin to Home</value>
-    <comment>Pinning or bookmarking a feed so you can see it from the home page</comment>
-  </data>
-  <data name="PostedReplyText" xml:space="preserve">
-    <value>Posted a reply</value>
-  </data>
-  <data name="PostsText" xml:space="preserve">
-    <value>posts</value>
-  </data>
-  <data name="ProfileText" xml:space="preserve">
-    <value>Profile</value>
-  </data>
-  <data name="RecentSearchesPlaceholder" xml:space="preserve">
-    <value>Your recent searches will appear here. Start searching!</value>
-  </data>
-  <data name="RecentSearchesText" xml:space="preserve">
-    <value>Recent searches</value>
-  </data>
-  <data name="RefreshText" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="ReplyText" xml:space="preserve">
-    <value>Reply</value>
-  </data>
-  <data name="RepostCaption" xml:space="preserve">
-    <value>Reposted by {0}</value>
-  </data>
-  <data name="RepostText" xml:space="preserve">
-    <value>Repost</value>
-  </data>
-  <data name="SearchPagePlaceholder1" xml:space="preserve">
-    <value>What are you waiting for?</value>
-  </data>
-  <data name="SearchPagePlaceholder2" xml:space="preserve">
-    <value>Start searching!</value>
-  </data>
-  <data name="SearchTabAutomationName" xml:space="preserve">
-    <value>Sorting options</value>
-  </data>
-  <data name="SearchText" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="SendFeedbackText" xml:space="preserve">
-    <value>Send feedback</value>
-  </data>
-  <data name="SessionTimeoutDialogMessage" xml:space="preserve">
-    <value>Your session expired, and you'll need to sign in again.</value>
-  </data>
-  <data name="SessionTimeoutDialogTitle" xml:space="preserve">
-    <value>Sign in required</value>
-  </data>
-  <data name="SignInText" xml:space="preserve">
-    <value>Sign in</value>
-  </data>
-  <data name="SignOutDialogMessage" xml:space="preserve">
-    <value>Are you sure? You will return to the sign in page.</value>
-  </data>
-  <data name="SignOutDialogTitle" xml:space="preserve">
-    <value>Signing out</value>
-  </data>
-  <data name="SignOutText" xml:space="preserve">
-    <value>Sign out</value>
-  </data>
-  <data name="SortLatestText" xml:space="preserve">
-    <value>Latest</value>
-  </data>
-  <data name="SortTopText" xml:space="preserve">
-    <value>Top</value>
-  </data>
-  <data name="StarterPackByText" xml:space="preserve">
-    <value>Starter pack by {0}</value>
-  </data>
-  <data name="SubmitText" xml:space="preserve">
-    <value>Submit</value>
-  </data>
-  <data name="SuggestedAccountsSubtitle" xml:space="preserve">
-    <value>Follow more accounts to get connected to your interests and build your network.</value>
-  </data>
-  <data name="SuggestedAccountsTitle" xml:space="preserve">
-    <value>Suggested accounts</value>
+    <value>Какой пароль приложения?</value>
   </data>
   <data name="U0Description" xml:space="preserve">
-    <value>U0Description</value>
+    <value>Первый публичный релиз</value>
     <comment>U0Description</comment>
   </data>
   <data name="U0Message" xml:space="preserve">
-    <value>U0Message</value>
+    <value>-</value>
     <comment>U0Message</comment>
   </data>
   <data name="U0Version" xml:space="preserve">
-    <value>U0Version</value>
+    <value>Экспериментальная функция живой плитки, улучшенный пользовательский интерфейс, улучшенная интеграция с группами, добавлена страница Что нового</value>
     <comment>U0Version</comment>
   </data>
   <data name="U1Description" xml:space="preserve">
-    <value>U1Description</value>
+    <value>UWP Пре-альфа</value>
     <comment>U1Description</comment>
   </data>
   <data name="U1Message" xml:space="preserve">
-    <value>U1Message</value>
+    <value>-</value>
     <comment>U1Message</comment>
   </data>
   <data name="U1Version" xml:space="preserve">
-    <value>U1Version</value>
+    <value>1.0.0</value>
     <comment>U1Version</comment>
   </data>
   <data name="UploadingText" xml:space="preserve">
-    <value>Uploading</value>
+    <value>Загрузка</value>
   </data>
 </root>

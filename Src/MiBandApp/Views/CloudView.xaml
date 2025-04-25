@@ -1,0 +1,205 @@
+﻿<UserControl xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:controls="using:MiBandApp.Controls" 
+             xmlns:core="using:Microsoft.Xaml.Interactions.Core" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:interactivity="using:Microsoft.Xaml.Interactivity" 
+             xmlns:local="using:MiBandApp.Views" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:micro="using:Caliburn.Micro" 
+             xmlns:viewModels="using:MiBandApp.ViewModels" 
+             x:Class="MiBandApp.Views.CloudView" 
+             x:Name="PageRoot">
+<Grid>
+    <StackPanel>
+        <StackPanel.Resources>
+            <ResourceDictionary>
+                <Style x:Key="ContentTextBlockStyle" TargetType="TextBlock">
+                    <Style.BasedOn>
+                        <StaticResource ResourceKey="GrayTextBlockStyle" />
+                    </Style.BasedOn>
+                    <Style.Setters>
+                            <Setter Property="FontSize" Value="8"/>                            
+                     </Style.Setters>
+                </Style>
+            </ResourceDictionary>
+        </StackPanel.Resources>
+            
+        <Grid>
+            <TextBlock x:Uid="CloudPageHint" 
+                       Margin="0,0,0,10" 
+                       TextAlignment="Left" 
+                       TextWrapping="Wrap"
+                       FontSize="8">
+            
+            <TextBlock.Style>
+              <StaticResource ResourceKey="GrayTextBlockStyle" />
+            </TextBlock.Style>
+             <TextBlock.Inlines>
+              <Run Text="Synchronize your activity history with cloud services, so you won't lose data when changing phone or reinstalling application." />
+            </TextBlock.Inlines>
+           </TextBlock>
+            
+             <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                    <Button.Visibility>
+                            <Binding Path="ShowOneDriveLoginButton">
+                                <!--Converter>
+                                    <StaticResource ResourceKey="BoolToVis" />
+                                </Converter-->
+                            </Binding>
+                        </Button.Visibility>
+                        <!--interactivity:Behaviors>
+                            <interactivity:BehaviorCollection>
+                                <core:EventTriggerBehavior EventName="Tapped">
+                                    <core:Actions>
+                                        <interactivity:ActionCollection>
+                                            <core:CallMethodAction MethodName="LoginOneDrive">
+                                                <core:TargetObject>
+                                                    <Binding Mode="OneWay" />
+                                                </core:TargetObject>
+                                            </core:CallMethodAction>
+                                        </interactivity:ActionCollection>
+                                    </core:Actions>
+                                </core:EventTriggerBehavior>
+                            </interactivity:BehaviorCollection>
+                        </interactivity:Behaviors-->
+                        <Button.Content>
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                  
+                                        <ColumnDefinition Width="0,3*" />
+                                        <ColumnDefinition />
+                                  
+                                </Grid.ColumnDefinitions>
+                                <Grid>
+                                   <BitmapIcon Margin="0,-5,0,-10" 
+                                               UriSource="/Resources/Images/OneDriveIcon.png" />
+                                   <TextBlock x:Uid="CloudPageConnectOneDrive"
+                                              Grid.Column="1" HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" FontSize="22" 
+                                              Text="Connect to OneDrive" 
+                                              TextAlignment="Center" TextWrapping="Wrap" />
+                                  
+                                </Grid>
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+                    <ProgressRing Background="Transparent" IsActive="False">
+                    <ProgressRing.Foreground>
+                            <StaticResource ResourceKey="AppForegroundBrush" />
+                        </ProgressRing.Foreground>
+                    <ProgressRing.Visibility>
+                        <Binding Path="ShowOneDriveProgressRing" 
+                                 Converter="{StaticResource BoolToVis}">                               
+                         </Binding>
+                     </ProgressRing.Visibility>
+                    </ProgressRing>
+            
+                    <ListView HorizontalContentAlignment="Stretch" IsTextScaleFactorEnabled="True">
+                    <ListView.Items>
+                       
+                                <ListViewItem HorizontalContentAlignment="Stretch">
+                                  <ListViewItem.Visibility>
+                                        <Binding Path="ShowOneDriveListItem" 
+                                                 Converter="{StaticResource BoolToVis}">                                          
+                                        </Binding>
+                                    </ListViewItem.Visibility>
+                                   <ListViewItem.Content>
+                                        <StackPanel>
+                                        <!--interactivity:Behaviors>
+                                            <interactivity:BehaviorCollection>
+                                                <core:EventTriggerBehavior EventName="Tapped">
+                                                    <core:Actions>
+                                                        <interactivity:ActionCollection>
+                                                            <controls:OpenMenuFlyoutAction />
+                                                        </interactivity:ActionCollection>
+                                                    </core:Actions>
+                                                </core:EventTriggerBehavior>
+                                            </interactivity:BehaviorCollection>
+                                        </interactivity:Behaviors-->
+                                        <!--AttachedFlyout>
+                                            <MenuFlyout Placement="Bottom">
+                                                <Items>
+                                                    <MenuFlyoutItemBaseCollection>
+                                                        <MenuFlyoutItem x:Uid="CloudPageOneDriveSyncNow" Text="synchronize now" Attach="[Event Click] = [Action OneDriveSyncNow()]">
+                                                            <IsEnabled>
+                                                                <Binding Path="OneDriveManipulationEnabled" />
+                                                            </IsEnabled>
+                                                            <micro:TargetWithoutContext>
+                                                                <Binding ElementName="PageRoot" Path="DataContext" />
+                                                            </micro:TargetWithoutContext>
+                                                            <micro:Model>
+                                                                <Binding />
+                                                            </micro:Model>
+                                                        </MenuFlyoutItem>
+                                                        <MenuFlyoutItem x:Uid="CloudPageOneDriveDisable" Text="disable" Attach="[Event Click] = [Action DisableOneDrive()]">
+                                                            <IsEnabled>
+                                                                <Binding Path="OneDriveManipulationEnabled" />
+                                                            </IsEnabled>
+                                                            <micro:TargetWithoutContext>
+                                                                <Binding ElementName="PageRoot" Path="DataContext" />
+                                                            </micro:TargetWithoutContext>
+                                                            <micro:Model>
+                                                                <Binding />
+                                                            </micro:Model>
+                                                        </MenuFlyoutItem>
+                                                    </MenuFlyoutItemBaseCollection>
+                                                </Items>
+                                            </MenuFlyout>
+                                        </AttachedFlyout-->
+                                        <Grid>
+                                            <Grid HorizontalAlignment="Stretch">
+                                                    <Grid.ColumnDefinitions>
+                                                          
+                                                        <ColumnDefinition Width="0,3*" />
+                                                        <ColumnDefinition Width="20px" />
+                                                        <ColumnDefinition />
+                                                          
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                           
+                                                        <RowDefinition />
+                                                        <RowDefinition Height="15px" />
+                                                           
+                                                </Grid.RowDefinitions>
+                                            <Grid>
+                                                <BitmapIcon Grid.RowSpan="2" Margin="0,-10,0,-15" UriSource="/Resources/Images/OneDriveIcon.png" />
+                                                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                                    <Grid>
+                                                        <TextBlock Margin="-2,0,0,-10" FontSize="25" Text="OneDrive" />
+                                                    </Grid>
+
+                                                </StackPanel>
+                                                <TextBlock Grid.Row="1" Grid.Column="2">
+                                                    <TextBlock.Style>
+                                                        <StaticResource ResourceKey="ContentTextBlockStyle" />
+                                                    </TextBlock.Style>
+                                                    <TextBlock.Text>
+                                                        <Binding Path="OneDriveSyncStateText" />
+                                                    </TextBlock.Text>
+                                                </TextBlock>
+                                                <BitmapIcon Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Height="20" 
+                                                            Margin="5,5,5,5" HorizontalAlignment="Right" 
+                                                            VerticalAlignment="Bottom" 
+                                                            UriSource="/Resources/Images/exclamation.png">
+                                                    <BitmapIcon.Foreground>
+                                                        <StaticResource ResourceKey="AppBackgroundBrush" />
+                                                    </BitmapIcon.Foreground>
+                                                    <BitmapIcon.Visibility>
+                                                        <Binding Path="HasNoConnection" Converter="{StaticResource BoolToVis}">                                                           
+                                                        </Binding>
+                                                    </BitmapIcon.Visibility>
+                                                </BitmapIcon>
+                                            </Grid>
+                                        </Grid>
+                                            </Grid>
+                                    </StackPanel>
+                                </ListViewItem.Content>
+                            </ListViewItem>          
+                        </ListView.Items>
+                    </ListView>
+                </Grid>
+        </StackPanel>
+    </Grid>
+</UserControl>
+

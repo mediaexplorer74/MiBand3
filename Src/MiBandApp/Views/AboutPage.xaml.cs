@@ -48,9 +48,12 @@ namespace MiBandApp.Views
 {
     public sealed partial class AboutPage : Page
     {
-                //private PivotItem ChangesHistoryPivotItem;
-        
-        public AboutPage() => this.InitializeComponent();
+        //private PivotItem ChangesHistoryPivotItem;
+
+        public AboutPage()
+        {
+            this.InitializeComponent();
+        }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

@@ -4,15 +4,7 @@
 ## About 
 RnD of MiBandApp, Unofficial UWP Client for Mi Band 2 ( [Windows Store link](https://apps.microsoft.com/detail/9p9p4lqh99c7?hl=ru-RU&gl=RU)  ).
 
-## Design of WP8 retro-version (not my screenshots)
-![WP8](Images/retro01.png)
-![WP8](Images/retro02.png)
-![WP8](Images/retro03.png)
-![WP8](Images/retro04.png)
-![WP8](Images/retro05.png)
-![WP8](Images/retro06.png)
-
-## Screenshot
+## Screenshots
 ![W11](Images/sshot01.png)
 ![W11](Images/sshot02.png)
 

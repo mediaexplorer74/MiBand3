@@ -102,9 +102,7 @@
                         </CheckBox.IsChecked>
                         <CheckBox.Content>
                             <TextBlock Margin="0,-8,0,-8" TextWrapping="Wrap">
-                                <TextBlock.FontSize>
-                                    <StaticResource ResourceKey="TextStyleSmallFontSize" />
-                                </TextBlock.FontSize>
+                                
                                 <Run x:Uid="AlarmsPageSmartCheckBoxTitle" Text="smart" FontSize="8"/>
                                    
                                 
