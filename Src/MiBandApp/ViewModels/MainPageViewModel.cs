@@ -216,9 +216,9 @@ namespace MiBandApp.ViewModels
 
                 try
                 {
-                    // RnD / DEBUG
+                    // RnD / DEBUG / Test
                     result = true;
-                    //   this._bandController.BindingState.Value == BindingState.Binded;
+                      //this._bandController.BindingState.Value == BindingState.Binded;
                 }
                 catch (Exception ex)
                 {

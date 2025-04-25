@@ -41,7 +41,9 @@ namespace MiBandApp.Converters
 
     private Visibility GetVisibilityForState(BandSyncState syncState, string paramString)
     {
-      return syncState.ToString().Equals(paramString, StringComparison.OrdinalIgnoreCase) ? (Visibility) 0 : (Visibility) 1;
+      return syncState.ToString().Equals(paramString, StringComparison.OrdinalIgnoreCase)
+                ? (Visibility) 0 
+                : (Visibility) 1;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, string language)
@@ -75,9 +77,12 @@ namespace MiBandApp.Converters
         case BandSyncState.None:
         case BandSyncState.Success:
         case BandSyncState.Binding:
-          return param == "textblock" ? (Brush) ((IDictionary<object, object>) Application.Current.Resources)[(object) "AppForegroundDisabledBrush"] : (Brush) ((IDictionary<object, object>) Application.Current.Resources)[(object) "CommandBarBackgroundThemeBrush"];
+         /*return param == "textblock" 
+                   ? (Brush) Application.Current.Resources["AppForegroundDisabledBrush"]
+                  : (Brush) Application.Current.Resources["CommandBarBackgroundThemeBrush"];*/
+         return (Brush)new SolidColorBrush(Colors.Green);
         case BandSyncState.InProgress:
-          return (Brush) ((IDictionary<object, object>) Application.Current.Resources)[(object) "AppAccentBrush"];
+          return (Brush) Application.Current.Resources[(object) "AppAccentBrush"];
         case BandSyncState.Failed:
           return (Brush) new SolidColorBrush(Colors.Red);
         default:

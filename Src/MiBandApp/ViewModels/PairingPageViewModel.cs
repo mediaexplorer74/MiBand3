@@ -91,12 +91,16 @@ namespace MiBandApp.ViewModels
     {
       this._log.Info("Starting binding", (Exception) null);
       MessageDialog errorDialog = (MessageDialog) null;
-      this._currentStatusBarProgressItem = this._statusBarNotificationService.Show<StatusBarProgressItem>(new StatusBarProgressItem(this._stringsLoader.GetString("PairingPageBindingMessage"), new double?()));
+      this._currentStatusBarProgressItem 
+                = this._statusBarNotificationService.Show<StatusBarProgressItem>(new StatusBarProgressItem(this._stringsLoader.GetString("PairingPageBindingMessage"), new double?()));
       do
       {
         try
         {
-          BindingResult result = await this._bandController.MiBand.Bind(alreadyStarted ? (UserInfo) null : this._settings.GetSavedUserInfo()).ConfigureAwait(true);
+          BindingResult result = await this._bandController.MiBand.Bind(alreadyStarted
+              ? (UserInfo) null
+              : this._settings.GetSavedUserInfo()).ConfigureAwait(true);
+
           switch (result)
           {
             case BindingResult.Success:

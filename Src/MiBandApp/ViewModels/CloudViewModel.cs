@@ -34,10 +34,15 @@ namespace MiBandApp.ViewModels
       this._stringsLoader = new ResourceLoader();
       this._settings = settings;
       this._oneDriveSyncService = oneDriveSyncService;
-      this._oneDriveSyncService.StateChanged += new EventHandler(this.OneDriveSyncServiceOnStateChanged);
+      this._oneDriveSyncService.StateChanged
+                += new EventHandler(this.OneDriveSyncServiceOnStateChanged);
+
       this._oneDriveSessionService = oneDriveSessionService;
       this._licensingService = licensingService;
-      this._oneDriveSessionService.StatusChanged += new EventHandler(this.OneDriveSessionServiceOnStatusChanged);
+
+      this._oneDriveSessionService.StatusChanged 
+                += new EventHandler(this.OneDriveSessionServiceOnStatusChanged);
+
       this._oneDriveSessionService.Init().ConfigureAwait(false);
       this.UpdateVisibilityOneDrive();
     }
@@ -82,7 +87,9 @@ namespace MiBandApp.ViewModels
     {
       get
       {
-        return this._oneDriveSyncService.State == OneDriveSyncService.SyncState.Error || this._oneDriveSyncService.State == OneDriveSyncService.SyncState.NotSynced || this._oneDriveSyncService.State == OneDriveSyncService.SyncState.Synced;
+        return this._oneDriveSyncService.State == OneDriveSyncService.SyncState.Error 
+                    || this._oneDriveSyncService.State == OneDriveSyncService.SyncState.NotSynced 
+                    || this._oneDriveSyncService.State == OneDriveSyncService.SyncState.Synced;
       }
     }
 
@@ -94,7 +101,9 @@ namespace MiBandApp.ViewModels
         switch (this._oneDriveSyncService.State)
         {
           case OneDriveSyncService.SyncState.NotSynced:
-            return lastSyncTime == DateTime.MinValue ? this._stringsLoader.GetString("CloudPageOneDriveNotSynchronized") : this.GetSyncedAtString(lastSyncTime);
+            return lastSyncTime == DateTime.MinValue 
+                            ? this._stringsLoader.GetString("CloudPageOneDriveNotSynchronized") 
+                            : this.GetSyncedAtString(lastSyncTime);
           case OneDriveSyncService.SyncState.Synced:
             return this.GetSyncedAtString(lastSyncTime);
           case OneDriveSyncService.SyncState.Connecting:
@@ -171,7 +180,8 @@ namespace MiBandApp.ViewModels
     {
       string str1 = syncTime.ToString("t");
       string str2 = syncTime.ToString("M");
-      return this._stringsLoader.GetString("CloudPageOneDriveSyncedAt") + " " + str1 + (syncTime.Date == DateTime.Today ? "" : ", " + str2);
+      return this._stringsLoader.GetString("CloudPageOneDriveSyncedAt") 
+                + " " + str1 + (syncTime.Date == DateTime.Today ? "" : ", " + str2);
     }
 
     private void UpdateVisibilityOneDrive()

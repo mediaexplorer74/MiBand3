@@ -24,9 +24,20 @@ namespace MiBandApp.Controls
     private const string EllipseLeftPartName = "PART_EllipseLeft";
     private const string EllipseCenterPartName = "PART_EllipseCenter";
     private const string EllipseRightPartName = "PART_EllipseRight";
-    public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof (Value), typeof (double), typeof (Band), new PropertyMetadata((object) 0.0, new PropertyChangedCallback(Band.OnValueChanged)));
-    public static readonly DependencyProperty AnimationProperty = DependencyProperty.Register(nameof (Animation), typeof (BandAnimation), typeof (Band), new PropertyMetadata((object) BandAnimation.None, new PropertyChangedCallback(Band.OnAnimationChanged)));
-    public static readonly DependencyProperty DotsVisibilityProperty = DependencyProperty.Register(nameof (DotsVisibility), typeof (Visibility), typeof (Band), new PropertyMetadata((object) (Visibility) 0));
+    public static readonly DependencyProperty ValueProperty 
+            = DependencyProperty.Register(nameof (Value), typeof (double),
+                typeof (Band), new PropertyMetadata((object) 0.0, 
+                    new PropertyChangedCallback(Band.OnValueChanged)));
+
+    public static readonly DependencyProperty AnimationProperty 
+            = DependencyProperty.Register(nameof (Animation), typeof (BandAnimation), 
+                typeof (Band), new PropertyMetadata((object) BandAnimation.None, 
+                    new PropertyChangedCallback(Band.OnAnimationChanged)));
+
+    public static readonly DependencyProperty DotsVisibilityProperty 
+            = DependencyProperty.Register(nameof (DotsVisibility), typeof (Visibility), 
+                typeof (Band), new PropertyMetadata((object) (Visibility) 0));
+
     private readonly List<Ellipse> _ellipses = new List<Ellipse>();
     private int _animationLightenedEllipse;
     private DispatcherTimer _animationTimer;
@@ -52,11 +63,12 @@ namespace MiBandApp.Controls
       set => ((DependencyObject) this).SetValue(Band.DotsVisibilityProperty, (object) value);
     }
 
-    protected /*virtual*/override void OnApplyTemplate()
+    protected override void OnApplyTemplate()
     {
       this._ellipses.Add(this.GetTemplateChild("PART_EllipseLeft") as Ellipse);
       this._ellipses.Add(this.GetTemplateChild("PART_EllipseCenter") as Ellipse);
       this._ellipses.Add(this.GetTemplateChild("PART_EllipseRight") as Ellipse);
+
       Band.OnValueChanged((DependencyObject) this);
       Band.OnAnimationChanged((DependencyObject) this);
       this.OnApplyTemplate();
@@ -110,7 +122,8 @@ namespace MiBandApp.Controls
             }
             else
             {
-                if (this._ellipses.Count == 0 || this._animationTimer != null && this._timerMode == this.Animation)
+                if (this._ellipses.Count == 0 || this._animationTimer != null 
+                    && this._timerMode == this.Animation)
                     return;
 
                 this._animationTimer?.Stop();
@@ -138,7 +151,8 @@ namespace MiBandApp.Controls
       ++this._animationLightenedEllipse;
       if (this._animationLightenedEllipse < this._ellipses.Count)
         this.LightEllipse(this._animationLightenedEllipse);
-      if (this._animationLightenedEllipse <= this._ellipses.Count + (this.Animation == BandAnimation.Communicating ? 2 : 0))
+      if (this._animationLightenedEllipse <= this._ellipses.Count +
+                (this.Animation == BandAnimation.Communicating ? 2 : 0))
         return;
       this._animationLightenedEllipse = -1;
     }

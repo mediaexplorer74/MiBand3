@@ -45,7 +45,7 @@
                     </Style>
                     <Style x:Key="SectionNoteTextBlockStyle" TargetType="TextBlock">
                         <Style.Setters>
-                            <Setter Property="FontSize" Value="8"/> 
+                            <Setter Property="FontSize" Value="12"/> 
                             <Setter Property="Margin" Value="12 -5 0 10" />
                             <Setter Property="TextWrapping" Value="Wrap" />
                         </Style.Setters>
@@ -55,7 +55,7 @@
                             <StaticResource ResourceKey="DefaultHyperlinkButtonStyle" />
                         </Style.BasedOn>
                         <Style.Setters>
-                            <Setter Property="FontSize" Value="20" />
+                            <Setter Property="FontSize" Value="16" />
                             <Setter Property="Margin" Value="12 0 0 10" />
                         </Style.Setters>
                     </Style>
@@ -68,7 +68,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Grid>
+            <StackPanel>
                 <StackPanel Grid.Row="0">
                     <Grid>
                         <TextBlock>
@@ -83,9 +83,9 @@
                     <Pivot.SelectedIndex>
                         <Binding Path="TabIndex" />
                     </Pivot.SelectedIndex>
-                    <Pivot.Style>
+                    <!--Pivot.Style>
                         <StaticResource ResourceKey="PivotWithoutStupidPaddingStyle" />
-                    </Pivot.Style>
+                    </Pivot.Style-->
                     <Pivot.TitleTemplate>
                         <DataTemplate />
                     </Pivot.TitleTemplate>
@@ -93,52 +93,53 @@
 
                         <PivotItem x:Uid="SettingsPageSettingsTab" Header="settings">
                             <PivotItem.Content>
-                                <Grid>
+                                <!--Grid-->
                                     <StackPanel>
                                         <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Visible"
                                                    VerticalScrollMode="Enabled">
                                             <ScrollViewer.Content>
                                                 <StackPanel>
-                                                    <Grid>
-                                                        <ComboBox x:Uid="SettingsPageDistanceUnitsComboBox" 
-                                                    Margin="0,0,0,0" Header="Distance units">
-                                                            <ComboBox.SelectedIndex>
-                                                                <Binding Path="DistanceUnitsIndex" 
-                                                      Mode="TwoWay" />
-                                                            </ComboBox.SelectedIndex>
-                                                            <ComboBox.Items>
-                                                                <ComboBoxItem x:Uid="SettingsPageDistanceUnitsKilometers"
-                                                             Content="Kilometers" />
-                                                                <ComboBoxItem x:Uid="SettingsPageDistanceUnitsMiles" 
-                                                             Content="Miles" />
-                                                            </ComboBox.Items>
-                                                        </ComboBox>
+                                                    <!--Grid-->
+                                                    <ComboBox x:Uid="SettingsPageDistanceUnitsComboBox" 
+                                                Margin="0,0,0,0" Header="Distance units">
+                                                        <ComboBox.SelectedIndex>
+                                                            <Binding Path="DistanceUnitsIndex" 
+                                                    Mode="TwoWay" />
+                                                        </ComboBox.SelectedIndex>
+                                                        <ComboBox.Items>
+                                                            <ComboBoxItem x:Uid="SettingsPageDistanceUnitsKilometers"
+                                                            Content="Kilometers" />
+                                                            <ComboBoxItem x:Uid="SettingsPageDistanceUnitsMiles" 
+                                                            Content="Miles" />
+                                                        </ComboBox.Items>
+                                                    </ComboBox>
 
-                                                        <TextBlock x:Uid="SettingsPageCloudSyncHeader" Margin="0,20,0,10">
-                                                            <TextBlock.Style>
-                                                                <ThemeResource ResourceKey="ControlHeaderTextBlockStyle" />
-                                                            </TextBlock.Style>
-                                                            <TextBlock.Inlines>
-                                                                <Run Text="Cloud synchronization" />
-                                                            </TextBlock.Inlines>
-                                                        </TextBlock>
+                                                    <TextBlock x:Uid="SettingsPageCloudSyncHeader" Margin="0,20,0,10">
+                                                        <TextBlock.Style>
+                                                            <ThemeResource ResourceKey="ControlHeaderTextBlockStyle" />
+                                                        </TextBlock.Style>
+                                                        <TextBlock.Inlines>
+                                                            <Run Text="Cloud synchronization" />
+                                                        </TextBlock.Inlines>
+                                                    </TextBlock>
 
-                                                        <ContentControl x:Name="CloudViewModel" Margin="5,0,5,0" />
+                                                    <ContentControl x:Name="CloudViewModel" Margin="5,0,5,0" />
 
-                                                        <HyperlinkButton Margin="0,30,0,0" 
-        NavigateUri="https://www.microsoft.com/store/apps/9nblggh528kp" 
-        Content="Notify Mi Band" FontSize="12">
+                                                    <HyperlinkButton Margin="0,30,0,0" 
+                                                        NavigateUri="https://www.microsoft.com/store/apps/9nblggh528kp" 
+                                                        Content="Notify Mi Band" 
+                                                        FontSize="12">
 
-                                                            <HyperlinkButton.Style>
+                                                        <HyperlinkButton.Style>
                                                                 <StaticResource ResourceKey="DefaultHyperlinkButtonStyle" />
                                                             </HyperlinkButton.Style>
                                                         </HyperlinkButton>
 
-                                                        <Button x:Uid="SettingsPage_Authorize" x:Name="AuthorizeNotify" 
-            Content="Authorize" />
-                                                        <TextBlock x:Uid="SettingsPage_NotifyMiBandHint"
-                Text="You will need to download and configure a separate application. Only available for Windows 10 Mobile with Anniversary Update installed."
-                FontSize="8">
+                                           <Button x:Uid="SettingsPage_Authorize" x:Name="AuthorizeNotify" 
+                                                        Content="Authorize" />
+                                           <TextBlock x:Uid="SettingsPage_NotifyMiBandHint"
+                                                         Text="You will need to download and configure a separate application. Only available for Windows 10 Mobile with Anniversary Update installed."
+                                                    FontSize="12">
                                                           
                                                             <TextBlock.Style>
                                                                 <ThemeResource ResourceKey="GrayTextBlockStyle" />
@@ -146,21 +147,21 @@
                                                         </TextBlock>
 
                                                         <ToggleSwitch x:Uid="SettingsPage_SyncReminder"
-                x:Name="SyncReminderEnabled" Margin="0,30,0,0" Header="Sync reminder" />
+                                                            x:Name="SyncReminderEnabled" Margin="0,30,0,0" Header="Sync reminder" />
 
                                                         <TextBlock x:Uid="SettingsPage_SyncReminderHint" 
-            Text="798978The reminder comes in a form of a notification. It is recommended to synchronize your band every 5 days to avoid data loss."
-                                                                   FontSize="8">                                                           
+                                                                Text="The reminder comes in a form of a notification. It is recommended to synchronize your band every 5 days to avoid data loss."
+                                                                   FontSize="12">                                                           
                                                             <TextBlock.Style>
                                                                 <ThemeResource ResourceKey="GrayTextBlockStyle" />
                                                             </TextBlock.Style>
                                                         </TextBlock>
-                                                    </Grid>
+                                                    <!--/Grid-->
                                                 </StackPanel>
                                             </ScrollViewer.Content>
                                         </ScrollViewer>
                                     </StackPanel>
-                                </Grid>
+                                <!--/Grid-->
                             </PivotItem.Content>
                         </PivotItem>
 
@@ -173,8 +174,9 @@
                                         <RowDefinition Height="Auto" />
 
                                     </Grid.RowDefinitions>
-                                    <Grid>
-                                        <TextBlock Grid.Row="0" Margin="0,0,0,10" FontSize="28">
+                                    
+                                    <StackPanel>
+                                        <TextBlock Grid.Row="0" Margin="0,0,0,10" FontSize="18">
                                             <TextBlock.Style>
                                                 <StaticResource ResourceKey="GrayBigTextBlockStyle" />
                                             </TextBlock.Style>
@@ -190,8 +192,9 @@
 
                                             </TextBlock.Inlines>
                                         </TextBlock>
-                                        <ScrollViewer Grid.Row="1" IsVerticalRailEnabled="False" 
-                                        VerticalScrollBarVisibility="Visible">
+                                        <ScrollViewer Grid.Row="1" 
+                                                      IsVerticalRailEnabled="False" 
+                                                      VerticalScrollBarVisibility="Visible">
                                             <ScrollViewer.Resources>
                                                 <ResourceDictionary>
                                                     <GridLength x:Key="RowHeight">80</GridLength>
@@ -200,7 +203,7 @@
                                             <ScrollViewer.Content>
                                                 <Grid VerticalAlignment="Top">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="80px" />
+                                                        <ColumnDefinition Width="380px" />
                                                         <ColumnDefinition Width="*" />
                                                     </Grid.ColumnDefinitions>
                                                     <Grid.RowDefinitions>
@@ -228,12 +231,12 @@
                                                     </Grid.Resources>
 
                                                     <StackPanel>
-                                                        <Canvas Width="75,9905" Height="75,9905">
+                                                        <Canvas Width="82" Height="82">
                                                             <Grid>
 
                                                                 <!--Left="17,4145" Top="14,2482"-->
-                                                                <Path
-                                                        Width="40,6287" Height="46,7808" Data="F1 M 41.1615,61.029C 28.0464,61.029 17.4145,50.3971 17.4145,37.2819C 17.4145,26.1675 25.0501,16.8364 35.3618,14.2482C 31.1173,18.5382 28.4964,24.4378 28.4964,30.9494C 28.4964,44.0645 39.1283,54.6964 52.2435,54.6964C 54.2442,54.6964 56.1871,54.449 58.0432,53.9831C 53.7389,58.3336 47.765,61.029 41.1615,61.029 Z M 49.9383,49.0772L 43.2883,49.0772L 43.2883,48.1882L 47.0243,43.3139L 43.7316,43.3139L 43.7316,41.6883L 49.9383,41.6883L 49.9383,42.7574L 46.3985,47.4517L 49.9383,47.4517L 49.9383,49.0772 Z M 56.2341,39.5784L 47.6841,39.5784L 47.6841,38.4354L 52.4875,32.1684L 48.2541,32.1684L 48.2541,30.0784L 56.2341,30.0784L 56.2341,31.4529L 51.683,37.4884L 56.2341,37.4884L 56.2341,39.5784 Z M 50.2606,28.4964L 39.8106,28.4964L 39.8106,27.0995L 45.6815,19.4398L 40.5073,19.4398L 40.5073,16.8853L 50.2606,16.8853L 50.2606,18.5653L 44.6982,25.942L 50.2606,25.942L 50.2606,28.4964 Z " Stretch="Fill">
+                                                                <Path Width="41" Height="41" 
+                                                                      Data="F1 M 41.1615,61.029C 28.0464,61.029 17.4145,50.3971 17.4145,37.2819C 17.4145,26.1675 25.0501,16.8364 35.3618,14.2482C 31.1173,18.5382 28.4964,24.4378 28.4964,30.9494C 28.4964,44.0645 39.1283,54.6964 52.2435,54.6964C 54.2442,54.6964 56.1871,54.449 58.0432,53.9831C 53.7389,58.3336 47.765,61.029 41.1615,61.029 Z M 49.9383,49.0772L 43.2883,49.0772L 43.2883,48.1882L 47.0243,43.3139L 43.7316,43.3139L 43.7316,41.6883L 49.9383,41.6883L 49.9383,42.7574L 46.3985,47.4517L 49.9383,47.4517L 49.9383,49.0772 Z M 56.2341,39.5784L 47.6841,39.5784L 47.6841,38.4354L 52.4875,32.1684L 48.2541,32.1684L 48.2541,30.0784L 56.2341,30.0784L 56.2341,31.4529L 51.683,37.4884L 56.2341,37.4884L 56.2341,39.5784 Z M 50.2606,28.4964L 39.8106,28.4964L 39.8106,27.0995L 45.6815,19.4398L 40.5073,19.4398L 40.5073,16.8853L 50.2606,16.8853L 50.2606,18.5653L 44.6982,25.942L 50.2606,25.942L 50.2606,28.4964 Z " Stretch="Fill">
                                                                     <Path.Fill>
                                                                         <ThemeResource ResourceKey="AppForegroundBrush" />
                                                                     </Path.Fill>
@@ -245,10 +248,10 @@
                                                                 <Run Text="Sleep tracking and analysis" />
                                                             </TextBlock.Inlines>
                                                         </TextBlock>
-                                                        <Canvas Grid.Row="1" Width="75,9905" Height="75,9905">
+                                                        <Canvas Grid.Row="1" Width="76" Height="76">
                                                             <Grid>
                                                                 <!-- Left="17" Top="19" -->
-                                                                <Path  Width="42" Height="38" Data="F1 M 17,19L 20,19L 20,54L 59,54L 59,57L 17,57L 17,19 Z M 22,52L 22,47.25L 32,37L 45,43.75L 57,25L 59,27L 46,48L 32.25,41L 22,52 Z " Stretch="Fill">
+                                                                <Path  Width="38" Height="38" Data="F1 M 17,19L 20,19L 20,54L 59,54L 59,57L 17,57L 17,19 Z M 22,52L 22,47.25L 32,37L 45,43.75L 57,25L 59,27L 46,48L 32.25,41L 22,52 Z " Stretch="Fill">
                                                                     <Path.Fill>
                                                                         <ThemeResource ResourceKey="AppForegroundBrush" />
                                                                     </Path.Fill>
@@ -256,7 +259,7 @@
                                                             </Grid>
                                                         </Canvas>
                                                         <TextBlock x:Uid="SettingsPageSubscriptionAdvantageStepsHistory" 
-                    Grid.Row="1" Grid.Column="1">
+                                                             Grid.Row="1" Grid.Column="1">
                                                             <TextBlock.Inlines>
                                                                 <Run Text="Steps history (sleep history and activity tracking are coming soon)" />
                                                             </TextBlock.Inlines>
@@ -269,7 +272,8 @@
 
                                                             <Grid>
                                                                 <!--Left="19" Top="28,4999"-->
-                                                                <Path  Width="38" Height="20,5002" Data="F1 M 49.0833,33.25C 53.4555,33.25 57,36.7944 57,41.1666C 57,45.5389 53.3723,48.9999 49,49L 23,49.0001C 20.8139,49 19,47.3111 19,45.125C 19,43.1866 20.3931,41.5737 22.2327,41.233C 22.1892,40.9533 22.1667,40.6667 22.1667,40.3749C 22.1667,37.3993 24.5122,34.9712 27.4553,34.8389C 28.7579,31.1462 32.2782,28.4999 36.4167,28.4999C 40.3458,28.4999 43.7179,30.8853 45.1637,34.2868C 46.3193,33.627 47.6573,33.25 49.0833,33.25 Z " Stretch="Fill" Stroke="#FFFFFFFF" StrokeLineJoin="Round" StrokeThickness="1">
+                                                                <Path Width="38" Height="20" Data="F1 M 49.0833,33.25C 53.4555,33.25 57,36.7944 57,41.1666C 57,45.5389 53.3723,48.9999 49,49L 23,49.0001C 20.8139,49 19,47.3111 19,45.125C 19,43.1866 20.3931,41.5737 22.2327,41.233C 22.1892,40.9533 22.1667,40.6667 22.1667,40.3749C 22.1667,37.3993 24.5122,34.9712 27.4553,34.8389C 28.7579,31.1462 32.2782,28.4999 36.4167,28.4999C 40.3458,28.4999 43.7179,30.8853 45.1637,34.2868C 46.3193,33.627 47.6573,33.25 49.0833,33.25 Z " Stretch="Fill" 
+                                                                      Stroke="#FFFFFFFF" StrokeLineJoin="Round" StrokeThickness="1">
                                                                     <Path.Fill>
                                                                         <ThemeResource ResourceKey="AppForegroundBrush" />
                                                                     </Path.Fill>
@@ -278,7 +282,7 @@
                                                         </Canvas>
 
                                                         <TextBlock x:Uid="SettingsPageSubscriptionAdvantageCloud" 
-                        Grid.Row="2" Grid.Column="1">
+                                                            Grid.Row="2" Grid.Column="1">
                                                             <TextBlock.Inlines>
                                                                 <Run Text="OneDrive cloud data synchronization" />
                                                             </TextBlock.Inlines>
@@ -286,7 +290,8 @@
                                                         <Canvas Grid.Row="3" Width="76" Height="76">
                                                             <Grid>
                                                                 <!--Left="19" Top="14,825"-->
-                                                                <Path  Width="38" Height="44,175" Data="F1 M 24,20L 49,20L 49.0833,26.9167C 53.4556,26.9167 57,30.4611 57,34.8334L 57,42.75C 57,47.1223 53.4556,50.6667 49.0833,50.6667L 49,59L 24,59L 24,20 Z M 49,46C 50.7489,46 53,43.7489 53,42L 53,36C 53,34.2511 50.7489,31 49,31L 49,46 Z M 27,23L 27,25L 46,25L 46,23L 27,23 Z M 46,56L 46,54L 27,54L 27,56L 46,56 Z M 30.5,28C 29.6256,28 29,29.1255 29,30L 29,49C 29,49.8745 29.6255,51 30.5,51C 31.3744,51 32,49.8745 32,49L 32,30C 32,29.1255 31.3745,28 30.5,28 Z M 36.5,28C 35.6256,28 35,29.1255 35,30L 35,49C 35,49.8745 35.6255,51 36.5,51C 37.3744,51 38,49.9578 38,49.0833L 38,30C 38,29.1255 37.3745,28 36.5,28 Z M 42.5,28C 41.6255,28 41,29.1255 41,30L 41,49C 41,49.8745 41.6255,51 42.5,51C 43.3745,51 44,49.8745 44,49L 44,30C 44,29.1255 43.3744,28 42.5,28 Z M 23.75,17.2292C 25,17 31.6667,13.6667 33.25,15.25C 34.8333,16.8333 36.4167,16.8333 38,16.8333C 39.5833,16.8333 41.1667,15.25 44.3333,15.25C 45.9167,15.25 49.0833,16.0417 49.0833,17.625C 49,21 47.8958,18.8125 47.8958,18.8125C 47.8958,18.8125 47.1041,17.2292 43.9375,17.2292C 40.7708,17.2292 39.5833,18.8125 38,18.8125C 36.4167,18.8125 33.6458,17.2292 30.4792,17.2292C 27.3125,17.2292 26.875,18.8334 24.9375,18.4167C 23,18 21,20 21.7708,21.9792C 23,24 22.1666,25.2817 22.1667,27.5209C 22.1667,27.9167 21.75,27.875 21.375,25.9375C 21,24 19,23.1667 19,21.5833C 19,20 19.1667,19.8333 20.5833,18.4167C 22,17 22.5,17.4584 23.75,17.2292 Z " Stretch="Fill">
+                                                                <Path  Width="38" Height="44" Data="F1 M 24,20L 49,20L 49.0833,26.9167C 53.4556,26.9167 57,30.4611 57,34.8334L 57,42.75C 57,47.1223 53.4556,50.6667 49.0833,50.6667L 49,59L 24,59L 24,20 Z M 49,46C 50.7489,46 53,43.7489 53,42L 53,36C 53,34.2511 50.7489,31 49,31L 49,46 Z M 27,23L 27,25L 46,25L 46,23L 27,23 Z M 46,56L 46,54L 27,54L 27,56L 46,56 Z M 30.5,28C 29.6256,28 29,29.1255 29,30L 29,49C 29,49.8745 29.6255,51 30.5,51C 31.3744,51 32,49.8745 32,49L 32,30C 32,29.1255 31.3745,28 30.5,28 Z M 36.5,28C 35.6256,28 35,29.1255 35,30L 35,49C 35,49.8745 35.6255,51 36.5,51C 37.3744,51 38,49.9578 38,49.0833L 38,30C 38,29.1255 37.3745,28 36.5,28 Z M 42.5,28C 41.6255,28 41,29.1255 41,30L 41,49C 41,49.8745 41.6255,51 42.5,51C 43.3745,51 44,49.8745 44,49L 44,30C 44,29.1255 43.3744,28 42.5,28 Z M 23.75,17.2292C 25,17 31.6667,13.6667 33.25,15.25C 34.8333,16.8333 36.4167,16.8333 38,16.8333C 39.5833,16.8333 41.1667,15.25 44.3333,15.25C 45.9167,15.25 49.0833,16.0417 49.0833,17.625C 49,21 47.8958,18.8125 47.8958,18.8125C 47.8958,18.8125 47.1041,17.2292 43.9375,17.2292C 40.7708,17.2292 39.5833,18.8125 38,18.8125C 36.4167,18.8125 33.6458,17.2292 30.4792,17.2292C 27.3125,17.2292 26.875,18.8334 24.9375,18.4167C 23,18 21,20 21.7708,21.9792C 23,24 22.1666,25.2817 22.1667,27.5209C 22.1667,27.9167 21.75,27.875 21.375,25.9375C 21,24 19,23.1667 19,21.5833C 19,20 19.1667,19.8333 20.5833,18.4167C 22,17 22.5,17.4584 23.75,17.2292 Z " 
+                                                                       Stretch="Fill">
                                                                     <Path.Fill>
                                                                         <ThemeResource ResourceKey="AppForegroundBrush" />
                                                                     </Path.Fill>
@@ -294,7 +299,7 @@
                                                             </Grid>
                                                         </Canvas>
                                                         <TextBlock x:Uid="SettingsPageSubscriptionAdvantageInspiration"
-                    Grid.Row="3" Grid.Column="1">
+                                                            Grid.Row="3" Grid.Column="1">
                                                             <TextBlock.Inlines>
                                                                 <Run Text="Inspiration for developers to continue doing a good work" />
                                                             </TextBlock.Inlines>
@@ -303,8 +308,9 @@
                                                 </Grid>
                                             </ScrollViewer.Content>
                                         </ScrollViewer>
-                                        <StackPanel Grid.Row="2" Margin="-4,0,-4,0">
-                                            <StackPanel.Resources>
+                                        
+                                        <Grid Grid.Row="2" Margin="-4,0,-4,0">
+                                            <Grid.Resources>
                                                 <ResourceDictionary>
                                                     <Style TargetType="Button">
                                                         <Style.Setters>
@@ -343,9 +349,9 @@
                                                         </Style.Setters>
                                                     </Style>
                                                 </ResourceDictionary>
-                                            </StackPanel.Resources>
+                                            </Grid.Resources>
 
-                                            <Grid>
+                                            <StackPanel>
                                                 <Button x:Uid="SettingsPagePurchaseLifetimeSubscription"
                                     x:Name="PurchaseLifetime" Grid.Column="0"
                                     Content="Purchase lifetime subscription">
@@ -420,9 +426,9 @@
                                     </interactivity:BehaviorCollection>
                                 </interactivity:Behaviors-->
                                                 </Button>
-                                            </Grid>
-                                        </StackPanel>
-                                    </Grid>
+                                            </StackPanel>
+                                        </Grid>
+                                    </StackPanel>
                                 </Grid>
                             </PivotItem.Content>
                         </PivotItem>
@@ -438,7 +444,7 @@
                         <Run x:Uid="PressBackButton" Text="Press back button when you are done." />
                     </TextBlock.Inlines>
                 </TextBlock>
-            </Grid>
+            </StackPanel>
         </Grid>
     </Page.Content>
 </Page>

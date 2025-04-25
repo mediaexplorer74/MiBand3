@@ -19,18 +19,18 @@
                         <StaticResource ResourceKey="GrayTextBlockStyle" />
                     </Style.BasedOn>
                     <Style.Setters>
-                            <Setter Property="FontSize" Value="8"/>                            
+                            <Setter Property="FontSize" Value="12"/>                            
                      </Style.Setters>
                 </Style>
             </ResourceDictionary>
         </StackPanel.Resources>
             
-        <Grid>
+        <StackPanel>
             <TextBlock x:Uid="CloudPageHint" 
                        Margin="0,0,0,10" 
                        TextAlignment="Left" 
                        TextWrapping="Wrap"
-                       FontSize="8">
+                       FontSize="12">
             
             <TextBlock.Style>
               <StaticResource ResourceKey="GrayTextBlockStyle" />
@@ -42,12 +42,11 @@
             
              <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                     <Button.Visibility>
-                            <Binding Path="ShowOneDriveLoginButton">
-                                <!--Converter>
-                                    <StaticResource ResourceKey="BoolToVis" />
-                                </Converter-->
+                            <Binding Path="ShowOneDriveLoginButton" 
+                                     Converter="{StaticResource BoolToVis}">
+                             
                             </Binding>
-                        </Button.Visibility>
+                    </Button.Visibility>
                         <!--interactivity:Behaviors>
                             <interactivity:BehaviorCollection>
                                 <core:EventTriggerBehavior EventName="Tapped">
@@ -65,22 +64,23 @@
                         </interactivity:Behaviors-->
                         <Button.Content>
                             <Grid HorizontalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                  
+                                <Grid.ColumnDefinitions>                                  
                                         <ColumnDefinition Width="0,3*" />
-                                        <ColumnDefinition />
-                                  
+                                        <ColumnDefinition />                                  
                                 </Grid.ColumnDefinitions>
-                                <Grid>
-                                   <BitmapIcon Margin="0,-5,0,-10" 
-                                               UriSource="/Resources/Images/OneDriveIcon.png" />
+                                
+                                <!--StackPanel-->
+                            <BitmapIcon Margin="0,-5,0,-10"
+                                               UriSource="/Resources/Images/OneDriveIcon.png" 
+                                       Width="32" Height="32"
+                                                />
                                    <TextBlock x:Uid="CloudPageConnectOneDrive"
                                               Grid.Column="1" HorizontalAlignment="Center"
                                               VerticalAlignment="Center" FontSize="22" 
                                               Text="Connect to OneDrive" 
                                               TextAlignment="Center" TextWrapping="Wrap" />
                                   
-                                </Grid>
+                                <!--/StackPanel-->
                             </Grid>
                         </Button.Content>
                     </Button>
@@ -96,8 +96,7 @@
                     </ProgressRing>
             
                     <ListView HorizontalContentAlignment="Stretch" IsTextScaleFactorEnabled="True">
-                    <ListView.Items>
-                       
+                    <ListView.Items>                       
                                 <ListViewItem HorizontalContentAlignment="Stretch">
                                   <ListViewItem.Visibility>
                                         <Binding Path="ShowOneDriveListItem" 
@@ -149,9 +148,8 @@
                                         </AttachedFlyout-->
                                         <Grid>
                                             <Grid HorizontalAlignment="Stretch">
-                                                    <Grid.ColumnDefinitions>
-                                                          
-                                                        <ColumnDefinition Width="0,3*" />
+                                                    <Grid.ColumnDefinitions>                                                          
+                                                        <ColumnDefinition Width="0.3*" />
                                                         <ColumnDefinition Width="20px" />
                                                         <ColumnDefinition />
                                                           
@@ -162,11 +160,11 @@
                                                         <RowDefinition Height="15px" />
                                                            
                                                 </Grid.RowDefinitions>
-                                            <Grid>
+                                            <StackPanel>
                                                 <BitmapIcon Grid.RowSpan="2" Margin="0,-10,0,-15" UriSource="/Resources/Images/OneDriveIcon.png" />
                                                 <StackPanel Grid.Column="2" Orientation="Horizontal">
                                                     <Grid>
-                                                        <TextBlock Margin="-2,0,0,-10" FontSize="25" Text="OneDrive" />
+                                                        <TextBlock Margin="-2,0,0,-10" FontSize="18" Text="OneDrive" />
                                                     </Grid>
 
                                                 </StackPanel>
@@ -190,15 +188,15 @@
                                                         </Binding>
                                                     </BitmapIcon.Visibility>
                                                 </BitmapIcon>
-                                            </Grid>
+                                            </StackPanel>
                                         </Grid>
-                                            </Grid>
+                                      </Grid>
                                     </StackPanel>
                                 </ListViewItem.Content>
                             </ListViewItem>          
                         </ListView.Items>
                     </ListView>
-                </Grid>
+                </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>

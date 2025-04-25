@@ -39,10 +39,13 @@ namespace MiBandApp.ViewModels.Tabs
       this._settings = settings;
       this._bandSyncController = bandSyncController;
       this._activitiesDataBase = activitiesDataBase;
-      this._bandSyncController.SyncState.Updated += new EventHandler<MonitorableUpdatedEventArgs<BandSyncState>>(this.SyncStateOnUpdated);
+      this._bandSyncController.SyncState.Updated 
+                += new EventHandler<MonitorableUpdatedEventArgs<BandSyncState>>(this.SyncStateOnUpdated);
     }
 
     public bool IsPro => this._licensingService.IsPro;
+
+    public string UpgradeToProText => "Upgrade To Pro";
 
     public GoalInfo GoalInfo => this._settings.GetSavedGoalInfo();
 

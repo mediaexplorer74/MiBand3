@@ -41,6 +41,8 @@ namespace MiBandApp.Services
 
     public bool IsPro => this.IsProLifetimeActive || this.IsPro1YearActive;
 
+    
+
     public bool IsProLifetimeActive
     {
       get
