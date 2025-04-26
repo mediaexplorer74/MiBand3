@@ -12,12 +12,12 @@
   <Identity
     Name="ME.MiBandAppV1"
     Publisher="CN=Admin"
-    Version="1.0.0.0" />
+    Version="1.30.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="c8cdd46f-248c-4ee8-b44a-ca5e28b51cfc" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="c8cdd46f-2487-4ee8-b44a-ca5e28b52fcf" PhonePublisherId="50023446-6116-0125-3000-300280350326"/>
 
   <Properties>
-    <DisplayName>MiBandApp v1.0</DisplayName>
+    <DisplayName>MiBandApp v1.30</DisplayName>
     <PublisherDisplayName>Admin</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -35,7 +35,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="MiBandApp.App">
       <uap:VisualElements
-        DisplayName="MiBandApp 1.0"
+        DisplayName="MiBandApp 1.30"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="MiBandApp (UWP)"

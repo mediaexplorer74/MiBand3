@@ -31,7 +31,7 @@ namespace Gregstoll
 
     public UniversalWrapPanel() => this.Orientation = (Orientation) 0;
 
-    protected virtual Size MeasureOverride(Size availableSize)
+    protected override Size MeasureOverride(Size availableSize)
     {
       Point point = new Point(0.0, 0.0);
       if (this.Orientation == Orientation.Horizontal)
@@ -73,7 +73,7 @@ namespace Gregstoll
       return new Size(point.X + val1_1, num1);
     }
 
-    protected virtual Size ArrangeOverride(Size finalSize)
+    protected override Size ArrangeOverride(Size finalSize)
     {
       Point point1 = new Point(0.0, 0.0);
       int num1 = 0;
@@ -82,11 +82,18 @@ namespace Gregstoll
         double num2 = 0.0;
         foreach (UIElement child in (IEnumerable<UIElement>) this.Children)
         {
-          child.Arrange((Rect) new Rect(point1, new Point(point1.X + ((Size) child.DesiredSize).Width, point1.Y + ((Size) child.DesiredSize).Height)));
+          child.Arrange((Rect) new Rect(point1, new Point(
+              point1.X + ((Size) child.DesiredSize).Width, 
+              point1.Y + ((Size) child.DesiredSize).Height)));
+
           if (((Size) child.DesiredSize).Height > num2)
             num2 = ((Size) child.DesiredSize).Height;
+
           point1.X += ((Size) child.DesiredSize).Width;
-          if (num1 + 1 < ((ICollection<UIElement>) this.Children).Count && point1.X + ((Size) ((IList<UIElement>) this.Children)[num1 + 1].DesiredSize).Width > finalSize.Width)
+          if (num1 + 1 < ((ICollection<UIElement>) this.Children).Count 
+                        && point1.X + 
+                        ((Size) ((IList<UIElement>) this.Children)[num1 + 1].DesiredSize).Width 
+                             > finalSize.Width)
           {
             point1.X = 0.0;
             point1.Y += num2;

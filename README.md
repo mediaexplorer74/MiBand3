@@ -1,15 +1,16 @@
-## MiBand3 vx.x.x - dev branch (MiBandApp codename)
+## MiBand3 v1.30.0 - dev branch (MiBandApp codename)
 ![Logo](Images/logo.png)
 
 ## About 
-RnD of MiBandApp, Unofficial UWP Client for Mi Band 2 ( [Windows Store link](https://apps.microsoft.com/detail/9p9p4lqh99c7?hl=ru-RU&gl=RU)  ).
+RnD of MiBandApp, Unofficial Client for Mi Band . - I found [old WP8 version of MiBandApp](https://4pda.to/forum/index.php?showtopic=792038), decompiled it via DotPeek, then "manuallty reversed" all vies/pages and resources. An,my plan are to dev more powerful Mi band app (real UWP app!) for old sweet retro-winphones Lumia ... :)
 
 ## Screenshots
 ![W11](Images/sshot01.png)
 ![W11](Images/sshot02.png)
+![W11](Images/sshot03.png)
+![W11](Images/sshot04.png)
 
 ## Tech details
-- I found [old xap version of MiBandApp](https://4pda.to/forum/index.php?showtopic=792038) and decompiled it via DotPeek.
 - I already fixed main app parts (except some usercontrols, main app views & viewmodels)
 - At now, I'm doing research of Ian's Cariburn Micro "high-level coding" to fix all MiBandApp MVVM logics ;) 
 
@@ -28,7 +29,9 @@ RnD of MiBandApp, Unofficial UWP Client for Mi Band 2 ( [Windows Store link](htt
  
 ## ToDo
 - Try to fix +-100500 bugs after MiBand R.E.
+- Repair all localization data (language resources for EN/RU at minimum)
 - Try to add Mi Band 3,4, and 5 compatibility.
+
 
 
 ## Reference(s)
