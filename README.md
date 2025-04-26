@@ -9,6 +9,7 @@ RnD of MiBandApp, Unofficial Client for Mi Band . - I found [old WP8 version of 
 ![W11](Images/sshot02.png)
 ![W11](Images/sshot03.png)
 ![W11](Images/sshot04.png)
+![W11](Images/sshot05.png)
 
 ## Tech details
 - I already fixed main app parts (except some usercontrols, main app views & viewmodels)
