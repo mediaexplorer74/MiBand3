@@ -29,5 +29,15 @@
         <StackPanel Grid.Row="2">
             <TextBlock Text="Make sure that Band is paired with your device." Foreground="#99bdda" Margin="20" HorizontalAlignment="Center" TextWrapping="WrapWholeWords" Name="lblDescription" />
         </StackPanel>
+
+
+        <AppBar>
+            <CommandBar>
+                <AppBarButton Icon="Home" Label="Home page" Name="btnHome" Click="btnHome_Click" />
+            </CommandBar>
+        </AppBar>
+
     </Grid>
+
+    
 </Page>

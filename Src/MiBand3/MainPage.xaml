@@ -20,13 +20,19 @@
                     <RowDefinition Height="100"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Column="0" VerticalAlignment="Bottom" Margin="10,0,0,10">
-                    <TextBlock Text="{Binding Title}" FontSize="12" FontFamily="Segoe UI Light" Foreground="#99bdda" />
-                    <TextBlock Text="{Binding Value}" Foreground="White" FontSize="50" FontWeight="Light" FontFamily="Segoe UI Light"/>
+                    <TextBlock Text="{Binding Title}" FontSize="12" FontFamily="Segoe UI Light" 
+                               Foreground="#99bdda" />
+                    <TextBlock Text="{Binding Value}" Foreground="White" FontSize="50" 
+                               FontWeight="Light" FontFamily="Segoe UI Light"/>
                 </StackPanel>
-                <StackPanel Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20,0,0,25">
-                    <TextBlock Text="{Binding Unit}" Foreground="White" FontSize="12" FontFamily="Segoe UI Light" HorizontalAlignment="Left" />
+                <StackPanel Grid.Column="1" HorizontalAlignment="Left" 
+                            VerticalAlignment="Bottom" Margin="20,0,0,25">
+                    <TextBlock Text="{Binding Unit}" Foreground="White" 
+                               FontSize="12" FontFamily="Segoe UI Light" 
+                               HorizontalAlignment="Left" />
                 </StackPanel>
-                <Border Grid.Column="2" HorizontalAlignment="Right" Height="40" VerticalAlignment="Bottom">
+                <Border Grid.Column="2" HorizontalAlignment="Right" Height="40" 
+                        VerticalAlignment="Bottom">
                     <Image Source="{Binding PictureUrl}" Margin="5"/>
                 </Border>
             </Grid>
@@ -42,7 +48,8 @@
             <controls:MasterDetailsView.MasterHeader>
                 <StackPanel Name="pgWorking" Grid.Row="0" Margin="10" Visibility="Collapsed" >
                     <ProgressBar IsEnabled="true" IsIndeterminate="true"/>
-                    <TextBlock Text="Synchronising" Foreground="White" FontSize="12" FontWeight="Light" HorizontalAlignment="Center" />
+                    <TextBlock Text="Synchronising" Foreground="White" FontSize="12" 
+                               FontWeight="Light" HorizontalAlignment="Center" />
                 </StackPanel>
             </controls:MasterDetailsView.MasterHeader>
 
@@ -61,7 +68,8 @@
             <controls:MasterDetailsView.NoSelectionContentTemplate>
                 <DataTemplate>
                     <Grid>
-                        <Image Stretch="UniformToFill" Source="ms-appx:///Assets/Wallpapers/landschaft.jpg" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                        <Image Stretch="UniformToFill" Source="ms-appx:///Assets/Wallpapers/landschaft.jpg" 
+                               VerticalAlignment="Top" HorizontalAlignment="Center"/>
                     </Grid>
                 </DataTemplate>
             </controls:MasterDetailsView.NoSelectionContentTemplate>
@@ -70,6 +78,13 @@
                     <AppBarButton Icon="Sync" Label="Sync" Name="btnSync" Click="btnSync_Click"/>
                     <AppBarButton Icon="ContactInfo" Label="Profile" Name="btnProfile" Click="btnProfile_Click"/>
                     <AppBarButton Icon="Setting" Label="Settings" Name="btnSetting" Click="btnSetting_Click" />
+
+                    <AppBarButton Icon="View" Label="Battery" Name="btnBattery" Click="btnBattery_Click" />
+                    <AppBarButton Icon="Clock" Label="Clock" Name="btnClock" Click="btnClock_Click" />
+                    <AppBarButton Icon="View" Label="Device" Name="btnDevice" Click="btnDevice_Click" />
+                    <AppBarButton Icon="View" Label="DisplayItems" Name="btnDisplayItems" 
+                                                                      Click="btnDisplayItems_Click" />
+                    <AppBarButton Icon="View" Label="Steps" Name="btnSteps" Click="btnSteps_Click" />
                 </CommandBar>
             </controls:MasterDetailsView.MasterCommandBar>
         </controls:MasterDetailsView>

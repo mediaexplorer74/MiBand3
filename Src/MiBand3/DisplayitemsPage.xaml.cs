@@ -5,9 +5,9 @@ using Windows.UI.Xaml.Controls;
 
 namespace MiBand3
 {
-    public sealed partial class DisplayitemsPage : Page
+    public sealed partial class DisplayItemsPage : Page
     {
-        public DisplayitemsPage()
+        public DisplayItemsPage()
         {
             InitializeComponent();
 
@@ -53,7 +53,7 @@ namespace MiBand3
             }
             catch (Exception ex)
             {
-                Helpers.DebugWriter(typeof(DisplayitemsPage), ex.Message);
+                Helpers.DebugWriter(typeof(DisplayItemsPage), ex.Message);
             }
             finally
             {

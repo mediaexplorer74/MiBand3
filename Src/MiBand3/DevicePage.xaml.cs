@@ -56,17 +56,20 @@ namespace MiBand3
             if (mDevice != null)
             {
                 lblTitle.Text = "Device found";
-                lblSubTitle.Text = "Trying to authenticate on Band...";
-                lblDescription.Text = "Tap on Band-Button to accept requested authentication!";
+                //lblSubTitle.Text = "Trying to authenticate on Band...";
+                //lblDescription.Text = "Tap on Band-Button to accept requested authentication!";
 
                 App.CustomMiBand = new CustomMiBand();
                 if (await App.CustomMiBand.AuthenticateAppOnDevice())
                 {
-                    Frame.Navigate(typeof(MainPage));
+                    pbProcess.IsIndeterminate = false;//true;
+                    //Frame.Navigate(typeof(MainPage));
+                    lblTitle.Text = "Device found: " +  mDevice.Name;
+                    lblSubTitle.Text = "Pairing: " + (mDevice.Pairing.IsPaired == true ? "paired" : "not paired");
                 }
                 else
                 {
-                    pbProcess.IsIndeterminate = true;
+                    pbProcess.IsIndeterminate = false;//true;
                     lblTitle.Text = "Authentication failed!";
                     lblSubTitle.Text = "try again later...";
                     lblDescription.Text = "Make sure you tapped on Band-Button, do not ignore requested authentication!";
@@ -74,10 +77,20 @@ namespace MiBand3
             }
             else
             {
+                // ?
+                pbProcess.IsIndeterminate = false;//true;
+
                 lblTitle.Text = "Band not found";
                 lblSubTitle.Text = "Make sure you already have paired your Band with your device...";
                 lblDescription.Text = "Make sure that Bluetooth connection is enabled!";
             }
+        }
+
+
+
+        private void btnHome_Click(Object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
         }
     }
 }

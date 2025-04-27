@@ -12,7 +12,8 @@
     Publisher="CN=Admin"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="d15c31b3-e37f-4b55-95f6-bbd2608daf97" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="d15c31b3-e37f-4be8-95f6-bbd2608daf9f" PhonePublisherId="50023446-6116-0424-3004-300280350326"/>
+
 
   <Properties>
     <DisplayName>MiBand3 v1.0</DisplayName>

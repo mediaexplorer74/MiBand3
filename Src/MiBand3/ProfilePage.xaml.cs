@@ -9,9 +9,9 @@ using Windows.UI.Xaml.Navigation;
 namespace MiBand3
 {
 
-    public sealed partial class Profile : Page
+    public sealed partial class ProfilePage : Page
     {
-        public Profile()
+        public ProfilePage()
         {
             InitializeComponent();
 
@@ -150,7 +150,7 @@ namespace MiBand3
             }
             catch (Exception ex)
             {
-                Helpers.DebugWriter(typeof(Profile), ex.Message);
+                Helpers.DebugWriter(typeof(ProfilePage), ex.Message);
             }
             finally
             {

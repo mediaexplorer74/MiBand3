@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using MiNotificationWatcher;
 using MiCore;
+using System.Threading;
 
 
 namespace MiBand3
@@ -32,9 +33,10 @@ namespace MiBand3
                     await App.CustomMiBand.UpdateOperations();
                 }
 
-                CustomMasterDetailsView.ItemsSource = null;
-                CustomMasterDetailsView.ItemsSource = App.CustomMiBand.DisplayItems.OrderBy(x => (int)x.Operation);
-                CustomMasterDetailsView.ItemsSource = App.CustomMiBand.DisplayItems.OrderBy(x => (int)x.Operation);
+                //RnD
+                //CustomMasterDetailsView.ItemsSource = null;
+                //CustomMasterDetailsView.ItemsSource = App.CustomMiBand.DisplayItems.OrderBy(x => (int)x.Operation);
+                //CustomMasterDetailsView.ItemsSource = App.CustomMiBand.DisplayItems.OrderBy(x => (int)x.Operation);
             }
             catch (Exception ex)
             {
@@ -49,16 +51,14 @@ namespace MiBand3
             }
         }
 
-        private void btnDevice_Click(Object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(DevicePage));
-        }
+     
 
         private async Task<bool> RegisterTaskForNotifications()
         {
             try
             {
-                if (BackgroundTaskRegistration.AllTasks.Values.FirstOrDefault(x => x.Name == "UserNotificationChanged") == null)
+                if (BackgroundTaskRegistration.AllTasks.Values.FirstOrDefault(
+                    x => x.Name == "UserNotificationChanged") == null)
                 {
                     var status = await BackgroundExecutionManager.RequestAccessAsync();
                     if (status != BackgroundAccessStatus.AlwaysAllowed && status !=
@@ -70,7 +70,9 @@ namespace MiBand3
                     BackgroundTaskBuilder builder = new BackgroundTaskBuilder()
                     {
                         Name = "UserNotificationChanged",
-                        TaskEntryPoint = "MiNotificationWatcher.NotificationChanged"//typeof(MiNotificationWatcher.NotificationChanged).FullName
+                        TaskEntryPoint = 
+                        "MiNotificationWatcher.NotificationChanged"
+                        //typeof(MiNotificationWatcher.NotificationChanged).FullName
                     };
 
                     builder.SetTrigger(new UserNotificationChangedTrigger(
@@ -142,9 +144,10 @@ namespace MiBand3
         {
             try
             {
-                CustomMasterDetailsView.ItemsSource = null;
-                CustomMasterDetailsView.ItemsSource = App.CustomMiBand.DisplayItems.OrderBy(
-                    x => x.Operation);
+                //RnD
+                //CustomMasterDetailsView.ItemsSource = null;
+                //CustomMasterDetailsView.ItemsSource = App.CustomMiBand.DisplayItems.OrderBy(
+                //    x => x.Operation);
 
                 if (await RegisterTaskForNotifications())
                 {
@@ -164,7 +167,7 @@ namespace MiBand3
                     Debug.WriteLine($"BackgroundTask for Sync NOT running!");
                 }
 
-                btnSync_Click(sender, e);
+                //btnSync_Click(sender, e);
 
                 await GetNotificationsListenerAccess();
             }
@@ -196,26 +199,38 @@ namespace MiBand3
                 switch (result.Operation)
                 {
                     case (int)CustomMiBandResult.BandOperation.Battery :
-                        ((Frame)sender).Navigate(typeof(BatteryPage), App.CustomMiBand.BatteryResult);
+                        //((Frame)sender).Navigate(typeof(BatteryPage), App.CustomMiBand.BatteryResult);
                         break;
                     case (int)CustomMiBandResult.BandOperation.Notifications :
-                        ((Frame)sender).Navigate(typeof(NotificationPage), App.CustomMiBand.NotificationResult);
+                       // ((Frame)sender).Navigate(typeof(NotificationPage), App.CustomMiBand.NotificationResult);
                         break;
                     case (int)CustomMiBandResult.BandOperation.Calories :
-                        ((Frame)sender).Navigate(typeof(StepsPage), App.CustomMiBand.StepResult);
+                       // ((Frame)sender).Navigate(typeof(StepsPage), App.CustomMiBand.StepResult);
                         break;
                     case (int)CustomMiBandResult.BandOperation.Steps :
-                        ((Frame)sender).Navigate(typeof(StepsPage), App.CustomMiBand.StepResult);
+                       // ((Frame)sender).Navigate(typeof(StepsPage), App.CustomMiBand.StepResult);
                         break;
                     case (int)CustomMiBandResult.BandOperation.Distance:
-                        ((Frame)sender).Navigate(typeof(DistancePage), App.CustomMiBand.StepResult);
+                       // ((Frame)sender).Navigate(typeof(DistancePage), App.CustomMiBand.StepResult);
                         break;
                     case (int)CustomMiBandResult.BandOperation.Heartrate:
-                        ((Frame)sender).Navigate(typeof(HeartratePage), App.CustomMiBand.HeartResult);
+                       // ((Frame)sender).Navigate(typeof(HeartratePage), App.CustomMiBand.HeartResult);
                         break;
                 }
             }
         }
+
+        
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            // TODO
+            if (e.SourcePageType == typeof(WelcomePage))
+            {
+                //btnSync_Click(null, null);
+            }
+        }
+
 
         private void btnSetting_Click(Object sender, RoutedEventArgs e)
         {
@@ -224,15 +239,33 @@ namespace MiBand3
 
         private void btnProfile_Click(Object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Profile));
+            Frame.Navigate(typeof(ProfilePage));
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+
+        private void btnBattery_Click(object sender, RoutedEventArgs e)
         {
-            if (e.SourcePageType == typeof(WelcomePage))
-            {
-                btnSync_Click(null, null);
-            }
+            Frame.Navigate(typeof(BatteryPage));
+        }
+
+        private void btnClock_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(ClockPage));
+        }
+
+        private void btnDevice_Click(Object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(DevicePage));
+        }
+
+        private void btnDisplayItems_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(DisplayItemsPage));
+        }
+
+        private void btnSteps_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(StepsPage));
         }
     }
 }

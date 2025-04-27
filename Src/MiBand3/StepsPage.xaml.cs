@@ -1,5 +1,6 @@
 ﻿using MiCore;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -15,6 +16,12 @@ namespace MiBand3
             set { _result = value; }
         }
 
+        
+        public StepsPage()
+        {
+            InitializeComponent();
+        }
+
         protected override void OnNavigatedTo(Windows.UI.Xaml.Navigation.NavigationEventArgs e)
         {
             _result = e.Parameter as StepResult;
@@ -24,81 +31,85 @@ namespace MiBand3
         {
             try
             {
-                lblTitle.Text = _result.StepsReachedInPercent;
-                lblSteps.Text = _result.TotalSteps.ToString("N0");
-                lblDistanceDetailsDay.Text = GetDistanceDayInKm();
-                lblCalsDetailsDay.Text = _result.TotalCals.ToString("N0");
-                rpbcDailySteps.Maximum = Convert.ToInt32(App.LocalSettings.Values["Profile_Steps"]);
-                rpbcDailySteps.Value = _result.TotalSteps;
-
-                lblDistanceDetailsWeek.Text = GetDistanceWeekInKm();
-                lblCalsDetailsWeek.Text = GetCalsWeek();
-
-                int i = 1;
-
-                foreach (var element in _result.History
-                    .Where(x => x.Type == 0 && x.Moment <= DateTime.Now
-                    && x.Moment >= DateTime.Now.AddDays(-7))
-                    .ToList())
+                if (_result != null)
                 {
-                    switch (i)
-                    {
-                        case 1:
-                            lblDay1.Text = element.Moment.Date.ToString("ddd");
-                            pbDay1.Maximum = Convert.ToInt32(App.LocalSettings.Values["Profile_Steps"]);
-                            pbDay1.Value = element.Value;
-                            pbDay1.Minimum = 0;
-                            lblValueDay1.Text = element.Value.ToString("N0");
-                            break;
-                        case 2:
-                            lblDay2.Text = element.Moment.Date.ToString("ddd");
-                            pbDay2.Maximum = Convert.ToInt32(App.LocalSettings.Values["Profile_Steps"]);
-                            pbDay2.Value = element.Value;
-                            pbDay2.Minimum = 0;
-                            lblValueDay2.Text = element.Value.ToString("N0");
-                            break;
-                        case 3:
-                            lblDay3.Text = element.Moment.Date.ToString("ddd");
-                            pbDay3.Maximum = Convert.ToInt32(App.LocalSettings.Values["Profile_Steps"]);
-                            pbDay3.Value = element.Value;
-                            pbDay3.Minimum = 0;
-                            lblValueDay3.Text = element.Value.ToString("N0");
-                            break;
-                        case 4:
-                            lblDay4.Text = element.Moment.Date.ToString("ddd");
-                            pbDay4.Maximum = Convert.ToInt32(App.LocalSettings.Values["Profile_Steps"]);
-                            pbDay4.Value = element.Value;
-                            pbDay4.Minimum = 0;
-                            lblValueDay4.Text = element.Value.ToString("N0");
-                            break;
-                        case 5:
-                            lblDay5.Text = element.Moment.Date.ToString("ddd");
-                            pbDay5.Maximum = Convert.ToInt32(App.LocalSettings.Values["Profile_Steps"]);
-                            pbDay5.Value = element.Value;
-                            pbDay5.Minimum = 0;
-                            lblValueDay5.Text = element.Value.ToString("N0");
-                            break;
-                        case 6:
-                            lblDay6.Text = element.Moment.Date.ToString("ddd");
-                            pbDay6.Maximum = Convert.ToInt32(App.LocalSettings.Values["Profile_Steps"]);
-                            pbDay6.Value = element.Value;
-                            pbDay6.Minimum = 0;
-                            lblValueDay6.Text = element.Value.ToString("N0");
-                            break;
-                        case 7:
-                            lblDay7.Text = element.Moment.Date.ToString("ddd");
-                            pbDay7.Maximum = Convert.ToInt32(App.LocalSettings.Values["Profile_Steps"]);
-                            pbDay7.Value = element.Value;
-                            pbDay7.Minimum = 0;
-                            lblValueDay7.Text = element.Value.ToString("N0");
-                            break;
-                    }
+                    lblTitle.Text = _result.StepsReachedInPercent;
+                    lblSteps.Text = _result.TotalSteps.ToString("N0");
+                    lblDistanceDetailsDay.Text = GetDistanceDayInKm();
+                    lblCalsDetailsDay.Text = _result.TotalCals.ToString("N0");
+                    rpbcDailySteps.Maximum = Convert.ToInt32(App.LocalSettings.Values["Profile_Steps"]);
+                    rpbcDailySteps.Value = _result.TotalSteps;
 
-                    i++;
-                }
+                    lblDistanceDetailsWeek.Text = GetDistanceWeekInKm();
+                    lblCalsDetailsWeek.Text = GetCalsWeek();
+
+                    int i = 1;
+
+                    foreach (var element in _result.History
+                        .Where(x => x.Type == 0 && x.Moment <= DateTime.Now
+                        && x.Moment >= DateTime.Now.AddDays(-7))
+                        .ToList())
+                    {
+                        switch (i)
+                        {
+                            case 1:
+                                lblDay1.Text = element.Moment.Date.ToString("ddd");
+                                pbDay1.Maximum = Convert.ToInt32(App.LocalSettings.Values["Profile_Steps"]);
+                                pbDay1.Value = element.Value;
+                                pbDay1.Minimum = 0;
+                                lblValueDay1.Text = element.Value.ToString("N0");
+                                break;
+                            case 2:
+                                lblDay2.Text = element.Moment.Date.ToString("ddd");
+                                pbDay2.Maximum = Convert.ToInt32(App.LocalSettings.Values["Profile_Steps"]);
+                                pbDay2.Value = element.Value;
+                                pbDay2.Minimum = 0;
+                                lblValueDay2.Text = element.Value.ToString("N0");
+                                break;
+                            case 3:
+                                lblDay3.Text = element.Moment.Date.ToString("ddd");
+                                pbDay3.Maximum = Convert.ToInt32(App.LocalSettings.Values["Profile_Steps"]);
+                                pbDay3.Value = element.Value;
+                                pbDay3.Minimum = 0;
+                                lblValueDay3.Text = element.Value.ToString("N0");
+                                break;
+                            case 4:
+                                lblDay4.Text = element.Moment.Date.ToString("ddd");
+                                pbDay4.Maximum = Convert.ToInt32(App.LocalSettings.Values["Profile_Steps"]);
+                                pbDay4.Value = element.Value;
+                                pbDay4.Minimum = 0;
+                                lblValueDay4.Text = element.Value.ToString("N0");
+                                break;
+                            case 5:
+                                lblDay5.Text = element.Moment.Date.ToString("ddd");
+                                pbDay5.Maximum = Convert.ToInt32(App.LocalSettings.Values["Profile_Steps"]);
+                                pbDay5.Value = element.Value;
+                                pbDay5.Minimum = 0;
+                                lblValueDay5.Text = element.Value.ToString("N0");
+                                break;
+                            case 6:
+                                lblDay6.Text = element.Moment.Date.ToString("ddd");
+                                pbDay6.Maximum = Convert.ToInt32(App.LocalSettings.Values["Profile_Steps"]);
+                                pbDay6.Value = element.Value;
+                                pbDay6.Minimum = 0;
+                                lblValueDay6.Text = element.Value.ToString("N0");
+                                break;
+                            case 7:
+                                lblDay7.Text = element.Moment.Date.ToString("ddd");
+                                pbDay7.Maximum = Convert.ToInt32(App.LocalSettings.Values["Profile_Steps"]);
+                                pbDay7.Value = element.Value;
+                                pbDay7.Minimum = 0;
+                                lblValueDay7.Text = element.Value.ToString("N0");
+                                break;
+                        }
+
+                        i++;
+                    }
+                }// if _result != null
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Debug.WriteLine("[ex] StepsPage - StepsPage_Loaded bug: " + ex.Message);
             }
         }
 

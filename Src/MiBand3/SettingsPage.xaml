@@ -14,8 +14,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Background="#005aa3">
-            <TextBlock Text="settings" HorizontalAlignment="Left" FontSize="30" Margin="10, 60, 0, 0" Foreground="White" FontWeight="Light"/>
-            <Image Source="ms-appx:///Assets/Symbols/settings.png" HorizontalAlignment="Right" Margin="10" Height="30"/>
+            <TextBlock Text="settings" HorizontalAlignment="Left"
+                       FontSize="30" Margin="10, 60, 0, 0" Foreground="White" FontWeight="Light"/>
+            <Image Source="ms-appx:///Assets/Symbols/settings.png" 
+                   HorizontalAlignment="Right" Margin="10" Height="30"/>
         </StackPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" Grid.Row="1">
             <StackPanel Margin="20">

@@ -85,7 +85,8 @@ namespace MiCore
 
                 try
                 {
-                    batteryResult = await mCharacteristic.ReadValueAsync(BluetoothCacheMode.Uncached);
+                    if (mCharacteristic != null)
+                      batteryResult = await mCharacteristic.ReadValueAsync(BluetoothCacheMode.Uncached);
                 }
                 catch (Exception ex)
                 {

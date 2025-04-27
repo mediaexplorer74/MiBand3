@@ -90,6 +90,7 @@ namespace MiBand3
         private void SettingsPage_Loaded(object sender, RoutedEventArgs e)
         {
         }
+
         private async void tsDisplay_Toggled(object sender, RoutedEventArgs e)
         {
             if (!bolLoading)
@@ -192,7 +193,7 @@ namespace MiBand3
 
         private void hlbMenu_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(DisplayitemsPage));
+            Frame.Navigate(typeof(DisplayItemsPage));
         }
 
         private void chkPeriodicSync_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -1,6 +1,5 @@
 ﻿using MiCore;
 using System;
-using System.Diagnostics;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -8,18 +7,13 @@ using Windows.UI.Xaml.Navigation;
 
 namespace MiBand3
 {
-    public sealed partial class BatteryPage : Page
+    public sealed partial class BatteryPage1 : Page
     {
         private BatteryResult _result;
         public BatteryResult Result
         {
             get { return _result; }
             set { _result = value; }
-        }
-
-        public BatteryPage()
-        {
-            InitializeComponent();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -29,20 +23,13 @@ namespace MiBand3
 
         private void BatteryPage_Loaded(Object sender, RoutedEventArgs e)
         {
-            try
+            if (_result != null)
             {
-                if (_result != null)
-                {
-                    lblPercentage.Text = $"{_result.Percentage} %";
-                    lblBefore.Text = "";
-                    lblChargingDate.Text = $"Last charging date: {_result.LastChargingDate:dd.MM.yyyy HH:mm}";
-                    lblEstimated.Text = GetEstimatedTime();
-                    pgPercentage.Value = _result.Percentage;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("[ex] BatteryPage - BatteryPage_Loaded bug: " + ex.Message);
+                lblPercentage.Text = $"{_result.Percentage} %";
+                lblBefore.Text = "";
+                lblChargingDate.Text = $"Last charging date: {_result.LastChargingDate:dd.MM.yyyy HH:mm}";
+                lblEstimated.Text = GetEstimatedTime();
+                pgPercentage.Value = _result.Percentage;
             }
         }
 

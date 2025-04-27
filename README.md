@@ -16,13 +16,14 @@ I'll ty to port ("translate") VB to C# and "upgrade" it for Xaiomi Band 3 (or ev
 
 
 ## Status / progress
-- Min. Win. SDK = 14393
-- Code "translated" with (help) of MS Copilot (Engine ChatGPT-4o).
+- Min. Win. SDK changed from 14393 to 10240 (Hello, Astoria compatibility)
+- UI remake started (normal Pivot for Main page planned...)
 - Draft / sketch (but at now, app already compiled and can start normally.. at minimum!)
 - Only Mi Band 3 tested (battery status ok, all other parameters failed), but theoretically Band 4 and 5 can be connected… 
 
 
 ## ToDo
+- Research GATT protocol, find all needed GUIDs...
 - Fix 100500 bugs of "automatic intelligence" (AI... it's joke))
 - Think of/about MiBand 4 & 5 modifications...
 
